@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>IPv6 Spike</title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="A tech blog about ruby, code, mongodb, golang and other stuff.">
+    <link rel="canonical" href="http://squarism.com//2013/07/28/ipv6-spike/">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/main.css">
+
+</head>
+
+
+    <body>
+
+    <header class="site-header">
+
+  <div class="wrap">
+
+    <a class="site-title" href="/">Squarism</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+           viewBox="0 0 18 15" enable-background="new 0 0 18 15" xml:space="preserve">
+          <path fill="#505050" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0
+            h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#505050" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484
+            h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#505050" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0
+            c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+      <div class="trigger">
+        
+          <a class="page-link" href="/about/">About</a>
+        
+          
+        
+          
+        
+          <a class="page-link" href="/about/index.html">About</a>
+        
+          <a class="page-link" href="/questions/index.html">Questions I Have</a>
+        
+          <a class="page-link" href="/tatris/index.html">Tatris - A Tetris Clone</a>
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrap">
+      <div class="post">
+
+  <header class="post-header">
+    <h1>IPv6 Spike</h1>
+    <p class="meta">Jul 28, 2013 • Posted by: chris</p>
+  </header>
+
+  <article class="post-content">
+  <p>A spike is when you play around with something and then throw it away for the purposes of learning.  So, let's play around with IPv6.  I had read a little bit about it but essentially my working experience with IPv6 was nothing except for disabling it.  Let's learn some stuff!</p>
+<p>I'm going to skip over all the history of IPv6 and assume that you agree with me and think that this is important and relevant to the future of the Internet.</p>
+<h2>Setup</h2>
+<p><br />
+First, build 4 Ubuntu VMs.  I’m using 13.04 but any current Linux distro should work, just the packages and paths will change.  I found the best way is to build a simple VM and then clone it 3 more times (in Fusion this is copy/paste and resetting the MAC address).  You’ll need four machines to simulate a local network.  You won’t need any network hardware and VMware will be able to simulate everything we need.  You can actually do this whole experiment on one real box (cool stuff)!&lt;/p&gt;</p>
+<p>The goal of this spike is:</p>
+<ul>
+<li>Build 4 VMs</li>
+<li>Make a router, a web server, a dns server and a client</li>
+<li>Hit a web page between two network boundaries over IPv6 only</li><br />
+</ul>
+<p>&lt;/p&gt;</p>
+<h2>Super practical IPv6 primer</h2>
+<p><br />
+Addressing is WEIRD.  That’s really what I wanted to spike on.  Getting comfortable with the addressing length, hexadecimal and understanding the addressing layout.&lt;/p&gt;</p>
+<p>In IPv4, a network segment might look like this: <code>   10.0.0.0/24</code><br />
+So a box with an IP on that network might be this: <code> ip: 10.0.0.136  netmask:255.255.255.0</code></p>
+<p>IPv6 is a lot different.  Private addresses don't start with 192.168., 172. or 10.  Private addresses start with fc00 (from what I've read).  So I made up two network segments called<br />
+<code>fc00:deed:d34d:b33f<br />
+fc00:deee:deee:deee<br />
+</code></p>
+<p>But that's only 4 sets of hex.  IPv6 addresses have 8 sets of 4 hex bytes like this:</p>
+<pre highlight="false">
+nnnn:nnnn:nnnn:nnnn:hhhh:hhhh:hhhh:hhhh<br />
+(where n's are the network parts and h's are the host parts in a /64)<br />
+</pre>
+<p>&lt;/p&gt;</p>
+<p>So let's configure a box with an ip.  Our boxes are named after onomatopoeias (boing, wap, rawr and piff).  Boing's address is "dot" 10.<br />
+<code>boing: fc00:deed:d34d:b33f::10/64</code></p>
+<p>So there's a box that's configured with an IP.  Notice the double colons.  That just means it fills in the zeros between.  It's shorthand.  The /64 is the network segment.  Like in ipv4 192.168.0.1/24 is a common private ip.  The /24 is out of 32.  So it means X.X.X.Y where Y is the host part and X.X.X is the network part.  So 192.168.0.* is the network and .1 is the host.  In IPv6 it's /64 out of a total /128.</p>
+<p>So my private address space is just like an IPv4 private range.  I'm assigning this IPv6 space and I have 18 trillion private address for my ONE SUBNET.  For a router to work, I need two subnets.  So now I have 36 TRILLION free private addresses.  O_o</p>
+<h2>Address Configuration</h2>
+<p><br />
+I’m using ipv4 just for remote admin and installing things through apt.  So you’ll have to add another ip to your vm’s network card.  Ubuntu does this in the file /etc/network/interfaces.  Here’s an example.&lt;/p&gt;
+&lt;pre highlight="false"&gt;
+boing - dns (10.0.0.137)<br />
+	/etc/network/interfaces<br />
+	  iface eth0 inet6 static<br />
+	  	address fc00:deed:d34d:b33f::10<br />
+	  	netmask 64<br />
+	  	gateway fc00:deed:d34d:b33f::1<br />
+&lt;/pre&gt;<br />
+If you type ifconfig or <code>ip addr</code> you will see that it has two IPs now.  One IPv4 and one IPv6 address.  We’re not quite done.  I drew a picture of the network layout and you’ll have to configure all the VMs like this.&lt;/p&gt;</p>
+<p><img src="http://squarism.com/wp-content/uploads/2013/07/ipv6_lab.png" alt="ipv6_lab" width="539" height="401" class="aligncenter size-full wp-image-2028" /></p>
+<h2>Router Configuration</h2>
+<p><br />
+This is really easy.  You just need the Rawr box to forward IPv6 packets like a router but not like a firewall.  So Linux can do that will a simple kernel switch.  But first, you’ll need to add a second network card in VMWare.  So:&lt;/p&gt;</p>
+<ul>
+<li>Shutdown rawr</li>
+<li>Add a second network card</li>
+<li>Boot rawr</li>
+<li>Edit /etc/sysctl.conf, change net.ipv6.conf.all.forwarding = 1</li>
+<li>Run sysctl -p</li><br />
+</ul>
+<p><br />
+Routing through rawr should work at this point.  For example, from piff, you should be able to ping boing through ipv6 even though they aren’t on the same network segment.  Use ping6 and traceroute6 to sanity check.&lt;/p&gt;</p>
+<h2>DNS Configuration</h2>
+<p><br />
+Boing is our DNS server so let’s make some changes.  First, apt-get install bind9.  Then edit these files below.  I configured a temporary subdomain on squarism.com called ipv6.squarism.com but this can be anything you want.&lt;/p&gt;
+&lt;pre title="/etc/bind/named.conf.local" toolbar="always"&gt;
+zone “ipv6.squarism.com” {<br />
+        type master;<br />
+        file “/etc/bind/db.ipv6.squarism.com”;<br />
+};&lt;/p&gt;</p>
+<p>zone "f.3.3.b.d.4.3.d.d.e.e.d.0.0.c.f.ip6.arpa" {<br />
+        type master;<br />
+        file "/etc/bind/db.fc00_deed_d34d_b33f";<br />
+};<br />
+<br />
+Notice that the reverse zone (ip6.arpa) is super annoying to type out.  It needs to be the reverse bytes (afaik).</p>
+<pre title="/etc/bind/db.ipv6.squarism.com" toolbar="always">
+$TTL 2D ; zone default 2 days<br />
+$ORIGIN ipv6.squarism.com.
+<p>@                       IN SOA  ns1.ipv6.squarism.com. hostmaster.squarism.com. (<br />
+                                2013062702      ; serial<br />
+                                3H              ; refresh<br />
+                                15M             ; retry<br />
+                                1W              ; expire<br />
+                                1D              ; minimum<br />
+                        )</p>
+<p>                        IN      NS      ns1.ipv6.squarism.com.</p>
+<p>ns1                             AAAA    fc00:deed:d34d:b33f::10  ; dns server</p>
+<p>; hosts<br />
+boing                   IN      AAAA    fc00:deed:d34d:b33f::10<br />
+wap                     IN      AAAA    fc00:deed:d34d:b33f::11<br />
+rawr                    IN      AAAA    fc00:deed:d34d:b33f::1<br />
+piff                    IN      AAAA    fc00:deee:deee:deee::6</p>
+<p>; aliases<br />
+www                     IN      CNAME   wap<br />
+<br />
+Here we're using the AAAA records for IPv6.  In IPv4 these would be A records.  Bind has supported AAAA records for a long time.  CNAME records don't change.  Notice that you could easily run a DNS server that serves both stacks.</p>
+<pre title="/etc/bind/db.fc00_deed_d34d_b33f" toolbar="always">
+; fc00:deed:d34d:b33f::/64<br />
+$TTL 1h ; Default TTL<br />
+@       IN      SOA     ns1.ipv6.squarism.com.  hostmaster.squarism.com. (<br />
+        2013072801      ; serial<br />
+        1h              ; slave refresh interval<br />
+        15m             ; slave retry interval<br />
+        1w              ; slave copy expire time<br />
+        1h              ; NXDOMAIN cache time<br />
+        )
+<p>;<br />
+; domain name servers<br />
+;<br />
+@       IN      NS      ns1.ipv6.squarism.com.</p>
+<p>; IPv6 PTR entries<br />
+0.1.0.0.0.0.0.0.0.0.0.0.0.0.f.3.3.b.d.4.3.d.d.e.e.d.0.0.c.f.ip6.arpa.    IN    PTR    boing.ipv6.squarism.com.<br />
+1.1.0.0.0.0.0.0.0.0.0.0.0.0.f.3.3.b.d.4.3.d.d.e.e.d.0.0.c.f.ip6.arpa.    IN    PTR    wap.ipv6.squarism.com.<br />
+1.0.0.0.0.0.0.0.0.0.0.0.0.0.f.3.3.b.d.4.3.d.d.e.e.d.0.0.c.f.ip6.arpa.    IN    PTR    rawr.ipv6.squarism.com.<br />
+6.0.0.0.0.0.0.0.0.0.0.0.0.0.e.e.e.d.e.e.e.d.e.e.e.d.0.0.c.f.ip6.arpa.    IN    PTR    piff.ipv6.squarism.com.<br />
+<br />
+I used a reverse zone generator <a href="http://rdns6.com/zone">at rdns6.com</a> for this last time.  It's amazingly annoying to type out.  I'm not sure if there's a more convenient form that could be used.</p>
+<p>Restart bind: <code>sudo services bind9 restart</code>  Check the logs in /var/log/syslog for any `named:` errors.  I had a few typos I had to chase down.  DNS can be tricky to set up so take your time.</p>
+<h2>See DNS working</h2><br />
+Ok, let's take a quick break from this infinite configuration and see how we are doing so far.  At this point we should have routing and DNS working.  So that means that Piff should be able to ping a DNS name and it should work.
+<p>But first, we need to tell Piff and all the other boxes to use our new dns server.  Edit /etc/network/interfaces again and add</p>
+<p><code><br />
+dns-search ipv6.squarism.com<br />
+dns-nameservers fc00:deed:d34d:b33f::10<br />
+</code></p>
+<p>For example, your eth0 block will look like this</p>
+<pre lang="diff">
+# The primary network interface<br />
+auto eth0<br />
+iface eth0 inet dhcp<br />
+iface eth0 inet6 static<br />
+	address fc00:deed:d34d:b33f::11<br />
+	netmask 64<br />
+	gateway fc00:deed:d34d:b33f::1<br />
+	dns-search ipv6.squarism.com<br />
+	dns-nameservers fc00:deed:d34d:b33f::10<br />
+</pre>
+<p>Restart networking.  Even if your VMs are running DHCP (they are by default), we're just adding a DNS server to the static IPv6 address.  In other Linux distros, this file will be different (sry).</p>
+<p><code><br />
+piff:~$ ping6 www.ipv6.squarism.com<br />
+PING www.ipv6.squarism.com(fc00:deed:d34d:b33f::11) 56 data bytes<br />
+64 bytes from fc00:deed:d34d:b33f::11: icmp_seq=1 ttl=64 time=1.12 ms<br />
+64 bytes from fc00:deed:d34d:b33f::11: icmp_seq=2 ttl=64 time=0.553 ms<br />
+</code></p>
+<p>Ok great.  DNS and routing are working.  Now we are ready for the final part.</p>
+<h2>Web Server Configuration</h2><br />
+Get dependencies installed on Wap (the web server).<br />
+<code>aptitude install zlib1g-dev libssl-dev libpcre3-dev</code>
+<p>We need ipv6 support built in and I'm not sure if the OS packages are going to come with it out of the box.  Installing nginx is easy.  So let's download nginx, configure, compile.<br />
+<code><br />
+# download latest stable and untar ...<br />
+./configure --with-ipv6 --prefix=/opt/nginx<br />
+make install<br />
+cd /opt/nginx<br />
+vi conf/nginx.conf<br />
+  # change this line<br />
+  listen       [::]:80 default ipv6only=on;<br />
+</code></p>
+<p>Start nginx:<br />
+<code>/opt/nginx/sbin/nginx -c /opt/nginx/conf/nginx.conf</code><br />
+Normally, I'd write a init.d script here but whatever.  You can stop nginx like this:<br />
+<code>sudo /opt/nginx/sbin/nginx -s stop</code></p>
+<p>Sanity check:<br />
+<code>netstat -nlp | grep nginx<br />
+tcp6   0  0 :::80  :::*  LISTEN  24618/nginx.conf</code></p>
+<p>Let's create a dummy web page on Wap (the nginx box).  We'll test this page in the next section.</p>
+<pre lang="html" title="/opt/nginx/html/ipv6.html" toolbar="always">
+  <html>
+<h1>This is only viewable over ipv6!</h1><br />
+  </html><br />
+</pre>
+<h2>End to end test</h2><br />
+Ok, everything is set up.  So let's see it work end to end.  Our goal was to hit an IPv6 web server through DNS and a router.  
+<p>Here you can see I'm pinging the webserver from the web client (piff -&gt; wap).</p>
+<pre highlight="false">
+piff:~$ ping 10.0.0.139<br />
+PING 10.0.0.139 (10.0.0.139) 56(84) bytes of data.<br />
+64 bytes from 10.0.0.139: icmp_req=1 ttl=64 time=0.341 ms<br />
+</pre>
+<p>IPv4 is routable directly because of vmware.  But IPv6 traffic is split, the client isn't on the same IPv6 segment as the web server.  So I can ping directly with IPv4.  So that's our IPv4 sanity test but not why we did all this.</p>
+<p>You can see when I try to hit that ipv6.html test page we created earlier it won't work.</p>
+<pre highlight="false">
+piff:~$ curl http://10.0.0.139<br />
+curl: (7) Failed connect to 10.0.0.139:80; Connection refused<br />
+</pre>
+<p>It actually says connection refused and this makes sense if you look at the netstat information from Wap.  It's not listening on 0.0.0.0:80, it's listening on :::80.  Crazy!</p>
+<p>If I use ipv6 (curl needs some special settings for the URL)</p>
+<pre highlight="false">
+piff:~$ curl -g http://[fc00:deed:d34d:b33f::11]/ipv6.html<br />
+  <html>
+<h1>This is only viewable over ipv6!</h1><br />
+  </html><br />
+</pre>
+<p>And ipv6 DNS is working.</p>
+<pre highlight="false">
+piff:~$ curl -g http://wap.ipv6.squarism.com/ipv6.html<br />
+<html>
+<h1>This is only viewable over ipv6!</h1><br />
+</html><br />
+</pre>
+<p>You can see it's going through a router:</p>
+<pre highlight="false">
+piff:~$ traceroute6 wap.ipv6.squarism.com<br />
+traceroute to wap.ipv6.squarism.com (fc00:deed:d34d:b33f::11)<br />
+from fc00:deee:deee:deee::6, 30 hops max, 24 byte packets<br />
+ 1  fc00:deee:deee:deee::1 (fc00:deee:deee:deee::1)  0.739 ms  0.651 ms  0.185 ms<br />
+ 2  fc00:deed:d34d:b33f::11 (fc00:deed:d34d:b33f::11)  1.266 ms  0.278 ms  0.262 ms<br />
+</pre>
+<p>Wget works too</p>
+<pre highlight="false">
+piff:~$ wget -O- http://wap.ipv6.squarism.com/ipv6.html<br />
+</pre>
+<p>Ssh has no special flags, it just works.</p>
+<pre highlight="false">
+piff:~$ ssh wap.ipv6.squarism.com<br />
+The authenticity of host 'wap.ipv6.squarism.com (fc00:deed:d34d:b33f::11)' can't be established.<br />
+ECDSA key fingerprint is -----.<br />
+Are you sure you want to continue connecting (yes/no)? yes<br />
+</pre>
+<h2>Victory Lap</h2><br />
+Even firefox works.<br />
+<img src="http://squarism.com/wp-content/uploads/2013/07/ipv6_firefox_dns-580x303.png" alt="ipv6_firefox_dns" width="580" height="303" class="aligncenter size-large wp-image-2056" />
+<p>Just to prove that this isn't IPv4, let's use the weird numerical URL format for the IP.<br />
+<img src="http://squarism.com/wp-content/uploads/2013/07/ipv6_firefox_ip.png" alt="ipv6_firefox_ip" width="620" height="293" class="aligncenter size-full wp-image-2057" /></p>
+<p>Well this was a fun spike and I feel like I understand IPv6 a whole lot more and it doesn't strike fear into my heart to think about big scary addressing.  I think the key is to actually use DNS instead of fudging it with typing manual addresses or managing crazy hosts files.  It should be interesting to see when ISPs and cloud providers start offering serious options for IPv6.</p>
+</pre></pre>
+
+  </article>
+
+</div>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrap">
+
+    <h2 class="footer-heading">Squarism</h2>
+
+    <div class="footer-col-1 column">
+      <ul>
+        <li>Squarism</li>
+        <li><a href="mailto:squarism@gmail.com">squarism@gmail.com</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col-2 column">
+      <ul>
+        <li>
+          <a href="https://github.com/squarism">
+            <span class="icon github">
+              <svg version="1.1" class="github-icon-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                 viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
+                <path fill-rule="evenodd" clip-rule="evenodd" fill="#C2C2C2" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761
+                c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32
+                c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472
+                c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037
+                C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65
+                c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261
+                c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082
+                c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129
+                c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/>
+              </svg>
+            </span>
+            <span class="username">squarism</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://twitter.com/squarism">
+            <span class="icon twitter">
+              <svg version="1.1" class="twitter-icon-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                 viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
+                <path fill="#C2C2C2" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809
+                c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27
+                c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767
+                c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206
+                C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271
+                c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469
+                c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/>
+              </svg>
+            </span>
+            <span class="username">squarism</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="footer-col-3 column">
+      <p class="text">A tech blog about ruby, code, mongodb, golang and other stuff.</p>
+    </div>
+
+  </div>
+
+</footer>
+
+
+    </body>
+</html>

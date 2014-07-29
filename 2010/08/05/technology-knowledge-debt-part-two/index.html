@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Technology Knowledge Debt, Part Two</title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="A tech blog about ruby, code, mongodb, golang and other stuff.">
+    <link rel="canonical" href="http://squarism.com//2010/08/05/technology-knowledge-debt-part-two/">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/main.css">
+
+</head>
+
+
+    <body>
+
+    <header class="site-header">
+
+  <div class="wrap">
+
+    <a class="site-title" href="/">Squarism</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+           viewBox="0 0 18 15" enable-background="new 0 0 18 15" xml:space="preserve">
+          <path fill="#505050" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0
+            h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#505050" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484
+            h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#505050" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0
+            c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+      <div class="trigger">
+        
+          <a class="page-link" href="/about/">About</a>
+        
+          
+        
+          
+        
+          <a class="page-link" href="/about/index.html">About</a>
+        
+          <a class="page-link" href="/questions/index.html">Questions I Have</a>
+        
+          <a class="page-link" href="/tatris/index.html">Tatris - A Tetris Clone</a>
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrap">
+      <div class="post">
+
+  <header class="post-header">
+    <h1>Technology Knowledge Debt, Part Two</h1>
+    <p class="meta">Aug 5, 2010 • Posted by: chris</p>
+  </header>
+
+  <article class="post-content">
+  <p>Knowledge debt is then you don't spend the time to catch up.  This is Part Two, discussing common knowledge gaps in technology projects regardless of company, industry, project or people.  Part One is <a href="http://squarism.com/2010/07/03/tech-knowledge-debt/">here</a> and talked about Troubleshooting, VNC, X11, Version Control, Sudo and Cron as common debted areas.  The original post that posed the questions is <a href="http://squarism.com/2010/05/31/dearth-patterns/">here</a>, where I wondered why the same patterns happen from project to project, company to company and person to person.</p>
+<h3>Myth of supportability</h3>
+<p><br />
+In most teams, one person is responsible for the work that they do.  If you’re lucky, you’ll have two people responsible for some of the same things so that if one person goes on vacation, the work can continue.  In most projects I’ve been on, this is not the case.  One person is responsible for the beginning, middle and end.  That means figuring out the question, figuring out the answer and then writing the answer down in such a way that anyone (with some level of experience hopefully) can do the work in the future.  That’s the idea anyway.&lt;/p&gt;</p>
+<p>However, most projects actually don't work out like that.  In the movie Ironman, Tony Stark invents a mini arc reactor which powers his suit.  The antagonist asks an engineer to build what Tony Stark made.  The engineer <a href="http://www.imdb.com/title/tt0371746/quotes?qt0478037">says he can't do it</a>, <em>I'm not Tony Stark</em>.  Of course it's just a movie but I feel it rings true.  Maybe it's going on where you work.  Here are some symptoms:</p>
+<ul>
+<li>You can't go on vacation.</li>
+<li>You'd probably get a raise or a bonus if you threatened to quit.</li>
+<li>No one knows what you're actually working on.</li>
+<li>To cross-train someone means starting from the beginning (ie: beyond two week notice).</li>
+<li>You fix your own mistakes even when they are years later discovered.  This doesn't have be negative.  You could enhance your own project years later or answer questions about projects long since turned over to other people or teams.</li><br />
+</ul>
+<p>&lt;/p&gt;</p>
+<p>It's called being "one deep" and it's not where you want to be.  However, sometimes it's impossible to find qualified people to support an effort.  Maybe it's money, maybe it's recruiting.  I don't know.  It's certainly not a problem at a single company.  I suspect it might have to do with the specialized nature of <a href="http://www.codinghorror.com/blog/archives/000227.html">Enterprise Software</a>.  For example, a generic problem is only bound by budget.  If you have an array sorting algorithm to write, a database schema to design and a cluster or Apache servers to set up; it's going to be really easy to find these people.  But if you have a <a href="http://www.emc.com/domains/documentum/index.htm">Documentum</a> connection pool performance problem when using AIX 5.1 for SCO mainframes but only when using the thick Oracle database driver that's being load balanced by a ... blah blah blah; it's going to be really hard to find someone that's done whatever craziness you're doing and then even harder to find someone who immediately knows how to fix your problem.</p>
+<p>What I'm talking about is <a href="http://en.wikipedia.org/wiki/Commercial_off-the-shelf">COTS</a>.  COTS stands for "I don't want to take a risk" software.  It means you're going to buy vs build.  It's been a strategy forever and yet we're all not on the beach with the information problems of the world solved for cheap.  Of course, reinventing the wheel is not the greatest approach either.  There's a middle ground, not directly in the middle, that's probably the best approach.</p>
+<p>I was tasked once to get a workflow engine running.  A meeting happened and there were suggestions like buy a workflow engine or reuse a web service out there somewhere.  The web service of course was BPEL compliant.  BPEL is a pain in the ass and I thought it was overkill just to do notifications when something happens.  I implemented OSWorkflow as a library and it worked out fine.  In the end, the effort was changed completely and my time was filed under <a href="http://en.wikipedia.org/wiki/Who_Moved_My_Cheese%3F">Cheese Movement</a>.  If I had killed myself getting a BPEL workflow engine working, I would have been a lot more upset when the project was canned.  And even worse, if it hadn't gotten canned and the project went live, they'd have an overcomplex system that's harder to hand off to cheaper support staff.  In the end, a workflow library was easier to integrate than a stand-alone COTS workflow product.</p>
+<p>Anecdotal argument aside, something is broken.  Is it a complete lack of development skills in systems engineering?  Is it a fear of concentrated thinking?  Do customers react horribly when you pitch "we're going to roll our own"?  Maybe it's eating your own dog food: if you used Sybase on one project, why would you store your preferences in XML?  Let's use Sybase again even though it's impossible to find Sybase people!  Yay!</p>
+<p>And even if you are allowed to roll your :</p>
+<ul>
+<li>If you're single threaded you only have one guy doing something.  If he does it manually, that's considered ok.</li>
+<li>If he leaves, the manual step is gone.</li>
+<li>If he codes it in COBOL (something unfamiliar), that's bad.</li>
+<li>If he does code it in COBOL, at least you have that asset if he leaves.</li>
+<li>If you force him to do it in Java or whatever your shop "knows", you need to hire a dev to replace him, which you don't have anyway.  If you did, you'd have your dev do it in Java right now.</li>
+<li>But just because you do it in Java, doesn't guarantee people are available or can read it.  I've gotten thrown some crazy code that was insane despite it's language.</li><br />
+</ul>
+<p>&lt;/p&gt;</p>
+<p>I say bring the solution and not the language.  Instead of harping on "you shouldn't have done it that way", say "I'm glad you got it done, now we own it and you've created an asset for us".  Don't <a href="http://en.wikipedia.org/wiki/Fear,_uncertainty_and_doubt">FUD</a>.  Just do it.</p>
+<h3>Copy and paste</h3>
+<p><br />
+First of all, a really whiney semantic point: cut is not copy.  Cut <strong>removes</strong> the text and copies it.  Copy <strong>leaves</strong> the text and copies it.  I know cut has one less syllable but when people say “I cut and pasted from that webpage”, <a href="http://xkcd.com/727/">I die a little</a>.  You can’t cut and paste on a read-only thing, like a webpage.&lt;/p&gt;</p>
+<p>Anyway, copy and paste changes with the application and OS.  Here's some examples:</p>
+<ul>
+<li>Native windows app: Ctrl+C and then Ctrl+V</li>
+<li>Native Linux app in Gnome: Ctrl+Shift+C and then Ctrl+Shift+V</li>
+<li>Putty copies to the clipboard when you select.  You don't need to Ctrl+C.  Ctrl+C means something else when you're SSH'ing to a Unix box.  Just select and Ctrl+V back to notepad or whatever you're using.</li>
+<li>Putty pastes with the right mouse button.  Don't Ctrl+V.</li>
+<li>The command-prompt in Windows pastes with the right mouse button too.  There's also a nice option to do Quick Edit if you go to Properties in the cmd.exe icon while it's running.  Quick Edit will let you select on left click drag and then copy with Enter.</li>
+<li>X11 copies on select.  It pastes with the middle mouse button.  If you select anything before you paste, guess what, you just copied that.</li><br />
+</ul>
+<p>&lt;/p&gt;</p>
+<p>I want to re-iterate that last point because I've seen this for years.  Copy on select is hard to grasp for Windows-y people.  I see people copy a bunch of text from Notepad, move their mouse over to the putty window and click on the right-ish portion of the screen.  When the click, a large white line has appeared and then they paste.  <em>Nothing but blanks!  What the hell happened!  Argh!  I hate computers!</em></p>
+<p><img src="http://squarism.com/wp-content/uploads/2010/07/paste_example.png" alt="" title="paste_example" width="665" height="398" class="aligncenter size-full wp-image-609" /></p>
+<p>When you click in putty, click on the left portion of the screen with text.  If you click on text, you won't select the blank space on a line.  Even better, just click on the menu bar to switch windows.  Or use alt+tab.  If you click on empty space, you're going to overwrite your clipboard with nothings.</p>
+<p>Linux virtual consoles sometimes have a mouse pointer (btw I'm talking about the Ctrl+Alt+F1 - F6 consoles if you walk up to the server).  On RedHat, it has this by default.  It's a little mouse driver and it's handy for copy and paste.  Select some text and right click.  It'll paste in.  But this clipboard isn't shared from the virtual console to the X11 GUI or to an SSH client.</p>
+<h3>Hierarchies in Software Architecture</h3>
+<p><br />
+As you go from project to project, some patterns should emerge.  You should see the same themes over and over in different software packages, different approaches to a problem and in the problems themselves.  I’m not the only one who’s noticing patterns.  I’ve met lots of smart people that can relate one thing to something else that they know.  It’s a good sign that they are paying attention.&lt;/p&gt;</p>
+<p>But of all the recurring patterns, hierarchies are the least discussed.  I don't know why I notice hierarchies so much.  Maybe because I've been working with LDAP a lot lately.  Maybe I'm a <a href="http://en.wikipedia.org/wiki/Tree_(data_structure)">tree hugger</a>.  Bam.  Pun'd.</p>
+<p>Hierarchies organize.  Hierarchies can't avoid defining relationships.  A hierarchy has at least one path to get to a node and to that point, hierarchies have paths.</p>
+<p>Here are some hierarchies and typical paths:</p>
+<ul>
+<li>A filesystem: C:\temp\whatever.txt  or /tmp/whatever.txt</li>
+<li>An LDAP DIT: DN: cn=joe,dc=yahoo,dc=com</li>
+<li>A workflow definition: Start -&gt; Request raise -&gt; Manager -&gt; Deny -&gt; Create monster.com account for employee -&gt; End</li>
+<li>An HTML document: html -&gt; body -&gt; p -&gt;Hello World</li>
+<li>A solid state disk: Controller -&gt; Block -&gt; Page</li>
+<li>A hard disk: Controller -&gt; Cylinder -&gt; Track -&gt; Sector</li>
+<li>Ruby class: Class -&gt; Module -&gt; Object -&gt; nil</li>
+<li>Java class: java.lang.Error -&gt; java.lang.Throwable -&gt; java.lang.Object -&gt; null</li><br />
+</ul>
+<p>&lt;/p&gt;</p>
+<p>These are just example paths, they are not how you'd persist these things.  For example, a workflow can be stored in XML, which is similar in structure to an HTML document:<br />
+<code><workflow name="Raise process"><br />
+<step id="1" name="Start" /><br />
+<step id="2" name="Request Raise"><br />
+  <action class="Email" to="joe-boss@company.com" /><br />
+  <unconditional-result status="Waiting for your boss to approve" /><br />
+</step><br />
+<step id="3" name="Manager Decision"><br />
+  &lt;condition name="Decision" class=CheckForApproval&gt;<br />
+    <arg name="approved" string="true" status="Approved" step="4"><br />
+  <br />
+  <unconditional-result status="Denied" step="5"><br />
+<br />
+<step id="4" name="Raise"><br />
+  <action class="RaiseSalary" status="Raised" step="6" /><br />
+</step><br />
+<step id="5" name="Job Board"><br />
+  <action class="CreateMonsterAccount" status="Getting you a new job" step="6" /><br />
+</step><br />
+<step id="6" name="End" /><br />
+<br />
+
+<p>This is sort of an OSWorkflow style document which is not by any means something that will parse correctly (If I had to do workflow again, I'd use the ruby gem <a href="http://slagyr.github.com/statemachine/">state machine</a>, which is awesome).  I'm just illustrating that this workflow is really a hierarchy/tree of steps.  And because trees are logically so generic, you'll see them everywhere.</p>
+<p>Here's a Java class hierarchy:<br />
+<code>public class Hierarchy {<br />
+	public static void main(String[] args) {<br />
+		System.out.print(Error.class.getName() + " -&gt; ");<br />
+		System.out.print(Error.class.getSuperclass().getName() + " -&gt; ");<br />
+		System.out.print(Error.class.getSuperclass().getSuperclass().getName() + " -&gt; ");<br />
+		System.out.println(Error.class.getSuperclass().getSuperclass().getSuperclass());<br />
+	}<br />
+}</code></p>
+<p>Which will spit out: <code>java.lang.Error -&gt; java.lang.Throwable -&gt; java.lang.Object -&gt; null</code></p>
+<p>And here's the equivalent ruby code:</p>
+<p><code>ruby -e 'print "#{Class} -&gt; #{Class.superclass} -&gt; #{Class.superclass.superclass} -&gt; #{Class.superclass.superclass.superclass}"'<br />
+outputs: Class -&gt; Module -&gt; Object -&gt;</code></p>
+<p>(there's a hidden null there)</p>
+<p>So that's hierarchies and especially that ones that I've noticed are all very much related.  You could transform any of these things into the other, like LDAP to XML to a file system hierarchy to a physical structure and back (and <a href="http://en.wikipedia.org/wiki/Graph_transformation">people do</a>).</p>
+<h3>Web application (webapp) vs webpage</h3><br />
+A lot of the projects I've worked on haven't been purely a development task.  It's lately been lego-style integration projects so I understand that all people won't be developers.  However, I find it interesting that the words webapp and webpage can be so wrongly mingled.  Even in product names (such as Websphere and Weblogic) and product features.  Templates, wizards and new project dialogs confuse me sometimes.  If I saw a "Create New Web Application Website" button, I'd wonder if I'm going to get some HTML and CSS or weather I'll end up with WAR project.  Sometimes there are hints like "dynamic" and that's really the distinction.
+<p>Webpages are static.  Webapps are dynamic.  Let's not get muddy with client-side javascript (it's a blurry line).  But where the terms really matter is on the server stack  you choose.  Application servers can serve HTML, yes.  But if you want to really use a pure web server, you'll go with <a href="http://en.wikipedia.org/wiki/Apache_HTTP_Server">Apache</a>/<a href="http://en.wikipedia.org/wiki/Nginx">Nginx</a>/etc.  Which in turn, can run code through modules.  But it's not in the spirit of Apache as a web server.  A web server is really just a file server on the web.  In some sense, an application server is a programming language on the web.  Every app server has its own language that it was built for.  Tomcat, JBoss, Weblogic and Websphere are all Java app servers.  Mongrel, Thin, WEBrick and Phusion Passenger are Rails app servers (with JRuby, Weblogic can run Rails but that's muddy again).  You can front these app servers with a web server and create a powerful and flexible environment with Apache modules.  In this way, you are using a web server not to serve "web pages" but to serve "web apps".</p>
+<p>So don't say app server when you mean web server and vice-versa.</p>
+<h3>Plain-text</h3><br />
+Think about what plain-text is.  It's human readable, it's not encrypted (which is really human readable) and it's also written, ultimately, by a human.  There are protocols, file formats and other standards that are simply plain text.  Sometimes plain text allows you to manipulate the system interactively and can help you debug or understand.  For example, when I wrote <a href="http://squarism.com/2010/02/28/arduino-command-protocol/">my IRC bot</a>, I simply wrote strings to a network connection object that complied with the <a href="http://www.ietf.org/rfc/rfc1459.txt">RFC protocol</a>.  But before doing that, I simply telnet'd to the IRC server and tried typing commands to stay connected.
+<p>Try this from a command prompt or unix shell:<br />
+<code>telnet irc.freenode.net 6667</code><br />
+You'll see the server hang and try to do an identd query.  You probably won't have one set up so you'll see the message "No Ident Response"</p>
+<p>Now type this:<br />
+<code>NICK ohmynickname<br />
+USER ohmynickname 0 * ohmynickname<br />
+JOIN #PieIsGreat<br />
+</code></p>
+<p>Now join up with a regular IRC client so you can see your message.  Back in the telnet window type:<br />
+<code>PRIVMSG #PieIsGreat :Isn't pie just wonderful?</code></p>
+<p>You'll see this in your regular IRC client (irssi in this case):<br />
+<img src="http://squarism.com/wp-content/uploads/2010/07/manual_irc.png" alt="" title="manual_irc" width="425" height="139" class="aligncenter size-full wp-image-640" /></p>
+<p>And so on.  All IRC is, is a plain-text protocol.  It's just like SMTP.</p>
+<p>To illustrate, let's send an email manually.  You'll need a Linux box for this one.<br />
+<code>$ dig -t mx gmail.com | grep smtp<br />
+gmail.com.              3249    IN      MX      20 alt2.gmail-smtp-in.l.google.com.<br />
+gmail.com.              3249    IN      MX      30 alt3.gmail-smtp-in.l.google.com.<br />
+gmail.com.              3249    IN      MX      40 alt4.gmail-smtp-in.l.google.com.<br />
+gmail.com.              3249    IN      MX      5 gmail-smtp-in.l.google.com.<br />
+gmail.com.              3249    IN      MX      10 alt1.gmail-smtp-in.l.google.com.
+<p>$ telnet alt2.gmail-smtp-in.l.google.com 25<br />
+Trying 74.125.43.27...<br />
+Connected to alt2.gmail-smtp-in.l.google.com.<br />
+Escape character is '^]'.<br />
+220 mx.google.com ESMTP a10si18542430bkc.24<br />
+helo me<br />
+250 mx.google.com at your service<br />
+MAIL FROM: &lt;someone@something.com&gt;<br />
+250 2.1.0 OK a10si18542430bkc.24<br />
+RCPT TO: &lt;test@gmail.com&gt;<br />
+250 2.1.5 OK a10si18542430bkc.24<br />
+DATA<br />
+354  Go ahead a10si18542430bkc.24<br />
+From: Bob Slow<br />
+Subject: Manual SMTP<br />
+This is great.<br />
+.<br />
+250 2.0.0 OK 1279640642 a10si18542430bkc.24<br />
+</p>
+<p>Go check your gmail.  You'll see an email.  It's probably going to be listed under your spam folder because we didn't specify a proper sender, our domain is bogus.  You'll want to use an actual domain name as the from address.  It really depends on Google's spam filter.  Sometimes they can check to see if you're actually sending from that domain, which is tricky unless you have a proper mail server to send from.  If you get something through, it'll look like a normal email.<img src="http://squarism.com/wp-content/uploads/2010/07/manual_smtp.png" alt="" title="manual_smtp" width="179" height="83" class="aligncenter size-full wp-image-631" /></p>
+<p>And why should it be any different?  This is what Thunderbird, Outlook or Mail.app program is doing behind the scenes.  This is also why email is so insecure.  Anyone can sniff your mail as it goes over the network (provided they have their sniffer set up right).  Even if you're using https on gmail.com's web interface, it's hard to say if SMTP is encrypted to your destination (probably not).  SSL certificates are hard to set up.</p>
+<p>Ok, one last example for our pattern.  We're going to make a manual connection to the HTTP listening port to a Yahoo! web server.</p>
+<p><code>$ telnet yahoo.com 80</code></p>
+<p>You'll see this message:<br />
+<code>Escape character is '^]'.</code></p>
+<p>You can hit enter and some blank lines will appear.  This means you're connected but the web server doesn't think much of newlines (ignores them).  Now type "GET /" before it times out.  If you time out, just telnet again.  You'll get a response:</p>
+<blockquote><p>Your browser did not send a "Host:" HTTP header, so the virtual host being requested could not be determined.  To access this site you will need to upgrade to a modern browser that supports the HTTP "Host:" header field.</p></blockquote>
+<p>Hmm.  That's interesting.  Yahoo uses an accelerator that needs to switch on a host header for virtual hosting and load balancing.  Let's do as they say.  First, we'll grab just the HEAD from the root document.</p>
+<p><code>$ telnet yahoo.com 80<br />
+Trying 98.137.149.56...<br />
+Connected to yahoo.com.<br />
+Escape character is '^]'.<br />
+HEAD / HTTP/1.1<br />
+Host: www.yahoo.com<br />
+Connection: close
+<p></p>
+<p>Make sure to add an extra newline (enter) at the end after Connection: close.  You'll see a <code>HTTP/1.1 200 OK</code> at the top of the little response block, which is a success.  The following is what you'll see (I put some [snips] in there to reduce length).</p>
+<p><code>HTTP/1.1 200 OK<br />
+Date: Tue, 20 Jul 2010 22:03:14 GMT<br />
+P3P: policyref="http://info.yahoo.com/w3c/p3p.xml", CP="CAO DSP COR CUR ADM DEV TAI PSA PSD IVAi IVDi CONi TELo OTPi OUR DELi SAMi OTRi UNRi PUBi IND PHY ONL UNI PUR FIN COM NAV INT DEM CNT STA POL HEA PRE LOC GOV"<br />
+Cache-Control: private<br />
+Set-Cookie: IU=deleted; expires=Mon, 20-Jul-2009 22:03:13 GMT; path=/; domain=.yahoo.com<br />
+Set-Cookie: PH=deleted; expires=Mon, 20-Jul-2009 22:03:13 GMT; path=/; domain=.yahoo.com<br />
+Set-Cookie: fpc=d=[snip]&amp;v=2; expires=Wed, 20-Jul-2011 22:03:14 GMT; path=/; domain=www.yahoo.com<br />
+Set-Cookie: fpms=u_30345330=%7B%22lv%22%3A1479641794%2C%22uvc%22%3A1%7D; expires=Wed, 20-Jul-2011 22:03:14 GMT; path=/; domain=www.yahoo.com<br />
+Set-Cookie: fpps=_page=%7B%22wsid%22%3A%22879345330%22%7D; expires=Wed, 20-Jul-2011 22:03:14 GMT; path=/; domain=www.yahoo.com<br />
+Set-Cookie: fpt=d=[snip]0._vZOYA-&amp;v=1; path=/; domain=www.yahoo.com<br />
+Set-Cookie: fpc_s=d=h[snip]&amp;v=2; path=/; domain=www.yahoo.com<br />
+Vary: Accept-Encoding<br />
+Content-Type: text/html;charset=utf-8<br />
+Age: 0<br />
+Connection: close<br />
+Server: YTS/1.17.23.1
+<p>Connection closed by foreign host.<br />
+</p>
+<p>Looks like they set a ton of cookies in the head.  Ok, fine.  So now just change the HEAD / to GET /.</p>
+<p><code>$ telnet yahoo.com 80<br />
+Trying 98.137.149.56...<br />
+Connected to yahoo.com.<br />
+Escape character is '^]'.<br />
+GET / HTTP/1.1<br />
+Host: www.yahoo.com<br />
+Connection: close
+<p></p>
+<p>You'll get the entire HTML document, header and all.  You'll see the same header that we saw before.  Scroll up past the &lt;!DOCTYPE html&gt; and <html> opening tags to find it.  At the end of the document, you'll see the </html>.  Your browser turns this plain-text into widgets, buttons and pictures using it's rendering engine.  Note that the security concerns of plain-text SMTP previously discussed also apply to HTTP.  Simply because it is plain text.  Instead of a yahoo front page, this response could include a DIV tag with a bank account number and balance or a HTTP POST with a username and password.</p>
+<p>So what?  Why would anyone use telnet as a test?  Who cares about plain-text?  What kind of <a href="http://www.youtube.com/watch?v=PB-wmOYelnM">weirdo</a> are you?</p>
+<ul>
+<li>It's interactive - you can watch a log while you type manually</li>
+<li>It's verbose - many times, errors will pop up when you do thing manually that would otherwise be hidden by <a href="http://www.codinghorror.com/blog/2005/03/the-great-enterprise-software-swindle.html">infinite layers</a> of enterprise software abstraction</li>
+<li>It's a good test that you can do if you're stuck at a client site without your dev machine because almost every OS (like Windows) has telnet</li>
+<li>It's near-absolute - If you can't telnet to port 80, your browser won't work (excepting proxies and other things)</li>
+<li>It's security related - Watch in horror as your html comes over the wire in the clear.  Shouldn't you be using SSL?</li><br />
+</ul>
+<h3>Hands-On Security</h3><br />
+I don't have a lot to say about this one so let's recap what my original complaint was:
+<blockquote><p>Policy makers vs whitehats. Like actually checking Sans for actual 0-day remote root-level ultra-bad exploit on foo software. Security is always a huge blanket statement with very few actual experts. I'm certainly not one but I have met very few that I thought were teaching me something. I want the guy who actually knows what a XSS attack or a buffer overflow is. This might just be a reflection on the projects I've been on.</p></blockquote>
+<p>Like I said, I haven't really met a hands-on security analyst that had a VM with a bunch of security demos/hacks etc on it.  There's some good security related videos out there but the really good ones aren't around me I guess.  Maybe that's telling of something.  Maybe they're ranting on about me.  I dunno.  Mark this one as incomplete.</p>
+<h3>Conclusion</h3><br />
+Ok well this was longer than I wanted.  Hopefully these tips help you directly, these tips could be linked to someone you know or perhaps seeing these common shortfalls listed out by me is some kind of cathartic release for you.  Until the next post, I'll be trying to understand ruby threading.  Threading and concurrency is a personal debt of mine.
+</code></p></code></p></code></p></code></p></unconditional-result></arg></step></workflow></code></p>
+
+  </article>
+
+</div>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrap">
+
+    <h2 class="footer-heading">Squarism</h2>
+
+    <div class="footer-col-1 column">
+      <ul>
+        <li>Squarism</li>
+        <li><a href="mailto:squarism@gmail.com">squarism@gmail.com</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col-2 column">
+      <ul>
+        <li>
+          <a href="https://github.com/squarism">
+            <span class="icon github">
+              <svg version="1.1" class="github-icon-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                 viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
+                <path fill-rule="evenodd" clip-rule="evenodd" fill="#C2C2C2" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761
+                c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32
+                c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472
+                c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037
+                C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65
+                c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261
+                c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082
+                c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129
+                c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/>
+              </svg>
+            </span>
+            <span class="username">squarism</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://twitter.com/squarism">
+            <span class="icon twitter">
+              <svg version="1.1" class="twitter-icon-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                 viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
+                <path fill="#C2C2C2" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809
+                c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27
+                c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767
+                c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206
+                C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271
+                c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469
+                c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/>
+              </svg>
+            </span>
+            <span class="username">squarism</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="footer-col-3 column">
+      <p class="text">A tech blog about ruby, code, mongodb, golang and other stuff.</p>
+    </div>
+
+  </div>
+
+</footer>
+
+
+    </body>
+</html>

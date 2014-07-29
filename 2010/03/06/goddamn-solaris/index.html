@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Goddamn Solaris</title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="A tech blog about ruby, code, mongodb, golang and other stuff.">
+    <link rel="canonical" href="http://squarism.com//2010/03/06/goddamn-solaris/">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/main.css">
+
+</head>
+
+
+    <body>
+
+    <header class="site-header">
+
+  <div class="wrap">
+
+    <a class="site-title" href="/">Squarism</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+           viewBox="0 0 18 15" enable-background="new 0 0 18 15" xml:space="preserve">
+          <path fill="#505050" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0
+            h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#505050" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484
+            h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#505050" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0
+            c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+      <div class="trigger">
+        
+          <a class="page-link" href="/about/">About</a>
+        
+          
+        
+          
+        
+          <a class="page-link" href="/about/index.html">About</a>
+        
+          <a class="page-link" href="/questions/index.html">Questions I Have</a>
+        
+          <a class="page-link" href="/tatris/index.html">Tatris - A Tetris Clone</a>
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrap">
+      <div class="post">
+
+  <header class="post-header">
+    <h1>Goddamn Solaris</h1>
+    <p class="meta">Mar 6, 2010 • Posted by: chris</p>
+  </header>
+
+  <article class="post-content">
+  <p><img src="http://squarism.com/wp-content/uploads/2010/03/sun_expensive.png" alt="sun_expensive" title="sun_expensive" width="499" height="160" class="aligncenter size-full wp-image-375" /><br />
+Solaris is a rock-solid serious OS with a dependable hardware platform.  Sun has always been solid technically.  Sun pours a lot of good tech into Solaris.  ZFS is amazing.  Dtrace is revolutionary.  Zones are flexible and lightweight.  They're doing good engineering all around in a crazy number of areas.  But we're going to temporarily ignore those things and talk about why Solaris is horrifying.  Hopefully Oracle can fix a number of these Goddamn Problems&acirc;&bdquo;&cent;.  If not, maybe OpenSolaris will/has.</p>
+<p>I'm open to counter-points except for the argument "but you can change it".  I know a lot of this is configurable (like adding packages or editing the default files) but that's not the point.  Linux comes out of the box "right" or most specifically, easier/better.  It's especially annoying because Sun boxes are so much more expensive and are <em>sooo</em> close to perfection.  And many times the box isn't yours or the baseline isn't yours so you can't just add packages or reconfigure a global config file.</p>
+<p>1. Default Bash Prompt.<br />
+Seriously, <code>-bash-3.00#</code> in 2010?  Which box am I on?  I don't know!  What directory am I in?  Every box, I edit /etc/profile to have <code>export PS1='[\u@\h \W]\$ '</code></p>
+<p>2. No `locate'.<br />
+Everyone does a find /.  Yay.  I love waiting 5 minutes to find one file.  In linux, I schedule updatedb at 2am and find files sub-second.</p>
+<p>3. No `screen'.<br />
+Greatest command in the world and it's an optional install from sunfreeware.  So I have a crappy default term program and no way to start processes except with <code>nohup command &amp;</code>.  Boo.</p>
+<p>4. Solaris tar is stupid.<br />
+Can't have filenames greater than 100 characters.  Ok, use gtar.  Great.  Gtar doesn't do bzip or gzip on the fly.  Argh.  Why can't Solaris just include and use exclusively GNU tar (as well as everything else GNU)?!</p>
+<p>5. No network package installs<br />
+Yum is great.  Aptitude is better.  Emerge is slow and dangerous (try moving between major Gentoo profiles).  But at least I can download packages from the net on the fly.  Ubuntu even tells me what to install when a command isn't found!</p>
+<p>6. You know what I meant Mr. Picky.<br />
+If I type <code>ls file -l</code> I get <code>-l: No such file or directory</code> and then a non-long <code>file</code> return.  Because it thinks I meant "show me two files file and -l".  When you type a command in Solaris and forget to put a switch on, you're doomed to Ctrl-A, insert the switch and make it look like <code>ls -l file</code>.  In Linux, it knows what you meant.  Most core commands are more flexible in this way under Linux.  It's goddamn maddening when you go back to Solaris.</p>
+<p>7. UFS is pathetic.<br />
+ZFS is pure bliss but it's tricky to put on your root partition.  You can't do it during the default install and you have to migrate everything.  Which is not only complicated but hard to do if you have UFS permissions all over the place (next point).  Also, UFS logging should be the default.  I don't want to do fsck checks if my box crashes.  Really.  W(hy)TF isn't logging the default?  Who doesn't want journaling on?!  What's the drawback?!  *head asplode*</p>
+<p>8. ACL translations<br />
+The problem with migrating is that fine-grained POSIX ACLs (UFS) aren't compatible with ZFS ACLs.  You control POSIX ACLs on UFS with setfacl &amp; getfacl.  You control ACLs on ZFS with chmod.  The two commands are very different in syntax.  So you have to "port" them.  Which is especially maddening if you do a `man get_acl'.  There's a goddamn C system call that can translate the ACLs built into the OS!  How do you think this works?<br />
+<code>cp /zfs/my_file /ufs/</code></p>
+<p>The OS doesn't strip the extended ACLs off the file when it appears in /ufs/my_file!  The capability is in the OS but it's not exposed as a command or another acl_translate call.  You'd have to write your own utility ... hmm.  Maybe that's a project.</p>
+<p>9. Embrace GCC plz<br />
+GCC can do a zillion things more than CC.  Get rid of CC, embrace GNU.  Keep format, keep whatever bios-replacement commands you want.  Keep the nice stuff from Solaris but please don't try to compete with better GNU utilities that already are switch compatible with Solaris tools.  Some of these GNU binaries are literally drop-in replacements with Solaris compatible switches.  And even if not, make Solaris 11 a GNU platform milestone and let customers decide if they want to upgrade.</p>
+<p>10. X11, CDE, openwin<br />
+I love the new /SP/console and LOM stuff.  I love the console architecture.  I love all the things that PCs can't do (unless you buy Vendor specific add-in cards).  I do not love CDE (yes Gnome is there) and OpenWindows.  /usr/openwin/bin/xclock should not be the path to xclock.  xclock should be in my default /usr/bin/ path and Xorg should be the only X11 anything anywhere.  I'm sick of not having Xnest and all the other awesome Linux standard tools.</p>
+<p>11. netstat -pan doesn't work.<br />
+Solaris netstat won't show me the process number of a network port.  This is heresy.  Just add the goddamn -p.  Do you know how useful it is to do something like <code>netstat -pan | grep `ps -ef|grep -v grep |grep java | awk '{print $2}'` | grep LISTEN</code> is?  Works on Linux.  Bam!  All the java listening ports.  Done.  Great for security, debugging and scripting.</p>
+<p>12. Solaris ps -ef is stupid.<br />
+Linux ps auxww is God.  GNU ps rules.  Holy ass this is annoying on Solaris.</p>
+<p>13. No top.<br />
+All you get is prstat.  Linux (some distros) has this awesome improvement on top called htop.  Htop lets you nice, kill and highlight processes.  It's really great but I'd be happy with top on default Solaris installs.  Even my Mac has top on it.  I'd love to know why adding a binary in /usr/bin is so hard.  Does it break some other command called top?  Do things detect top in the $PATH and set Linux mode to true?</p>
+<p>*breathe*</p>
+<p>Rants are great.  By the end of the list, I realize I'm nitpicking.  But day in and day out, I'm praying to the Sun gods that they develops the absolute crap out of Solaris and get an amazing milestone together for Solaris 11 or Solaris 12 or whatever.  Something that will appeal to ever-increasing Ubuntu and casual hacker community instead of reminiscing about legacy compatibility until x86 mediocrity makes the obscure Solaris way of doing things completely irrelevant.</p>
+<p>I remember when Solaris didn't even have ssh by default.  I guess this "behind" strategy continues.  Maybe OpenSolaris can become the default on Sparc and people can stay behind until they feel like stepping into a different baseline.  But even outside of packages and baselines, nice things left off (like UFS logging) by default is just maddening.</p>
+
+  </article>
+
+</div>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrap">
+
+    <h2 class="footer-heading">Squarism</h2>
+
+    <div class="footer-col-1 column">
+      <ul>
+        <li>Squarism</li>
+        <li><a href="mailto:squarism@gmail.com">squarism@gmail.com</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col-2 column">
+      <ul>
+        <li>
+          <a href="https://github.com/squarism">
+            <span class="icon github">
+              <svg version="1.1" class="github-icon-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                 viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
+                <path fill-rule="evenodd" clip-rule="evenodd" fill="#C2C2C2" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761
+                c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32
+                c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472
+                c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037
+                C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65
+                c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261
+                c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082
+                c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129
+                c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/>
+              </svg>
+            </span>
+            <span class="username">squarism</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://twitter.com/squarism">
+            <span class="icon twitter">
+              <svg version="1.1" class="twitter-icon-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                 viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
+                <path fill="#C2C2C2" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809
+                c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27
+                c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767
+                c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206
+                C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271
+                c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469
+                c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/>
+              </svg>
+            </span>
+            <span class="username">squarism</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="footer-col-3 column">
+      <p class="text">A tech blog about ruby, code, mongodb, golang and other stuff.</p>
+    </div>
+
+  </div>
+
+</footer>
+
+
+    </body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Dearth Patterns</title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="A tech blog about ruby, code, mongodb, golang and other stuff.">
+    <link rel="canonical" href="http://squarism.com//2010/05/31/dearth-patterns/">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/main.css">
+
+</head>
+
+
+    <body>
+
+    <header class="site-header">
+
+  <div class="wrap">
+
+    <a class="site-title" href="/">Squarism</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+           viewBox="0 0 18 15" enable-background="new 0 0 18 15" xml:space="preserve">
+          <path fill="#505050" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0
+            h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#505050" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484
+            h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#505050" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0
+            c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+      <div class="trigger">
+        
+          <a class="page-link" href="/about/">About</a>
+        
+          
+        
+          
+        
+          <a class="page-link" href="/about/index.html">About</a>
+        
+          <a class="page-link" href="/questions/index.html">Questions I Have</a>
+        
+          <a class="page-link" href="/tatris/index.html">Tatris - A Tetris Clone</a>
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrap">
+      <div class="post">
+
+  <header class="post-header">
+    <h1>Dearth Patterns</h1>
+    <p class="meta">May 31, 2010 • Posted by: chris</p>
+  </header>
+
+  <article class="post-content">
+  <p>There seems to be a lack of understanding and experience in the same areas from project to project, company to company and sector to sector.  It's nothing specific to any one company.  I've seen this in small .com companies to large contractors.  It's very odd to me.  Even if everyone can't know everything, it seems certain things are never taught or learned.</p>
+<p>Some of these things are high-level skills and some are very specific.  I think the specific ones are weirder.  Osmosis, you'd think, would have some people learn certain tools or languages or whatever.</p>
+<p><strong>Troubleshooting</strong><br />
+Basic troubleshooting skills.  Like, change one thing at a time.  Or, turn on debugging.  Or what the likely culprit is versus chasing after every possibility.  Or, feeling overwhelmed and not trying anything: it's just broken.  Broken how?  What changed last?  What is persisted?  Is there a tmp file?  Is there a cache?  Can you repeat this every time?  If not, what are the variables?</p>
+<p><strong>VNC</strong><br />
+No one seems to know how VNC works.  But everyone uses remote desktop just fine.  With VNC, it's an effort to get everyone connected and it's a hand-holding operation.  I understand it's tricky.  But VNC has been around for almost a decade and it hasn't really changed.  I figured osmosis would kick in.</p>
+<p><strong>X11</strong><br />
+Cygwin, Xming, putty and getting X11 working.  Or how X11 isn't encrypted.  Or security problems with xhost.  Or running X as root.  Or how X11 is different than the Windows display.  Or how X11 is separate from the X11 shell.  How to forward X11 over ssh.  All these X concepts don't come from the Windows world but are in every other OS: Solaris, OSX (X11 app), Linux.</p>
+<p><strong>Version control</strong><br />
+Conflicts, merging, branching.  Why SVN is different from SharePoint is different than git is different than just calling files .year.mon.day in a file share.  Even 'senior developers' that don't have any high-level knowledge of CVS, a program that was released in 1990.  I've seen this everywhere.</p>
+<p><strong>Sudo and cron</strong><br />
+Even if in a Windows environment, what the UAC momentary elevation of privileges is like (also see OSX ignorance).  Or how `at` works on Windows.  At is also a program in UNIX.</p>
+<p><strong>Myth of supportability</strong><br />
+Everything has to be written in the language that's delivered.  If we're delivering a COTS program that runs on C# then every script has to be C# because that's what we know.  If you offered to write a utility in a higher level language, then all the Java devs would cry foul because it's too foreign.  So everything is a hammer problem even though all tech changes in a few years.  I wish someone would add up all the "this is going to save you so much money" promises of middleware.</p>
+<p>Regarding COTS, Mike Taylor's <a href="http://reprog.wordpress.com/2010/03/03/whatever-happened-to-programming/">Whatever happened to programming?</a> is a good read.  I think of his libraries as my COTS/middleware.</p>
+<p><strong>Copy and paste</strong><br />
+How to paste in X11 (middle click).  How to paste into putty (right click).  How to copy in X11 (select), how to copy in putty (select).  How to copy and paste across VNC (enable clipboard support).  How to strip out formatting (paste to notepad, start-&gt;Run, anything plain text).</p>
+<p><strong>Hierarchies in Software Architecture</strong><br />
+How many nodes make up an X?  How many X's make up a Y?  Can I have multiple Y's per Z?  What's shared between Z and foo?  Do I have to create foo first?  Enough of the contrived examples.  Let me give you some real examples: </p>
+<p>I have a bunch of disks I'm going to share out for a database.</p>
+<ol>
+<li>Combine one or more disks into raid or jbod array on SAN</li>
+<li>Slice up SAN into one or more LUNs</li>
+<li>Create volumes or filesystems with one or more partitions</li>
+<li>Organize partisions into one or more diskgroups</li>
+<li>Database is spread across one or more diskgroups</li>
+<li>Database has one or more schemas</li>
+<li>Schema has one or more tables</li>
+<li>Tables can have one or more data partitions</li><br />
+</ol>
+<p>&lt;/p&gt;</p>
+<p>And so on.  It can keep going like this for quite a while.  In terms of performance, if the partitions go to the same busy disks then there's not a whole lot of point in sharding.  In terms of design and planning, obviously I have to do step 1 before I can do step 5 and often undoing step 1 will cause the house of cards to tumble.</p>
+<p>That's not really a software thing like I said, ok.  I can have multiple listeners in Oracle DB but I can't have multiple listeners on the same port.  I can have multiple reverse HTTP proxies on different boxes point back to the same web server on a single port though.  I can have multiple IPs on a box but not multiple programs using a port on a single IP.  I can have multiple virtualhosts against one IP in Apache but I can't have name based virtualhosts against one IP with ssh.  This hierarchy is especially important when load balancing webapps.  Even the F5 has an internal hierarchy to make the configuration flexible.</p>
+<p>Ok, ok.  That's still not software enough.  I can have multiple sessions in a webapp but only one identity.  The identity is in the persistence layer of the above SAN example and my webapp can scale out to the horizon with shared-nothing or whatever I want.  I'm still really logging in only once even if I bounce between 500 boxes.  The session could be just an instance of my identity.</p>
+<p><strong>Webapp vs webpage</strong><br />
+Website is to webserver as webapp is to application server.  HTML is a webpage/website.  JSP/PHP/CF/ASP is a webapp.  This is simplified but so many people don't know the difference even when their job revolves around integrating or even developing 'webpages'.</p>
+<p><strong>Plain-text</strong><br />
+Many protocols, passwords and network traffic can be viewed in plaintext.  There's some protocols you can interact with just by typing text to an open telnet session.  You can do IRC with telnet.  You can do SMTP with telnet.  You can do a HTTP GET.</p>
+<p><strong>Hands-On Security</strong><br />
+Policy makers vs whitehats.  Like actually checking Sans for actual 0-day remote root-level ultra-bad exploit on foo software.  Security is always a huge blanket statement with very few actual experts.  I'm certainly not one but I have met very few that I thought were teaching me something.  I want the guy who actually knows what a XSS attack or a buffer overflow is.  This might just be a reflection on the projects I've been on.</p>
+
+  </article>
+
+</div>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrap">
+
+    <h2 class="footer-heading">Squarism</h2>
+
+    <div class="footer-col-1 column">
+      <ul>
+        <li>Squarism</li>
+        <li><a href="mailto:squarism@gmail.com">squarism@gmail.com</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col-2 column">
+      <ul>
+        <li>
+          <a href="https://github.com/squarism">
+            <span class="icon github">
+              <svg version="1.1" class="github-icon-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                 viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
+                <path fill-rule="evenodd" clip-rule="evenodd" fill="#C2C2C2" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761
+                c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32
+                c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472
+                c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037
+                C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65
+                c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261
+                c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082
+                c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129
+                c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/>
+              </svg>
+            </span>
+            <span class="username">squarism</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://twitter.com/squarism">
+            <span class="icon twitter">
+              <svg version="1.1" class="twitter-icon-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                 viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
+                <path fill="#C2C2C2" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809
+                c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27
+                c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767
+                c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206
+                C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271
+                c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469
+                c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/>
+              </svg>
+            </span>
+            <span class="username">squarism</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="footer-col-3 column">
+      <p class="text">A tech blog about ruby, code, mongodb, golang and other stuff.</p>
+    </div>
+
+  </div>
+
+</footer>
+
+
+    </body>
+</html>

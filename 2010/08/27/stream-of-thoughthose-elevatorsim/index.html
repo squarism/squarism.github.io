@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Stream of thoughthose: ElevatorSim</title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="A tech blog about ruby, code, mongodb, golang and other stuff.">
+    <link rel="canonical" href="http://squarism.com//2010/08/27/stream-of-thoughthose-elevatorsim/">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/main.css">
+
+</head>
+
+
+    <body>
+
+    <header class="site-header">
+
+  <div class="wrap">
+
+    <a class="site-title" href="/">Squarism</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+           viewBox="0 0 18 15" enable-background="new 0 0 18 15" xml:space="preserve">
+          <path fill="#505050" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0
+            h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#505050" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484
+            h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#505050" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0
+            c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+      <div class="trigger">
+        
+          <a class="page-link" href="/about/">About</a>
+        
+          
+        
+          
+        
+          <a class="page-link" href="/about/index.html">About</a>
+        
+          <a class="page-link" href="/questions/index.html">Questions I Have</a>
+        
+          <a class="page-link" href="/tatris/index.html">Tatris - A Tetris Clone</a>
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrap">
+      <div class="post">
+
+  <header class="post-header">
+    <h1>Stream of thoughthose: ElevatorSim</h1>
+    <p class="meta">Aug 27, 2010 • Posted by: chris</p>
+  </header>
+
+  <article class="post-content">
+  <p>Another herecation.  I have a lot I want to get done.  On the way back from a training class, I got stuck in traffic and decided to brainstorm and transcribe my stream of consciousness to the iPhones voice recorder.  I was hoping to find a speech to text package for cheap (sub $50?) but looks like <a href="http://www.macspeech.com/pages.php?pID=181">Scribe</a> is the only one and it's $150.  I really don't need it beyond the 12 minutes of "drink from the thought hose" recordings, so I can't buy it right now.  Maybe if I keep <a href="http://www.joynk.com/cdg/">talking to myself</a>, I'll buy it.  It's exactly what I need in this situation actually, just don't know how often this situation will occur.</p>
+<p>Hey I don't want to be the guy with the personal recorder with the crap ideas: "Note to self.  Chocolate saucepan.  Makes a great gift for chocoholics.  No mess to clean up.  Research chocolate that can withstand 400&Acirc;&ordm;."  Whatever.</p>
+<p>So there's two projects rattling around.  One, not really important right now, an elevator simulator (which has been blogged about <a href="http://squarism.com/2009/04/26/elevator-sim-wip/">previously</a>).  Really stale project, don't know why I started thinking about it, I realized I got stuck on it and wanted to jot down a TODO in case I had some time.  So here's what I shouted to myself.  It's really raw.  Just posting it here for myself rather than putting it in Evernote.  If Scribe + iPhone works out, I'll stop posting them publicly.  This is just a follow-up to the now very old ElevatorSim post on here.</p>
+<blockquote><p>
+What's left to do is to load people onto elevator car.  This could be done by creating four slots which would be dots on the floor of the elevator car representing the offsets where those people would stand.  This could be defined as a series of constants in the car as offsets to the center of the car, which could be reusable for each of the cars.  So I need to add a series of x and y, maybe z values representing all the spots on the floor where the people stand basically.  Each of the slots also should be pointers that can hold people.  So I also need a loadCar method, that when a person gets on the elevator, they go into the next free slot.  And also maybe a convenience method to say whether the car is full not or maybe the loadCar method returns false if it's full (IDK), uh, that's the easy part.</p>
+<p>When the car is loaded, the draw list should still iterate through the people in the car.  So when the building manager or the drawing manager draws, it can draw the car but it also draws all the people in the car because the people haven't fallen off the drawable list.  If this is too messy or confusing possibly the elevator car, when it draws, it could draw the people in the car.  But I'm pretty sure that the project, as it's set up right now, that it draws the people independently.  So the drawing shouldn't change.  But what will happen is that when the elevator moves, that move method will need to update that same list of four slots (the pointers to the people riding in the car).  So when the elevator car's tween method fires, that updates the X, that also needs to iterate through the list, updating all the people in the car.  Basically, the people will tween with the car.</p>
+<p>When the car arrives, and there's a callback or a sysout that prints "we've arrived!".  The people will need to be unloaded onto the bind point on the floor.  So basically all the people's positions will need to be updated to the bind point.  At that point, the people need to decide which exit to exit to.  Which should just be like a random value to make the simulation more interesting.  So basically, there needs to be a method for unloadPeople() that either could be put in the car or that could be put in the building.  The building could have an unload, which basically the car would call the building unload method to a person object and then that unload method on the building could take over the setting of the bind point and then randomize the exit that the person is going to go to.</p>
+<p>And then, once the person decides which exit they are going to go to on the ground floor, when they reach that exit, there will be like another "we've arrived" callback hopefully and that should destroy the person off the user population list (if there is one right now -- I don't think there is).</p>
+<p>Ok.  So that's basically the user movement stuff of the building that's left to do.  The other big problem with the project is watching the simulation when debugging.  Because the rotation of the camera is all screwed up right now.  So what I need to do is to implement WASD style flythrough.  So I can move around, fly through with the camera/keyboard/mouse WASD movement.  And then I can actually peer inside the car to watch all the bind points because while I'm developing the loading and unloading of people, it's going to be really hard to debug with sysouts or whatever.  I'm going to wanna draw the bind points in the car, have like filled in circles when they're populated and empty circles when they're not populated.  Just so I can get all the logic coded up, etc.  I'm going to wanna fly through, watch the people go down with the car, make sure there's no clipping, any bugs or whatever.  Watch the people load, go to the bind point, decide which exit they're going to go to, exit the building and get destroyed.  All that stuff is going to be hard to watch unless I freakin fix all the camera movement (which is all jacked up right now).</p>
+<p>So those are the two big high level features that need to be done.  There's a ton of little tiny features that need to go in to make the elevator car load people getting on the elevator and coming off the elevator.  But basically, this is where I got stuck last time.  So, I need to write this into some psuedocode, write a little TODO list, put it in a pomodoro list and start working on it on my week off, if I have time.  That's it.<br />
+</p></blockquote>
+<p>So basically, I'm saying the <a href="http://squarism.com/2009/06/21/elevator-sim-update/">people moving on the floors</a> aren't getting on the elevator car.  I got stuck on this not knowing which design was best or really how to think about it.  I didn't really start design either.  It just kinda died at that point.  Then I'm saying I need to fix the camera controls.  Not only for the user experience but also for my own debugging.  It's hard to use System.println() calls all over the place (sysouts) to try to debug a game or simulator.  It's a state engine and so you get lots of text that you have to later sort through and think about how the state changed.  Instead, it's better to build the tools inside the simulation/game itself.  Like the Quake console or whatever.</p>
+<p>Anyway, this brainstorm wasn't really important.  And it took a long time to transcribe by hand.  Meh.  Onto the next little recording...</p>
+
+  </article>
+
+</div>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrap">
+
+    <h2 class="footer-heading">Squarism</h2>
+
+    <div class="footer-col-1 column">
+      <ul>
+        <li>Squarism</li>
+        <li><a href="mailto:squarism@gmail.com">squarism@gmail.com</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col-2 column">
+      <ul>
+        <li>
+          <a href="https://github.com/squarism">
+            <span class="icon github">
+              <svg version="1.1" class="github-icon-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                 viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
+                <path fill-rule="evenodd" clip-rule="evenodd" fill="#C2C2C2" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761
+                c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32
+                c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472
+                c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037
+                C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65
+                c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261
+                c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082
+                c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129
+                c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/>
+              </svg>
+            </span>
+            <span class="username">squarism</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://twitter.com/squarism">
+            <span class="icon twitter">
+              <svg version="1.1" class="twitter-icon-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                 viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
+                <path fill="#C2C2C2" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809
+                c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27
+                c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767
+                c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206
+                C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271
+                c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469
+                c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/>
+              </svg>
+            </span>
+            <span class="username">squarism</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="footer-col-3 column">
+      <p class="text">A tech blog about ruby, code, mongodb, golang and other stuff.</p>
+    </div>
+
+  </div>
+
+</footer>
+
+
+    </body>
+</html>

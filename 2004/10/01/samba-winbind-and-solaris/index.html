@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>samba, winbind and solaris</title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="A tech blog about ruby, code, mongodb, golang and other stuff.">
+    <link rel="canonical" href="http://squarism.com//2004/10/01/samba-winbind-and-solaris/">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/main.css">
+
+</head>
+
+
+    <body>
+
+    <header class="site-header">
+
+  <div class="wrap">
+
+    <a class="site-title" href="/">Squarism</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+           viewBox="0 0 18 15" enable-background="new 0 0 18 15" xml:space="preserve">
+          <path fill="#505050" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0
+            h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#505050" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484
+            h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#505050" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0
+            c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+      <div class="trigger">
+        
+          <a class="page-link" href="/about/">About</a>
+        
+          
+        
+          
+        
+          <a class="page-link" href="/about/index.html">About</a>
+        
+          <a class="page-link" href="/questions/index.html">Questions I Have</a>
+        
+          <a class="page-link" href="/tatris/index.html">Tatris - A Tetris Clone</a>
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrap">
+      <div class="post">
+
+  <header class="post-header">
+    <h1>samba, winbind and solaris</h1>
+    <p class="meta">Oct 1, 2004 • Posted by: chris</p>
+  </header>
+
+  <article class="post-content">
+  <p><font color="orange"><i>This is a repost for formatting</i></font></p>
+<p>Winbind-Solaris Documentation<br />
+Naag Mummaneni getnag at rediffmail.com<br />
+Thu May 2 11:10:54 GMT 2002 </p>
+<p>Next message: Winbind-Solaris Documentation<br />
+Messages sorted by: [ date ] [ thread ] [ subject ] [ author ] </p>
+<p>--------------------------------------------------------------------------------</p>
+<p>Hi,</p>
+<p>I just configured my Solaris box to logon to my Windows 2k Domain after working on it for three days.I am sorry to say that I have found no documentation for setting up Samba-winbind on solaris.And I feel that a Prestigious opensource project like Samba shouldnt be blamed for this.So I modified the documentation that come with samba &amp; prepared this one for "solaris" so that no other administrator will face problems that I did. I hope the Samba group will put this documentation part in the distribution.Please find the attached doc file for the documentation.</p>
+<p>Thanks<br />
+Naag Mummaneni(getnag at rediffmail.com)<br />
+--------------------------------------------------------<br />
+<a id="more"></a><a id="more-46"></a><br />
+Installation and Configuration of Winbind on Solaris.</p>
+<p>This HOWTO describes how to get winbind services up and running to control access and authenticate users on your Solaris box using the winbind services which come with SAMBA 2.2.x latest CVS Checkout.Make sure you are using the latest Samba 2.2.x cvs checkout as other versions come with a lots of bugs regarding winbind .And even the Latest Samba Stable Release is also not an exception to this.</p>
+<p>Introduction<br />
+This HOWTO describes the procedures used to get winbind up and running on a Solaris system.<br />
+Winbind is capable of providing access and authentication control for Windows Domain users through an NT<br />
+or Win2K PDC for 'regular' services, such as telnet and ftp, as well for SAMBA services.<br />
+Why should I to this? ?h?n<br />
+This allows the SAMBA administrator to rely on the authentication mechanisms on the NT/Win2K<br />
+PDC for the authentication of domain members. NT/Win2K users no longer need to have separate<br />
+accounts on the SAMBA server.<br />
+Who should be reading this document? ?h?n<br />
+This HOWTO is designed for system administrators. If you are implementing SAMBA on a file<br />
+server and wish to (fairly easily) integrate existing NT/Win2K users from your PDC onto the<br />
+SAMBA server, this HOWTO is for you. </p>
+<p>Requirements<br />
+If you have a samba configuration file that you are currently using... BACK IT UP! If your system already uses PAM, back up the /etc/pam.conf file ! If you haven't already made a boot disk, MAKEONE NOW!<br />
+Messing with the pam configuration file can make it nearly impossible to log in to yourmachine. That's why you want to be able to boot back into your machine in single user mode and restore your /etc/pam.conf back<br />
+to the original state they were in if you get frustrated with the way things are going. ;-)<br />
+Please refer to the main SAMBA web page or, better yet, your closest SAMBA mirror site for<br />
+instructions on downloading the source code of Samba 2.2.x from the SAMBA CVS repository.<br />
+To allow Domain users the ability to access SAMBA shares and files, as well as potentially other services provided by your SAMBA machine, PAM (pluggable authentication modules) must be setup properly on your machine. In order to compile the winbind modules, you should have at least the pam libraries resident on your system. Solaris 7/8 has its pam modules coming with the distribution itself.</p>
+<p>Testing Things Out<br />
+Before starting, it is probably best to kill off all the SAMBA related daemons running on your server. Kill off<br />
+all smbd, nmbd, and winbindd processes that may be running. </p>
+<p>Configure and compile SAMBA<br />
+The configuration and compilation of SAMBA is pretty straightforward. The first three steps may not be<br />
+necessary depending upon whether or not you have previously built the Samba binaries.<br />
+root# autoconf<br />
+root# make clean<br />
+root# rm config.cache<br />
+root# ./configure --with-winbind --with-pam<br />
+root# make<br />
+root# make install</p>
+<p>This will, by default, install SAMBA in /usr/local/samba. See the main SAMBA documentation if you<br />
+want to install SAMBA somewhere else. It will also build the winbindd executable and libraries.</p>
+<p>Configure nsswitch.conf and the winbind libraries<br />
+The libraries needed to run the winbindd daemon through nsswitch need to be copied to their proper<br />
+locations, so<br />
+root# cp ../samba/source/nsswitch/libnss_winbind.so /usr/lib<br />
+I also found it necessary to make the following symbolic links:<br />
+root# ln -s /usr/lib/libnss_winbind.so /usr/lib/libnss_winbind.so.1<br />
+root# ln -s /usr/lib/libnss_winbind.so /usr/lib/libnss_winbind.so.2<br />
+root# ln -s /usr/lib/libnss_winbind.so /usr/lib/nss_winbind.so.1<br />
+root# ln -s /usr/lib/libnss_winbind.so /usr/lib/nss_winbind.so.2</p>
+<p>Now, as root you need to edit /etc/nsswitch.conf to allow user and group entries to be visible from the winbindd daemon. My /etc/nsswitch.conf file look like this after editing:<br />
+passwd: files winbind<br />
+group: files winbind</p>
+<p>Configure smb.conf<br />
+Several parameters are needed in the smb.conf file to control the behavior of winbindd. Configure smb.conf These are described in more detail in the winbindd(8) man page. My smb.conf file was modified to include the following entries in the [global] section:<br />
+[global]</p>
+<p># The previous documentation says to as the "winbind seperator " #directive also but it is no longer supported.<br />
+# use uids from 10000 to 20000 for domain users<br />
+winbind uid = 10000-20000<br />
+# use gids from 10000 to 20000 for domain groups<br />
+winbind gid = 10000-20000<br />
+# allow enumeration of winbind users and groups<br />
+winbind enum users = yes<br />
+winbind enum groups = yes<br />
+# give winbind users a real shell (only needed if they have telnet access)<br />
+template homedir = /home/winnt/%D/%U<br />
+template shell = /bin/bash</p>
+<p>Join the SAMBA server to the PDC domain<br />
+Enter the following command to make the SAMBA server join the PDC domain, where DOMAIN is the name<br />
+of your Windows domain and Administrator is a domain user who has administrative privileges in the<br />
+domain.<br />
+root# /usr/local/samba/bin/smbpasswd -j DOMAIN -r PDC -U Administrator<br />
+The proper response to the command should be: "Joined the domain DOMAIN" where DOMAIN is your<br />
+DOMAIN name.</p>
+<p>Start up the winbindd daemon and test it!<br />
+Eventually, you will want to modify your smb startup script to automatically invoke the winbindd daemon<br />
+when the other parts of SAMBA start, but it is possible to test out just the winbind portion first. To start up<br />
+winbind services, enter the following command as root:<br />
+root# /usr/local/samba/bin/winbindd<br />
+I'm always paranoid and like to make sure the daemon is really running...<br />
+root# ps -ae | grep winbindd<br />
+This command should produce output like this, if the daemon is running<br />
+3025 ? 00:00:00 winbindd<br />
+Now... for the real test, try to get some information about the users on your PDC<br />
+root# /usr/local/samba/bin/wbinfo -u<br />
+This should echo back a list of users on your Windows users on your PDC. For example, I get the following<br />
+response:<br />
+CEO\Administrator<br />
+CEO\burdell<br />
+CEO\Guest<br />
+CEO\jt-ad<br />
+CEO\krbtgt<br />
+CEO\TsInternetUser</p>
+<p>root# /usr/local/samba/bin/wbinfo -g<br />
+CEO\Domain Admins<br />
+CEO\Domain Users<br />
+CEO\Domain Guests<br />
+CEO\Domain Computers<br />
+CEO\Domain Controllers<br />
+CEO\Cert Publishers<br />
+CEO\Schema Admins<br />
+CEO\Enterprise Admins<br />
+CEO\Group Policy Creator Owners<br />
+The function 'getent' can now be used to get unified lists of both local and PDC users and groups. Try the<br />
+following command:<br />
+root# getent passwd<br />
+You should get a list that looks like your /etc/passwd list followed by the domain users with their new<br />
+uids, gids, home directories and default shells.<br />
+The same thing can be done for groups with the command<br />
+root# getent group</p>
+<p>Fix the /etc/rc.d/init.d/samba.server startup files<br />
+The winbindd daemon needs to start up after the smbd and nmbd daemons are running. To accomplish this<br />
+task, you need to modify the /etc/init.d/samba.server script to add commands to invoke this daemon in the<br />
+proper sequence. My /etc/init.d/samba.server file starts up smbd, nmbd, and winbindd from the<br />
+/usr/local/samba/bin directory directly.<br />
+samba.server<br />
+if [ ! -d /usr/bin ]<br />
+then                    # /usr not mounted<br />
+        exit<br />
+fi</p>
+<p>killproc() {            # kill the named process(es)<br />
+        pid=`/usr/bin/ps -e |<br />
+             /usr/bin/grep -w $1 |<br />
+             /usr/bin/sed -e 's/^  *//' -e 's/ .*//'`<br />
+        [ "$pid" != "" ] &amp;&amp; kill $pid<br />
+}</p>
+<p># Start/stop processes required for samba server</p>
+<p>case "$1" in</p>
+<p>'start')<br />
+#<br />
+# Edit these lines to suit your installation (paths, workgroup, host)<br />
+#<br />
+echo Starting SMBD<br />
+   /usr/local/samba/bin/smbd -D<br />
+#-s /usr/local/samba/smb.conf<br />
+echo Starting NMBD<br />
+   /usr/local/samba/bin/nmbd -D<br />
+#-l /usr/local/samba/var/log -s /usr/local/samba/smb.conf<br />
+echo Starting Winbind Daemon<br />
+/usr/local/samba/bin/winbindd<br />
+   ;;<br />
+'stop')<br />
+   killproc nmbd<br />
+   killproc smbd<br />
+   killproc winbindd<br />
+   ;;<br />
+*)<br />
+   echo "Usage: /etc/init.d/samba.server { start | stop }"<br />
+   ;;<br />
+esac</p>
+<p>If you restart the smbd, nmbd, and winbindd daemons at this point, you should be able to connect to the<br />
+samba server as a domain member just as if you were a local user.</p>
+<p>Configure Winbind and PAM<br />
+If you have made it this far, you know that winbindd and samba are working together. If you want to use<br />
+winbind to provide authentication for other services, keep reading. The pam configuration file need to be altered in this step. (Did you remember to make backups of your original /etc/pam.conf file? If not, do it now.)<br />
+You will need a pam module to use winbindd with these other services. This module will be compiled in the ../source/nsswitch directory by default when we used<br />
+ ./configure --with-pam option.<br />
+root# make nsswitch/pam_winbind.so<br />
+from the ../source directory. The pam_winbind.so file should be copied to the location of your other<br />
+pam security modules. On my Solaris 8, this was the /usr/lib/security directory.<br />
+root# cp ../samba/source/nsswitch/pam_winbind.so /usr/lib/security</p>
+<p>The /etc/pam.conf need to be changed. I changed this file so that my Domain users can logon both locally as well as telnet.The following are the changes that I made.You can customize the pam.conf file as per your requirements,but be sure of those changes because in the worst case it will leave your system nearly impossible to boot.</p>
+<p>#<br />
+#ident	"@(#)pam.conf	1.14	99/09/16 SMI"<br />
+#<br />
+# Copyright (c) 1996-1999, Sun Microsystems, Inc.<br />
+# All Rights Reserved.<br />
+#<br />
+# PAM configuration<br />
+#<br />
+# Authentication management<br />
+#<br />
+login   auth required   /usr/lib/security/pam_winbind.so<br />
+login	auth required 	/usr/lib/security/$ISA/pam_unix.so.1 try_first_pass<br />
+login	auth required 	/usr/lib/security/$ISA/pam_dial_auth.so.1 try_first_pass<br />
+#<br />
+rlogin  auth sufficient /usr/lib/security/pam_winbind.so<br />
+rlogin  auth sufficient /usr/lib/security/$ISA/pam_rhosts_auth.so.1<br />
+rlogin	auth required 	/usr/lib/security/$ISA/pam_unix.so.1 try_first_pass<br />
+#<br />
+dtlogin auth sufficient /usr/lib/security/pam_winbind.so<br />
+dtlogin	auth required 	/usr/lib/security/$ISA/pam_unix.so.1 try_first_pass<br />
+#<br />
+rsh	auth required	/usr/lib/security/$ISA/pam_rhosts_auth.so.1<br />
+other   auth sufficient /usr/lib/security/pam_winbind.so<br />
+other	auth required	/usr/lib/security/$ISA/pam_unix.so.1 try_first_pass<br />
+#<br />
+# Account management<br />
+#<br />
+login   account sufficient      /usr/lib/security/pam_winbind.so<br />
+login	account requisite	/usr/lib/security/$ISA/pam_roles.so.1<br />
+login	account required	/usr/lib/security/$ISA/pam_unix.so.1<br />
+#<br />
+dtlogin account sufficient      /usr/lib/security/pam_winbind.so<br />
+dtlogin	account requisite	/usr/lib/security/$ISA/pam_roles.so.1<br />
+dtlogin	account required	/usr/lib/security/$ISA/pam_unix.so.1<br />
+#<br />
+other   account sufficient      /usr/lib/security/pam_winbind.so<br />
+other	account requisite	/usr/lib/security/$ISA/pam_roles.so.1<br />
+other	account required	/usr/lib/security/$ISA/pam_unix.so.1<br />
+#<br />
+# Session management<br />
+#<br />
+other	session required	/usr/lib/security/$ISA/pam_unix.so.1<br />
+#<br />
+# Password management<br />
+#<br />
+#other   password sufficient     /usr/lib/security/pam_winbind.so<br />
+other	password required	/usr/lib/security/$ISA/pam_unix.so.1<br />
+dtsession auth required	/usr/lib/security/$ISA/pam_unix.so.1<br />
+#<br />
+# Support for Kerberos V5 authentication (uncomment to use Kerberos)<br />
+#<br />
+#rlogin	auth optional	/usr/lib/security/$ISA/pam_krb5.so.1 try_first_pass<br />
+#login	auth optional	/usr/lib/security/$ISA/pam_krb5.so.1 try_first_pass<br />
+#dtlogin	auth optional	/usr/lib/security/$ISA/pam_krb5.so.1 try_first_pass<br />
+#other	auth optional	/usr/lib/security/$ISA/pam_krb5.so.1 try_first_pass<br />
+#dtlogin	account optional /usr/lib/security/$ISA/pam_krb5.so.1<br />
+#other	account optional /usr/lib/security/$ISA/pam_krb5.so.1<br />
+#other	session optional /usr/lib/security/$ISA/pam_krb5.so.1<br />
+#other	password optional /usr/lib/security/$ISA/pam_krb5.so.1 try_first_pass</p>
+<p>I also added a try_first_pass line after the winbind.so line to get rid of annoying double<br />
+prompts for passwords.</p>
+<p>Now restart your Samba &amp; try connecting through your  application that you configured in the pam.conf.</p>
+<p>_________________________________________________________<br />
+Click below to visit monsterindia.com and review jobs in India or Abroad<br />
+http://monsterindia.rediff.com/jobs</p>
+<p>--------------------------------------------------------------------------------</p>
+<p>Next message: Winbind-Solaris Documentation<br />
+Messages sorted by: [ date ] [ thread ] [ subject ] [ author ] </p>
+<p>--------------------------------------------------------------------------------<br />
+More information about the samba-docs mailing list</p>
+
+  </article>
+
+</div>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrap">
+
+    <h2 class="footer-heading">Squarism</h2>
+
+    <div class="footer-col-1 column">
+      <ul>
+        <li>Squarism</li>
+        <li><a href="mailto:squarism@gmail.com">squarism@gmail.com</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col-2 column">
+      <ul>
+        <li>
+          <a href="https://github.com/squarism">
+            <span class="icon github">
+              <svg version="1.1" class="github-icon-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                 viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
+                <path fill-rule="evenodd" clip-rule="evenodd" fill="#C2C2C2" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761
+                c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32
+                c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472
+                c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037
+                C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65
+                c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261
+                c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082
+                c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129
+                c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/>
+              </svg>
+            </span>
+            <span class="username">squarism</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://twitter.com/squarism">
+            <span class="icon twitter">
+              <svg version="1.1" class="twitter-icon-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                 viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
+                <path fill="#C2C2C2" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809
+                c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27
+                c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767
+                c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206
+                C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271
+                c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469
+                c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/>
+              </svg>
+            </span>
+            <span class="username">squarism</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="footer-col-3 column">
+      <p class="text">A tech blog about ruby, code, mongodb, golang and other stuff.</p>
+    </div>
+
+  </div>
+
+</footer>
+
+
+    </body>
+</html>
