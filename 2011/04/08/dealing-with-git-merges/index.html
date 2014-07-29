@@ -67,7 +67,7 @@
   </header>
 
   <article class="post-content">
-  <p><img src="http://squarism.com/wp-content/uploads/2011/04/key_lime_pie-300x226.png" alt="" title="key_lime_pie" width="300" height="226" class="alignright size-medium wp-image-1197" /><br />
+  <p><img src="/uploads/2011/04/key_lime_pie-300x226.png" alt="" title="key_lime_pie" width="300" height="226" class="alignright size-medium wp-image-1197" /><br />
 Git changed the way I code singularly because of how branching works.  Hopefully you have at least tried branching out in Git.  Even if you have, you might still be doing the old SVN ways of never merging.  If you do merge, chances are you've had a conflict.  I have had only really bad experience with conflicts when something is majorly wrong with my repo.  For the most part, Git does everything automatically and is really smart about it.</p>
 <p>But sometimes, Git doesn't know what's going on because too many changes have happened.  No fault of Git but sometimes it has cost me some time when I'm either doing too many things at once or did something wrong.  As far as actually defining what I do and in what order (workflow), it's not really relevant because I usually work on one feature branch at one time.  In a team environment (which I haven't really done), I'd say <a href="http://reinh.com/blog/2009/03/02/a-git-workflow-for-agile-teams.html">this looks pretty good</a>.</p>
 <p>Regardless, we're going to play around with conflicts and show a sample workflow with branching.  First, go into some directory you don't care about and create a project:</p>
@@ -138,7 +138,7 @@ code.txt
   {local}: modified<br />
   {remote}: modified<br />
 Hit return to start merge resolution tool (opendiff):</p>
-<p><img src="http://squarism.com/wp-content/uploads/2011/04/git_merge_gui.png" alt="" title="git_merge_gui" width="497" height="402" class="aligncenter size-full wp-image-1210" /></p>
+<p><img src="/uploads/2011/04/git_merge_gui.png" alt="" title="git_merge_gui" width="497" height="402" class="aligncenter size-full wp-image-1210" /></p>
 <p>If you hit enter, this will open a gui diff tool (FileMerge on Mac) which will let you select which left or right lines you want to use.  Hit Apple+S or when you close it, select Save.  In my case, I want to use the poetry branch to overwrite the entire file.  So I selected the one line on the right and saved code.txt.  In this case, the entire file is overwritten to look like a diff patch.  Unfortunately, Apple's tool doesn't get rid of the .orig unless you're really fast with selecting the side (left/right) you want and hitting Apple+S.  I assume that's because FIleMerge doesn't capture the foreground shell's focus.  Anyway, you'll either have a code.txt file that looks like a diff patch or you'll have a code.txt that's clean (if you did the FileMerge fast).  In either case, we have to remove the .orig file.</p>
 <pre lang="bash">rm code.txt.orig<br />
 git commit -a -m "merge poetry"</pre>

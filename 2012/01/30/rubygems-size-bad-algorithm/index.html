@@ -67,7 +67,7 @@
   </header>
 
   <article class="post-content">
-  <p><img src="http://squarism.com/wp-content/uploads/2012/01/pixel_disk.png" alt="" title="pixel_disk" width="157" height="150" class="alignright size-full wp-image-1513" /><br />
+  <p><img src="/uploads/2012/01/pixel_disk.png" alt="" title="pixel_disk" width="157" height="150" class="alignright size-full wp-image-1513" /><br />
 I mirrored ruby gems just to see how big it would be.  I used the  rubygems-mirror gem.  It's pretty simple.  Just cd into a directory with a lot of space (ie: /opt/gems or something) and type `gem mirror`. </p>
 <p>After a massive initial load of 155k gems, the size was about 45GB (currently, it grows pretty quick per week).  The rubygem and gem mirror command is smart enough to just download just the deltas when you run it again:</p>
 <p><code><br />
@@ -96,9 +96,9 @@ Delete the gem family name from the gem_names array.<br />
 <p>Sounded good on paper.  And then it took 65 hours to run (227305.19 seconds) and CPU was absolutely pegged the entire time.  This algorithm was easy to come up with in IRB using a small test data set but scaling up in the real use case completely sucked.  So I pushed it to github for versioning and rewrote the loop.</p>
 <p>The <a href="https://github.com/squarism/sandbox/blob/master/latest_gem_sizes.rb">latest version</a> runs in 8.5 seconds and spits out a total size of all the latest ruby gems at 6.5GB.  Of course, this information is useless since it's not going to check compatibility or anything.  I was just curious to know how much space is back versions.</p>
 <p>The real key to the new version is the fact that I'm using a proper "grouped" data structure (Hash) instead of a massive flat Array.  This allows the regexes and other operations to work on a smaller data set.  The compound nature of the previous inefficiency is pretty amazing (hours to seconds).</p>
-<p><img src="http://squarism.com/wp-content/uploads/2012/01/gems_algorithm_1.png" alt="" title="gems_algorithm_1" width="650" height="375" class="aligncenter size-full wp-image-1520" /></p>
-<p><img src="http://squarism.com/wp-content/uploads/2012/01/gems_algorithm_2.png" alt="" title="gems_algorithm_2" width="650" height="375" class="aligncenter size-full wp-image-1521" /></p>
-<p><img src="http://squarism.com/wp-content/uploads/2012/01/gems_algorithm_3.png" alt="" title="gems_algorithm_3" width="650" height="375" class="aligncenter size-full wp-image-1522" /></p>
+<p><img src="/uploads/2012/01/gems_algorithm_1.png" alt="" title="gems_algorithm_1" width="650" height="375" class="aligncenter size-full wp-image-1520" /></p>
+<p><img src="/uploads/2012/01/gems_algorithm_2.png" alt="" title="gems_algorithm_2" width="650" height="375" class="aligncenter size-full wp-image-1521" /></p>
+<p><img src="/uploads/2012/01/gems_algorithm_3.png" alt="" title="gems_algorithm_3" width="650" height="375" class="aligncenter size-full wp-image-1522" /></p>
 <p>So hopefully you see above that a huge array of a File glob is flat and makes regex's or grouping operations very time consuming.  Ruby's magic group_by method sorts and groups the data structure once and then it's much easier to regex out versions and do other things.</p>
 <p>See below for the code inline or <a href="https://github.com/squarism/sandbox/blob/master/latest_gem_sizes.rb">take a look at the github repo</a>.</p>
 <pre lang="ruby">

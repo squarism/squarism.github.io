@@ -76,7 +76,7 @@ And the equal signs on top and bottom adjust as you type in "Banner".  It's pret
 = Fri Jan 1 21:46:13 EDT 2034<br />
 ===============================</code></p>
 <p>Too long.  So here's what you can do.  Go to Bundles-&gt;Bundle Editor-&gt;Show Bundle Editor.  Then go to the Source category.  You can filter at the top for Snippets if it's easier.  See this picture.</p>
-<p><img src="http://squarism.com/wp-content/uploads/2012/09/snippet_banner-580x431.png" alt="" title="snippet_banner" width="580" height="431" class="aligncenter size-large wp-image-1739" /></p>
+<p><img src="/uploads/2012/09/snippet_banner-580x431.png" alt="" title="snippet_banner" width="580" height="431" class="aligncenter size-large wp-image-1739" /></p>
 <p>Then put this code in:</p>
 <pre lang="perl">${TM_COMMENT_START/\s*$//}==${1/(.)|(?m:\n.*)/(?1:=)/g}==${TM_COMMENT_END/^\s*(.+)/ $1/}<br />
 ${TM_COMMENT_START/\s*$//}= ${1:${TM_SELECTED_TEXT:`date +'%a %b %d %Y'`}} =${TM_COMMENT_END/\s*(.+)/ $1/}<br />

@@ -67,7 +67,7 @@
   </header>
 
   <article class="post-content">
-  <p><img src="http://squarism.com/wp-content/uploads/2012/09/reversing_sentences.png" alt="" title="reversing_sentences" width="178" height="178" class="aligncenter size-full wp-image-1699" /></p>
+  <p><img src="/uploads/2012/09/reversing_sentences.png" alt="" title="reversing_sentences" width="178" height="178" class="aligncenter size-full wp-image-1699" /></p>
 <p><strong>Update:</strong>Doh!  You can just do text.split(/(\.)\s+/) to make the regex keep the delimiter with the parens group match.  Then you have to join in groups and some other stuff.  I keep the post below for posterity. :)</p>
 <p>When you split a string on a character, you get an array back without the split character.  When splitting sentences, the period goes away with the split.  So we can employ some rather nasty behind regex tricks to remember the puntuation and still do the split.  Pretty great!</p>
 <p>Here's some code I stole from stackoverflow that splits sentences fairly well.  Pay no attention to the complexity of this unchained beast.</p>

@@ -5,13 +5,13 @@
     <description>A tech blog about ruby, code, mongodb, golang and other stuff.</description>
     <link>http://squarism.com//</link>
     <atom:link href="http://squarism.com//feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 29 Jul 2014 14:08:50 -0400</pubDate>
-    <lastBuildDate>Tue, 29 Jul 2014 14:08:50 -0400</lastBuildDate>
+    <pubDate>Tue, 29 Jul 2014 14:23:57 -0400</pubDate>
+    <lastBuildDate>Tue, 29 Jul 2014 14:23:57 -0400</lastBuildDate>
     <generator>Jekyll v2.1.1</generator>
     
       <item>
         <title>Default DC Tech is Just Bad</title>
-        <description>&lt;p&gt;&lt;img src=&quot;http://squarism.com/wp-content/uploads/2014/05/dc_capitol.jpg&quot; alt=&quot;dc_capitol&quot; width=&quot;500&quot; height=&quot;333&quot; class=&quot;aligncenter size-large wp-image-2137&quot; /&gt;&lt;/p&gt;
+        <description>&lt;p&gt;&lt;img src=&quot;/uploads/2014/05/dc_capitol.jpg&quot; alt=&quot;dc_capitol&quot; width=&quot;500&quot; height=&quot;333&quot; class=&quot;aligncenter size-large wp-image-2137&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;small&gt;&lt;em&gt;The opinions of this blog, but especially this post are mine and not my employers&#39;.&lt;/em&gt;&lt;/small&gt;&lt;/p&gt;
 &lt;p&gt;I&#39;m done with DC.  I need to archive the reasons why for myself.  I hope this serves as a free field trip to the DC area for anyone outside the beltway.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;TL;DR&lt;/strong&gt;&lt;/p&gt;
@@ -38,7 +38,7 @@ Of course, there’s no silver bullet.  You can have a crappy job in a great com
 
 &lt;h2&gt;Story Time&lt;/h2&gt;
 &lt;p&gt;&lt;br /&gt;
-&lt;img src=&quot;http://squarism.com/wp-content/uploads/2014/05/dc_old_mainframes-580x388.jpg&quot; alt=&quot;dc_old_mainframes&quot; width=&quot;580&quot; height=&quot;388&quot; class=&quot;aligncenter size-large wp-image-2140&quot; /&gt;&amp;lt;/p&amp;gt;&lt;/p&gt;
+&lt;img src=&quot;/uploads/2014/05/dc_old_mainframes-580x388.jpg&quot; alt=&quot;dc_old_mainframes&quot; width=&quot;580&quot; height=&quot;388&quot; class=&quot;aligncenter size-large wp-image-2140&quot; /&gt;&amp;lt;/p&amp;gt;&lt;/p&gt;
 &lt;p&gt;I have a lot of horror stories, some are mostly funny, some are mostly sad and some are a mix of funny/sad.  I&#39;ll try to focus on the funny/sad ones in that they are the most telling about the culture in DC.&lt;/p&gt;
 &lt;h3&gt;The No Clue About Webapps Project&lt;/h3&gt;
 &lt;p&gt;&lt;br /&gt;
@@ -93,7 +93,7 @@ There’s no black and white.  I’m probably anti-DC right now because I’m tr
 
 &lt;h2&gt;The Good Stuff about DC&lt;/h2&gt;
 &lt;p&gt;&lt;br /&gt;
-&lt;img src=&quot;http://squarism.com/wp-content/uploads/2014/05/dc_arlington-580x435.png&quot; alt=&quot;dc_arlington&quot; width=&quot;580&quot; height=&quot;435&quot; class=&quot;aligncenter size-large wp-image-2138&quot; /&gt;&amp;lt;/p&amp;gt;&lt;/p&gt;
+&lt;img src=&quot;/uploads/2014/05/dc_arlington-580x435.png&quot; alt=&quot;dc_arlington&quot; width=&quot;580&quot; height=&quot;435&quot; class=&quot;aligncenter size-large wp-image-2138&quot; /&gt;&amp;lt;/p&amp;gt;&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;No burnout.  If you work a normal DC job, you can go to work and not burn out.  9-5 is very, very normal.  No one talks about Sustainability like they do in the valley, you don&#39;t need to.  Normal hours are the norm.  This also means though that organizing hackathons are both unknown and foreign.&lt;/li&gt;
 &lt;li&gt;There are lots of smart people in DC.  DC has the highest literacy rate in the country.  People want real answers for policy and practice that has real work to be done.  If you are involved in practical problems, there&#39;s a chance to work on national issues, crises and programs that make a difference without selling out.  Sort of.&lt;/li&gt;
@@ -116,7 +116,7 @@ There’s no black and white.  I’m probably anti-DC right now because I’m tr
 
 &lt;h2&gt;The Bad&lt;/h2&gt;
 &lt;p&gt;&lt;br /&gt;
-&lt;img src=&quot;http://squarism.com/wp-content/uploads/2014/05/dc_traffic-580x386.jpg&quot; alt=&quot;dc_traffic&quot; width=&quot;580&quot; height=&quot;386&quot; class=&quot;aligncenter size-large wp-image-2136&quot; /&gt;&amp;lt;/p&amp;gt;&lt;/p&gt;
+&lt;img src=&quot;/uploads/2014/05/dc_traffic-580x386.jpg&quot; alt=&quot;dc_traffic&quot; width=&quot;580&quot; height=&quot;386&quot; class=&quot;aligncenter size-large wp-image-2136&quot; /&gt;&amp;lt;/p&amp;gt;&lt;/p&gt;
 &lt;h3&gt;Traffic&lt;/h3&gt;
 &lt;p&gt;&lt;br /&gt;
 I would swear very offensively here but I’m trying to cut back on my bad language.  I can’t describe how bad the traffic is.  Above is a picture of what you can expect on a Saturday (or maybe not, who knows!).  My wife and I exclaim in horror at what we find when we go out.  “Traffic on a Sunday.  Wow.”  The rush hour is insane.  You will plan around the traffic.  You will not take jobs because of the commute.  You will find people who hate downtown.  You will find recruiters who ask you where you live FIRST because they know you will never take a job where your commute is one hour if you are any good.  And some  people would kill for a 1 hour commute!  I know people that commute from Leesburg downtown and it’s like 2 hours each  way for them every day.  What.  How can people even.&amp;lt;/p&amp;gt;&lt;/p&gt;
@@ -155,7 +155,7 @@ I could probably go on with The Good vs The Bad.  It’s just too much to list. 
 
 &lt;h2&gt;So I&#39;m Moving&lt;/h2&gt;
 &lt;p&gt;&lt;br /&gt;
-&lt;img src=&quot;http://squarism.com/wp-content/uploads/2014/05/mt_hood-580x386.jpg&quot; alt=&quot;mt_hood&quot; width=&quot;580&quot; height=&quot;386&quot; class=&quot;aligncenter size-large wp-image-2135&quot; /&gt;&lt;br /&gt;
+&lt;img src=&quot;/uploads/2014/05/mt_hood-580x386.jpg&quot; alt=&quot;mt_hood&quot; width=&quot;580&quot; height=&quot;386&quot; class=&quot;aligncenter size-large wp-image-2135&quot; /&gt;&lt;br /&gt;
 I gave it 14 years but I’m moving to Portland.  Hope springs eternal in the human breast.  I understand that nothing is perfect.  Things like the &lt;a href=&quot;http://calagator.org/&quot;&gt;Calagator event calendar&lt;/a&gt; look absolutely amazing to me.  Look at this schedule!&amp;lt;/p&amp;gt;
 &lt;code&gt;May 29 2014  PDX Weekly Hackathon&lt;br /&gt;
 May 29 2014  Bruce Schneier: &quot;Internet, Security, and Power&quot;&lt;br /&gt;
@@ -192,8 +192,9 @@ I&#39;ve gotten upset with people for their code because it was so stupid. I&#39
 &lt;/p&gt;&lt;/blockquote&gt;
 &lt;p&gt;I know what he&#39;s trying to say.  There are moments when this is true.  In fact, I would say in the  majority of cases it&#39;s better to just &quot;get over it&quot; (a challenge itself).  Most of the time I try to run in this mode.  Most of the time I fail.  It&#39;s especially hard when you feel like you need to &quot;represent&quot;.&lt;/p&gt;
 &lt;h2&gt;Story Time&lt;/h2&gt;
-&lt;p&gt;&lt;br /&gt;
-Here was my situation.  A “lead architect” I sat with in a shared office room was named “Bradly”.  Bradly was not his real name but it will help you remember that Bradly was Bad.  He was a lead  architect of our project but he couldn’t code and he couldn’t build servers.  He had some very  narrow skills in a certain problem domain but those skills weren’t general enough for him to be an “architect”.  He got the title/position through a previous successful project.  I’m just setting up the scenario here.&amp;lt;/p&amp;gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;
+Here was my situation.  A &quot;lead architect&quot; I sat with in a shared office room was named &quot;Bradly&quot;.  Bradly was not his real name but it will help you remember that Bradly was Bad.  He was a lead  architect of our project but he couldn&#39;t code and he couldn&#39;t build servers.  He had some very  narrow skills in a certain problem domain but those skills weren&#39;t general enough for him to be an &quot;architect&quot;.  He got the title/position through a previous successful project.  I&#39;m just setting up the scenario here.&lt;/p&gt;
 &lt;p&gt;We had an application in the middle-tier, doesn&#39;t really matter what it did except that it talks  to a database.  His bright idea was to install a database on every node to reduce network traffic.  We were vendor-locked into Oracle.  We had at least 10 servers that this design decision would impact.  We really needed 1 database but we would be purchasing 10.  I was the only one on the  project that could or would argue against the decision.&lt;/p&gt;
 &lt;p&gt;It was very simple from my point of view:&lt;br /&gt;
 - Three tier architecture is front, middle, back.  Normally that&#39;s web, app server, database.&lt;br /&gt;
@@ -208,19 +209,20 @@ Here was my situation.  A “lead architect” I sat with in a shared office roo
 &lt;hr /&gt;
 
 &lt;p&gt;Just to be clear, this is a simplified version of what Bradly wanted.&lt;br /&gt;
-&lt;img src=&quot;http://squarism.com/wp-content/uploads/2014/05/tier_architecture_one.png&quot; alt=&quot;tier_architecture_one&quot; width=&quot;403&quot; height=&quot;364&quot; class=&quot;aligncenter size-full wp-image-2119&quot; /&gt;&amp;lt;/p&amp;gt;&lt;/p&gt;
+&lt;img src=&quot;/uploads/2014/05/tier_architecture_one.png&quot; alt=&quot;tier_architecture_one&quot; width=&quot;403&quot; height=&quot;364&quot; class=&quot;aligncenter size-full wp-image-2119&quot; /&gt;&lt;/p&gt;
 &lt;hr /&gt;
 
 &lt;p&gt;This is what I wanted.&lt;br /&gt;
-&lt;img src=&quot;http://squarism.com/wp-content/uploads/2014/05/tier_architecture_two.png&quot; alt=&quot;tier_architecture_two&quot; width=&quot;403&quot; height=&quot;304&quot; class=&quot;aligncenter size-large wp-image-2120&quot; /&gt;&amp;lt;/p&amp;gt;&lt;/p&gt;
+&lt;img src=&quot;/uploads/2014/05/tier_architecture_two.png&quot; alt=&quot;tier_architecture_two&quot; width=&quot;403&quot; height=&quot;304&quot; class=&quot;aligncenter size-large wp-image-2120&quot; /&gt;&lt;/p&gt;
 &lt;hr /&gt;
 
 &lt;p&gt;I did my best to remain calm but this is the represent problem.  I felt compelled to bring the “outside world” to his mind.  I knew that no one did it like this.  And I imagined a stadium of my peers agreeing with me if they only knew what he was saying.  “What would the Internet think?  Oh my god!  They would laugh!  Imagine our embarrassment!  What kind of project is this?!” etc.&amp;lt;/p&amp;gt;&lt;/p&gt;
 &lt;p&gt;I tried to approach it logically.  I showed vendor diagrams and documentation of example architectures from the very vendor product we were using and no diagrams showed locally installed databases.  Eventually it came down to his argument: &quot;I own the architecture, I&#39;m the architect.&quot;&lt;/p&gt;
 &lt;p&gt;In this case, I was very passionate.  I was furious.  I had to represent the outside world.  I couldn&#39;t let it go.  I had to teach him that no one does it this way.  I had to represent.&lt;/p&gt;
 &lt;h2&gt;Drama&lt;/h2&gt;
-&lt;p&gt;&lt;br /&gt;
-We eventually got into the only screaming argument I’ve ever had in my 14-ish year career.  It was bad.  We didn’t talk anymore.  We split the team.  We pitched our designs to management separately.  Management was trying to side with one of us since money was involved.  I moved offices so I didn’t have to sit with him anymore.  It was no fun, it was a bad situation.&amp;lt;/p&amp;gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;
+We eventually got into the only screaming argument I&#39;ve ever had in my 14-ish year career.  It was bad.  We didn&#39;t talk anymore.  We split the team.  We pitched our designs to management separately.  Management was trying to side with one of us since money was involved.  I moved offices so I didn&#39;t have to sit with him anymore.  It was no fun, it was a bad situation.&lt;/p&gt;
 &lt;p&gt;In the end, he moved onto to other projects and I was able to influence the project back to normalcy.  When new developers joined the project, some artifacts of this debate would surface (like an old diagram).  Someone with three-tier experience would say &quot;what the hell is this&quot; and I&#39;d have to explain the whole thing.  In those rare cases I felt righteous but to this day I feel awful about the whole story.  My working relationship was ruined with him and I hate the memory of that job just because of experiences like this one and others.&lt;/p&gt;
 &lt;p&gt;I&#39;d rather teach than win.  But he wasn&#39;t there to be a teacher and I wasn&#39;t given that role or power.  When some people go to work they optimize for their career.  They start off the day wanting to perform a job, move up and at the very least maintain the power they have.  Because this is the best they&#39;ve ever been in their career.&lt;/p&gt;
 &lt;p&gt;When I wake up, I optimize for experience.  I start off the day ready to learn, improve and at the very least make myself or other people better at what we spend our time doing.  Because this is the very worst I&#39;ll ever be in my career.&lt;/p&gt;
@@ -237,7 +239,7 @@ We eventually got into the only screaming argument I’ve ever had in my 14-ish 
     
       <item>
         <title>DRY up Methods with Ruby Blocks</title>
-        <description>&lt;p&gt;&lt;img src=&quot;http://squarism.com/wp-content/uploads/2013/09/pixel-ribbon_redolution.png&quot; alt=&quot;pixel-ribbon_redolution&quot; width=&quot;576&quot; height=&quot;24&quot; class=&quot;aligncenter size-full wp-image-2108&quot; /&gt;&lt;/p&gt;
+        <description>&lt;p&gt;&lt;img src=&quot;/uploads/2013/09/pixel-ribbon_redolution.png&quot; alt=&quot;pixel-ribbon_redolution&quot; width=&quot;576&quot; height=&quot;24&quot; class=&quot;aligncenter size-full wp-image-2108&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;Let&#39;s do something terrible by hand.  First, here&#39;s our data.  It comes from a database.&lt;/p&gt;
 &lt;pre lang=&quot;ruby&quot;&gt;
 db_results = [&lt;br /&gt;
@@ -380,14 +382,14 @@ end&lt;/p&gt;
     
       <item>
         <title>Problems with &quot;The Cloud&quot;</title>
-        <description>&lt;p&gt;&lt;img src=&quot;http://squarism.com/wp-content/uploads/2013/08/pixel-ribbon_grass.png&quot; alt=&quot;pixel-ribbon_grass&quot; width=&quot;576&quot; height=&quot;24&quot; class=&quot;aligncenter size-full wp-image-2091&quot; /&gt;&lt;br /&gt;
+        <description>&lt;p&gt;&lt;img src=&quot;/uploads/2013/08/pixel-ribbon_grass.png&quot; alt=&quot;pixel-ribbon_grass&quot; width=&quot;576&quot; height=&quot;24&quot; class=&quot;aligncenter size-full wp-image-2091&quot; /&gt;&lt;br /&gt;
 I&#39;ve been thinking about the problems with The Cloud outside it being a raging buzzword.  It really comes down to &lt;em&gt;Control and Connectivity&lt;/em&gt;.  That&#39;s the problem but allow me to elaborate.&lt;/p&gt;
 &lt;h2&gt;Control&lt;/h2&gt;
 &lt;p&gt;&lt;br /&gt;
 Google Wave is a great example of control loss.  If you really put a lot of energy, stock and trust into Google Wave as a content store for your team, brain or idea then you might feel deflated by its cancellation.  Even as an idea and a disruptive alternative to E-mail or SMTP crappiness, it’s a shame it had to die.  So what now?  Wait for an open source version?  Host your own?&amp;lt;/p&amp;gt;&lt;/p&gt;
 &lt;p&gt;The idea was to &quot;put it in the cloud&quot; and forget about it.  But when the cloud changes outside your control, you have to be aware of it again.  Now you really have to think about the cloud itself.  It&#39;s not such a vague black box which is what the cloud diagram really means.&lt;/p&gt;
 &lt;p&gt;Another example of control is YouTube.  I use YouTube favorites as a persistent list.  I see a cool video, I favorite it and I feel like I sort of own it, or at least it&#39;s in a list that I can refer to later.  But take a look at this:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://squarism.com/wp-content/uploads/2013/08/youtube_whoops.png&quot; alt=&quot;youtube_whoops&quot; width=&quot;532&quot; height=&quot;296&quot; class=&quot;aligncenter size-full wp-image-2089&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/uploads/2013/08/youtube_whoops.png&quot; alt=&quot;youtube_whoops&quot; width=&quot;532&quot; height=&quot;296&quot; class=&quot;aligncenter size-full wp-image-2089&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;What were those things?  Who knows!  Now, I have to think about &quot;the cloud&quot; again.  These are temporary videos that someone else ultimately controls.  I&#39;m just adding references to a list.  I don&#39;t own the clips.  They are transient.  They are ephemeral.  I&#39;m out of control again.  I don&#39;t even know what media I&#39;ve lost.  Do I mitigate again?  Do I suck down a list periodically and do a diff?&lt;/p&gt;
 &lt;h2&gt;Connectivity&lt;/h2&gt;
 &lt;p&gt;&lt;br /&gt;
@@ -448,7 +450,7 @@ boing - dns (10.0.0.137)&lt;br /&gt;
 	  	gateway fc00:deed:d34d:b33f::1&lt;br /&gt;
 &amp;lt;/pre&amp;gt;&lt;br /&gt;
 If you type ifconfig or &lt;code&gt;ip addr&lt;/code&gt; you will see that it has two IPs now.  One IPv4 and one IPv6 address.  We’re not quite done.  I drew a picture of the network layout and you’ll have to configure all the VMs like this.&amp;lt;/p&amp;gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://squarism.com/wp-content/uploads/2013/07/ipv6_lab.png&quot; alt=&quot;ipv6_lab&quot; width=&quot;539&quot; height=&quot;401&quot; class=&quot;aligncenter size-full wp-image-2028&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/uploads/2013/07/ipv6_lab.png&quot; alt=&quot;ipv6_lab&quot; width=&quot;539&quot; height=&quot;401&quot; class=&quot;aligncenter size-full wp-image-2028&quot; /&gt;&lt;/p&gt;
 &lt;h2&gt;Router Configuration&lt;/h2&gt;
 &lt;p&gt;&lt;br /&gt;
 This is really easy.  You just need the Rawr box to forward IPv6 packets like a router but not like a firewall.  So Linux can do that will a simple kernel switch.  But first, you’ll need to add a second network card in VMWare.  So:&amp;lt;/p&amp;gt;&lt;/p&gt;
@@ -621,9 +623,9 @@ Are you sure you want to continue connecting (yes/no)? yes&lt;br /&gt;
 &lt;/pre&gt;
 &lt;h2&gt;Victory Lap&lt;/h2&gt;&lt;br /&gt;
 Even firefox works.&lt;br /&gt;
-&lt;img src=&quot;http://squarism.com/wp-content/uploads/2013/07/ipv6_firefox_dns-580x303.png&quot; alt=&quot;ipv6_firefox_dns&quot; width=&quot;580&quot; height=&quot;303&quot; class=&quot;aligncenter size-large wp-image-2056&quot; /&gt;
+&lt;img src=&quot;/uploads/2013/07/ipv6_firefox_dns-580x303.png&quot; alt=&quot;ipv6_firefox_dns&quot; width=&quot;580&quot; height=&quot;303&quot; class=&quot;aligncenter size-large wp-image-2056&quot; /&gt;
 &lt;p&gt;Just to prove that this isn&#39;t IPv4, let&#39;s use the weird numerical URL format for the IP.&lt;br /&gt;
-&lt;img src=&quot;http://squarism.com/wp-content/uploads/2013/07/ipv6_firefox_ip.png&quot; alt=&quot;ipv6_firefox_ip&quot; width=&quot;620&quot; height=&quot;293&quot; class=&quot;aligncenter size-full wp-image-2057&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;/uploads/2013/07/ipv6_firefox_ip.png&quot; alt=&quot;ipv6_firefox_ip&quot; width=&quot;620&quot; height=&quot;293&quot; class=&quot;aligncenter size-full wp-image-2057&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;Well this was a fun spike and I feel like I understand IPv6 a whole lot more and it doesn&#39;t strike fear into my heart to think about big scary addressing.  I think the key is to actually use DNS instead of fudging it with typing manual addresses or managing crazy hosts files.  It should be interesting to see when ISPs and cloud providers start offering serious options for IPv6.&lt;/p&gt;
 &lt;/pre&gt;&lt;/pre&gt;
 </description>
@@ -638,7 +640,7 @@ Even firefox works.&lt;br /&gt;
     
       <item>
         <title>The Best Way to Read CSV in Ruby</title>
-        <description>&lt;p&gt;&lt;img src=&quot;http://squarism.com/wp-content/uploads/2013/06/pixel-ribbon_company_profile.png&quot; alt=&quot;pixel-ribbon_company_profile&quot; width=&quot;576&quot; height=&quot;24&quot; class=&quot;aligncenter size-full wp-image-2014&quot; /&gt;&lt;/p&gt;
+        <description>&lt;p&gt;&lt;img src=&quot;/uploads/2013/06/pixel-ribbon_company_profile.png&quot; alt=&quot;pixel-ribbon_company_profile&quot; width=&quot;576&quot; height=&quot;24&quot; class=&quot;aligncenter size-full wp-image-2014&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;CSV is awful.  CSV isn&#39;t well formed.  It isn&#39;t hard to use because it&#39;s bloated and slow.  CSV is hard to use because it&#39;s just a dumb data format.  However, sometimes all you have is stupid data and &lt;em&gt;who cares, let&#39;s do this thing and blot out the memories&lt;/em&gt;.&lt;/p&gt;
 &lt;p&gt;I assume you know how to use the CSV module that&#39;s built into Ruby.  It&#39;s pretty easy.  You just read a file in and you get some 2D array back.  It usually comes out pretty horrible with long methods and little room for nice abstractions.&lt;/p&gt;
 &lt;p&gt;So what if you want to polish it up a little bit?  Maybe you aren&#39;t just going to kludge this thing again and hate yourself later?  What if you aren&#39;t just going to load this into a database?  What if you want to do some quick CSV analysis but at the same time make it come out sort of readable?&lt;/p&gt;
@@ -734,52 +736,52 @@ puts peanut_guest_count&lt;/p&gt;
 }&lt;br /&gt;
 &lt;/style&gt;
 &lt;p&gt;&amp;lt;/p&amp;gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://squarism.com/wp-content/uploads/2013/05/pixel-ribbon_copper_leaf_hotel_lobby.png&quot; alt=&quot;pixel-ribbon_copper_leaf_hotel_lobby&quot; width=&quot;576&quot; height=&quot;24&quot; class=&quot;aligncenter size-full wp-image-1968&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/uploads/2013/05/pixel-ribbon_copper_leaf_hotel_lobby.png&quot; alt=&quot;pixel-ribbon_copper_leaf_hotel_lobby&quot; width=&quot;576&quot; height=&quot;24&quot; class=&quot;aligncenter size-full wp-image-1968&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;What shops, companies, consultants, startups or other folks are using Ruby or Rails (on any level)?  Contact me on twitter if you want to be added or you have corrections: &lt;a href=&quot;https://twitter.com/squarism&quot;&gt;@squarism&lt;/a&gt; or leave a comment below.&lt;/p&gt;
 &lt;table width=&quot;100%&quot; class=&quot;shops&quot;&gt;
 &lt;tr&gt;
 &lt;td&gt;
-&lt;img src=&quot;http://squarism.com/wp-content/uploads/2013/05/rails_dev_shops_radiant-e1367684038894.png&quot; alt=&quot;rails_dev_shops_radiant&quot; width=&quot;150&quot; height=&quot;37&quot; class=&quot;aligncenter size-full wp-image-1945&quot; /&gt;&lt;br /&gt;
+&lt;img src=&quot;/uploads/2013/05/rails_dev_shops_radiant-e1367684038894.png&quot; alt=&quot;rails_dev_shops_radiant&quot; width=&quot;150&quot; height=&quot;37&quot; class=&quot;aligncenter size-full wp-image-1945&quot; /&gt;&lt;br /&gt;
 &lt;/td&gt;
 &lt;td&gt;&lt;a href=&quot;http://radiantcms.org/&quot;&gt;Radiant CMS&lt;/a&gt;&lt;/td&gt;
 &lt;td&gt;&lt;em&gt;Radiant is a no-fluff, open source content management system designed for small teams.&lt;/em&gt;&lt;/td&gt;&lt;br /&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td&gt;
-&lt;img src=&quot;http://squarism.com/wp-content/uploads/2013/05/rails_dev_shops_triple_dog_dare-e1367684106998.png&quot; alt=&quot;rails_dev_shops_triple_dog_dare&quot; width=&quot;150&quot; height=&quot;40&quot; class=&quot;aligncenter size-full wp-image-1963&quot; /&gt;&lt;br /&gt;
+&lt;img src=&quot;/uploads/2013/05/rails_dev_shops_triple_dog_dare-e1367684106998.png&quot; alt=&quot;rails_dev_shops_triple_dog_dare&quot; width=&quot;150&quot; height=&quot;40&quot; class=&quot;aligncenter size-full wp-image-1963&quot; /&gt;&lt;br /&gt;
 &lt;/td&gt;
 &lt;td&gt;&lt;a href=&quot;http://tripledogdare.net/&quot;&gt;Triple Dog Dare&lt;/a&gt;&lt;/td&gt;
 &lt;td&gt;&lt;em&gt;Has your Rails (or Ruby) project gone off of the tracks? Did you outsource your work on the cheap only to find that your application is bug-ridden and slow?  I can help make it better. Wrangling chaos is one of my specialities.&lt;/em&gt;&lt;/td&gt;&lt;br /&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td&gt;
-&lt;img src=&quot;http://squarism.com/wp-content/uploads/2013/05/rails_dev_shops_intridea.png&quot; alt=&quot;rails_dev_shops_intridea&quot; width=&quot;151&quot; height=&quot;51&quot; class=&quot;aligncenter size-large wp-image-1946&quot; /&gt;&lt;br /&gt;
+&lt;img src=&quot;/uploads/2013/05/rails_dev_shops_intridea.png&quot; alt=&quot;rails_dev_shops_intridea&quot; width=&quot;151&quot; height=&quot;51&quot; class=&quot;aligncenter size-large wp-image-1946&quot; /&gt;&lt;br /&gt;
 &lt;/td&gt;
 &lt;td&gt;&lt;a href=&quot;http://www.intridea.com/&quot;&gt;Intridea&lt;/a&gt;&lt;/td&gt;
 &lt;td&gt;&lt;em&gt;We don&#39;t just make web apps - we solve problems. At Intridea we write intelligently designed software to help businesses develop strategic solutions and launch new ideas.&lt;/em&gt;&lt;/td&gt;&lt;br /&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td&gt;
-&lt;img src=&quot;http://squarism.com/wp-content/uploads/2013/05/rails_dev_shops_codesherpas.png&quot; alt=&quot;rails_dev_shops_codesherpas&quot; width=&quot;168&quot; height=&quot;109&quot; class=&quot;aligncenter size-large wp-image-1947&quot; /&gt;&lt;br /&gt;
+&lt;img src=&quot;/uploads/2013/05/rails_dev_shops_codesherpas.png&quot; alt=&quot;rails_dev_shops_codesherpas&quot; width=&quot;168&quot; height=&quot;109&quot; class=&quot;aligncenter size-large wp-image-1947&quot; /&gt;&lt;br /&gt;
 &lt;/td&gt;
 &lt;td&gt;&lt;a href=&quot;http://www.codesherpas.com/&quot;&gt;Code Sherpas&lt;/a&gt;&lt;/td&gt;
 &lt;td&gt;&lt;em&gt;CodeSherpas is a full life-cycle software development and design firm based in Reston, VA.&lt;/em&gt;&lt;/td&gt;&lt;br /&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td&gt;
-&lt;img src=&quot;http://squarism.com/wp-content/uploads/2013/05/rails_dev_shops_livingsocial.png&quot; alt=&quot;rails_dev_shops_livingsocial&quot; width=&quot;179&quot; height=&quot;69&quot; class=&quot;aligncenter size-full wp-image-1943&quot; /&gt;&lt;br /&gt;
+&lt;img src=&quot;/uploads/2013/05/rails_dev_shops_livingsocial.png&quot; alt=&quot;rails_dev_shops_livingsocial&quot; width=&quot;179&quot; height=&quot;69&quot; class=&quot;aligncenter size-full wp-image-1943&quot; /&gt;&lt;br /&gt;
 &lt;/td&gt;
 &lt;td&gt;&lt;a href=&quot;https://livingsocial.com/&quot;&gt;Living Social&lt;/a&gt;&lt;/td&gt;
 &lt;td&gt;&lt;em&gt;LivingSocial is a deal-of-the-day website that features discounted gift certificates usable at local or national companies. Based in Washington, D.C., LivingSocial now has more than 70 million members around the world.&lt;/em&gt;&lt;/td&gt;&lt;br /&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td&gt;&lt;img src=&quot;http://squarism.com/wp-content/uploads/2013/05/rails_dev_shops_bloomberg.png&quot; alt=&quot;rails_dev_shops_bloomberg&quot; width=&quot;132&quot; height=&quot;33&quot; class=&quot;aligncenter size-large wp-image-1944&quot; /&gt;&lt;br /&gt;
+&lt;td&gt;&lt;img src=&quot;/uploads/2013/05/rails_dev_shops_bloomberg.png&quot; alt=&quot;rails_dev_shops_bloomberg&quot; width=&quot;132&quot; height=&quot;33&quot; class=&quot;aligncenter size-large wp-image-1944&quot; /&gt;&lt;br /&gt;
 &lt;/td&gt;
 &lt;td&gt;Bloomberg&lt;/td&gt;
 &lt;td&gt;&lt;em&gt;Bloomberg, the global business and financial information and news leader, gives influential decision makers a critical edge by connecting them to a dynamic network of information, people and ideas.&lt;/em&gt;&lt;/td&gt;&lt;br /&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td&gt;&lt;img src=&quot;http://squarism.com/wp-content/uploads/2013/05/rails_dev_shops_monkeysee.jpg&quot; alt=&quot;rails_dev_shops_monkeysee&quot; width=&quot;150&quot; height=&quot;45&quot; class=&quot;aligncenter size-full wp-image-1965&quot; /&gt;&lt;/td&gt;
+&lt;td&gt;&lt;img src=&quot;/uploads/2013/05/rails_dev_shops_monkeysee.jpg&quot; alt=&quot;rails_dev_shops_monkeysee&quot; width=&quot;150&quot; height=&quot;45&quot; class=&quot;aligncenter size-full wp-image-1965&quot; /&gt;&lt;/td&gt;
 &lt;td&gt;Monkeysee.com&lt;/td&gt;
 &lt;td&gt;&lt;em&gt;Monkey See captures the skill and knowledge of the world&#39;s top experts and delivers it to inquisitive audiences everywhere.&lt;/em&gt;&lt;/td&gt;&lt;br /&gt;
 &lt;/tr&gt;
@@ -812,7 +814,7 @@ puts peanut_guest_count&lt;/p&gt;
     
       <item>
         <title>The Supermodel Ruby Gem Loses Data</title>
-        <description>&lt;p&gt;&lt;img src=&quot;http://squarism.com/wp-content/uploads/2013/05/pixel-ribbon_northface.png&quot; alt=&quot;pixel-ribbon_northface&quot; width=&quot;576&quot; height=&quot;24&quot; class=&quot;aligncenter size-full wp-image-2005&quot; /&gt;&lt;br /&gt;
+        <description>&lt;p&gt;&lt;img src=&quot;/uploads/2013/05/pixel-ribbon_northface.png&quot; alt=&quot;pixel-ribbon_northface&quot; width=&quot;576&quot; height=&quot;24&quot; class=&quot;aligncenter size-full wp-image-2005&quot; /&gt;&lt;br /&gt;
 Actually no.&lt;/p&gt;
 &lt;p&gt;I love &lt;a href=&quot;https://github.com/maccman/supermodel&quot;&gt;Supermodel&lt;/a&gt;.  It might be overcome by ActiveModel::Model in Rails 4 but until then Supermodel is a fantastic in-memory database for Ruby that has a lot of advantages over using just a plain hash or trying to roll your own.&lt;/p&gt;
 &lt;p&gt;However using it with a large amount of data, we noticed it loses data.  Sometimes, a few records.  Other times, a few more.  It was really random.  We were confused.  Looking at the docs, this is the default class maccman has in his README.&lt;/p&gt;
@@ -864,7 +866,7 @@ include SuperModel::RandomID&lt;br /&gt;
     
       <item>
         <title>Super Interesting Talks from RubyConf 2012</title>
-        <description>&lt;p&gt;&lt;img src=&quot;http://squarism.com/wp-content/uploads/2013/05/pixel-ribbon_chem.png&quot; alt=&quot;pixel-ribbon_chem&quot; width=&quot;576&quot; height=&quot;24&quot; class=&quot;aligncenter size-full wp-image-1999&quot; /&gt;&lt;/p&gt;
+        <description>&lt;p&gt;&lt;img src=&quot;/uploads/2013/05/pixel-ribbon_chem.png&quot; alt=&quot;pixel-ribbon_chem&quot; width=&quot;576&quot; height=&quot;24&quot; class=&quot;aligncenter size-full wp-image-1999&quot; /&gt;&lt;/p&gt;
 &lt;p&gt;Trying to summarize someone&#39;s 30-60minute talk is really hard.  So apologies go out to anyone I&#39;m trying to paraphrase here.  I took it upon myself to watch every single video from &lt;a href=&quot;http://www.confreaks.com/events/rubyconf2012?sort=post&quot;&gt;RubyConf 2012&lt;/a&gt; which started airing in November.  It&#39;s May now.  There&#39;s a lot of content there and you can&#39;t just slurp it down and expect to process it all.  So I thought I&#39;d leave little breadcrumbs to myself noting which things were super interesting to me.&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;http://www.confreaks.com/videos/1291-rubyconf2012-real-time-salami&quot;&gt;Real Time Salami - Aaron Patterson&lt;/a&gt;&lt;br /&gt;
 Any presentation by @tenderlove is great and this one was fun and interesting as expected.  Aaron talks about parallelism, streaming and making Salami (actual salami).&lt;/p&gt;
@@ -909,7 +911,7 @@ Chris walks you through creating a web service like they do at square as if you 
     
       <item>
         <title>Using a Redis as a Database</title>
-        <description>&lt;p&gt;&lt;img src=&quot;http://squarism.com/wp-content/uploads/2013/05/pixel-ribbon_cor.png&quot; alt=&quot;pixel-ribbon_cor&quot; width=&quot;576&quot; height=&quot;24&quot; class=&quot;aligncenter size-full wp-image-1971&quot; /&gt;&lt;/p&gt;
+        <description>&lt;p&gt;&lt;img src=&quot;/uploads/2013/05/pixel-ribbon_cor.png&quot; alt=&quot;pixel-ribbon_cor&quot; width=&quot;576&quot; height=&quot;24&quot; class=&quot;aligncenter size-full wp-image-1971&quot; /&gt;&lt;/p&gt;
 &lt;h2&gt;The Spike&lt;/h2&gt;
 &lt;p&gt;&lt;br /&gt;
 I was spiking on Redis recently.  I wanted to use the &lt;a href=&quot;https://github.com/nateware/redis-objects&quot;&gt;redis-objects gem&lt;/a&gt; to simulate a shopping cart app even though the README specifically says&amp;lt;/p&amp;gt;&lt;/p&gt;

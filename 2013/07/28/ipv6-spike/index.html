@@ -110,7 +110,7 @@ boing - dns (10.0.0.137)<br />
 	  	gateway fc00:deed:d34d:b33f::1<br />
 &lt;/pre&gt;<br />
 If you type ifconfig or <code>ip addr</code> you will see that it has two IPs now.  One IPv4 and one IPv6 address.  We’re not quite done.  I drew a picture of the network layout and you’ll have to configure all the VMs like this.&lt;/p&gt;</p>
-<p><img src="http://squarism.com/wp-content/uploads/2013/07/ipv6_lab.png" alt="ipv6_lab" width="539" height="401" class="aligncenter size-full wp-image-2028" /></p>
+<p><img src="/uploads/2013/07/ipv6_lab.png" alt="ipv6_lab" width="539" height="401" class="aligncenter size-full wp-image-2028" /></p>
 <h2>Router Configuration</h2>
 <p><br />
 This is really easy.  You just need the Rawr box to forward IPv6 packets like a router but not like a firewall.  So Linux can do that will a simple kernel switch.  But first, you’ll need to add a second network card in VMWare.  So:&lt;/p&gt;</p>
@@ -283,9 +283,9 @@ Are you sure you want to continue connecting (yes/no)? yes<br />
 </pre>
 <h2>Victory Lap</h2><br />
 Even firefox works.<br />
-<img src="http://squarism.com/wp-content/uploads/2013/07/ipv6_firefox_dns-580x303.png" alt="ipv6_firefox_dns" width="580" height="303" class="aligncenter size-large wp-image-2056" />
+<img src="/uploads/2013/07/ipv6_firefox_dns-580x303.png" alt="ipv6_firefox_dns" width="580" height="303" class="aligncenter size-large wp-image-2056" />
 <p>Just to prove that this isn't IPv4, let's use the weird numerical URL format for the IP.<br />
-<img src="http://squarism.com/wp-content/uploads/2013/07/ipv6_firefox_ip.png" alt="ipv6_firefox_ip" width="620" height="293" class="aligncenter size-full wp-image-2057" /></p>
+<img src="/uploads/2013/07/ipv6_firefox_ip.png" alt="ipv6_firefox_ip" width="620" height="293" class="aligncenter size-full wp-image-2057" /></p>
 <p>Well this was a fun spike and I feel like I understand IPv6 a whole lot more and it doesn't strike fear into my heart to think about big scary addressing.  I think the key is to actually use DNS instead of fudging it with typing manual addresses or managing crazy hosts files.  It should be interesting to see when ISPs and cloud providers start offering serious options for IPv6.</p>
 </pre></pre>
 

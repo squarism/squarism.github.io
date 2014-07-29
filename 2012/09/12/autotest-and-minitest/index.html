@@ -67,7 +67,7 @@
   </header>
 
   <article class="post-content">
-  <p><img src="http://squarism.com/wp-content/uploads/2012/09/spork.png" alt="" title="spork" width="110" height="230" class="alignright size-full wp-image-1654" /><br />
+  <p><img src="/uploads/2012/09/spork.png" alt="" title="spork" width="110" height="230" class="alignright size-full wp-image-1654" /><br />
 I love Guard.  I've posted about it and used it a lot.  But it's got some problems right now with all the downstream gems and addons that I like.</p>
 <p>Of course, a more elegant solution is to not pre-fork and use Gary Bernhardt's (and others') advice of extracting domain objects from rails and <a href="https://www.destroyallsoftware.com/screencasts/catalog/extracting-domain-objects">running tests</a> over that.  This is fine within plain old ruby objects but sometimes you need to load rake or factory_girl and that requires rails.  So let's assume you can't isolate your tests into lib/ or extras/ and you need fast tests while loading your entire Rails environment.  That's where Guard and Autotest come in.</p>
 <p>The newest Guard installs Listen which doesn't work.  So I had to back down a version of listen.  Added gem 'listen', '0.4.7' to my Gemfile to get rid of polling warning.  0.5.0 is latest but it has a problem right now (bug opened 2 days ago as of today, grr).  All that is unrelated to the real problem.  </p>

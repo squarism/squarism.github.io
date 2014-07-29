@@ -109,7 +109,7 @@ First of all, a really whiney semantic point: cut is not copy.  Cut <strong>remo
 </ul>
 <p>&lt;/p&gt;</p>
 <p>I want to re-iterate that last point because I've seen this for years.  Copy on select is hard to grasp for Windows-y people.  I see people copy a bunch of text from Notepad, move their mouse over to the putty window and click on the right-ish portion of the screen.  When the click, a large white line has appeared and then they paste.  <em>Nothing but blanks!  What the hell happened!  Argh!  I hate computers!</em></p>
-<p><img src="http://squarism.com/wp-content/uploads/2010/07/paste_example.png" alt="" title="paste_example" width="665" height="398" class="aligncenter size-full wp-image-609" /></p>
+<p><img src="/uploads/2010/07/paste_example.png" alt="" title="paste_example" width="665" height="398" class="aligncenter size-full wp-image-609" /></p>
 <p>When you click in putty, click on the left portion of the screen with text.  If you click on text, you won't select the blank space on a line.  Even better, just click on the menu bar to switch windows.  Or use alt+tab.  If you click on empty space, you're going to overwrite your clipboard with nothings.</p>
 <p>Linux virtual consoles sometimes have a mouse pointer (btw I'm talking about the Ctrl+Alt+F1 - F6 consoles if you walk up to the server).  On RedHat, it has this by default.  It's a little mouse driver and it's handy for copy and paste.  Select some text and right click.  It'll paste in.  But this clipboard isn't shared from the virtual console to the X11 GUI or to an SSH client.</p>
 <h3>Hierarchies in Software Architecture</h3>
@@ -184,7 +184,7 @@ JOIN #PieIsGreat<br />
 <p>Now join up with a regular IRC client so you can see your message.  Back in the telnet window type:<br />
 <code>PRIVMSG #PieIsGreat :Isn't pie just wonderful?</code></p>
 <p>You'll see this in your regular IRC client (irssi in this case):<br />
-<img src="http://squarism.com/wp-content/uploads/2010/07/manual_irc.png" alt="" title="manual_irc" width="425" height="139" class="aligncenter size-full wp-image-640" /></p>
+<img src="/uploads/2010/07/manual_irc.png" alt="" title="manual_irc" width="425" height="139" class="aligncenter size-full wp-image-640" /></p>
 <p>And so on.  All IRC is, is a plain-text protocol.  It's just like SMTP.</p>
 <p>To illustrate, let's send an email manually.  You'll need a Linux box for this one.<br />
 <code>$ dig -t mx gmail.com | grep smtp<br />
@@ -212,7 +212,7 @@ This is great.<br />
 .<br />
 250 2.0.0 OK 1279640642 a10si18542430bkc.24<br />
 </p>
-<p>Go check your gmail.  You'll see an email.  It's probably going to be listed under your spam folder because we didn't specify a proper sender, our domain is bogus.  You'll want to use an actual domain name as the from address.  It really depends on Google's spam filter.  Sometimes they can check to see if you're actually sending from that domain, which is tricky unless you have a proper mail server to send from.  If you get something through, it'll look like a normal email.<img src="http://squarism.com/wp-content/uploads/2010/07/manual_smtp.png" alt="" title="manual_smtp" width="179" height="83" class="aligncenter size-full wp-image-631" /></p>
+<p>Go check your gmail.  You'll see an email.  It's probably going to be listed under your spam folder because we didn't specify a proper sender, our domain is bogus.  You'll want to use an actual domain name as the from address.  It really depends on Google's spam filter.  Sometimes they can check to see if you're actually sending from that domain, which is tricky unless you have a proper mail server to send from.  If you get something through, it'll look like a normal email.<img src="/uploads/2010/07/manual_smtp.png" alt="" title="manual_smtp" width="179" height="83" class="aligncenter size-full wp-image-631" /></p>
 <p>And why should it be any different?  This is what Thunderbird, Outlook or Mail.app program is doing behind the scenes.  This is also why email is so insecure.  Anyone can sniff your mail as it goes over the network (provided they have their sniffer set up right).  Even if you're using https on gmail.com's web interface, it's hard to say if SMTP is encrypted to your destination (probably not).  SSL certificates are hard to set up.</p>
 <p>Ok, one last example for our pattern.  We're going to make a manual connection to the HTTP listening port to a Yahoo! web server.</p>
 <p><code>$ telnet yahoo.com 80</code></p>

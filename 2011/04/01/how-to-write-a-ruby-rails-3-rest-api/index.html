@@ -67,7 +67,7 @@
   </header>
 
   <article class="post-content">
-  <p><img src="http://squarism.com/wp-content/uploads/2011/04/pixel-ribbon_feet.png" alt="pixel-ribbon_feet" width="576" height="24" class="aligncenter size-full wp-image-2083" /></p>
+  <p><img src="/uploads/2011/04/pixel-ribbon_feet.png" alt="pixel-ribbon_feet" width="576" height="24" class="aligncenter size-full wp-image-2083" /></p>
 <h2>Background</h2>
 <p><br />
 I’ve always wondered how I’d go about publishing a real REST API on the web to do something.  In this example, we’ll create an employee manager app-thing.  It’s not particularly interesting but it shows what “API” means.  In another bit, we’ll create an “API” meaning a library to interact with this web service.&lt;/p&gt;</p>
@@ -139,7 +139,7 @@ a:hover { color: #fff; background-color:#000; }</p>
 <p>Start rails.<br />
 <code>rails s</code></p>
 <p>Browse to http://localhost:3000/employees/.  Click Create New Employee and create some records.  There's no validations or anything fancy yet so just fill in both fields accurately.  Now you have some data to work with that should look something like this:<br />
-<img src="http://squarism.com/wp-content/uploads/2011/03/rails_api_data.png" alt="" title="rails_api_data" width="346" height="197" class="aligncenter size-full wp-image-1132" /></p>
+<img src="/uploads/2011/03/rails_api_data.png" alt="" title="rails_api_data" width="346" height="197" class="aligncenter size-full wp-image-1132" /></p>
 <h2>CRUD with curl</h2>
 <p>Crud is Create, Read, Update, Delete.  I'll walk through each verb with curl first.</p>
 <p><strong>Create</strong><br />
@@ -153,7 +153,7 @@ This will create a new employee using curl.  Create a new file called new.xml:</
 </pre>
 <p><code>curl -v -H "Content-Type: application/xml; charset=utf-8" --data-ascii @new.xml http://localhost:3000/employees.xml</code></p>
 <p>Now you have a new entry in the database.  You can refresh the rails /employees URL listing to watch it change.<br />
-<img src="http://squarism.com/wp-content/uploads/2011/03/rails_api_curl_add.png" alt="" title="rails_api_curl_add" width="335" height="169" class="aligncenter size-full wp-image-1133" /></p>
+<img src="/uploads/2011/03/rails_api_curl_add.png" alt="" title="rails_api_curl_add" width="335" height="169" class="aligncenter size-full wp-image-1133" /></p>
 <p>Now let's add xml rendering to our controller.  Edit the file:<br />
 <code>app/controllers/employees_controller.rb</code><br />
 Add the two format.xml lines below.</p>
@@ -338,7 +338,7 @@ Fairy Faucet, Sandy Salt<br />
 Optionally, you can create Rdoc for app.  Run this rake task in the rails root:
 <p><code>rake doc:app</code></p>
 <p>If you open doc/app/Api.html, you'll see the Rdoc from the comments above.  This is especially useful when publishing an API to the world.  It'll suck in comments from your methods, in this case the api.rb file has comments over every method definition that gets turned into pretty HTML.<br />
-<img src="http://squarism.com/wp-content/uploads/2011/03/rails_api_rdoc.png" alt="" title="rails_api_rdoc" width="368" height="285" class="aligncenter size-full wp-image-1146" /></p>
+<img src="/uploads/2011/03/rails_api_rdoc.png" alt="" title="rails_api_rdoc" width="368" height="285" class="aligncenter size-full wp-image-1146" /></p>
 <h2>Wrap up</h2><br />
 So we have published an API over the web with Rails.  It's pretty easy because the scaffolding handles the xml requests in the respond_to blocks in the controllers.  But we also wrapped this API in a utility class that we were able to run from the command line.  This could easily be converted to a gem and published just as the rails app could easily be pushed to Heroku and published.
 <p>This example mimics a CRUD layer for a DB so closely that you'd never do this exactly.  But hopefully it illustrates how you'd make a wrapper to a web service that you don't have direct DB access to.  For me, it was interesting to see what API really means.  In terms of REST and the web, it's simply publishing methods and data over HTTP (in this case wrapped up in XML).  In terms of a library or gem, it means giving someone an object and methods to do something inside a black box you've designed.</p>
