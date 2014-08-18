@@ -9,18 +9,23 @@
 html, body { height: 100%; }
 
 body {
-  font-family: Helvetica, Arial, sans-serif;
-  font-size: 14px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
   line-height: 1.5;
   font-weight: 300;
   background-color: #fdfdfd;
 }
 
-/*h1, h2, h3, h4, h5, h6 { font-size: 100%; font-weight: 400; }*/
+h1 { font-size: 2.5em; font-weight: normal;}
 
-a         { color: #2a7ae2; text-decoration: none; }
-a:hover   { color: #000; text-decoration: underline; }
-a:visited { color: #205caa; }
+h2, h3, h4, h5, h6 { color: #777; font-weight: bold; }
+
+a         { color: #C74228; text-decoration: none; }
+a:hover   { color: #FF5837; text-decoration: underline; }
+a:visited { color: #C74228; }
+
+pre { font-size: 15px; }
+
 
 /* Utility */
 
@@ -345,4 +350,14 @@ a:visited { color: #205caa; }
     width: auto;
     margin: 0 0 15px; }
 
+}
+
+
+/*
+Using negative values in CSS is a pathetic display of frontend chops.
+I accept all death threats as fact.
+- @squarism
+*/
+.author {
+  margin-top: -27px;
 }

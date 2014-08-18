@@ -21,8 +21,10 @@ categories:
 tags: []
 comments: []
 ---
-<p><img src="/uploads/2013/08/pixel-ribbon_grass.png" alt="pixel-ribbon_grass" width="576" height="24" class="aligncenter size-full wp-image-2091" />
-I've been thinking about the problems with The Cloud outside it being a raging buzzword.  It really comes down to <em>Control and Connectivity</em>.  That's the problem but allow me to elaborate.</p>
+<p><img src="/uploads/2013/08/pixel-ribbon_grass.png" alt="pixel-ribbon_grass" width="576" height="24" class="aligncenter size-full wp-image-2091" /></p>
+
+<p>I've been thinking about the problems with The Cloud outside it being a raging buzzword.  It really comes down to <em>Control and Connectivity</em>.  That's the problem but allow me to elaborate.</p>
+
 <h2>Control</h2><p>
 Google Wave is a great example of control loss.  If you really put a lot of energy, stock and trust into Google Wave as a content store for your team, brain or idea then you might feel deflated by its cancellation.  Even as an idea and a disruptive alternative to E-mail or SMTP crappiness, it's a shame it had to die.  So what now?  Wait for an open source version?  Host your own?</p>
 <p>The idea was to "put it in the cloud" and forget about it.  But when the cloud changes outside your control, you have to be aware of it again.  Now you really have to think about the cloud itself.  It's not such a vague black box which is what the cloud diagram really means.</p>

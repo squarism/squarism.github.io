@@ -43,7 +43,8 @@ comments:
   width: 25%;
   border-right: 1px solid #ddd;
 }
-</style></p>
+</style>
+
 <p><img src="/uploads/2013/05/pixel-ribbon_copper_leaf_hotel_lobby.png" alt="pixel-ribbon_copper_leaf_hotel_lobby" width="576" height="24" class="aligncenter size-full wp-image-1968" /></p>
 <p>What shops, companies, consultants, startups or other folks are using Ruby or Rails (on any level)?  Contact me on twitter if you want to be added or you have corrections: <a href="https://twitter.com/squarism">@squarism</a> or leave a comment below.</p>
 <table width="100%" class="shops">

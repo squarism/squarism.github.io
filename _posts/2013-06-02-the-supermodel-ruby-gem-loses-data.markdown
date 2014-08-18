@@ -21,8 +21,10 @@ categories:
 tags: []
 comments: []
 ---
-<p><img src="/uploads/2013/05/pixel-ribbon_northface.png" alt="pixel-ribbon_northface" width="576" height="24" class="aligncenter size-full wp-image-2005" />
-Actually no.</p>
+<p><img src="/uploads/2013/05/pixel-ribbon_northface.png" alt="pixel-ribbon_northface" width="576" height="24" class="aligncenter size-full wp-image-2005" /></p>
+
+<p>Actually no.</p>
+
 <p>I love <a href="https://github.com/maccman/supermodel">Supermodel</a>.  It might be overcome by ActiveModel::Model in Rails 4 but until then Supermodel is a fantastic in-memory database for Ruby that has a lot of advantages over using just a plain hash or trying to roll your own.</p>
 <p>However using it with a large amount of data, we noticed it loses data.  Sometimes, a few records.  Other times, a few more.  It was really random.  We were confused.  Looking at the docs, this is the default class maccman has in his README.</p>
 

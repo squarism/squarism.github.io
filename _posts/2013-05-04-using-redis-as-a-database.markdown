@@ -86,20 +86,20 @@ u.name = 'Testy McTesterson'
 
 
 <p>When you look at Redis, the keys are already composited for you and magic has happened.</p>
-<code>
+<pre>
 redis 127.0.0.1:6379> keys *
 user:test@test.com:name
 
 redis 127.0.0.1:6379> get user:test@test.com:name
 Testy McTesterson
-</code>
+</pre>
 
 <p>Yay!</p>
 <p>The name field is from redis-objects and the create uses datamapper.  This is a really odd pairing but I like the fact that I have no sql database in the mix but still have finders similar to an ORM.  Something to keep in mind, datamapper's finders are a bit different than the Rails 3 ones (no .where method).</p>
 <h2>Benchmarking A Million Things</h2><p>
 Ok fine.  So maybe this works, maybe it doesn't.  Maybe it's not the right idea.  What about the good stuff?  Like, how fast can we load a whole lot of names into MySQL versus Redis using  the above code and techniques?  Is it even relevant?</p>
 
-<code>
+<pre>
 Summary
 -------------------------------------------------------------------------------
 (PL = pipelined redis operation)
@@ -116,9 +116,9 @@ Loading 10k ecommerce-style data (orders, users, products)
 MySQL:    00:09.40
 Redis:    00:14.50
 Redis PL: 00:02.72
-</code>
+</pre>
 
-A gist of these <a href="https://gist.github.com/squarism/5234519">test results is here</a>.</p>
+A gist of these <a href="https://gist.github.com/squarism/5234519">test results is here</a>.
 
 <h2>A More Complete Example</h2>
 <p>

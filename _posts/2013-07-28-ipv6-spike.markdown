@@ -175,12 +175,12 @@ iface eth0 inet6 static
 
 <p>Restart networking.  Even if your VMs are running DHCP (they are by default), we're just adding a DNS server to the static IPv6 address.  In other Linux distros, this file will be different (sry).</p>
 
-<p><code>
+<pre>
 piff:~$ ping6 www.ipv6.squarism.com
 PING www.ipv6.squarism.com(fc00:deed:d34d:b33f::11) 56 data bytes
 64 bytes from fc00:deed:d34d:b33f::11: icmp_seq=1 ttl=64 time=1.12 ms
 64 bytes from fc00:deed:d34d:b33f::11: icmp_seq=2 ttl=64 time=0.553 ms
-</code></p>
+</pre>
 
 <p>Ok great.  DNS and routing are working.  Now we are ready for the final part.</p>
 <h2>Web Server Configuration</h2>
@@ -190,7 +190,7 @@ Get dependencies installed on Wap (the web server).
 </p>
 
 <p>We need ipv6 support built in and I'm not sure if the OS packages are going to come with it out of the box.  Installing nginx is easy.  So let's download nginx, configure, compile.
-<code>
+<pre>
 # download latest stable and untar ...
 ./configure --with-ipv6 --prefix=/opt/nginx
 make install
@@ -198,7 +198,7 @@ cd /opt/nginx
 vi conf/nginx.conf
   # change this line
   listen       [::]:80 default ipv6only=on;
-</code>
+</pre>
 </p>
 
 <p>Start nginx:
@@ -283,9 +283,15 @@ Are you sure you want to continue connecting (yes/no)? yes
 </pre>
 
 
-<h2>Victory Lap</h2><p>
+<h2>Victory Lap</h2>
+<p>
 Even firefox works.
+</p>
+
+<p>
 <img src="/uploads/2013/07/ipv6_firefox_dns-580x303.png" alt="ipv6_firefox_dns" width="580" height="303" class="aligncenter size-large wp-image-2056" /></p>
+
 <p>Just to prove that this isn't IPv4, let's use the weird numerical URL format for the IP.
 <img src="/uploads/2013/07/ipv6_firefox_ip.png" alt="ipv6_firefox_ip" width="620" height="293" class="aligncenter size-full wp-image-2057" /></p>
+
 <p>Well this was a fun spike and I feel like I understand IPv6 a whole lot more and it doesn't strike fear into my heart to think about big scary addressing.  I think the key is to actually use DNS instead of fudging it with typing manual addresses or managing crazy hosts files.  It should be interesting to see when ISPs and cloud providers start offering serious options for IPv6.</p>

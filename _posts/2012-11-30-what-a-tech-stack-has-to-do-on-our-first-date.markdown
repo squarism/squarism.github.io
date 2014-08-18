@@ -29,12 +29,13 @@ Watch this video -> <a href="http://www.confreaks.com/videos/368-rubyconf2010-ke
 <p>Dismissing Dave Thomas' opinion that you should learn a new language every year just because he is an author is a crap position to take.  First, FUD.  Second, Dave Thomas doesn't sell books about the languages he says to check out in the video.  Thirdly, I trust Dave Thomas.  This isn't some fucking Larry Ellison power play.</p>
 <p>So in terms of following his advice, I might pick up Scala.  It's different enough and anti-hipster-omg-embrace-the-java-enterprise enough that it will challenge me and/or be different than say continuing with Python (will is really Ruby like Spanish to Portugese) learning.  I've picked up <a href="http://www.amazon.com/Programming-Scala-Comprehensive-Step---Step/dp/0981531644/ref=sr_1_1?ie=UTF8&qid=1353200587&sr=8-1&keywords=scala">a Scala book</a> but haven't started it yet.  I looked at the Lift docs and was completely deflated.  <a href="https://twitter.com/chadfowler">Chad Fowler</a> tweeted about the Play! framework (thanks for the reminder) and thank god this looks better.</p>
 <p>If I get sick of a city, I might move.  When I move, I'm looking for something new.  Similarly, starting out with Scala is going to be a bit like jumping into a new town.  Ok, I need to find the equivalents of the old things that I'm used to.  But wait, I moved to a new town to do something new!  If I bring my old habits with me, I'll just be <em>writing Ruby code in Scala</em>.  And that's crap.</p>
-<blockquote><p>
-Marge: I've dug myself into a happy little rut here and I'm not about to
-       hoist myself out of it.
-Homer: Just bring the rut with ya, Honey.
+
+<blockquote>
+Marge: I've dug myself into a happy little rut here and I'm not about to hoist myself out of it.<br>
+Homer: Just bring the rut with ya, Honey.<br>
 -- "<a href="http://www.snpp.com/episodes/3F23.html">You Only Move Twice</a>"
-</p></blockquote>
+</blockquote>
+
 <h2>What any technology stack is going to have to do on our first date</h2><p>
 I need a list of libraries at least searchable by category and popularity.  Popular gems are likely to be used and therefore good.  This is great to get to higher level operations and gain productivity.  For example, <a href="http://ruby-toolbox.com">ruby-toolbox.com</a>.</p>
 <p>I need screencasts ordered by date so you can learn community trends.  I'm going to need a way to keep up with the Jones' and know what's falling out of favor in the community because a shiny new library, technique or concept is getting the attention of key people.  This also operates as curated content.  For example, everyone is talking about CORS.  I'm sure there will be a <a href="http://railscasts.com">Railscast</a> on CORS even though CORS is not specific to Ruby or Rails.</p>

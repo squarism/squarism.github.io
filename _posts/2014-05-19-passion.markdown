@@ -45,10 +45,13 @@ Here was my situation.  A "lead architect" I sat with in a shared office room wa
 - Local databases would avoid the network.</p>
 <hr>
 Just to be clear, this is a simplified version of what Bradly wanted.
-<img src="/uploads/2014/05/tier_architecture_one.png" alt="tier_architecture_one" width="403" height="364" class="aligncenter size-full wp-image-2119" />
+<p>
+<img src="/uploads/2014/05/tier_architecture_one.png" alt="tier_architecture_one" width="403" height="364" class="aligncenter size-full wp-image-2119" /></p>
 <hr>
 This is what I wanted.
+<p>
 <img src="/uploads/2014/05/tier_architecture_two.png" alt="tier_architecture_two" width="403" height="304" class="aligncenter size-large wp-image-2120" />
+</p>
 <hr>
 I did my best to remain calm but this is the represent problem.  I felt compelled to bring the "outside world" to his mind.  I knew that no one did it like this.  And I imagined a stadium of my peers agreeing with me if they only knew what he was saying.  "What would the Internet think?  Oh my god!  They would laugh!  Imagine our embarrassment!  What kind of project is this?!" etc.</p>
 <p>I tried to approach it logically.  I showed vendor diagrams and documentation of example architectures from the very vendor product we were using and no diagrams showed locally installed databases.  Eventually it came down to his argument: "I own the architecture, I'm the architect."</p>

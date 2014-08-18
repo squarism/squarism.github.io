@@ -93,17 +93,17 @@ In a similar desktop inventory task, I went downtown one time.  I walked up and 
 <p>
 There's no black and white.  I'm probably anti-DC right now because I'm trying to move.  As painful as it is to admit, I've spent a lot of time here and <em>haven't died from emo</em> so it can't be that bad.</p>
 <ul>
-<li>I sat on Bush's desk and set up Cheney's Wife's computer.  That was nuts.  My personal politics aside, it was cool to help people that were going to the White House.</li>
-<li>I got to travel and see the country including Alaska which was awesome.</li>
-<li>I helped some people catch some child molesters (may they burn in hell).  There's a lot of work in DC that isn't about catching terrorists and other ethereal goals.</li>
-<li>Once, someone asked me if I wanted to work on a quantum computer project.  They were serious.</li>
-<li>I've met some people that worked on The Internet.  Like, the actual Internet.  Everyday people have had historic roles.  A lot of them are humble.  I'm not sure the valley does that all the time.  Who knows.</li>
-<li>Was able to guide some (not all) projects away from rocks.  If my goal was to influence from within, I did.</li>
-<li>You can work on big systems.  Clusters, huge storage, large concurrent queues, events, streams, billions of rows, zillions of things.</li>
-<li>I learned Unix, Java and had time to learn Rails/Ruby and play with Python, Node, Scala, Golang and countless libraries and databases.  There's time to breathe.</li>
-<li>#dctech is a good community.  AgileTechDC is a good conference.  But I think they are the outsiders to the default and that relationship should be flipped in a perfect world.</li>
-<li>I met chinese, spanish, korean and other native language speakers just because DC is so diverse.  I've learned a lot about languages just by osmosis.</li>
-<li>I met the love of my life here.</li>
+  <li>I met the love of my life here.</li>
+  <li>I sat on Bush's desk and set up Cheney's Wife's computer.  That was nuts.  My personal politics aside, it was cool to help people that were going to the White House.</li>
+  <li>I got to travel and see the country including Alaska which was awesome.</li>
+  <li>I helped some people catch some child molesters (may they burn in hell).  There's a lot of work in DC that isn't about catching terrorists and other ethereal goals.</li>
+  <li>Once, someone asked me if I wanted to work on a quantum computer project.  They were serious.</li>
+  <li>I've met some people that worked on The Internet.  Like, the actual Internet.  Everyday people have had historic roles.  A lot of them are humble.  I'm not sure the valley does that all the time.  Who knows.</li>
+  <li>Was able to guide some (not all) projects away from rocks.  If my goal was to influence from within, I did.</li>
+  <li>You can work on big systems.  Clusters, huge storage, large concurrent queues, events, streams, billions of rows, zillions of things.</li>
+  <li>I learned Unix, Java and had time to learn Rails/Ruby and play with Python, Node, Scala, Golang and countless libraries and databases.  There's time to breathe.</li>
+  <li>#dctech is a good community.  AgileTechDC is a good conference.  But I think they are the outsiders to the default and that relationship should be flipped in a perfect world.</li>
+  <li>I met chinese, spanish, korean and other native language speakers just because DC is so diverse.  I've learned a lot about languages just by osmosis.</li>
 </ul>
 <hr>
 
@@ -163,12 +163,15 @@ I could probably go on with The Good vs The Bad.  It's just too much to list.  I
 </li></p>
 <li>Modified agile.  Software craftsmanship people are moving on from the term agile because it's been rendered meaningless.  This decay is happening here.</li>
 </ol>
+
 <hr>
 <h2>So I'm Moving</h2>
 <p>
-<img src="/uploads/2014/05/mt_hood-580x386.jpg" alt="mt_hood" width="580" height="386" class="aligncenter size-large wp-image-2135" />
+<img src="/uploads/2014/05/mt_hood-580x386.jpg" alt="mt_hood" width="580" height="386" class="aligncenter size-large wp-image-2135" /></p>
+
 I gave it 14 years but I'm moving to Portland.  Hope springs eternal in the human breast.  I understand that nothing is perfect.  Things like the <a href="http://calagator.org/">Calagator event calendar</a> look absolutely amazing to me.  Look at this schedule!</p>
-<code>May 29 2014  PDX Weekly Hackathon
+
+<pre>May 29 2014  PDX Weekly Hackathon
 May 29 2014  Bruce Schneier: "Internet, Security, and Power"
 May 30 2014  Ruby Programmers Informal Co-Working
 May 30 2014  Python Web Development with Flask
@@ -179,6 +182,7 @@ Jun 2 2014   Triage-a-Thon at Puppet Labs
 Jun 3 2014   Google Glass versus the COMPETITION
 Jun 5 2014   PDXNode presentation night
 ....
-</code>
+</pre>
+
 <p>Yes, there are similar events in DC (Bruce is probably talking here).  There's a lot of cool stuff happening in an Open Government mailing list called <a href="https://groups.google.com/forum/#!forum/sunlightlabs">Sunlight Labs</a>.  I wrote <a href="http://squarism.com/2013/06/09/rails-dev-shops-in-washington-dc/">a blog post</a> attempting to enumerate awesome shops in DC (I picked Rails as a starting point).  It wasn't as long as I had hoped.  <a href="http://istrategylabs.com/team/peter-corbett/">Peter Corbett</a> is an awesome guy.  I'd seriously suggest networking with him if you get the chance.</p>
 <p>I hope in a year I'm blogging about myself in a startup, lean company or more forward-leaning shop.  Or maybe I'll have created an art installation with Golang or something.  We'll see!  :)</p>

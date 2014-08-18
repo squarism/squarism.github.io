@@ -71,25 +71,30 @@ marty === (doc .. future)  # wrong, wrong, wrong
 
 
 {% highlight ruby %}
-require 'date'</p>
-<p>holidays = {
+require 'date'
+
+holidays = {
   :halloween => { :date => Date.parse("Oct 31 2012"), :presents => false },
   :christmas => { :date => Date.parse("Dec 25 2012"), :presents => true },
   :july_fourth => { :date => Date.parse("July 4 2013"), :presents => false },
   :valentines_day => { :date => Date.parse("Feb 14 2013"), :presents => true },
   :thanksgiving => { :date => Date.parse("Nov 28 2012"), :presents => false }
-}</p>
-<p># turn hash of hashes into array of hashes
+}
+
+# turn hash of hashes into array of hashes
 holiday_array = []
 holidays.keys.each do |key|
   holiday_array << { :id => key }.merge(holidays[key])
-end</p>
-<p># find all the holidays with presents
+end
+
+# find all the holidays with presents
 puts "yay presents!"
-puts holiday_array.select {|holiday| holiday[:presents] == true }</p>
-<p># find all the holidays within a date range
-winter = (Date.parse("Dec 21 2012")..Date.parse("Mar 20 2013"))</p>
-<p>puts "Winter holidays"
+puts holiday_array.select {|holiday| holiday[:presents] == true }
+
+# find all the holidays within a date range
+winter = (Date.parse("Dec 21 2012")..Date.parse("Mar 20 2013"))
+
+puts "Winter holidays"
 puts holiday_array.select {|h| winter === h[:date] }
 {% endhighlight %}
 
