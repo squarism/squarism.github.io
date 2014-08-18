@@ -57,6 +57,7 @@ Here's the pie menu.  Pick the one that you like!
 What?  This is terrible.  This isn't fair.  Certainly technology cannot be like this.  This is computer science!  How can you choose?  How can you know?
 
 > Hungry: "Waiter.  What's in humility pie?"
+
 > Waiter: "Humility."
 > Hungry: "What does that mean?"
 > Waiter: "Have you ever literally tasted humility?"
@@ -148,7 +149,7 @@ How long has JUnit been around?  Is there a Java developer you know that hasn't 
 
 ### That Seems Hard
 
-Someone who can only write code in a procedural style can't break down problems into easily solvable bits.  Without concepts like Mixins/Traits, Composing Behavior and TDD; a complex problem is just going to seem too hard.  "I don't do that kind of stuff."  When someone that has OO or Functional experience might say "here's how I would do it, who wants to help me?"  Of course there are things that are just too big but the difference is in experience.  A Bash scripter isn't ever going to understand ncurses events because they haven't ever written a desktop GUI.  So even though ncurses can be great for turning "scripts" into "programs", they are going to shy away from ncurses because "wtf that seems hard".
+Someone who can only write code in a procedural style can't break down problems into easily solvable bits.  Without concepts like Mixins/Traits, Composing Behavior and TDD; a complex problem is just going to seem too hard.  _"I don't do that kind of stuff."_  When someone that has OO or Functional experience might say _"here's how I would do it, who wants to help me?"_  Of course there are things that are just too big but the difference is in experience.  A Bash scripter isn't ever going to understand ncurses events because they haven't ever written a desktop GUI.  So even though ncurses can be great for turning "scripts" into "programs", they are going to shy away from ncurses because _"wtf that seems hard"_.
 
 - You can't explain the benefits of a web framework because of the Blub Paradox.
 - You can't explain the benefits of an ORM vs raw SQL because of the Blub Paradox.
