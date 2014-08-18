@@ -1,0 +1,13 @@
+# Site settings
+title: Squarism
+email: squarism@gmail.com
+description: "A tech blog about ruby, code, mongodb, golang and other stuff."
+baseurl: ""
+url: "http://squarism.com/"
+twitter_username: squarism
+github_username: squarism
+
+# Build settings
+markdown: kramdown
+permalink: /:year/:month/:day/:title/
+paginate: 15

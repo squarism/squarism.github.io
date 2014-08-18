@@ -1,0 +1,37 @@
+---
+layout: post
+status: publish
+published: true
+title: ! 'Fink OSX '
+author:
+  display_name: squarism
+  login: chris
+  email: squarism@gmail.com
+  url: ''
+author_login: chris
+author_email: squarism@gmail.com
+wordpress_id: 82
+wordpress_url: http://squarism.com/2007/05/12/fink-osx/
+date: !binary |-
+  MjAwNy0wNS0xMiAxNjozNjo1NyAtMDQwMA==
+date_gmt: !binary |-
+  MjAwNy0wNS0xMiAyMTozNjo1NyAtMDQwMA==
+categories:
+- Mac
+tags: []
+comments: []
+---
+<p>I wanted lua installed on my Mac for some gamedev tests ... darwinports didn't give me a warm fuzzy.  In uninstalled DarwinPorts with:
+<code>sudo rm -rf /opt/local /Applications/DarwinPorts /Library/Tcl/darwinports1.0 /Library/StartupItems/DarwinPortsStartup</code></p>
+<p>And then downloaded fink (the universal binary).  After installing the rather large 17mb package, fink wasn't working.  First the path /sw/bin wasn't added to my profile.  I fixed that by editing ~/.bash_profile:
+<code>PATH=$PATH:/sw/bin</code>
+Simple enough but then you're supposed to type "fink scanpackages; fink index" after the install is done.  That failed like this:</p>
+<p><code>$ fink index
+...
+Failed: Can't locate auto/Term/ReadKey/termsizeopt.al in @INC</code></p>
+<p>So then I googled this and only found <a href="http://radastery.jp/blog/2006/10/intel_mac_fink.html">a jp site</a> that suggested this:
+<code>
+$ sudo perl -MCPAN -e shell
+cpan> install Term::ReadKey
+</code></p>
+<p>Which fixed the `fink index` command.</p>

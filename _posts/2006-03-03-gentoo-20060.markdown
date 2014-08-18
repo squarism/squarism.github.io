@@ -1,0 +1,47 @@
+---
+layout: post
+status: publish
+published: true
+title: Gentoo 2006.0 installer screenshots
+author:
+  display_name: squarism
+  login: chris
+  email: squarism@gmail.com
+  url: ''
+author_login: chris
+author_email: squarism@gmail.com
+excerpt: Gentoo 2006.0 was released today. Of note, is a new GUI installer on the
+  live cd. Here are some screenshots of the installer. (click read on)
+wordpress_id: 6
+wordpress_url: http://squarism.com/?p=6
+date: !binary |-
+  MjAwNi0wMy0wMyAxNjoyNzowMyAtMDUwMA==
+date_gmt: !binary |-
+  MjAwNi0wMy0wMyAyMToyNzowMyAtMDUwMA==
+categories:
+- Unix
+tags: []
+comments: []
+---
+<p><strong>Here we go!</strong></p>
+<p><a id="more"></a><a id="more-6"></a>
+Booting
+<a href="http://squarism.com/2006/03/03/gentoo-20060/2006-0-gentoo-1/"><img src="/uploads/2006/03/2006.0_gentoo_1-300x224.jpg" alt="2006.0 gentoo 1" title="2006.0 gentoo 1" width="300" height="224" class="alignnone size-medium wp-image-1274" /></a> </p>
+<p>Initial screen
+<a href="http://squarism.com/2006/03/03/gentoo-20060/2006-0-gentoo-2/"><img src="/uploads/2006/03/2006.0_gentoo_2-300x224.jpg" alt="2006.0 gentoo 2" title="2006.0 gentoo 2" width="300" height="224" class="alignnone size-medium wp-image-1275" /></a> </p>
+<p>Launching the installer wizard
+<a href="http://squarism.com/2006/03/03/gentoo-20060/2006-0-gentoo-3/"><img src="/uploads/2006/03/2006.0_gentoo_3-300x224.jpg" alt="2006.0 gentoo 3" title="2006.0 gentoo 3" width="300" height="224" class="alignnone size-medium wp-image-1276" /></a> </p>
+<p>Partition screen
+<a href="http://squarism.com/2006/03/03/gentoo-20060/2006-0-gentoo-4/"><img src="/uploads/2006/03/2006.0_gentoo_4-300x224.jpg" alt="2006.0 gentoo 4" title="2006.0 gentoo 4" width="300" height="224" class="alignnone size-medium wp-image-1277" /></a> </p>
+<p>Stage selection screen
+<a href="http://squarism.com/2006/03/03/gentoo-20060/2006-0-gentoo-5/"><img src="/uploads/2006/03/2006.0_gentoo_5-300x224.jpg" alt="2006.0 gentoo 5" title="2006.0 gentoo 5" width="300" height="224" class="alignnone size-medium wp-image-1278" /></a> </p>
+<p>Install log/progress screen
+<a href="http://squarism.com/2006/03/03/gentoo-20060/2006-0-gentoo-6/"><img src="/uploads/2006/03/2006.0_gentoo_6-300x224.jpg" alt="2006.0 gentoo 6" title="2006.0 gentoo 6" width="300" height="224" class="alignnone size-medium wp-image-1279" /></a> </p>
+<p>The GUI is a mixed blessing. It certainly is more intuitive, but you still
+rely on the docs for figuring out what they mean by snapshot, for example, to
+use the CD~Rs portage snapshot:</p>
+<p>Obtaining a Portage tree You must choose Snapshot on this screen. The
+installer will automatically install a Portage tree from the LiveCD once
+you select Snapshot; you do not need to specify a snapshot URI.</p>
+<p>It~Rs not an easy task to create UIs, I don~Rt mean to be too critical.
+This is a good direction for Gentoo and the UI adds a lot to the distro.</p>

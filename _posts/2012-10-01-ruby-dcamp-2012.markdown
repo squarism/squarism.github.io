@@ -1,0 +1,34 @@
+---
+layout: post
+status: publish
+published: true
+title: Ruby DCamp 2012!
+author:
+  display_name: squarism
+  login: chris
+  email: squarism@gmail.com
+  url: ''
+author_login: chris
+author_email: squarism@gmail.com
+wordpress_id: 1744
+wordpress_url: http://squarism.com/?p=1744
+date: !binary |-
+  MjAxMi0xMC0wMSAxNzo0NzoyMiAtMDQwMA==
+date_gmt: !binary |-
+  MjAxMi0xMC0wMSAyMjo0NzoyMiAtMDQwMA==
+categories:
+- Ruby
+- Blog
+tags: []
+comments: []
+---
+<p><img src="/uploads/2012/10/rubydcamp_2012-580x434.jpg" alt="" title="rubydcamp_2012" width="580" height="434" class="aligncenter size-large wp-image-1747" />
+Great conference!  There's a lot to be said about it.  I am not going to post it all, it would take a long of writing.  You can find things about #coderetreat <a href="http://coderetreat.org/profiles/blogs/coderetreat-london-29-09-12">meetups out there</a>.</p>
+<p>After decompressing and reflecting, I came to a philosophical realization.</p>
+<ul>
+<li>Rubyists were not taught Ruby in school or elsewhere, they willed their skill into existence.</li>
+<li>Internet access came through the air over cell and we suddenly had dev environments in the middle of the woods.</li>
+<li>The wikipedia description of game of life was just some english bullet points that were implemented 100 times</li>
+</ul></p>
+<p>So in these three ways, we willed things out of the ether and that is awesome.</p>
+<p>For a less philosophical run-down of what happened, check out <a href="http://brandonhays.com/blog/2012/10/04/ruby-dcamp-what-i-learned-on-summer-vacation/">Brandon Hays's blog</a>.</p>

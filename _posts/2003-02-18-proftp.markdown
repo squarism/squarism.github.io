@@ -1,0 +1,24 @@
+---
+layout: post
+status: publish
+published: true
+title: ProFTP
+author:
+  display_name: squarism
+  login: chris
+  email: squarism@gmail.com
+  url: ''
+author_login: chris
+author_email: squarism@gmail.com
+wordpress_id: 11
+wordpress_url: http://squarism.com/2003/02/18/proftp/
+date: !binary |-
+  MjAwMy0wMi0xOCAyMjowNTo0MiAtMDUwMA==
+date_gmt: !binary |-
+  MjAwMy0wMi0xOSAwMzowNTo0MiAtMDUwMA==
+categories:
+- News
+tags: []
+comments: []
+---
+<p>I removed the unwieldly wu-ftp stuff from the server today (wieldiness is proportional to my own knowledge) and replaced it with the ever promising <a href="http://www.proftpd.net/">ProFTP</a> server.  Of notability is its ability to avoid recursive DNS lookups which were slowing things down.  If I see an attack, I'll just do a whois.</p>

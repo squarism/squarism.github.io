@@ -1,0 +1,57 @@
+---
+layout: post
+status: publish
+published: true
+title: Parabola
+author:
+  display_name: squarism
+  login: chris
+  email: squarism@gmail.com
+  url: ''
+author_login: chris
+author_email: squarism@gmail.com
+wordpress_id: 80
+wordpress_url: http://squarism.com/2007/04/15/parabola/
+date: !binary |-
+  MjAwNy0wNC0xNSAxOTo0NDoyNCAtMDQwMA==
+date_gmt: !binary |-
+  MjAwNy0wNC0xNiAwMDo0NDoyNCAtMDQwMA==
+categories:
+- GameDev
+tags: []
+comments:
+- id: 139
+  author: chris
+  author_email: chris.pilkington@gmail.com
+  author_url: ''
+  date: !binary |-
+    MjAwOC0xMS0xMyAxNjo1MzoxNCAtMDUwMA==
+  date_gmt: !binary |-
+    MjAwOC0xMS0xMyAyMTo1MzoxNCAtMDUwMA==
+  content: ! "I can't view the code, that link doesn't work.  You can make portable
+    C++ if use portable libraries such as SDL and OpenGL.  \r\n\r\nI don't know if
+    you have already or if you are still maintaining either of these, but if you are,
+    a reasonably simple mod would be combining Parabola with Animated Box for double
+    the awesomeness.\r\nhttp://squarism.com/2007/04/01/animated-box/\r\n\r\nAnother
+    cool thing which would tick one of your goals, is adding lua support.\r\nhttp://squarism.com/questions/\r\n\r\nI
+    haven't done much lua, but you could maybe have a function in your lua file (Pseudo
+    code):\r\nvoid GetYValue(in x, out&amp; y)\r\n{\r\n  y = x;\r\n}\r\n\r\nand you
+    can easily add a million variations:\r\nvoid GetYValue(in x, out&amp; y)\r\n{\r\n
+    \ y = sin(x);\r\n}\r\n\r\netc.\r\n\r\nIt's is kind of limited like that, ie. you
+    can't get a vertical line.  You could extend it to actually read a string so that
+    you can specify either y = ... or x = ... and your program would magically work
+    it all out.\r\nI'm not sure if lua does it or not, but you could even have a check
+    in your update function that compares the last modified time of the currently
+    loaded script with the modified time of the script on the hard drive and reloads
+    it if it is newer, so you edit the script in XCode or whatever and save it and
+    the graph magically shows up."
+---
+<p><a href="http://squarism.com/2007/04/15/parabola/parabola-sketch/"><img src="/uploads/2007/04/parabola_sketch-300x185.jpg" alt="parabola sketch" title="parabola sketch" width="300" height="185" class="alignnone size-medium wp-image-1293" /></a> </p>
+<p>My goal was to create the curves above.  I knew if I could draw it then I could move a box or game object along that path.  It took me about two weeks of casual time and many math questions posted to yahoo answers.</p>
+<p>The problem is, implementing a math formula in C++.  It's just not as pretty as the equation and any algebra tricks are hard to express in code.  Not to mention remembering algebra period.  ?</p>
+<p>Eventually, I ended up with this.  I specified the starting point, the ending point and how tall I want the curve.  A series of horrible equations builds the rest into a vector of x,y point structs.  There's an LOD thing too that says how pretty the curve should be.</p>
+<p><a href="http://squarism.com/2007/04/15/parabola/parabola3/"><img src="/uploads/2007/04/parabola3-300x273.png" alt="parabola3" title="parabola3" width="300" height="273" class="alignnone size-medium wp-image-1294" /></a> </p>
+<p>Of course, it's pixilated and kinda ugly.  I tried anti-aliasing it but it doesn't look much better.  Also, I might have some math issues because in some places there seems to be small humps.  I might be running into precision problems again.  ?</p>
+<p>Overall, I'm pretty exhausted.  I don't know what my next project will be, I don't know if I want to make more of a game that's interactive instead of these little graphics tests.</p>
+<p>Also, C++ is pretty ugly imo.  It's used everywhere, I understand but I might pick up an actionscript book and see how much of this graphics stuff could be wrapped up in flash.  I bet you can do some cool low-level drawing in flash; and then it'd be more 'portable' than an OSX app.</p>
+<p>Anyway ... it's a thing of goddamn beauty for now.  Except <a href="http://wiki.ubernub.com/parabola">the code</a>, which is ugly, untidy and probably doesn't compile by itself.  I'll update it so it's stand-alone.</p>

@@ -1,0 +1,39 @@
+---
+layout: post
+status: publish
+published: true
+title: Buying a cat with logic switches
+author:
+  display_name: squarism
+  login: chris
+  email: squarism@gmail.com
+  url: ''
+author_login: chris
+author_email: squarism@gmail.com
+wordpress_id: 301
+wordpress_url: http://squarism.com/?p=301
+date: !binary |-
+  MjAxMC0wMS0yMyAxMzo0MzoxOSAtMDUwMA==
+date_gmt: !binary |-
+  MjAxMC0wMS0yMyAxODo0MzoxOSAtMDUwMA==
+categories:
+- Blog
+tags: []
+comments:
+- id: 1929
+  author: Bailey Singh
+  author_email: ''
+  author_url: ''
+  date: !binary |-
+    MjAxMC0wNS0xMSAxNjoxMDoyMyAtMDQwMA==
+  date_gmt: !binary |-
+    MjAxMC0wNS0xMSAyMToxMDoyMyAtMDQwMA==
+  content: Led lights are great because they are long lasting and consumes less electricity.  [ed.]Also,
+    I'm a bot link-spamming.
+---
+<p>Charles Petzold's book <a href="http://www.amazon.com/Code-Language-Computer-Hardware-Software/dp/0735611319">Code</a> is an awesome read.  I'm reading it again actually.  It's so elegant and simple.  Walks you through history and experiments in a style I find <em>extremely</em> invoking.  I wanted to build a logic switch but I don't want to blow anything up so I tried <a href="http://www.falstad.com/circuit/">this java applet</a> at falstad.com and it works pretty well.  I tried qucs but it's way too complicate for me and doesn't include an LED.</p>
+<p>An example from Code (this is not the exact example) is where he's trying to buy a pet from a pet store and he creates a logic circuit that will light up a light bulb when the pet is correct.  Let's say I'm looking for a normal gray cat as a house pet (not a tiger! rawr!).  When I flip all the switches correctly, the LED lights up but if I get a gray tiger (that's technically a cat) then the LED (the red dot) says nope.</p>
+<p>The salesman brings me a gray tiger.  Nope.
+<img src="/uploads/2010/01/logic_gray_tiger-300x200.png" alt="logic_gray_tiger" title="logic_gray_tiger" width="300" height="200" class="aligncenter size-medium wp-image-302" /></p>
+<p>The salesman brings me a gray cat that's not a tiger.  Yep.
+<img src="/uploads/2010/01/logic_gray_cat-300x200.png" alt="logic_gray_cat" title="logic_gray_cat" width="300" height="200" class="aligncenter size-medium wp-image-303" /></p>
