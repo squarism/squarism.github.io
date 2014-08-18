@@ -32,12 +32,22 @@ comments:
     problems I had when building Tatris which did not use a bitmap for player position,
     instead it used real 2d space of [...]'
 ---
-<p><img class="alignleft" src="http://squarism.com/files/tatris_0.3.png" alt="Tatris Screenshot" /></p>
-<p>I wrote a tetris clone using Processing.org.  I used no game framework and simply graphic and tweening libraries.  I did it in about 6 weeks during a vacation between contracts.  It's the hardest thing I've ever done.  I wrote <a href="http://squarism.com/2009/06/22/making-tatris/">a lengthy post</a> about how I constructed it.</p>
-<p>I will have the source published as soon as I decide on a git hosting service.</p>
-<p><strong>Downloads</strong>
-<a href="/files/tatris_0.3.1_mac.zip">Tatris 0.3.1 for Mac</a>
-<a href="/files/tatris_0.3.1_win.zip">Tatris 0.3.1 for Windows</a>
-<a href="/files/tatris_0.3.1_linux.zip">Tatris 0.3.1 for Linux</a></p>
-<p>Or you can play online (opens a popup).  Click <a href="http://squarism.com/files/tatris_applet/">here</a>.</p>
-<p><em>This game study has no associate with the Tetris LLC or it's properties.  If the name constitutes a breach of copyright, please leave a comment.</em></p>
+![](/uploads/2009/04/tatris_03.png)
+
+<p>I wrote a tetris clone using Processing.org.  I used no game framework and simply graphic and tweening libraries.  I did it in about 6 weeks during a vacation between contracts.  It was the hardest thing I had ever done at the time.  I wrote <a href="http://squarism.com/2009/06/22/making-tatris/">a lengthy post</a> about how I constructed it.</p>
+
+The source code is available [here](https://github.com/squarism/tatris) but it is not reference code by any stretch.
+
+<!--
+<p>
+  <strong>Downloads</strong>
+  <a href="/files/tatris_0.3.1_mac.zip">Tatris 0.3.1 for Mac</a>
+  <a href="/files/tatris_0.3.1_win.zip">Tatris 0.3.1 for Windows</a>
+  <a href="/files/tatris_0.3.1_linux.zip">Tatris 0.3.1 for Linux</a>
+</p>
+
+<p>Or you can play online (opens a popup).  Click <a href="http://squarism.com/files/tatris_applet/">here</a>. -->
+
+<em>Downloads relocated ... will have them up again soon.</em>
+
+<p><em>This game study has no associate with the Tetris LLC or it's properties.  If the name constitutes a breach of copyright, please contact @squarism on twitter.</em></p>
