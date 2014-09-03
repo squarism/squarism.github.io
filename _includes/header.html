@@ -17,6 +17,10 @@
         </svg>
       </a>
       <div class="trigger">
+        <!-- static links -->
+        <a class="page-link" href="https://squarism.hackpad.com/ctw84GWwzYf">Hackpad</a>
+
+        <!-- page links -->
         {% for page in site.pages %}
           {% if page.title %}<a class="page-link" href="{{ page.url | prepend: site.baseurl }}">{{ page.title }}</a>{% endif %}
         {% endfor %}
