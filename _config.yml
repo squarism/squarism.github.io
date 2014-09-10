@@ -11,3 +11,4 @@ github_username: squarism
 markdown: kramdown
 permalink: /:year/:month/:day/:title/
 paginate: 15
+excerpt_separator: "<!-- more -->"

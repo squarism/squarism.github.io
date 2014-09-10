@@ -10,9 +10,17 @@ layout: default
     <p class="author">
       <span class="post-date">{{ post.date | date: "%b %-d, %Y" }}</span>
     </p>
+
     <div class="post-content">
-      {{ post.content }}
+      {% if post.content contains '<!-- more -->' %}
+        {{ post.content | split:'<!-- more -->' | first }}
+        <p><a href="{{ post.url }}">Continue reading</a></p>
+      {% else %}
+        {{ post.content }}
+      {% endif %}
     </div>
+
+
 
     <hr>
   {% endfor %}

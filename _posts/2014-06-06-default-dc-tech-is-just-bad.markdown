@@ -40,6 +40,9 @@ comments:
 <blockquote>
 If you move to DC for the tech jobs, you are going to have to prune a lot of C-minus government work if you are good.  All the while, you will be paying for local benefits you are not taking advantage of.  This is the land of politics, military, intelligence, big government and lobbyists.  I tried to influence from within but now it's time for me to GTFO and move to Portland to try to find "actual reality" jobs.</blockquote>
 </p>
+
+<!-- more -->
+
 <h3>I've Been Here Too Long</h3>
 <p>
 I've lived in the DC area for 30 years.  I've been working for 14.  You might as well say I've lived around DC my whole life.  I went to School and College in Northern Virginia.  Northern Virginia and Maryland are part of the DC metropolitan area or what we would call the "DC Metro".  This is a little bit confusing because if you say "The Metro" then you mean the subway.  I've traveled around and lived other places but you could say I've been here for a long time.  Recently, I've concluded that DC isn't all bad but I've been here too long.  Also I feel like a slow learner in that it has taken me so long to realize these things.  I'm doing something about it and I'll talk about that later.</p>
@@ -48,6 +51,7 @@ I've lived in the DC area for 30 years.  I've been working for 14.  You might as
 Beltway bandit is a term for private companies located in or near Washington, D.C. whose major business is to provide consulting services to the US government.
 </p>
 </blockquote>
+
 <p>At every company there's been good and bad parts.  I've been happier lately because of my move to something non-typical but I'm still done with the area.  The problems are very complicated but at the core of it are a few common patterns which I'll talk about later.  It's not the companies' or the people's fault, it's the Beltway culture.  It's not micro, it's macro.  It's not the individuals, it's the whole.  It's <a href="http://www.washingtonpost.com/opinions/review-of-mark-leibovichs-this-town/2013/07/03/5d882b8c-de9f-11e2-b94a-452948b95ca8_story.html">This Town</a>.</p>
 <p>At the same time, there are some start-ups and smaller consulting shops that I've found very interesting.  <a href="http://viget.com/">Viget Labs</a> is outside DC a little bit and they do cool stuff like Rails consulting, UX, frontend stuff, iOS (iirc) and even have meetups in their corporate office space.  But I think this is because they are bringing outside culture into DC not because they are native.  Default DC tech doesn't host meetups, have hack-a-thons or get valley culture right.  It's emulation.  I look at the lame attempts to adopt agile in recent years and it's just cargo culting.</p>
 <p><a href="http://blog.sei.cmu.edu/post.cfm/using-agile-effectively-in-dod-environments">Using Agile Effectively in a DoD Environment</a> - Give me a break.  It might as well say "doing fast things in a slow environment".  It's a fight.  You have to fight the default.  If you listen to speakers at talks like this one, sometimes you will hear these exact words.  <em>"We had to fight ... against the grain ... it was a struggle to ..."</em></p>
