@@ -1,7 +1,7 @@
 # Site settings
-title: Squarism
+title: [ squarism ]
 email: squarism@gmail.com
-description: "A tech blog about ruby, code, mongodb, golang and other stuff."
+description: "I'm from the valley of the heavy heads."
 baseurl: ""
 url: "http://squarism.com/"
 twitter_username: squarism

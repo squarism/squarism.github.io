@@ -361,3 +361,15 @@ I accept all death threats as fact.
 .author {
   margin-top: -27px;
 }
+
+
+/* images */
+.post-content img {
+  border: 1px solid #ddd;
+  padding: 3px;
+  margin: 7px;
+}
+
+.post-content img.right {
+  float: right;
+}
