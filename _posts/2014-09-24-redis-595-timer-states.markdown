@@ -70,8 +70,8 @@ I also wish that you could break out PiPiper's watch events to have two blocks f
   excessive because reboots in Linux rarely solve anything.  What I
   think it does do is give the pins time to quiet down.  This is strange
   to me from a `/dev` or `/proc` standpoint.  I've never seen pins cause
-  file locks before __(in unix, everything is a file, sure but it's still
-  weird)__.
+  file locks before _(in unix, everything is a file, sure but it's still
+  weird)_.
 	- Electrical problems might cause `Device or resource busy`?  Check grounds?
 - Clocks.  I'm reading the state kind of "by chance".  What if the state changes in the middle of a read?  Ah!  Clocks!  It's like a contract!  I get it now.  I'm not interested enough in making this "lolscale" to implement this.  I bet there's something better than what I'm doing.
 - The 595.  Through playing with the 595's various aspects, I feel I grok the 595 now.
