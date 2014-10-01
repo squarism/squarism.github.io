@@ -34,7 +34,8 @@ comments:
     is wrong.  Most all of those\r\nthings you claim don't exist, do exist.  You just
     didn't try hard enough.\r\n\r\nYou're adorable :)"
 ---
-<p><img src="/uploads/2013/09/pixel-ribbon_redolution.png" alt="pixel-ribbon_redolution" width="576" height="24" class="aligncenter size-full wp-image-2108" /></p>
+![Post Ribbon](/ribbons/pixel-ribbon_redolution.png){:.ribbon}
+
 <p>Let's do something terrible by hand.  First, here's our data.  It comes from a database.</p>
 {% highlight ruby %}
 db_results = [

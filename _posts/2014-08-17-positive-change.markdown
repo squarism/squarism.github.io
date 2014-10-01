@@ -4,7 +4,7 @@ status: publish
 published: true
 title: Positive Change
 ---
-![good_enough](/uploads/2013/04/good_enough-580x24.png)
+![Post Ribbon](/ribbons/pixel-ribbon-good_enough.png){:.ribbon}
 
 I've been in Portland for a week.  So far, it's amazing.  I really don't want to blather on about how great it is because, to be honest, I'm afraid of boyish optimism.  This town, like college, will probably give back whatever I put into it.  So I'm pacing myself.  I think it will be good though.
 

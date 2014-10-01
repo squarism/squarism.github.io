@@ -370,6 +370,11 @@ I accept all death threats as fact.
   margin: 7px;
 }
 
+
 .post-content img.right {
   float: right;
+}
+
+img.ribbon {
+  border: 0px solid #fff;
 }

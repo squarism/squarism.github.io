@@ -32,6 +32,8 @@ comments:
     http://squarism.com/2014/06/06/default-dc-tech-is-just-bad/
     [&#8230;]'
 ---
+![Post Ribbon](/ribbons/pixel-ribbon-good_enough.png){:.ribbon}
+
 <p><img src="/uploads/2014/05/dc_capitol.jpg" alt="dc_capitol" width="500" height="333" class="aligncenter size-large wp-image-2137" /></p>
 <p><small><em>The opinions of this blog, but especially this post are mine and not my employers'.</em></small></p>
 <p>I'm done with DC.  I need to archive the reasons why for myself.  I hope this serves as a free field trip to the DC area for anyone outside the beltway.</p>

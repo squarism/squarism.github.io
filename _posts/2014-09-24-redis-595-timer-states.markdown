@@ -4,7 +4,7 @@ status: publish
 published: true
 title: Redis and 595 Timer States
 ---
-![Pixel Ribbon](/ribbons/pixel-ribbon_air_mail.png){:.ribbon}
+![Post Ribbon](/ribbons/pixel-ribbon-good_enough.png){:.ribbon}
 
 I wanted to learn about how a 595 timer chip works.  I'm a code dude.  So when I see this integrated chip and all its pins, it's scary.  I'm sure an EE major is giggling right now but that's just [Impostor Syndrome](http://en.wikipedia.org/wiki/Impostor_syndrome).  For no reason beyond this, I wanted to visualize and grok a 595 timer's state at any given point by having it's pins mapped to Redis key/value pairs.
 
