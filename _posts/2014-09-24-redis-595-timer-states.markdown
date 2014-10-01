@@ -19,6 +19,9 @@ Here's my initial drawing on how I thought it was going to work.
 
 ![595 Sketch](/uploads/2014/09/595_sketch.png)
 
+It didn't work this way in the end.  There were no buttons and it didn't
+send the number over serial.  Also, I did 3 bits instead of 8.
+
 ### Electronics
 
 The 595 timer chip isn't really scary.  You can read about them on [Adafruit](https://learn.adafruit.com/adafruit-arduino-lesson-4-eight-leds/the-74hc595-shift-register) but the real breakthrough for me was this [interactive 595 timer toy](http://conductiveresistance.com/2011/02/28/interactive-595-shift-register-simulator/) online.
