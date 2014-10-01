@@ -4,7 +4,7 @@ status: publish
 published: true
 title: Redis and 595 Timer States
 ---
-![Pixel Ribbon](/ribbons/pixel-ribbon_air_mail.png)
+![Pixel Ribbon](/ribbons/pixel-ribbon_air_mail.png){:.ribbon}
 
 I wanted to learn about how a 595 timer chip works.  I'm a code dude.  So when I see this integrated chip and all its pins, it's scary.  I'm sure an EE major is giggling right now but that's just [Impostor Syndrome](http://en.wikipedia.org/wiki/Impostor_syndrome).  For no reason beyond this, I wanted to visualize and grok a 595 timer's state at any given point by having it's pins mapped to Redis key/value pairs.
 
@@ -65,10 +65,16 @@ I also wish that you could break out PiPiper's watch events to have two blocks f
 
 - RPi GPIO isn't perfect.
 	- Sudo stuff is unfortunate.
-	- The best way to reset is to unplug all the GPIO and reboot.
+	- The best way to reset GPIO if it complains about `Device or resource
+  busy` is to unplug all the GPIO pins and reboot.  Rebooting I think is
+  excessive because reboots in Linux rarely solve anything.  What I
+  think it does do is give the pins time to quiet down.  This is strange
+  to me from a `/dev` or `/proc` standpoint.  I've never seen pins cause
+  file locks before __(in unix, everything is a file, sure but it's still
+  weird)__.
 	- Electrical problems might cause `Device or resource busy`?  Check grounds?
 - Clocks.  I'm reading the state kind of "by chance".  What if the state changes in the middle of a read?  Ah!  Clocks!  It's like a contract!  I get it now.  I'm not interested enough in making this "lolscale" to implement this.  I bet there's something better than what I'm doing.
-- The 595.  Through playing with this an its various aspects, I feel I grok the 595 now.
+- The 595.  Through playing with the 595's various aspects, I feel I grok the 595 now.
 - This won't scale forever.  Reading the pins is slow and the 595 can really flip states fast.  If I really wanted to read this at some kind of insane throughput, I'd have to really think about it.  In other words, this toy is kind of performance-stupid.
 - Grounding is very important.  I had some shorts along the way and I don't understand why.
 - This was my first project with RPi GPIO, so that was fun.
