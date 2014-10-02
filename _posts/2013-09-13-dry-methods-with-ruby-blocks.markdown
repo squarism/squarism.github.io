@@ -20,23 +20,9 @@ categories:
 - Blog
 tags: []
 comments:
-- id: 10418
-  author: Riot Nrrrd&acirc;&bdquo;&cent;
-  author_email: Riot.Nrrrd.mail@Gmail.COM
-  author_url: ''
-  date: !binary |-
-    MjAxNC0wNS0wNiAwNzoxODozOSAtMDQwMA==
-  date_gmt: !binary |-
-    MjAxNC0wNS0wNiAxMjoxODozOSAtMDQwMA==
-  content: ! "A Google search for \"htop\" on Solaris got me to your old \"Goddamn
-    Solaris\" post.\r\n\r\nI should comment over there, but I bet you'd never see
-    if it I did.\r\n\r\nAlmost every one of your rant/assertions in that article
-    is wrong.  Most all of those\r\nthings you claim don't exist, do exist.  You just
-    didn't try hard enough.\r\n\r\nYou're adorable :)"
 ---
-![Post Ribbon](/ribbons/pixel-ribbon_redolution.png){:.ribbon}
+Let's do something terrible by hand.  First, here's our data.  It comes from a database.
 
-<p>Let's do something terrible by hand.  First, here's our data.  It comes from a database.</p>
 {% highlight ruby %}
 db_results = [
   { id: 1, login: 'mjay', roles: ['user'], projects: ['muffins'] },
@@ -47,7 +33,7 @@ db_results = [
 ]
 {% endhighlight %}
 
-<p>Now when working with these people, we probably could get away with doing something like this for a while:</p>
+Now when working with these people, we probably could get away with doing something like this for a while:
 
 {% highlight ruby %}
 # find all admins
@@ -55,7 +41,8 @@ admins = db_results.select {|user| user[:roles].include? 'admin' }
 {% endhighlight %}
 
 
-<p>Which is fine.  Until you want to find out what people are on the Muffin Project:</p>
+Which is fine.  Until you want to find out what people are on the Muffin Project:
+
 {% highlight ruby %}
 # find all people working on the muffins project
 people_on_muffins = db_results.select {|user| user[:projects].include? 'muffins' }

@@ -4,8 +4,6 @@ status: publish
 published: true
 title: Positive Change
 ---
-![Post Ribbon](/ribbons/pixel-ribbon-good_enough.png){:.ribbon}
-
 I've been in Portland for a week.  So far, it's amazing.  I really don't want to blather on about how great it is because, to be honest, I'm afraid of boyish optimism.  This town, like college, will probably give back whatever I put into it.  So I'm pacing myself.  I think it will be good though.
 
 Our house is completely empty while we wait for our movers to arrive and that's ok.  I've been getting a lot done without all the distractions.  One of my favorite pictures of Steve Jobs is where he is sitting in an almost empty room with nothing but books.  I'm not trying to be Steve Jobs but I appreciate the minimalism because my house looks very similar to this picture right now.

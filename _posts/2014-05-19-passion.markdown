@@ -21,9 +21,8 @@ categories:
 tags: []
 comments: []
 ---
-![Post Ribbon](/ribbons/pixel-ribbon_redolution.png){:.ribbon}
+On a [Ruby Rogues podcast about Passion](http://rubyrogues.com/144-rr-passion/), Avdi continued to  enlighten and entertain me with his insights.  I've really been enjoying his speaking style and  voice lately through tapas and talks.  If he reads this, I hope he understands I don't disagree with what he is saying; I thought he would enjoy a related story.
 
-<p>On a <a href="http://rubyrogues.com/144-rr-passion/">Ruby Rogues podcast about Passion</a>, Avdi continued to  enlighten and entertain me with his insights.  I've really been enjoying his speaking style and  voice lately through tapas and talks.  If he reads this, I hope he understands I don't disagree with what he is saying; I thought he would enjoy a related story.</p>
 <p>Honestly, this topic is so massive I don't think I can really offer too much more than the Rogues did on the podcast so I encourage you to <a href="http://rubyrogues.com/144-rr-passion/">listen to the episode yourself</a>.  It has almost nothing to do with programming or Ruby.  I feel that philosophies and stories about passion are so close to the difficult and inevitable goal of "master yourself", which is both complicated and personal, I can just barely approach the topic and then a rat's nest of anecdotes and advice explodes all around us.</p>
 <p>With that context laid out, here are a few stories.</p>
 <p>On the podcast, the rogues talked about two PhDs that would scream at each other in the office on a daily basis.  Avdi said that he's had similar experiences personally and said:</p>
