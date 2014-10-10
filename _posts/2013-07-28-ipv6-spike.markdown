@@ -21,7 +21,8 @@ categories:
 tags: []
 comments: []
 ---
-<p>A spike is when you play around with something and then throw it away for the purposes of learning.  So, let's play around with IPv6.  I had read a little bit about it but essentially my working experience with IPv6 was nothing except for disabling it.  Let's learn some stuff!</p>
+A spike is when you play around with something and then throw it away for the purposes of learning.  So, let's play around with IPv6.  I had read a little bit about it but essentially my working experience with IPv6 was nothing except for disabling it.  Let's learn some stuff!
+
 <p>I'm going to skip over all the history of IPv6 and assume that you agree with me and think that this is important and relevant to the future of the Internet.</p>
 <h2>Setup</h2>
 <p>

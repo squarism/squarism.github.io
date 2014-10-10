@@ -21,8 +21,6 @@ categories:
 tags: []
 comments: []
 ---
-![Post Ribbon](/ribbons/pixel-ribbon_grass.png){:.ribbon}
-
 <p>I've been thinking about the problems with The Cloud outside it being a raging buzzword.  It really comes down to <em>Control and Connectivity</em>.  That's the problem but allow me to elaborate.</p>
 
 <h2>Control</h2><p>
