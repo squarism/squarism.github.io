@@ -1,14 +1,50 @@
-# Site settings
-title: [ squarism ]
-email: squarism@gmail.com
-description: "I'm from the valley of the heavy heads."
-baseurl: ""
-url: "http://squarism.com/"
-twitter_username: squarism
-github_username: squarism
+baseurl: "" # The subpath of your site. Use "" if you're hosting a blog at the root level.
+# url: "http://squarism.com" # the base hostname & protocol for your site
+title: "[ squarism ]"
 
-# Build settings
-markdown: kramdown
+# This is used by feed.xml. Uncomment if you want to use it.
+description: "I'm from the valley of the heavy heads."
+links:
+  - title: Home
+    url: /
+    external: false
+    icon: home
+  - title: Archive
+    url: /archive
+    external: false
+    icon: archive
+  - title: About
+    url: /about
+    external: false
+    icon: home
+
+projects:
+  - title: Tatris
+    url: /tatris
+    description: A tetris clone
+  - title: Arduino Cat Faucet
+    url: /2011/03/09/arduino-cat-faucet-with-mongodb-and-rails
+    # description: Overengineered cat watering thing.
+
+gems:
+  - jemoji
+exclude:
+  - "README.md"
+  - "CHANGELOG.md"
+  - "CNAME"
+  - "Gemfile"
+  - "Gemfile.lock"
 permalink: /:year/:month/:day/:title/
-paginate: 15
-excerpt_separator: "<!-- more -->"
+defaults:
+  -
+    scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+  -
+    scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"

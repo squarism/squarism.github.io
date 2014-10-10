@@ -1,0 +1,160 @@
+// Add your own custom CSS here.
+@import "pygments-tomorrow";
+
+.post-content img,
+.post-excerpt-home img,
+.post-nav img {
+  @extend .img-rounded;
+}
+.post-content table,
+.post-excerpt-home table,
+.post-nav table {
+  @extend .table;
+  @extend .table-bordered;
+}
+
+
+
+.debug {
+  border: 1px solid red;
+}
+
+.business_card {
+  width: 300px;
+  height: 480px;
+  padding: 1em;
+  margin: 0.5em;
+  z-index: -5;
+  border-left: 1px solid #eee;
+}
+
+.business_card .name_area {
+  height: 50%;
+  padding-bottom: 1em;
+  text-align: center;
+}
+
+.business_card .contact_details {
+  height: 50%;
+  padding-top: 1em;
+}
+
+.name_area .mug {
+  margin-left: 25%;
+  margin-right: 50%;
+  width: 160px;
+  height: 160px;
+  margin-top: 20px;
+  margin-bottom: 5px;
+  background: url('images/mug.png');
+}
+
+.name_area .name {
+  width: 160px;
+  height: 20px;
+  margin-left: 25%;
+  margin-right: 50%;
+  z-index: 3;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.business_card ul {
+  list-style-type: none;
+}
+
+.business_card li {
+}
+
+
+.contact_details .detail_key {
+  background: #0e191d;
+  padding-top: 5px;
+  padding-left: 10px;
+  padding-right: 20px;
+  padding-bottom: 5px;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  width: 50%;
+  float: left;
+  margin-bottom: 0.75em;   /* line spacing between contact detail ribbons */
+  position: relative;
+  left: -80px;
+}
+
+.contact_details .detail_value {
+  z-index: -3;
+  padding-top: 3px;
+  padding-bottom: 7px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-right: 18px;
+  font-weight: bold;
+  font-size: 16px;
+  width: 30%;
+  float: right;
+  position: relative;
+  left: -80px;
+}
+
+.business_card .gutter_bar {
+  position: absolute;
+  left: 2em;
+  top: 72px;
+  height: 449px;
+  width: 24px;
+}
+
+.business_card .talk_icon {
+  position: relative;
+  font-size: 48px;
+  float: right;
+  left: -20px;
+  z-index: 1;
+}
+
+.business_card .talk_icon_bg {
+  left: 25px;
+  top: -7px;
+  z-index: 0;
+}
+
+.business_card .hi {
+  font-family: "Arial", sans;
+  font-weight: light;
+  color: #ccc;
+  font-size: 11px;
+  margin-bottom: -20px;
+  left: 20px;
+  position: relative;
+}
+
+.business_card #vertical_stripes {
+  z-index: -1;
+  height: 481px;
+  top: -16px;
+  left: -10px;
+  float: left;
+  position: relative;
+}
+
+.business_card #vertical_stripes .stripe {
+  z-index: -2;
+  float: left;
+  width: 8px;
+  height: 100%;
+}
+
+/* Good Enough Theme
+ * #304140 #2e5949 #759857 #89bc86 #2e3b3d #3b0902 #e17811 #db3012 #8a8c54 #0e191d #dc3112 #6e0604
+ */
+#stripe-1 { background: #3b0902; }
+#stripe-2 { background: #0e191d; }
+#stripe-3 { background: #2e3b3d; }
+#stripe-4 { background: #304140; }
+#stripe-5 { background: #2e5949; }
+#stripe-6 { background: #8a8c54; }
+#stripe-7 { background: #759857; }
+#stripe-8 { background: #89bc86; }
