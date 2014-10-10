@@ -14,6 +14,17 @@
 }
 
 
+.sidebar {
+  margin-left: 5em;
+}
+
+.sidebar li {
+  line-height: 0.75em;
+  margin-top: 4em;
+  margin-top: 0px;
+  padding-bottom: 0px;
+  padding-top: 0px;
+}
 
 .debug {
   border: 1px solid red;
@@ -103,7 +114,7 @@
   position: absolute;
   left: 2em;
   top: 72px;
-  height: 449px;
+  height: 849px;
   width: 24px;
 }
 
@@ -133,7 +144,7 @@
 
 .business_card #vertical_stripes {
   z-index: -1;
-  height: 481px;
+  height: 881px;
   top: -16px;
   left: -10px;
   float: left;
