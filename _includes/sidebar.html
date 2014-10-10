@@ -1,20 +1,4 @@
-<h3 class="section-header">
-  Projects
-</h3>
-
-<ul class="nav nav-stacked">
-{% for project in site.projects %}
-  <li>
-    <a href="{{project.url}}">{{ project.title }}
-      {% if project.description %}
-       - <span class="muted">{{project.description}}</span> </a>
-      {% else %}
-        </a>
-      {% endif %}
-   </li>
-{% endfor %}
-</ul>
-
+<!-- Contact Details -->
 
 <div class="business_card">
 
@@ -59,4 +43,21 @@
     </ul>
   </div>
 
+</div>
+
+
+<!-- Project List -->
+<div class="sidebar">
+  <h3 class="section-header">
+    Projects
+  </h3>
+
+
+  <ul class="nav">
+  {% for project in site.projects %}
+    <li>
+      <a href="{{project.url}}">{{ project.title }}</a>
+     </li>
+  {% endfor %}
+  </ul>
 </div>

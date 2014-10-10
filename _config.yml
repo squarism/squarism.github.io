@@ -19,12 +19,13 @@ links:
     icon: home
 
 projects:
-  - title: Tatris
+  - title: Tatris - A tetris clone
     url: /tatris
-    description: A tetris clone
   - title: Arduino Cat Faucet
     url: /2011/03/09/arduino-cat-faucet-with-mongodb-and-rails
     # description: Overengineered cat watering thing.
+  - title: 595 Chip with Redis
+    url: /2014/09/24/redis-595-timer-states/
 
 gems:
   - jemoji
