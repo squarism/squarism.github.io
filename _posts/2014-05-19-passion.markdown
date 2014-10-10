@@ -23,32 +23,47 @@ comments: []
 ---
 On a [Ruby Rogues podcast about Passion](http://rubyrogues.com/144-rr-passion/), Avdi continued to  enlighten and entertain me with his insights.  I've really been enjoying his speaking style and  voice lately through tapas and talks.  If he reads this, I hope he understands I don't disagree with what he is saying; I thought he would enjoy a related story.
 
-<p>Honestly, this topic is so massive I don't think I can really offer too much more than the Rogues did on the podcast so I encourage you to <a href="http://rubyrogues.com/144-rr-passion/">listen to the episode yourself</a>.  It has almost nothing to do with programming or Ruby.  I feel that philosophies and stories about passion are so close to the difficult and inevitable goal of "master yourself", which is both complicated and personal, I can just barely approach the topic and then a rat's nest of anecdotes and advice explodes all around us.</p>
-<p>With that context laid out, here are a few stories.</p>
-<p>On the podcast, the rogues talked about two PhDs that would scream at each other in the office on a daily basis.  Avdi said that he's had similar experiences personally and said:</p>
-<blockquote><p>
-I've gotten upset with people for their code because it was so stupid. I've gotten angry and I've said mean things. And you know what? All those instances, those were wastes of my passion. That was wasted emotional energy.
-</p></blockquote>
-<p>I know what he's trying to say.  There are moments when this is true.  In fact, I would say in the  majority of cases it's better to just "get over it" (a challenge itself).  Most of the time I try to run in this mode.  Most of the time I fail.  It's especially hard when you feel like you need to "represent".</p>
-<h2>Story Time</h2><p>
-<p>
-Here was my situation.  A "lead architect" I sat with in a shared office room was named "Bradly".  Bradly was not his real name but it will help you remember that Bradly was Bad.  He was a lead  architect of our project but he couldn't code and he couldn't build servers.  He had some very  narrow skills in a certain problem domain but those skills weren't general enough for him to be an "architect".  He got the title/position through a previous successful project.  I'm just setting up the scenario here.</p>
-<p>We had an application in the middle-tier, doesn't really matter what it did except that it talks  to a database.  His bright idea was to install a database on every node to reduce network traffic.  We were vendor-locked into Oracle.  We had at least 10 servers that this design decision would impact.  We really needed 1 database but we would be purchasing 10.  I was the only one on the  project that could or would argue against the decision.</p>
-<p>It was very simple from my point of view:
+Honestly, this topic is so massive I don't think I can really offer too much more than the Rogues did on the podcast so I encourage you to <a href="http://rubyrogues.com/144-rr-passion/">listen to the episode yourself</a>.  It has almost nothing to do with programming or Ruby.  I feel that philosophies and stories about passion are so close to the difficult and inevitable goal of "master yourself", which is both complicated and personal, I can just barely approach the topic and then a rat's nest of anecdotes and advice explodes all around us.
+
+With that context laid out, here are a few stories.
+
+<!-- more -->
+
+On the podcast, the rogues talked about two PhDs that would scream at each other in the office on a daily basis.  Avdi said that he's had similar experiences personally and said:
+
+> I've gotten upset with people for their code because it was so stupid. I've gotten angry and I've said mean things. And you know what? All those instances, those were wastes of my passion. That was wasted emotional energy.
+
+I know what he's trying to say.  There are moments when this is true.  In fact, I would say in the  majority of cases it's better to just "get over it" (a challenge itself).  Most of the time I try to run in this mode.  Most of the time I fail.  It's especially hard when you feel like you need to "represent".</p>
+
+### Story Time
+
+Here was my situation.  A "lead architect" I sat with in a shared office room was named "Bradly".  Bradly was not his real name but it will help you remember that Bradly was Bad.  He was a lead  architect of our project but he couldn't code and he couldn't build servers.  He had some very  narrow skills in a certain problem domain but those skills weren't general enough for him to be an "architect".  He got the title/position through a previous successful project.  I'm just setting up the scenario here.
+
+We had an application in the middle-tier, doesn't really matter what it did except that it talks  to a database.  His bright idea was to install a database on every node to reduce network traffic.  We were vendor-locked into Oracle.  We had at least 10 servers that this design decision would impact.  We really needed 1 database but we would be purchasing 10.  I was the only one on the  project that could or would argue against the decision.
+
+
+It was very simple from my point of view:
+
 - Three tier architecture is front, middle, back.  Normally that's web, app server, database.
 - No one installs databases on their app servers to reduce network traffic.
 - We didn't know that network traffic is the (or a) bottleneck.
 - Oracle database licenses sell for about $20k + $?? annual support.
 - We were going to have a failover site so this single decision was on the order of $400k.
-- Running 10 databases is hard.  Replication is hard.  Oracle RDBMS does not "want" this layout.</p>
-<p>Bradly's argument was:
+- Running 10 databases is hard.  Replication is hard.  Oracle RDBMS does not "want" this layout.
+
+Bradly's argument was:
+
 - Networks (gigabit, brand new awesome switches) are slow.
-- Local databases would avoid the network.</p>
+- Local databases would avoid the network.
+
 <hr>
+
 Just to be clear, this is a simplified version of what Bradly wanted.
-<p>
-<img src="/uploads/2014/05/tier_architecture_one.png" alt="tier_architecture_one" width="403" height="364" class="aligncenter size-full wp-image-2119" /></p>
+
+![tier_architecture_one](/uploads/2014/05/tier_architecture_one.png)
+
 <hr>
+
 This is what I wanted.
 <p>
 <img src="/uploads/2014/05/tier_architecture_two.png" alt="tier_architecture_two" width="403" height="304" class="aligncenter size-large wp-image-2120" />

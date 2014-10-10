@@ -21,8 +21,6 @@ categories:
 tags: []
 comments: []
 ---
-<p><img src="/uploads/2013/05/pixel-ribbon_northface.png" alt="pixel-ribbon_northface" width="576" height="24" class="aligncenter size-full wp-image-2005" /></p>
-
 <p>Actually no.</p>
 
 <p>I love <a href="https://github.com/maccman/supermodel">Supermodel</a>.  It might be overcome by ActiveModel::Model in Rails 4 but until then Supermodel is a fantastic in-memory database for Ruby that has a lot of advantages over using just a plain hash or trying to roll your own.</p>
@@ -42,6 +40,7 @@ end
 @errors={}, @previously_changed={"bacon"=>[nil, "tasty"]}>
 {% endhighlight %}
 
+<!-- more -->
 
 <p>Ok, that ID of 70095779847820 seems good enough right?  Let's see!</p>
 

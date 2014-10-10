@@ -21,7 +21,6 @@ categories:
 tags: []
 comments: []
 ---
-<p><img src="/uploads/2013/06/pixel-ribbon_company_profile.png" alt="pixel-ribbon_company_profile" width="576" height="24" class="aligncenter size-full wp-image-2014" /></p>
 <p>CSV is awful.  CSV isn't well formed.  It isn't hard to use because it's bloated and slow.  CSV is hard to use because it's just a dumb data format.  However, sometimes all you have is stupid data and <em>who cares, let's do this thing and blot out the memories</em>.</p>
 <p>I assume you know how to use the CSV module that's built into Ruby.  It's pretty easy.  You just read a file in and you get some 2D array back.  It usually comes out pretty horrible with long methods and little room for nice abstractions.</p>
 <p>So what if you want to polish it up a little bit?  Maybe you aren't just going to kludge this thing again and hate yourself later?  What if you aren't just going to load this into a database?  What if you want to do some quick CSV analysis but at the same time make it come out sort of readable?</p>
@@ -36,6 +35,8 @@ Lewis Black, 5, Yes, No
 Jon Stewart, 3, Yes, Yes
 Jim Gaffigan, 0, Yes, No
 </pre>
+
+<!-- more -->
 
 <p>Supermodel is pretty old and I like it a lot but it hasn't been updated in a while and has some open pull requests.  I took at look at some alternatives but it didn't work out.
 - ActiveModel from Rails 3 is hard to make generic

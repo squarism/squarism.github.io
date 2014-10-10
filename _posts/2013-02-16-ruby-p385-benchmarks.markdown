@@ -21,7 +21,6 @@ categories:
 tags: []
 comments: []
 ---
-<p><img src="/uploads/2013/02/pixel-ribbon_electric_fun.png" alt="pixel-ribbon_electric_fun" width="576" height="24" class="aligncenter size-full wp-image-1991" /></p>
 <p>I was playing around with the falcon p385 patch to see if it's any faster than some of the more recent MRI rubies.
 <strong>TL;DR version: looks like p192 is faster than p385 of any type or tweak.</strong></p>
 <p>Here's how to get a p385 Ruby version patched with funny falcon's performance patches using RVM.
@@ -38,6 +37,8 @@ Then rvm use 1.9.3-p385-perf or set it as your global ruby.  </p>
 <h3>Test Setup</h3>
 <p>
 The following benchmarks were run on an i7 server with a RAID5 array.  The disk is slow (lack of large cache) but the benchmarks were run on the same box so it should compare apples-to-apples.</p>
+
+<!-- more -->
 
 <p>From here on out, here are the definitions for the Ruby versions.
 <pre>

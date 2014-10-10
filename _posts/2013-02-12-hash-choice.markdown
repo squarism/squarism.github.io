@@ -41,6 +41,7 @@ comments: []
 ]
 {% endhighlight %}
 
+<!-- more -->
 
 <p>In this case of an array of hashes, the data is easier to manipulate with array operations and filters.  But before talking about matching on arrays of hashes, I want to talk about matching on dates.</p>
 

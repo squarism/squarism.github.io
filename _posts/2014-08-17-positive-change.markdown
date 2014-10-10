@@ -8,6 +8,8 @@ I've been in Portland for a week.  So far, it's amazing.  I really don't want to
 
 Our house is completely empty while we wait for our movers to arrive and that's ok.  I've been getting a lot done without all the distractions.  One of my favorite pictures of Steve Jobs is where he is sitting in an almost empty room with nothing but books.  I'm not trying to be Steve Jobs but I appreciate the minimalism because my house looks very similar to this picture right now.
 
+<!-- more -->
+
 ![steve](/uploads/2014/08/stevejobs.png)
 
 I went downtown and got through most of the angular.js tutorial.  The commute to an amazing spot downtown was universally less painful than doing the equivalent in DC.  I'm floored and excited.

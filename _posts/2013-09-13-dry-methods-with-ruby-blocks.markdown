@@ -51,6 +51,8 @@ people_on_muffins = db_results.select {|user| user[:projects].include? 'muffins'
 
 <p>But as you keep working, you might be getting a feeling of deja-vu.  The two methods above are very similar.  You might be inspired by other Ruby libraries which give you a tiny DSL or at least allow you to pass blocks into methods to be more expressive.</p>
 
+<!-- more -->
+
 <h2>The Smell</h2>
 Here's the complete code smelly example.
 

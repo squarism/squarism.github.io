@@ -21,11 +21,12 @@ categories:
 tags: []
 comments: []
 ---
-<p><img src="/uploads/2013/05/pixel-ribbon_chem.png" alt="pixel-ribbon_chem" width="576" height="24" class="aligncenter size-full wp-image-1999" /></p>
 <p>Trying to summarize someone's 30-60minute talk is really hard.  So apologies go out to anyone I'm trying to paraphrase here.  I took it upon myself to watch every single video from <a href="http://www.confreaks.com/events/rubyconf2012?sort=post">RubyConf 2012</a> which started airing in November.  It's May now.  There's a lot of content there and you can't just slurp it down and expect to process it all.  So I thought I'd leave little breadcrumbs to myself noting which things were super interesting to me.</p>
 
 <p><a href="http://www.confreaks.com/videos/1291-rubyconf2012-real-time-salami">Real Time Salami - Aaron Patterson</a><br/>
 Any presentation by @tenderlove is great and this one was fun and interesting as expected.  Aaron talks about parallelism, streaming and making Salami (actual salami).</p>
+
+<!-- more -->
 
 <p><a href="http://www.confreaks.com/videos/1284-rubyconf2012-tokaido-making-ruby-better-on-osx">Tokaido: Making Ruby Better on OSX - Yehuda Katz</a><br/>
 This was an exciting talk about Tokaido which is a work in progress to make a Rails.app one-click super-easy dev tool for Mac.  He talks about other platforms too, don't worry.  This talk really makes you appreciate how hard this problem is.  There are some super interesting low-level OSX details in there.</p>
