@@ -16,6 +16,7 @@
 
 .sidebar {
   margin-left: 5em;
+  width: 100%;
 }
 
 .sidebar li {
@@ -57,7 +58,7 @@
   height: 160px;
   margin-top: 20px;
   margin-bottom: 5px;
-  background: url('images/mug.png');
+  background: url('/images/mug.png');
 }
 
 .name_area .name {

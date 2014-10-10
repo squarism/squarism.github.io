@@ -37,11 +37,14 @@ comments:
     N&AElig;&deg;&aacute;&raquo;&rsaquo;ng means \"Fried Chicken\" in Vietnamese  :-)\r\n\r\nThank
     you, and have a nice day,"
 ---
-<p><img src="/uploads/2013/05/pixel-ribbon_cor.png" alt="pixel-ribbon_cor" width="576" height="24" class="aligncenter size-full wp-image-1971" /></p>
 <h2>The Spike</h2><p>
 I was spiking on Redis recently.  I wanted to use the <a href="https://github.com/nateware/redis-objects">redis-objects gem</a> to simulate a shopping cart app even though the README specifically says</p>
 <blockquote><p>Just use MySQL, k?</p></blockquote>
+
 <p>I wanted to see what would happen if I tried it anyway.  So the README and examples for the redis-objects gem are great so I'm not going to rehash what's there.  However, I will say though that the example has you hardcode the id field to 1.  That detail snuck up on me.</p>
+
+<!-- more -->
+
 <p>If you don't set an ID then you can't work with a redis-object instance.  You get an exception: <code>Redis::Objects::NilObjectId: Attempt to address redis-object :name on class User with nil id (unsaved record?)</code></p>
 <p>It's basically trying to tell you, "hey, save the record first or set an ID".  Well, honestly, I don't want to set an id myself.  This is where the meat of the README is.  Redis-objects really fits organically in an existing ActiveRecord model.  That means Rails.  In this case though, I don't want an entire Rails app.  I can see the value though in a plain old Rails app.  Just look at the examples if you want to see more.</p>
 <p>Anyway, continuing on with the spiking, I tried to integrate the Supermodel gem with Redis-objects.  That sort of worked.  You just <code>class User < Supermodel::Base</code> and you can sort of get it to work.  This is great because Supermodel gives you finders like <code>User.find_by_email('bob@yahoo.com')</code> to make it act like ActiveRecord but you can't use <code>.create(email: 'bob@yahoo.com')</code> to begin with because of the same errors as I mentioned above.  Redis-objects really wants the record to have an ID already.  Even using Supermodel's RandomID mixin didn't work.  The initialize order and callback hooks don't really work (or at least I couldn't get them to work).</p>

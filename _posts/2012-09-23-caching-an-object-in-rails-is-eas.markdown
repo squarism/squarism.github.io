@@ -21,7 +21,6 @@ categories:
 tags: []
 comments: []
 ---
-<p><img src="/uploads/2013/04/good_enough_mono-580x24.png" alt="good_enough_mono" width="580" height="24" class="aligncenter size-large wp-image-1880" /></p>
 <p>Caching in Rails is really simple (straight from the docs):</p>
 <p><em>You can set up your application's default cache store by calling config.cache_store= in the Application definition inside your config/application.rb file or in an Application.configure block in an environment specific configuration file (i.e. config/environments/*.rb). The first argument will be the cache store to use and the rest of the argument will be passed as arguments to the cache store constructor.
 </em></p>

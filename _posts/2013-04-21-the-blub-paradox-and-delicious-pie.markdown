@@ -21,8 +21,6 @@ categories:
 tags: []
 comments: []
 ---
-![good_enough](/uploads/2013/04/good_enough-580x24.png)
-
 Anything worth doing is worth doing well.  "That's Good Enough" isn't good enough.  There are some cases where you are writing a one-off script but those tasks are few and far between.  Most people don't get paid to write throw-away code.  Most developers aren't sysadmins writing procedural code on the level and complexity of Bash.  Even if you are, is this the only style you know?  Do you shy away from more complex tasks?  Can you not break down an any size problem into smaller pieces?
 
 A musician practices their art constantly.  An athlete trains.  And yet, we in the tech community have to go out of our way to find people who work on personal projects on the side or have the will/motivation to learn new things outside of "the job".  If you don't learn on your own then you have to figure it out as you go.  And you are already very busy so I know you're just skimming over this post anyway.  So let's break this down in a bulleted list.
@@ -35,6 +33,8 @@ A musician practices their art constantly.  An athlete trains.  And yet, we in t
 - [The Blub Paradox](http://c2.com/cgi/wiki?BlubParadox) says (among other things) that you can't make anyone understand the power of a different language because developers become sedentary.
 - Good consultants are already busy so no one is going to save you.
 - Training or bootcamps won't change your skillset or habits by a large percentage.
+
+<!-- more -->
 
 Let me put this another way.
 

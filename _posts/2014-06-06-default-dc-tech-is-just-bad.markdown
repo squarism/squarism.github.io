@@ -43,6 +43,7 @@ If you move to DC for the tech jobs, you are going to have to prune a lot of C-m
 </blockquote>
 
 <!-- more -->
+
 ![dc_capitol](/uploads/2014/05/dc_capitol.jpg)
 
 <h3>I've Been Here Too Long</h3>

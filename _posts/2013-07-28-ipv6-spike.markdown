@@ -34,6 +34,8 @@ First, build 4 Ubuntu VMs.  I'm using 13.04 but any current Linux distro should 
 <li>Hit a web page between two network boundaries over IPv6 only</li>
 </ul>
 
+<!-- more -->
+
 <h2>Super practical IPv6 primer</h2>
 <p>
 Addressing is WEIRD.  That's really what I wanted to spike on.  Getting comfortable with the addressing length, hexadecimal and understanding the addressing layout.</p>
