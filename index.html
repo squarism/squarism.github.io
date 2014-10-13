@@ -9,7 +9,13 @@
   {% include post-header-home.html %}
 </div>
 <div class="post-excerpt-home">
-  {{ post.excerpt }}
-  <p class="text-right"><a href="{{ post.url | prepend:site.baseurl }}">Continue Reading &rarr;</a></p>
+
+  {% if post.content contains '<!-- more -->' %}
+    {{ post.content | split:'<!-- more -->' | first }}
+    <p class="text-right"><a href="{{ post.url | prepend:site.baseurl }}">Continue Reading &rarr;</a></p>
+  {% else %}
+    {{ post.content }}
+  {% endif %}
+
 </div>
 {% endfor %}
