@@ -97,7 +97,7 @@
 }
 
 .contact_details .detail_value {
-  z-index: -3;
+  z-index: 5;  /* putting this under 0 makes the links unclickable */
   padding-top: 3px;
   padding-bottom: 7px;
   padding-left: 10px;
