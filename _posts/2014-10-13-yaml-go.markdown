@@ -1,6 +1,6 @@
 ---
 layout: post
-status: draft
+status: publish
 published: false
 title: YAML and Maps in Go
 ---
@@ -8,51 +8,55 @@ This wasn't exactly clear.  When using the gopkg.in/yaml.v2 (or gopkg.in/yaml.v1
 
 Let's say we start off with this file.yml:
 
-    description: fruits are delicious
-    fruits:
-      apple:
-        - red
-        - sweet
-      lemon:
-        - yellow
-        - sour
+{% highlight yaml %}
+description: fruits are delicious
+fruits:
+  apple:
+    - red
+    - sweet
+  lemon:
+    - yellow
+    - sour
+{% endhighlight %}
 
 Here's a complete example to read this file in and you get a parsed data structure out of it:
 
-    package main
+{% highlight go %}
+package main
 
-    import (
-      "fmt"
-      "gopkg.in/yaml.v2"
-      "io/ioutil"
-      "path/filepath"
-    )
+import (
+  "fmt"
+  "gopkg.in/yaml.v2"
+  "io/ioutil"
+  "path/filepath"
+)
 
-    type Config struct {
-      Description string
-      Fruits map[string][]string
-    }
+type Config struct {
+  Description string
+  Fruits map[string][]string
+}
 
-    func main() {
-      filename, _ := filepath.Abs("./file.yml")
+func main() {
+  filename, _ := filepath.Abs("./file.yml")
 
-      yamlFile, err := ioutil.ReadFile(filename)
-      check(err)
+  yamlFile, err := ioutil.ReadFile(filename)
+  check(err)
 
-      var config Config
+  var config Config
 
-      err = yaml.Unmarshal(yamlFile, &config)
-      check(err)
+  err = yaml.Unmarshal(yamlFile, &config)
+  check(err)
 
-      fmt.Printf("Description: %#v\n", config.Description)
-      fmt.Printf("Fruits: %#+v\n", config.Fruits)
-    }
+  fmt.Printf("Description: %#v\n", config.Description)
+  fmt.Printf("Fruits: %#+v\n", config.Fruits)
+}
 
-    func check(e error) {
-      if e != nil {
-        panic(e)
-      }
-    }
+func check(e error) {
+  if e != nil {
+    panic(e)
+  }
+}
+{% endhighlight %}
 
 What is `Fruits map[string][]string` in the Config type?  It's `foo: ['a', 'b', 'c']`.
 
@@ -62,19 +66,23 @@ changes, we have to update our `type Config`.  I'm ok with this.  I was just sur
 
 First, the keys are significant.  If we change the YAML to be:
 
-    description: fruits are delicious
-    tambourines:
-      apple:
-        - red
-        - sweet
-      lemon:
-        - yellow
-        - sour
+{% highlight yaml %}
+description: fruits are delicious
+tambourines:
+  apple:
+    - red
+    - sweet
+  lemon:
+    - yellow
+    - sour
+{% endhighlight %}
 
 It won't work.  But HOW it won't work is confusing.
 
-    Description: "fruits are delicious"
-    Fruits: map[string][]string(nil)
+{% highlight text %}
+Description: "fruits are delicious"
+Fruits: map[string][]string(nil)
+{% endhighlight %}
 
 You'll get an empty map until you change your type to have Tambourines in it.  You can't just access
 `.Tambourines` either.  The type/struct won't have a method on it.  So this is the trick and benefit the package
@@ -83,59 +91,91 @@ YAML (dare I say schema?) is.  So would you then validate that it loaded correct
 etc?
 
 Now what happens when you get it really wrong?
+<!-- more -->
 
-    "cannot unmarshal !!seq into map"
+{% highlight text %}
+"cannot unmarshal !!seq into map"
+{% endhighlight %}
 
 Here I've tried mapping yaml like this
 
-    - one:
-      blah
-    - two
-      blah
-    - three
-      blah
+{% highlight yaml %}
+- one:
+  blah
+- two
+  blah
+- three
+  blah
+{% endhighlight %}
 
 Into a data structure that really expects
 
-    one:
-      - blah
-    two:
-      - blah
-    three:
-      - blah
+{% highlight yaml %}
+one:
+  - blah
+two:
+  - blah
+three:
+  - blah
+{% endhighlight %}
 
 And this behavior is different between the v1 and v2 package.  I just ended up thinking that `seq` means `[]`.
 
 Let's look at another example.  Going back to our original `file.yml`, let's compare what changes to the
 fruits struct when the yaml changes.  Ignore the description data, that's easy.
 
-    fruits:
-      apple:
-        - red
+{% highlight yaml %}
+fruits:
+  apple:
+    - red
+{% endhighlight %}
 
-    Fruits map[string][]string
-    // magical happy party!
-
+{% highlight go %}
+Fruits map[string][]string
+// Fruits have properties.  You have success.
+{% endhighlight %}
 
 We want this YAML now.  What needs to change in Go?
 
-    fruits:
-      - apple:
-        - red
+{% highlight yaml %}
+fruits:
+  - apple:
+    - red
+{% endhighlight %}
 
-    Fruits []map[string][]string
-    // good job conquering evil!
+{% highlight go %}
+Fruits []map[string][]string
+// There are more fruits now.  Good job, fruit adventurer.
+{% endhighlight %}
 
 This is because apple has become an array value and not a key.  In other words, we can have many apples
 in the second example but not the first.  What happens if we try this?
 
-    fruits:
-      apple:
-        - red
-      apple:
-        - green
+{% highlight yaml %}
+fruits:
+  apple:
+    - red
+  apple:
+    - green
+{% endhighlight %}
 
-    Fruits map[string][]string
+{% highlight go %}
+Fruits map[string][]string
+// Fruits cannot coexist.  You have unwittingly caused fruit murder.
+{% endhighlight %}
 
-The second green apple stomps on the red apple.  `Fruits: map[string][]string{"apple":[]string{"green"}}`
-So it depends on what you want.
+The second green apple stomps on the red apple.  `Fruits: map[string][]string{"apple":[]string{"green"}}`  So it depends on what you want.
+
+
+### Conclusion
+
+I hope this helps to clarify the magic, or perhaps the relationship,
+between Go structs and YAML structures.  For the beginner like me
+understanding maps was key as well as the syntax around maps of arrays.
+It also helps greatly to play with more sample data than just an array
+of one.  The difference between a list and a set is only obvious when
+there's collisions.
+
+I will probably refer back to this post myself the next time I do
+serialization.
+
