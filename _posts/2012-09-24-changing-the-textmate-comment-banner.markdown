@@ -22,6 +22,7 @@ tags: []
 comments: []
 ---
 I like to put a little date banner on files that are like a CHANGELOG.  The Insert Comment Banner in Textmate is great for this.  You just hit Ctrl+Shift+B and this appears:
+
 {% highlight text %}
 =========
 = Banner
