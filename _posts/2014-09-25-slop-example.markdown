@@ -1,7 +1,7 @@
 ---
 layout: post
-status: draft
-published: false
+status: publish
+published: true
 title: Ruby Slop Example
 ---
 One of my favorite features of slop is the automatic help generation.
