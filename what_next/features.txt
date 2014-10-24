@@ -1,0 +1,141 @@
+Feature: Culture
+  In order to love day to day work
+  As a human being
+  I want to work in a place I love
+
+  Scenario: People think more creatively with plants around (etc)
+    Given that office design is pretty arbitrary
+    And I've sometimes worked in concrete holes
+    When I look at an office space
+    Then I want to know that someone thought about employee happiness at least at little
+
+  Scenario: CO2 is probably a problem
+    Given that I don't have a garage with an electric plug
+    When I go to work
+    Then I'd like to ride my bike
+
+  Scenario: I moved to Portland on purpose
+    Given that people are nicer and different on the west coast
+    And I sold my house and moved my family to Portland
+    When I get my first local job here
+    Then I don't want to over-expect but I want it to be crazy-awesome (it probably will be)
+
+  Scenario: People work more creatively when they can laugh
+    Given that work should be fun
+    When I make bad jokes
+    Then we can have a good time while getting stuff done
+
+Feature: Great People
+  In order to be a social being
+  As a team member
+  I want to align, inspire, fuel and contribute
+
+  Scenario: All problems are people problems
+    Given that we have biases and psychology whether we talk about it or not
+    When I talk about books and talks like "Refactor your wetware" or "The Passionate Programmer"
+    Then I'd love to have a two way conversation about meta and psych topics
+    And just know that like-minded people work with me
+
+  Scenario: We all have specializations and something to give
+    Given that I have some area of expertise or figure something out that's relevant
+    When I realize, "I should give a talk on this!"
+    Then I can give a talk or write a blog post
+
+  Scenario: I am not an island of all knowledge
+    Given that someone wants to share
+    When I have time
+    Then I'd like to stay after work and listen to a talk or presentation and lift people up
+
+  Scenario: Tricks spread with pairing
+    Given that I feel like a big fish in a small pond
+    When I pair with different people over some period of time
+    Then I'd love to be learning workflows, shortcuts and tricks
+
+Feature: Tactics
+  In order to be practical
+  As a software developer or devops person
+  I want to mitigate human biases and problems with configuration, code and infrastructure
+
+  Scenario: Code as infrastructure
+    Given a meeting where people have different cloud bubbles over their heads
+    And we need to collaborate
+    When we communicate and implement business rules and team decisions
+    Then we should communicate through code as infrastructure
+
+  Scenario: Monday morning
+    Given we've all reset since our last sprint
+    When we come in
+    Then I've love a stand-up to load our brains and get to work
+
+  Scenario: Communication is hard
+    Given I'm trying to learn how things work at Puppet Labs
+    When I'm seeking help
+    Then I've love IRC/Wikis/Bots and internal tools to help team dynamics (github strategy)
+
+  Scenario: Testing gives confidence but not guarantees
+    Given everyone is comfortable with testing
+    When we decide to do TDD or not
+    Then we all should know what the trade-offs and benefits are
+
+  Scenario: Automation should be the norm
+    Given we have too much to do and we are fallible creatures
+    When we see repeatable steps
+    Then we should know to automate it
+
+  Scenario: Tools need sharpening
+    Given we keep typing sl instead of ls in a shell
+    When we run an analysis script of our history file
+    And discover our top most typoed commands
+    Then we should write down an solution to work on later
+
+Feature: Technical Growth
+  In order to improve
+  As an engineer and writer
+  I want to learn new tools
+
+  Scenario: DevOps have become a thing since I was a sysadmin back in the day
+    Given there are a ton of tools out there
+    And I know generic technologies
+    And I don't really grok how Docker works
+    And where Docker sits in the space
+    When I have a job to do that might benefit from Docker
+    Then I'd like to have time and equipment and encouragement (however slight) to learn Docker
+
+  Scenario: Traditional organizations are painfully behind the curve
+    Given I have seen failures in person
+    When I see how it's actually done right
+    Then I'll have a great appreciation for the solution
+
+  Scenario: Rails apps are annoying to deploy
+    Given the simplest rails application
+    And I know how to do all the steps by hand
+    When I want to not configure RVM and Passenger for the Nth time
+    Then I'd love to know how Puppet integrates and compares with Docker/Chef/Capistrano/...
+
+  Scenario: Ruby is slow
+    Given that I love Ruby to death
+    And it's given me the opportunity to touch on many problem domains quickly
+    When I need parallelism
+    Then I've love to have Go as a secondary language I can speak
+
+  Scenario: Mutation and state kills
+    Given that concurrency hates mutation
+    When I modify objects in place
+    And hard bugs pop up
+    Then I wish I knew a functional language
+
+  Scenario: Managing N number of boxes changes your approach
+    Given that I can't ssh into 500 boxes
+    When a large scale problem arises
+    And I want to provision a million MongoDB nodes
+    Then I wish I had tools in my belt that work at scale
+
+  Scenario: I have a list of personal boundaries that work should chip away at
+    Given that experience stops somewhere
+    When I look at my personal boundary list at http://squarism.com/questions
+    And it's assumed that this isn't the entire list
+    Then I see that I'm checking things off
+
+21 scenarios (21 passed)
+76 steps (76 passed)
+0m0.060s
