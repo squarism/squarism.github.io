@@ -48,10 +48,14 @@ Usage: slop_test.rb [options]
 Great!  Then using it correctly will do this:
 
 {% highlight text %}
-$ ruby slop_test.rb --resume hechicero-de-relámpago.doc
+$ ruby slop_test.rb --resume hechicero-del-relámpago.doc
 Here's the data
-{:resume=>"hechicero-de-relámpago.doc", :skill=>nil, :verbose=>nil, :help=>nil}
+{:resume=>"hechicero-del-relámpago.doc", :skill=>nil, :verbose=>nil, :help=>nil}
 {% endhighlight %}
 
 The resume flag is the only required one, so in this case that's how
 it's run correctly.
+
+*Update:* I was very happy that @lee_jarvis (the slop author) [accepted my pull request](https://github.com/leejarvis/slop/commit/380672e6e96e58a34905b9a2c07c8a35b41d7ae9) to put
+this example into the README.
+
