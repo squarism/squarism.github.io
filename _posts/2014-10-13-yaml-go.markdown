@@ -1,7 +1,8 @@
 ---
 layout: post
 status: publish
-published: false
+published: true
+date: 2014-10-13
 title: YAML and Maps in Go
 ---
 This wasn't exactly clear.  When using the gopkg.in/yaml.v2 (or gopkg.in/yaml.v1) packages, I was confused as to what to do with my data structure.
@@ -61,8 +62,8 @@ func check(e error) {
 What is `Fruits map[string][]string` in the Config type?  It's `foo: ['a', 'b', 'c']`.
 
 This is roughly equivalent to what I would do in Ruby.  Of course the Ruby code is much shorter because
-in Ruby, typically we abuse hashes.  The surprise I would have would be related to this.  When the YAML
-changes, we have to update our `type Config`.  I'm ok with this.  I was just surprised by a few things.
+in Ruby, typically we abuse hashes.  :)  The surprise I had is this: **when the YAML
+changes, we have to update our `type Config`**.  I'm ok with this.  I was just surprised by a few things.
 
 First, the keys are significant.  If we change the YAML to be:
 
@@ -91,6 +92,7 @@ YAML (dare I say schema?) is.  So would you then validate that it loaded correct
 etc?
 
 Now what happens when you get it really wrong?
+
 <!-- more -->
 
 {% highlight text %}
@@ -176,6 +178,6 @@ It also helps greatly to play with more sample data than just an array
 of one.  The difference between a list and a set is only obvious when
 there's collisions.
 
-I will probably refer back to this post myself the next time I do
-serialization.
+I will happily refer back to this post myself the next time I do
+serialization in Go.
 
