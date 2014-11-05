@@ -275,79 +275,113 @@ comments:
   content: ! "I go to see daily a few websites and blogs to read articles, but this
     \r\nblog presents quality based posts."
 ---
-<p><img src="/uploads/2011/04/pixel-ribbon_feet.png" alt="pixel-ribbon_feet" width="576" height="24" class="aligncenter size-full wp-image-2083" /></p>
-<h2>Background</h2><p>
-I've always wondered how I'd go about publishing a real REST API on the web to do something.  In this example, we'll create an employee manager app-thing.  It's not particularly interesting but it shows what "API" means.  In another bit, we'll create an "API" meaning a library to interact with this web service.</p>
-<h2>Caveats</h2><p>
-If you are just getting started with Rails and Ruby, you might find that this tutorial is really long and includes a lot of syntax.  I love Rails to death but many people say it has a "large surface area".  That means that it's hard to learn and the API is broad and vast.</p>
-<p>As an alternative, I suggest taking a look at <a href="https://github.com/intridea/grape">Grape</a> and <a href="http://www.sinatrarb.com/">Sinatra</a> if you are finding Rails to be a little too heavy.  However, make sure you read up on what features you will lose when going thinner.  It's not always clear and you might find things like autoreloading were assumed in Rails but now you have to get a plugin for Sinatra (or Grape).  BTW, I think Grape by Intridea is the better Web API framework at least vs Sinatra.  For pure APIs, it may be better suited for the job than stripping down Rails.</p>
-<h2>The rails app</h2><p>
+![pixel-ribbon_feet](/uploads/2011/04/pixel-ribbon_feet.png)
+
+### Background
+
+I've always wondered how I'd go about publishing a real REST API on the web to do something.  In this example, we'll create an employee manager app-thing.  It's not particularly interesting but it shows what "API" means.  In another bit, we'll create an "API" meaning a library to interact with this web service.
+
+### Caveats
+
+If you are just getting started with Rails and Ruby, you might find that this tutorial is really long and includes a lot of syntax.  I love Rails to death but many people say it has a "large surface area".  That means that it's hard to learn and the API is broad and vast.
+
+As an alternative, I suggest taking a look at [Grape](https://github.com/intridea/grape) and [Sinatra](http://www.sinatrarb.com/) if you are finding Rails to be a little too heavy.  However, make sure you read up on what features you will lose when going thinner.  It's not always clear and you might find things like autoreloading were assumed in Rails but now you have to get a plugin for Sinatra (or Grape).  BTW, I think Grape by Intridea is the better Web API framework at least vs Sinatra.  For pure APIs, it may be better suited for the job than stripping down Rails.
+
+### The rails app
+
 Ok enough caveats and intro.  First, create a new rails app.  I'm going to assume you have RVM installed and know how to create gemsets.
-<code>rails new rest_api</code>
-<code>cd rest_api</code></p>
-<p><strong>update:</strong>This was last tested with 3.2.12.</p>
-<h2>Database setup</h2><p>
-In this example we are going to use Sqlite3 but you can easily substitute MySQL or some other database here.  To keep this post on topic and short, we'll use the sqlite3 default for spiking.</p>
-<p><a id="more"></a><a id="more-1131"></a></p>
-<p>Generate some default UI with scaffolding.
-<code>rails g scaffold employee name:string extension:integer</code></p>
-<p>Create our database tables from what the scaffolding just generated.
-<code>rake db:migrate</code></p>
-<p>Ok, we're going to pretty up the scaffold here.  This is completely optional but I just hate the default.
-Create app/assets/stylesheets/rest_api.css</p>
-<pre lang="css" line="0">
-body { background-color: #5f7395; color: #333; }</p>
-<p>body, p, ol, ul, td {
+
+{% highlight bash %}
+rails new rest_api
+cd rest_api
+{% endhighlight %}
+
+**update:** This was last tested with 3.2.12.
+
+### Database setup
+
+In this example we are going to use Sqlite3 but you can easily substitute MySQL or some other database here.  To keep this post on topic and short, we'll use the sqlite3 default for spiking.
+
+<!-- more -->
+
+Generate some default UI with scaffolding.
+
+{% highlight bash %}
+rails g scaffold employee name:string extension:integer
+{% endhighlight %}
+
+Create our database tables from what the scaffolding just generated.
+
+{% highlight bash %}
+rake db:migrate
+{% endhighlight %}
+
+Ok, we're going to pretty up the scaffold here.  This is completely optional but I just hate the default.
+
+Create `app/assets/stylesheets/rest_api.css`
+
+{% highlight css %}
+body { background-color: #5f7395; color: #333; }
+body, p, ol, ul, td {
   font-family: verdana, arial, helvetica, sans-serif;
   font-size:   13px;
   line-height: 18px;
-}</p>
-<p>pre {
+}
+pre {
   background-color: #eee;
   padding: 10px;
   font-size: 11px;
-}</p>
-<p>a { color: #000; }
+}
+a { color: #000; }
 a:visited { color: #666; }
-a:hover { color: #fff; background-color:#000; }</p>
-<p>#main {
+a:hover { color: #fff; background-color:#000; }
+#main {
 	background-color: #fff;
 	border: solid #000 1px;
 	margin: 5em;
 	height: 30em;
 	padding: 1em;
-}</p>
-<p>#notice {
+}
+#notice {
 	background-color: #e1facf;
 	border: solid #97C36d 1px;
 	padding: 0.5em;
 }
-</pre></p>
-<p>Change app/view/layouts/application.html.erb to be:</p>
-<pre lang="html">
-  <!DOCTYPE html>
-  <html>
-  <head>
-    <title>RestApi</title>
-    <%= stylesheet_link_tag 'rest_api' %>
-    <%= javascript_include_tag "application" %>
-    <%= csrf_meta_tag %>
-  </head>
-  <body></p>
+{% endhighlight %}
+
+Change `app/view/layouts/application.html.erb` to be:
+{% highlight html %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>RestApi</title>
+  <%= stylesheet_link_tag 'rest_api' %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tag %>
+</head>
+<body>
 <div id="main">
-<p>    <%= yield %></p>
-<p>    </div></p>
-<p>  </body>
-  </html>
-</pre></p>
-<p>Start rails.
-<code>rails s</code></p>
-<p>Browse to http://localhost:3000/employees/.  Click Create New Employee and create some records.  There's no validations or anything fancy yet so just fill in both fields accurately.  Now you have some data to work with that should look something like this:
-<img src="/uploads/2011/03/rails_api_data.png" alt="" title="rails_api_data" width="346" height="197" class="aligncenter size-full wp-image-1132" /></p>
-<h2>CRUD with curl</h2></p>
-<p>Crud is Create, Read, Update, Delete.  I'll walk through each verb with curl first.</p>
-<p><strong>Create</strong>
-This will create a new employee using curl.  Create a new file called new.xml:</p>
+  <%= yield %>
+</div>
+</body>
+</html>
+{% endhighlight %}
+
+Start rails.
+{% highlight bash %}
+$ rails s
+{% endhighlight %}
+
+Browse to `http://localhost:3000/employees/`.  Click Create New Employee and create some records.  There's no validations or anything fancy yet so just fill in both fields accurately.  Now you have some data to work with that should look something like this:
+
+![rails_api_data](/uploads/2011/03/rails_api_data.png)
+
+## CRUD with curl
+
+Crud is Create, Read, Update, Delete.  I'll walk through each verb with curl first.
+
+##### Create
+This will create a new employee using curl.  Create a new file called new.xml:
 {% highlight xml %}
 <?xml version="1.0" encoding="UTF-8"?>
 <employee>
@@ -356,12 +390,17 @@ This will create a new employee using curl.  Create a new file called new.xml:</
 </employee>
 {% endhighlight %}
 
-<p><code>curl -v -H "Content-Type: application/xml; charset=utf-8" --data-ascii @new.xml http://localhost:3000/employees.xml</code></p>
-<p>Now you have a new entry in the database.  You can refresh the rails /employees URL listing to watch it change.
-<img src="/uploads/2011/03/rails_api_curl_add.png" alt="" title="rails_api_curl_add" width="335" height="169" class="aligncenter size-full wp-image-1133" /></p>
-<p>Now let's add xml rendering to our controller.  Edit the file:
-<code>app/controllers/employees_controller.rb</code>
-Add the two format.xml lines below.</p>
+{% highlight bash %}
+curl -v -H "Content-Type: application/xml; charset=utf-8" --data-ascii @new.xml http://localhost:3000/employees.xml
+{% endhighlight %}
+
+Now you have a new entry in the database.  You can refresh the `/employees` URL listing to watch it change.
+
+![rails_api_curl_add](/uploads/2011/03/rails_api_curl_add.png)
+
+Now let's add xml rendering to our controller.  Edit the file:
+`app/controllers/employees_controller.rb`
+Add the two format.xml lines below.
 
 {% highlight ruby %}
  # GET /employees
@@ -391,15 +430,22 @@ Add the two format.xml lines below.</p>
   end
 {% endhighlight %}
 
-<p><strong>Read</strong>
+##### Read
 Get all employees:
-<code>curl http://localhost:3000/employees.xml</code></p>
-<p>Get one employee:
-<code>curl http://localhost:3000/employees/1.xml</code></p>
-<p>These will just return XML to the screen.  We'll do something with this in a bit.</p>
-<p><strong>Update</strong>
+{% highlight bash %}
+curl http://localhost:3000/employees.xml
+{% endhighlight %}
 
-Create update.xml:</p>
+Get one employee:
+{% highlight bash %}
+curl http://localhost:3000/employees/1.xml
+{% endhighlight %}
+
+These will just return XML to the screen.  We'll do something with this in a bit.
+
+##### Update
+
+Create `update.xml`:
 {% highlight xml %}
 <?xml version="1.0" encoding="UTF-8"?>
 <employee>
@@ -409,16 +455,27 @@ Create update.xml:</p>
 </employee>
 {% endhighlight %}
 
-<p><code>curl -v -H "Content-Type: application/xml; charset=utf8" -T update.xml http://localhost:3000/employees/1.xml</code></p>
-<p>Make sure that you have an ID of 1 in your database, otherwise you'll get a 404 or some rails rendered error message.</p>
-<p><strong>Delete</strong>
-I assume that you have an ID of 3 in your database.  In that case, the user's URL for the controller action show() is /3 so we can send an HTTP delete to that URL like this.</p>
-<p><code>curl --request DELETE http://localhost:3000/employees/3.xml</code></p>
-<p>The record will be gone from the database now if you go to the /employees page in your browser.</p>
-<h2>Ruby API Client</h2><p>
-Now let's make this less bound to curl.  Let's write a class called Api that represents a gem or ruby library that does some work.  In our case, it's going to make web calls (not DB calls) to update employees exactly how we were doing it with curl.</p>
+{% highlight bash %}
+curl -v -H "Content-Type: application/xml; charset=utf8" -T update.xml http://localhost:3000/employees/1.xml
+{% endhighlight %}
 
-<p>Create a new file in the rest_api/lib directory called api.rb:</p>
+Make sure that you have an ID of 1 in your database, otherwise you'll get a 404 or some rails rendered error message.
+
+##### Delete
+
+I assume that you have an ID of 3 in your database.  In that case, the user's URL for the controller action `show()` is `/employees/3` so we can send an HTTP delete to that URL like this.
+
+{% highlight bash %}
+curl --request DELETE http://localhost:3000/employees/3.xml
+{% endhighlight %}
+
+The record will be gone from the database now if you go to the `/employees` page in your browser.
+
+## Ruby API Client
+
+Now let's make this less bound to curl.  Let's write a class called Api that represents a gem or ruby library that does some work.  In our case, it's going to make web calls (not DB calls) to update employees exactly how we were doing it with curl.
+
+Create a new file in the `rest_api/lib` directory called `api.rb`:
 
 {% highlight ruby %}
 require 'net/http'
@@ -513,17 +570,22 @@ end
 {% endhighlight %}
 
 
-This program is just like curl except we're able to programmatically be more precise with what we're querying and deleting.  However, you'll notice that the XML document is hardcoded in the program.  So it's not infinitely flexible.  If you're nodes are not named employees then this isn't going to work so well.  But this is just an example.</p>
+This program is just like curl except we're able to programmatically be more precise with what we're querying and deleting.  However, you'll notice that the XML document is hardcoded in the program.  So it's not infinitely flexible.  If you're nodes are not named employees then this isn't going to work so well.  But this is just an example.
 
-Now we'll create a program to use api.rb.  You'll need nokogiri.  So add this to your Gemfile (anywhere):</p>
+Now we'll create a program to use api.rb.  You'll need nokogiri.  So add this to your `Gemfile` (anywhere):
 
-<code>gem 'nokogiri'</code>
+{% highlight ruby %}
+gem 'nokogiri'
+{% endhighlight %}
+
 And then run
-<code>bundle</code></p>
+{% highlight bash %}
+bundle
+{% endhighlight %}
 
-This program will be a rest client that will use our api class.  This api could be something you've published and this could be how you'd document the use of your gem to the world in your README.</p>
+This program will be a rest client that will use our api class.  This api could be something you've published and this could be how you'd document the use of your gem to the world in your README.
 
-Create a file named api_client.rb in the root of the rest_api rails app.</p>
+Create a file named `api_client.rb` in the root of the rest_api rails app.
 
 {% highlight ruby %}
 require './lib/api.rb'
@@ -568,7 +630,8 @@ list_employees(api)
 
 
 Now run with ruby api_client.rb and you should see:
-<code>
+
+{% highlight bash %}
 Current Employees:
 Fairy Faucet, Sandy Salt
 
@@ -583,13 +646,24 @@ Fairy Faucet, Sandy Salt, Robert Flaid
 deleting last record ...
 Current Employees:
 Fairy Faucet, Sandy Salt
-</code>
-<p>Depending on what dummy data you put in to begin with, the output might look different.</p>
-<h2>Rdoc</h2><p>
-Optionally, you can create Rdoc for app.  Run this rake task in the rails root:</p>
-<p><code>rake doc:app</code></p>
-<p>If you open doc/app/Api.html, you'll see the Rdoc from the comments above.  This is especially useful when publishing an API to the world.  It'll suck in comments from your methods, in this case the api.rb file has comments over every method definition that gets turned into pretty HTML.
-<img src="/uploads/2011/03/rails_api_rdoc.png" alt="" title="rails_api_rdoc" width="368" height="285" class="aligncenter size-full wp-image-1146" /></p>
-<h2>Wrap up</h2><p>
-So we have published an API over the web with Rails.  It's pretty easy because the scaffolding handles the xml requests in the respond_to blocks in the controllers.  But we also wrapped this API in a utility class that we were able to run from the command line.  This could easily be converted to a gem and published just as the rails app could easily be pushed to Heroku and published.</p>
-<p>This example mimics a CRUD layer for a DB so closely that you'd never do this exactly.  But hopefully it illustrates how you'd make a wrapper to a web service that you don't have direct DB access to.  For me, it was interesting to see what API really means.  In terms of REST and the web, it's simply publishing methods and data over HTTP (in this case wrapped up in XML).  In terms of a library or gem, it means giving someone an object and methods to do something inside a black box you've designed.</p>
+{% endhighlight %}
+
+Depending on what dummy data you put in to begin with, the output might look different.
+
+## Rdoc
+
+Optionally, you can create Rdoc for app.  Run this rake task in the rails root:
+
+{% highlight bash %}
+rake doc:app
+{% endhighlight %}
+
+If you open `doc/app/Api.html`, you'll see the Rdoc from the comments above.  This is especially useful when publishing an API to the world.  It'll suck in comments from your methods, in this case the api.rb file has comments over every method definition that gets turned into pretty HTML.
+
+![rails_api_rdoc](/uploads/2011/03/rails_api_rdoc.png)
+
+## Wrap up
+
+So we have published an API over the web with Rails.  It's pretty easy because the scaffolding handles the xml requests in the respond_to blocks in the controllers.  But we also wrapped this API in a utility class that we were able to run from the command line.  This could easily be converted to a gem and published just as the rails app could easily be pushed to Heroku and published.
+
+This example mimics a CRUD layer for a DB so closely that you'd never do this exactly.  But hopefully it illustrates how you'd make a wrapper to a web service that you don't have direct DB access to.  For me, it was interesting to see what API really means.  In terms of REST and the web, it's simply publishing methods and data over HTTP (in this case wrapped up in XML).  In terms of a library or gem, it means giving someone an object and methods to do something inside a black box you've designed.
