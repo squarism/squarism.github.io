@@ -296,7 +296,7 @@ rails new rest_api
 cd rest_api
 {% endhighlight %}
 
-**update:** This was last tested with 3.2.12.
+**update:** This was last tested with Rails 3.2.20.
 
 ### Database setup
 
@@ -349,7 +349,7 @@ a:hover { color: #fff; background-color:#000; }
 }
 {% endhighlight %}
 
-Change `app/view/layouts/application.html.erb` to be:
+Change `app/views/layouts/application.html.erb` to be:
 {% highlight html %}
 <!DOCTYPE html>
 <html>
@@ -381,7 +381,7 @@ Browse to `http://localhost:3000/employees/`.  Click Create New Employee and cre
 Crud is Create, Read, Update, Delete.  I'll walk through each verb with curl first.
 
 ##### Create
-This will create a new employee using curl.  Create a new file called new.xml:
+This will create a new employee using curl.  Create a new file called `new.xml`:
 {% highlight xml %}
 <?xml version="1.0" encoding="UTF-8"?>
 <employee>
@@ -391,7 +391,8 @@ This will create a new employee using curl.  Create a new file called new.xml:
 {% endhighlight %}
 
 {% highlight bash %}
-curl -v -H "Content-Type: application/xml; charset=utf-8" --data-ascii @new.xml http://localhost:3000/employees.xml
+curl -v -H "Content-Type: application/xml; charset=utf-8" \
+--data-ascii @new.xml http://localhost:3000/employees.xml
 {% endhighlight %}
 
 Now you have a new entry in the database.  You can refresh the `/employees` URL listing to watch it change.
@@ -456,7 +457,8 @@ Create `update.xml`:
 {% endhighlight %}
 
 {% highlight bash %}
-curl -v -H "Content-Type: application/xml; charset=utf8" -T update.xml http://localhost:3000/employees/1.xml
+curl -v -H "Content-Type: application/xml; charset=utf8" \
+-T update.xml http://localhost:3000/employees/1.xml
 {% endhighlight %}
 
 Make sure that you have an ID of 1 in your database, otherwise you'll get a 404 or some rails rendered error message.
@@ -469,7 +471,7 @@ I assume that you have an ID of 3 in your database.  In that case, the user's UR
 curl --request DELETE http://localhost:3000/employees/3.xml
 {% endhighlight %}
 
-The record will be gone from the database now if you go to the `/employees` page in your browser.
+The record will be gone from the database now if you go to the `/employees` page in your browser or run the curl command against the `/employees` endpoint.
 
 ## Ruby API Client
 
@@ -572,7 +574,7 @@ end
 
 This program is just like curl except we're able to programmatically be more precise with what we're querying and deleting.  However, you'll notice that the XML document is hardcoded in the program.  So it's not infinitely flexible.  If you're nodes are not named employees then this isn't going to work so well.  But this is just an example.
 
-Now we'll create a program to use api.rb.  You'll need nokogiri.  So add this to your `Gemfile` (anywhere):
+Now we'll create a program to use api.rb.  You'll need nokogiri.  So add this to your `Gemfile` at the end.
 
 {% highlight ruby %}
 gem 'nokogiri'
@@ -580,7 +582,7 @@ gem 'nokogiri'
 
 And then run
 {% highlight bash %}
-bundle
+$ bundle
 {% endhighlight %}
 
 This program will be a rest client that will use our api class.  This api could be something you've published and this could be how you'd document the use of your gem to the world in your README.
@@ -661,6 +663,15 @@ rake doc:app
 If you open `doc/app/Api.html`, you'll see the Rdoc from the comments above.  This is especially useful when publishing an API to the world.  It'll suck in comments from your methods, in this case the api.rb file has comments over every method definition that gets turned into pretty HTML.
 
 ![rails_api_rdoc](/uploads/2011/03/rails_api_rdoc.png)
+
+## Real World
+
+This is just an tutorial about how Rails can be a fast way to make a web API.  Don't follow this exactly for a production app (obviously).  Here's a few pointers for something more real world:
+
+* Use an api gem to document your api.  These gems change as to what is current but something like [apipie](https://github.com/Apipie/apipie-rails) might be a good fit.  Swagger + Grape would be a good alternative too (but Grape would be an option to Rails itself).
+* The program we created in `/lib` is called an API wrapper or a wrapper.  I would suggest creating a gem for this and not putting it in the root of your project.  There are also gems that can generate wrappers (ruby code) from api descriptions/doc.
+* If you are just creating an API and not a front-end, you could use the `rails-api` gem to get rid of the web interface.  You could also embed a small API in a rails app.  Small reusable services start talk about SOA and it usually pays off.  At this point though, you might choose something other than Rails for "just an API".  I've had pretty practical and rapid success with Scalatra (Scala) and Martini (golang).
+* All these steps have mostly remained the same for Rails 2, 3 & 4.  I will be making an updated post about doing this with Rails 4 and/or with API related gems.
 
 ## Wrap up
 
