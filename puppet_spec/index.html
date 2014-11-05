@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <style>
+            body {
+                padding-top: 50px;
+                padding-bottom: 20px;
+            }
+        </style>
+        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="css/main.css">
+
+        <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    </head>
+    <body>
+
+    <div class="container">
+        <h1>PuppetLabs Spec</h1>
+    </div>
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+      <div class="container">
+        <p>Qualifications</p>
+        <ul>
+          <li>You have knowledge and experience (3-5 years) of high-level programming languages like ruby, python, java, etc.</li>
+          <li>You have developed and implemented solutions to challenging automation problems.</li>
+          <li>You think web APIs to control hardware and infrastructure are brilliant.</li>
+          <li>You are a believer in thoroughly testing software, automate that testing and believe that better QA drives better quality.  You have experience with test automation frameworks and continuous integration.</li>
+          <li>Being an active member of open source communities is something you cherish, and you have experience helping community members advance their code.</li>
+          <li>You are not dogmatic about technology choices. You understand that what matters is using the right tool for the job at hand.</li>
+          <li>You understand and use distributed version control systems such as git.</li>
+          <li>Minimum 3 years of full time experience in a software development role (5+ years preferred).</li>
+          <li>BSCS or equivalent or relevant industry experience.</li>
+          <li>Experience in writing high-quality, reusable Puppet modules is a plus.</li>
+          <li>Requires logic and reasoning to identify the strengths and weaknesses of alternative solutions, conclusions or approaches to problems.</li>
+          <li>Requires contact with others (face-to-face, by telephone, virtual meetings, VOIP or otherwise) and the ability to work and interact in a group or team.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container">
+      <h2>RSpec Results</h2>
+      <div class="row">
+        <div class="col-md-8">
+          <div class="rspec-output">
+          INFO - Running: spec/lib/qualifications_spec.rb
+          <br><br>
+          Qualifications<br>
+          &nbsp;&nbsp;You have knowledge and experience (3-5 years) of high-level programming languages like ruby, python, java, etc.<br>
+          &nbsp;&nbsp;You have developed and implemented solutions to challenging automation problems.<br>
+          &nbsp;&nbsp;You think web APIs to control hardware and infrastructure are brilliant.<br>
+          &nbsp;&nbsp;You are a believer in thoroughly testing software, automate that testing and believe that better
+          QA drives better quality.  You have experience with test automation frameworks and continuous
+          integration.<br>
+          &nbsp;&nbsp;Being an active member of open source communities is something you cherish, and you have
+          experience helping community members advance their code.<br>
+          &nbsp;&nbsp;You are not dogmatic about technology choices. You understand that what matters is using the
+          right tool for the job at hand.<br>
+          &nbsp;&nbsp;You understand and use distributed version control systems such as git.<br>
+          &nbsp;&nbsp;Minimum 3 years of full time experience in a software development role (5+ years preferred).<br>
+          &nbsp;&nbsp;BSCS or equivalent or relevant industry experience.<br>
+          &nbsp;&nbsp;<span class="failed">Experience in writing high-quality, reusable Puppet modules is a plus. (FAILED - 1)</span><br>
+          &nbsp;&nbsp;Requires logic and reasoning to identify the strengths and weaknesses of alternative solutions,
+          conclusions or approaches to problems.<br>
+          &nbsp;&nbsp;Requires contact with others (face-to-face, by telephone, virtual meetings, VOIP or otherwise)
+          and the ability to work and interact in a group or team.<br>
+
+          <br>
+          Failures:
+          <br><br>
+          &nbsp;&nbsp;1) Qualifications Experience in writing high-quality, reusable Puppet modules is a plus.<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;Failure/Error: expect( me.puppet_modules_written > 0 ).to be true<br>
+
+          &nbsp;&nbsp;&nbsp;&nbsp;expected true<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;got false<br>
+          &nbsp;&nbsp;# ./spec/lib/qualifications_spec.rb:55:in `block (2 levels) in &lt;top (required)&gt;'<br>
+          <br><br>
+          Finished in 0.00745 seconds (files took 0.40468 seconds to load)<br>
+          12 examples, 1 failure<br>
+        </div>
+      </div>
+
+      <hr>
+
+      <footer>
+      </footer>
+    </div> <!-- /container -->        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.1.min.js"><\/script>')</script>
+
+        <script src="js/vendor/bootstrap.min.js"></script>
+
+        <script src="js/main.js"></script>
+
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+        <script>
+            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+            e.src='//www.google-analytics.com/analytics.js';
+            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+            ga('create','UA-XXXXX-X');ga('send','pageview');
+        </script>
+    </body>
+</html>

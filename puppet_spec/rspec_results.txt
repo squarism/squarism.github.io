@@ -1,0 +1,34 @@
+INFO - Running: spec/lib/qualifications_spec.rb
+
+Qualifications
+  You have knowledge and experience (3-5 years) of high-level programming languages like ruby,
+python, java, etc.
+  You have developed and implemented solutions to challenging automation problems.
+  You think web APIs to control hardware and infrastructure are brilliant.
+  You are a believer in thoroughly testing software, automate that testing and believe that better
+QA drives better quality.  You have experience with test automation frameworks and continuous
+integration.
+  Being an active member of open source communities is something you cherish, and you have
+experience helping community members advance their code.
+  You are not dogmatic about technology choices. You understand that what matters is using the
+right tool for the job at hand.
+  You understand and use distributed version control systems such as git.
+  Minimum 3 years of full time experience in a software development role (5+ years preferred).
+  BSCS or equivalent or relevant industry experience.
+  Experience in writing high-quality, reusable Puppet modules is a plus. (FAILED - 1)
+  Requires logic and reasoning to identify the strengths and weaknesses of alternative solutions,
+conclusions or approaches to problems.
+  Requires contact with others (face-to-face, by telephone, virtual meetings, VOIP or otherwise)
+and the ability to work and interact in a group or team.
+
+Failures:
+
+  1) Qualifications Experience in writing high-quality, reusable Puppet modules is a plus.
+     Failure/Error: expect( me.puppet_modules_written > 0 ).to be true
+
+       expected true
+            got false
+     # ./spec/lib/qualifications_spec.rb:55:in `block (2 levels) in <top (required)>'
+
+Finished in 0.00745 seconds (files took 0.40468 seconds to load)
+12 examples, 1 failure
