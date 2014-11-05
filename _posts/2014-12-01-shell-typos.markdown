@@ -2,6 +2,7 @@
 layout: post
 status: draft
 published: false
+date: 2014-12-01
 title: Analyzing Shell Typos
 ---
 Let's create a list of our most common typos on the shell.  First, let's
