@@ -35,10 +35,7 @@ excerpt: ! "<img src=\"/uploads/2011/04/pixel-ribbon_feet.png\"
   here.  To keep this post on topic and short, we'll use the sqlite3 default for spiking.\r\n\r\n"
 wordpress_id: 1131
 wordpress_url: http://squarism.com/?p=1131
-date: !binary |-
-  MjAxMS0wNC0wMSAyMzoxODowNiAtMDQwMA==
-date_gmt: !binary |-
-  MjAxMS0wNC0wMiAwNDoxODowNiAtMDQwMA==
+date: 2011-04-01
 categories:
 - Ruby
 - Rails
