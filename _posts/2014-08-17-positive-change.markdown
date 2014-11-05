@@ -3,6 +3,7 @@ layout: post
 status: publish
 published: true
 title: Positive Change
+date:   2014-08-17
 ---
 I've been in Portland for a week.  So far, it's amazing.  I really don't want to blather on about how great it is because, to be honest, I'm afraid of boyish optimism.  This town, like college, will probably give back whatever I put into it.  So I'm pacing myself.  I think it will be good though.
 
