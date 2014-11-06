@@ -4,18 +4,18 @@ status: publish
 published: true
 title: IPv6 Spike
 author:
-  display_name: squarism
-  login: chris
-  email: squarism@gmail.com
-  url: ''
+display_name: squarism
+login: chris
+email: squarism@gmail.com
+url: ''
 author_login: chris
 author_email: squarism@gmail.com
 wordpress_id: 2025
 wordpress_url: http://squarism.com/?p=2025
 date: !binary |-
-  MjAxMy0wNy0yOCAxNDowODo0MSAtMDQwMA==
+MjAxMy0wNy0yOCAxNDowODo0MSAtMDQwMA==
 date_gmt: !binary |-
-  MjAxMy0wNy0yOCAxOTowODo0MSAtMDQwMA==
+MjAxMy0wNy0yOCAxOTowODo0MSAtMDQwMA==
 categories:
 - Blog
 tags: []
@@ -97,7 +97,8 @@ zone "f.3.3.b.d.4.3.d.d.e.e.d.0.0.c.f.ip6.arpa" {
         file "/etc/bind/db.fc00_deed_d34d_b33f";
 };
 </pre>
-Notice that the reverse zone (ip6.arpa) is super annoying to type out.  It needs to be the reverse bytes (afaik).</p>
+
+Notice that the reverse zone (ip6.arpa) is super annoying to type out.  It needs to be the reverse bytes (afaik).
 
 <pre>
 $TTL 2D ; zone default 2 days
@@ -151,7 +152,8 @@ $TTL 1h ; Default TTL
 6.0.0.0.0.0.0.0.0.0.0.0.0.0.e.e.e.d.e.e.e.d.e.e.e.d.0.0.c.f.ip6.arpa.    IN    PTR    piff.ipv6.squarism.com.
 </pre>
 
-I used a reverse zone generator <a href="http://rdns6.com/zone">at rdns6.com</a> for this last time.  It's amazingly annoying to type out.  I'm not sure if there's a more convenient form that could be used.</p>
+I used a reverse zone generator <a href="http://rdns6.com/zone">at rdns6.com</a> for this last time.  It's amazingly annoying to type out.  I'm not sure if there's a more convenient form that could be used.
+
 <p>Restart bind: <code>sudo services bind9 restart</code>  Check the logs in /var/log/syslog for any `named:` errors.  I had a few typos I had to chase down.  DNS can be tricky to set up so take your time.</p>
 <h2>See DNS working</h2>
 <p>
