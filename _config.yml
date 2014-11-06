@@ -37,6 +37,7 @@ exclude:
   - "Gemfile.lock"
 permalink: /:year/:month/:day/:title/
 excerpt_separator: "<!-- more -->"
+future: false
 defaults:
   -
     scope:
