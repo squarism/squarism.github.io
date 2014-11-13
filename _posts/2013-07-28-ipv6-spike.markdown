@@ -12,10 +12,7 @@ author_login: chris
 author_email: squarism@gmail.com
 wordpress_id: 2025
 wordpress_url: http://squarism.com/?p=2025
-date: !binary |-
-MjAxMy0wNy0yOCAxNDowODo0MSAtMDQwMA==
-date_gmt: !binary |-
-MjAxMy0wNy0yOCAxOTowODo0MSAtMDQwMA==
+date: 2013-07-28
 categories:
 - Blog
 tags: []
