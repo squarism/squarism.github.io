@@ -1,0 +1,127 @@
+
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+body {
+	padding: 1px;
+	font-family: 'Helvetica', 'Arial', sans-serif;
+	color: #444;
+	background-color: #c0d8ec;
+  font-size: 85%;
+}
+
+.container {
+  margin-left: 2em;
+  margin-right: 2em;
+}
+
+div.tagline {
+  margin-top: .25em;
+  margin-bottom: 15px;
+  height: 100%;
+}
+div.tagline h1 {
+  font-size: 5em;
+  line-height: 0.75em;
+  margin-bottom: 0em;
+}
+div.tagline p {
+  margin-left: 0.25em;
+  color: #8098ac;
+  border-top: solid 1px #D0DFEC;
+}
+
+a:link { color: #444; }
+a:visited { color: #444; }
+a:visited:hover { color: #444; }
+a:hover { color: #444; }
+a:active { color: #444; }
+
+footer {
+  text-align: center;
+}
+
+.project {
+  border-top: solid 1px #c8dff4;
+}
+
+div.heading {
+  margin: 0.5em;
+}
+
+div.heading .blurb {
+  float: left;
+  width: 50%;
+}
+
+div.blurb .name {
+  font-size: 2.5em;
+  font-weight: lighter;
+  margin-bottom: -0.2em;
+}
+
+div.blurb p {
+  padding: 0.5em;
+}
+
+div.tech {
+  float: right;
+  margin-right: 3em;
+  padding-left: 2em;
+  margin-top: 1em;
+  height: 95%;
+  border-left: 1px solid #D0DFEC;
+}
+
+div.heading .tech ul,li {
+  /*   display: inline; */
+  font-size: 1em;
+  font-style: normal;
+  list-style: none;
+  margin-left: 0;
+  padding-left: -2em;
+  margin-left: -1.2em;
+}
+
+div.heading .tech li {
+  border-bottom: 1px solid #D0DFEC;
+  color: #666;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
+div.heading .tech li:last-child {
+  border-bottom: none;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
+
+
+.screenshot {
+  clear: both;
+  float: left;
+  margin-left: 2em;
+  margin-bottom: 1em;
+}
+
+.screenshot-img {
+  box-shadow: 5px 5px #c0d8ec;
+  margin: 1em auto;
+  display: block;
+}
+
+.pure-g > div {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.pure-g > div:nth-child(odd) {
+  /*border: 1px solid #c5dcf1;*/
+  border-right: 1px solid #D0DFEC;
+}
+.l-box {
+  padding: 1em;
+}
+
