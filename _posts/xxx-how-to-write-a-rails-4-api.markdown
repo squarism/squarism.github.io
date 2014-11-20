@@ -3,7 +3,7 @@ layout: post
 status: published
 published: false
 title: How to Write a Rails 4 API
-date: 2014-11-21
+# date: xxx
 ---
 Let's dodge the question for a bit.  If you just need a simple API I encourage you to try building it with Grape, Sinatra or Padrino instead of starting out with Rails.  However sometimes that approach can turn out too simple and you end up recreating large parts of Rails in a Sinatra project.
 
