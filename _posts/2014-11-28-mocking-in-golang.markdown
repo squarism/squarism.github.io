@@ -1,7 +1,7 @@
 ---
 layout: post
 status: published
-published: false
+published: true
 title: Mocking in Golang
 date: 2014-11-28
 ---
@@ -69,7 +69,7 @@ type MockGateway struct {
     Url  string
 }
 
-func (m MockGateway) Charge() {
+func (m *MockGateway) Charge() {
     fmt.Println("This is a fake gateway.  --> [no-op] <---")
     fmt.Println("Yay!  :) ")
 }
@@ -143,7 +143,7 @@ type MockGateway struct {
     mock.Mock
 }
 
-func (m MockGateway) Charge() bool {
+func (m *MockGateway) Charge() bool {
     args := m.Mock.Called()
     return args.Bool(0)
 }
@@ -153,6 +153,7 @@ func TestCharging(t *testing.T) {
     m.On("Charge").Return(true)
 
     r := ChargeCustomer(m)
+    m.Mock.AssertExpectations(t)
 
     assert := assert.New(t)
     assert.True(r, true)
@@ -167,12 +168,25 @@ PASS
 ok      github.com/squarism/credit_card 0.018s
 {% endhighlight %}
 
-So here are some questions:
+In the mocking example we also added m.Mock.AssertExpectations there.
+That is additional test that captures and remembers the calls.  If
+the wiring is wrong and the expected call is not called, the test will
+fail.  For a while I was not testing this and I would have had a test
+coverage gap.  Another mistake I made while figuring out the
+AssertExpectations test was not passing by reference.  I continue to
+make this mistake because I'm pointer-nooby.  For more information on
+this see my [question on
+stackoverflow](http://stackoverflow.com/questions/17125497/oo-style-struct-objects-in-go).
+
+Ok, so that's my first foray with mocking in Go.  So here are some questions:
 
 * Do you use a mocking library?
 * Do you see how default arguments wouldn't work to help with mocking? You can't really DI. I'm ok with this. I just need to learn.
 * Do you like interfaces for (not only) testing reasons?
 * Do you like the interfaces version more than the mocking version?
 * It seems that mocking really needs an interface somewhere? Otherwise won't you get a cannot use gateway (type *VisaGateway) as type PaymentGateway in argument to ChargeCustomer. I might have gotten this wrong from the testify docs. It wasn't obvious until I wrote this question.
+
+If you have anything to say or answers to this question tweet me at
+@squarism.
 
 _... and once again, rubber ducking on stackoverflow. Writing the question made me figure it out._
