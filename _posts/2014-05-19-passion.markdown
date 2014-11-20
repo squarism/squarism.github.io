@@ -12,10 +12,7 @@ author_login: chris
 author_email: squarism@gmail.com
 wordpress_id: 2118
 wordpress_url: http://squarism.com/?p=2118
-date: !binary |-
-  MjAxNC0wNS0xOSAxMjowNDo1OCAtMDQwMA==
-date_gmt: !binary |-
-  MjAxNC0wNS0xOSAxNzowNDo1OCAtMDQwMA==
+date: 2014-05-19
 categories:
 - Blog
 tags: []
@@ -33,7 +30,7 @@ On the podcast, the rogues talked about two PhDs that would scream at each other
 
 > I've gotten upset with people for their code because it was so stupid. I've gotten angry and I've said mean things. And you know what? All those instances, those were wastes of my passion. That was wasted emotional energy.
 
-I know what he's trying to say.  There are moments when this is true.  In fact, I would say in the  majority of cases it's better to just "get over it" (a challenge itself).  Most of the time I try to run in this mode.  Most of the time I fail.  It's especially hard when you feel like you need to "represent".</p>
+I know what he's trying to say.  There are moments when this is true.  In fact, I would say in the  majority of cases it's better to just "get over it" (a challenge itself).  Most of the time I try to run in this mode.  Most of the time I fail.  It's especially hard when you feel like you need to "represent".
 
 ### Story Time
 
@@ -65,17 +62,24 @@ Just to be clear, this is a simplified version of what Bradly wanted.
 <hr>
 
 This is what I wanted.
-<p>
-<img src="/uploads/2014/05/tier_architecture_two.png" alt="tier_architecture_two" width="403" height="304" class="aligncenter size-large wp-image-2120" />
-</p>
+![tier_architecture_two](/uploads/2014/05/tier_architecture_two.png)
+
 <hr>
-I did my best to remain calm but this is the represent problem.  I felt compelled to bring the "outside world" to his mind.  I knew that no one did it like this.  And I imagined a stadium of my peers agreeing with me if they only knew what he was saying.  "What would the Internet think?  Oh my god!  They would laugh!  Imagine our embarrassment!  What kind of project is this?!" etc.</p>
-<p>I tried to approach it logically.  I showed vendor diagrams and documentation of example architectures from the very vendor product we were using and no diagrams showed locally installed databases.  Eventually it came down to his argument: "I own the architecture, I'm the architect."</p>
-<p>In this case, I was very passionate.  I was furious.  I had to represent the outside world.  I couldn't let it go.  I had to teach him that no one does it this way.  I had to represent.</p>
-<h2>Drama</h2><p>
-<p>
-We eventually got into the only screaming argument I've ever had in my 14-ish year career.  It was bad.  We didn't talk anymore.  We split the team.  We pitched our designs to management separately.  Management was trying to side with one of us since money was involved.  I moved offices so I didn't have to sit with him anymore.  It was no fun, it was a bad situation.</p>
-<p>In the end, he moved onto to other projects and I was able to influence the project back to normalcy.  When new developers joined the project, some artifacts of this debate would surface (like an old diagram).  Someone with three-tier experience would say "what the hell is this" and I'd have to explain the whole thing.  In those rare cases I felt righteous but to this day I feel awful about the whole story.  My working relationship was ruined with him and I hate the memory of that job just because of experiences like this one and others.</p>
-<p>I'd rather teach than win.  But he wasn't there to be a teacher and I wasn't given that role or power.  When some people go to work they optimize for their career.  They start off the day wanting to perform a job, move up and at the very least maintain the power they have.  Because this is the best they've ever been in their career.</p>
-<p>When I wake up, I optimize for experience.  I start off the day ready to learn, improve and at the very least make myself or other people better at what we spend our time doing.  Because this is the very worst I'll ever be in my career.</p>
-<p>So Avdi, in this and other things, I hear you.</p>
+
+I did my best to remain calm but this is the represent problem.  I felt compelled to bring the "outside world" to his mind.  I knew that no one did it like this.  And I imagined a stadium of my peers agreeing with me if they only knew what he was saying.  "What would the Internet think?  Oh my god!  They would laugh!  Imagine our embarrassment!  What kind of project is this?!" etc.
+
+I tried to approach it logically.  I showed vendor diagrams and documentation of example architectures from the very vendor product we were using and no diagrams showed locally installed databases.  Eventually it came down to his argument: "I own the architecture, I'm the architect."
+
+In this case, I was very passionate.  I was furious.  I had to represent the outside world.  I couldn't let it go.  I had to teach him that no one does it this way.  I had to represent.
+
+## Drama
+
+We eventually got into the only screaming argument I've ever had in my 14-ish year career.  It was bad.  We didn't talk anymore.  We split the team.  We pitched our designs to management separately.  Management was trying to side with one of us since money was involved.  I moved offices so I didn't have to sit with him anymore.  It was no fun, it was a bad situation.
+
+In the end, he moved onto to other projects and I was able to influence the project back to normalcy.  When new developers joined the project, some artifacts of this debate would surface (like an old diagram).  Someone with three-tier experience would say "what the hell is this" and I'd have to explain the whole thing.  In those rare cases I felt righteous but to this day I feel awful about the whole story.  My working relationship was ruined with him and I hate the memory of that job just because of experiences like this one and others.
+
+I'd rather teach than win.  But he wasn't there to be a teacher and I wasn't given that role or power.  When some people go to work they optimize for their career.  They start off the day wanting to perform a job, move up and at the very least maintain the power they have.  Because this is the best they've ever been in their career.
+
+When I wake up, I optimize for experience.  I start off the day ready to learn, improve and at the very least make myself or other people better at what we spend our time doing.  Because this is the very worst I'll ever be in my career.
+
+So Avdi, in this and other things, I hear you.
