@@ -1,6 +1,0 @@
-Looking at Work
-
-Not saying my project a perfect run.  Just saying this as it applies to retrospectives, repos and code reviews.  Thought it was a good point by Justin Searls at RubyConf 2014.
-
-Hoping to give you more of a `git log` view than what one or two minutes of time can provide.
-
