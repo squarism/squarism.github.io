@@ -48,12 +48,12 @@ Which is fine.  Until you want to find out what people are on the Muffin Project
 people_on_muffins = db_results.select {|user| user[:projects].include? 'muffins' }
 {% endhighlight %}
 
-
-<p>But as you keep working, you might be getting a feeling of deja-vu.  The two methods above are very similar.  You might be inspired by other Ruby libraries which give you a tiny DSL or at least allow you to pass blocks into methods to be more expressive.</p>
+But as you keep working, you might be getting a feeling of deja-vu.  The two methods above are very similar.  You might be inspired by other Ruby libraries which give you a tiny DSL or at least allow you to pass blocks into methods to be more expressive.
 
 <!-- more -->
 
-<h2>The Smell</h2>
+## The Smell
+
 Here's the complete code smelly example.
 
 {% highlight ruby %}
@@ -74,13 +74,11 @@ puts meeting_ids
 # => rroke ghaz mjay tpain
 {% endhighlight %}
 
+We're having a meeting between the admins and people who are on the Muffin Project.  The only person not matching these rules in this case is Bob Barker (bbarker).  He must be busy enjoying retirement eating pie, who knows.
 
-<p>We're having a meeting between the admins and people who are on the Muffin Project.  The only person not matching these rules in this case is Bob Barker (bbarker).  He must be busy enjoying retirement eating pie, who knows.</p>
+## Inspiration
 
-<h2>Inspiration</h2>
-<p>
 Let's take a look at Faraday.  Faraday uses blocks to great effect to communicate intent just like most libraries in Ruby.  In Faraday, this is how a HTTP POST is done using Faraday:
-</p>
 
 {% highlight ruby %}
 conn.post do |req|
@@ -90,11 +88,11 @@ conn.post do |req|
 end
 {% endhighlight %}
 
+This is kind of nice!  You can get more than one thing done at a time and it doesn't require a lot of temporary variables.  Let's see if we can use blocks like this.  We'll get to blocks in a miniute.  Let's first refactor a little bit first.
 
-<p>This is kind of nice!  You can get more than one thing done at a time and it doesn't require a lot of temporary variables.  Let's see if we can use blocks like this.  We'll get to blocks in a miniute.  Let's first refactor a little bit first.</p>
+## The Fix
 
-<h2>The Fix</h2>
-<p>There's a certain similarity between the two selects.  We really want to get "admins" and "project people" all together, so let's just do that.  We'll create two methods that essentially replace the instance methods but can be used in the future for other rules.  We'll call them .with_roles and .with_projects.</p>
+There's a certain similarity between the two selects.  We really want to get "admins" and "project people" all together, so let's just do that.  We'll create two methods that essentially replace the instance methods but can be used in the future for other rules.  We'll call them .with_roles and .with_projects.
 
 {% highlight ruby %}
 def with_roles(results, role)
@@ -106,8 +104,8 @@ def with_projects(results, project)
 end
 {% endhighlight %}
 
+Next, we'll create a method that takes a block.
 
-<p>Next, we'll create a method that takes a block.</p>
 {% highlight ruby %}
 def user_ids(results, &block)
   rows = yield block
@@ -116,8 +114,8 @@ def user_ids(results, &block)
 end
 {% endhighlight %}
 
+The &block argument and yield block is optional.  You could write this as:
 
-<p>The &block argument and yield block is optional.  You could write this as:</p>
 {% highlight ruby %}
  def user_ids(results)
    rows = results.dup
@@ -127,12 +125,12 @@ end
  end
 {% endhighlight %}
 
-<p>
-But in that case, the block is optional, so you'll want to check for block_given?.  For this example, it's easier for us to require a block to make this a shorter post ... err, well I guess it's longer now.</p>
+But in that case, the block is optional, so you'll want to check for block_given?.  For this example, it's easier for us to require a block to make this a shorter post ... err, well I guess it's longer now.
 
-<p>In any event, this method's job is to filter results (users) with whatever code is passed in.  Then it uniques the collected array because user IDs are assumed here to be unique.  Finally, it returns just user_ids like it's name implies.</p>
+In any event, this method's job is to filter results (users) with whatever code is passed in.  Then it uniques the collected array because user IDs are assumed here to be unique.  Finally, it returns just user_ids like it's name implies.
 
-<p>The usage of this user_ids method that takes a block ends up reading very well.</p>
+The usage of this user_ids method that takes a block ends up reading very well.
+
 {% highlight ruby %}
 admins = user_ids(db_results) do
   with_roles(db_results, 'admin') +
@@ -143,7 +141,8 @@ puts admins
 # => rroke ghaz mjay tpain
 {% endhighlight %}
 
-<p>Here's the completed, less smelly example.</p>
+Here's the completed, less smelly example.
+
 {% highlight ruby %}
 db_results = [
   { id: 1, login: 'mjay', roles: ['user'], projects: ['muffins'] },
@@ -181,7 +180,8 @@ puts admins
 # => returns everyone because no filtering block was passed
 {% endhighlight %}
 
+## Wrap Up
 
-<h2>Wrap Up</h2>
-<p>This is pretty procedural.  I'll leave it to you to put it into a class, maybe add something better than a "plus" operator to combine the user list together.  Maybe a UserList abstraction class could help get away from hashes too.</p>
-<p>I like going down these paths because you end up with more expressive code that is flexible to change.  At the same time, little hints of DSLs come out when using blocks to this effect.  This is starting down the path of a Ruby DSL. I'll be posting about that pretty soon.</p>
+This is pretty procedural.  I'll leave it to you to put it into a class, maybe add something better than a "plus" operator to combine the user list together.  Maybe a UserList abstraction class could help get away from hashes too.
+
+I like going down these paths because you end up with more expressive code that is flexible to change.  At the same time, little hints of DSLs come out when using blocks to this effect.  This is starting down the path of a Ruby DSL. I'll be posting about that pretty soon.
