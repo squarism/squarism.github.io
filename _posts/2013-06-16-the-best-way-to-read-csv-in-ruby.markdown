@@ -21,12 +21,16 @@ categories:
 tags: []
 comments: []
 ---
-<p>CSV is awful.  CSV isn't well formed.  It isn't hard to use because it's bloated and slow.  CSV is hard to use because it's just a dumb data format.  However, sometimes all you have is stupid data and <em>who cares, let's do this thing and blot out the memories</em>.</p>
-<p>I assume you know how to use the CSV module that's built into Ruby.  It's pretty easy.  You just read a file in and you get some 2D array back.  It usually comes out pretty horrible with long methods and little room for nice abstractions.</p>
-<p>So what if you want to polish it up a little bit?  Maybe you aren't just going to kludge this thing again and hate yourself later?  What if you aren't just going to load this into a database?  What if you want to do some quick CSV analysis but at the same time make it come out sort of readable?</p>
-<p>Let's take a look at an abstraction layer and see how we could write a CSV loader for a guest list.  We're going to have a dinner party and evite gave us a crappy CSV dump of who's responded so far.  Well, it's what we have.  But how many people are coming and how many groups aren't allergic to peanuts?  We want to know how many peanut M&Ms to buy.</p>
+CSV is awful.  CSV isn't well formed.  It isn't hard to use because it's bloated and slow.  CSV is hard to use because it's just a dumb data format.  However, sometimes all you have is stupid data and _who cares, let's do this thing and blot out the memories_.
 
-<p>Here's our data:</p>
+I assume you know how to use the CSV module that's built into Ruby.  It's pretty easy.  You just read a file in and you get some 2D array back.  It usually comes out pretty horrible with long methods and little room for nice abstractions.
+
+So what if you want to polish it up a little bit?  Maybe you aren't just going to kludge this thing again and hate yourself later?  What if you aren't just going to load this into a database?  What if you want to do some quick CSV analysis but at the same time make it come out sort of readable?
+
+Let's take a look at an abstraction layer and see how we could write a CSV loader for a guest list.  We're going to have a dinner party and evite gave us a crappy CSV dump of who's responded so far.  Well, it's what we have.  But how many people are coming and how many groups aren't allergic to peanuts?  We want to know how many peanut M&Ms to buy.
+
+Here's our data:
+
 <pre>
 Name, Plus, RSVP'd, Peanut Allergies
 Tom DeLuise, 1, No, Yes
@@ -38,20 +42,21 @@ Jim Gaffigan, 0, Yes, No
 
 <!-- more -->
 
-<p>Supermodel is pretty old and I like it a lot but it hasn't been updated in a while and has some open pull requests.  I took at look at some alternatives but it didn't work out.
+Supermodel is pretty old and I like it a lot but it hasn't been updated in a while and has some open pull requests.  I took at look at some alternatives but it didn't work out.
 - ActiveModel from Rails 3 is hard to make generic
 - ActiveModel::Model from Rails 4 is a great upgrade from 3.x.  You can  make anything look like a database object but it still doesn't have the concept of a collection.  So now I have to make an array variable called table?  This is weird.
-- Sequel has a nice interface to an in-memory sqlite3 database.  It's probably the most 'real' that I found but it requires you to do a CREATE TABLE statement even for your in-memory database.</p>
-<p>None of these alternatives above are bad but let's take a look and see how nice we can get it with Supermodel.</p>
-<p>First, we are going to use a supermodel fork so that we automatically get rails 3.2.13 instead of 3.0.x.  Create a project folder and a Gemfile file:</p>
+- Sequel has a nice interface to an in-memory sqlite3 database.  It's probably the most 'real' that I found but it requires you to do a CREATE TABLE statement even for your in-memory database.
+
+None of these alternatives above are bad but let's take a look and see how nice we can get it with Supermodel.
+
+First, we are going to use a supermodel fork so that we automatically get rails 3.2.13 instead of 3.0.x.  Create a project folder and a Gemfile file:
 
 {% highlight ruby %}
 source "https://rubygems.org"
 gem 'supermodel', :git => 'https://github.com/amdtech/supermodel.git'
 {% endhighlight %}
 
-
-<p>Run bundle.</p>
+Run bundle.
 
 {% highlight ruby %}
 require 'csv'
@@ -107,4 +112,4 @@ puts peanut_guest_count
 # 7
 {% endhighlight %}
 
-<p>You can see that Guest.all is much more intent revealing than manipulating a 2D array by hand.</p>
+You can see that Guest.all is much more intent revealing than manipulating a 2D array by hand.
