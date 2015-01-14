@@ -37,18 +37,23 @@ comments:
     N&AElig;&deg;&aacute;&raquo;&rsaquo;ng means \"Fried Chicken\" in Vietnamese  :-)\r\n\r\nThank
     you, and have a nice day,"
 ---
-<h2>The Spike</h2><p>
-I was spiking on Redis recently.  I wanted to use the <a href="https://github.com/nateware/redis-objects">redis-objects gem</a> to simulate a shopping cart app even though the README specifically says</p>
-<blockquote><p>Just use MySQL, k?</p></blockquote>
+## The Spike
 
-<p>I wanted to see what would happen if I tried it anyway.  So the README and examples for the redis-objects gem are great so I'm not going to rehash what's there.  However, I will say though that the example has you hardcode the id field to 1.  That detail snuck up on me.</p>
+I was spiking on Redis recently.  I wanted to use the [redis-objects gem](https://github.com/nateware/redis-objects) to simulate a shopping cart app even though the README specifically says
+
+> Just use MySQL, k?
+
+I wanted to see what would happen if I tried it anyway.  So the README and examples for the redis-objects gem are great so I'm not going to rehash what's there.  However, I will say though that the example has you hardcode the id field to 1.  That detail snuck up on me.
 
 <!-- more -->
 
-<p>If you don't set an ID then you can't work with a redis-object instance.  You get an exception: <code>Redis::Objects::NilObjectId: Attempt to address redis-object :name on class User with nil id (unsaved record?)</code></p>
-<p>It's basically trying to tell you, "hey, save the record first or set an ID".  Well, honestly, I don't want to set an id myself.  This is where the meat of the README is.  Redis-objects really fits organically in an existing ActiveRecord model.  That means Rails.  In this case though, I don't want an entire Rails app.  I can see the value though in a plain old Rails app.  Just look at the examples if you want to see more.</p>
-<p>Anyway, continuing on with the spiking, I tried to integrate the Supermodel gem with Redis-objects.  That sort of worked.  You just <code>class User < Supermodel::Base</code> and you can sort of get it to work.  This is great because Supermodel gives you finders like <code>User.find_by_email('bob@yahoo.com')</code> to make it act like ActiveRecord but you can't use <code>.create(email: 'bob@yahoo.com')</code> to begin with because of the same errors as I mentioned above.  Redis-objects really wants the record to have an ID already.  Even using Supermodel's RandomID mixin didn't work.  The initialize order and callback hooks don't really work (or at least I couldn't get them to work).</p>
-<p>Finally, I tried combining just redis-objects and datamapper redis.  That worked.  And it's pretty nice.  Check it out.</p>
+If you don't set an ID then you can't work with a redis-object instance.  You get an exception: `Redis::Objects::NilObjectId: Attempt to address redis-object :name on class User with nil id (unsaved record?)`
+
+It's basically trying to tell you, "hey, save the record first or set an ID".  Well, honestly, I don't want to set an id myself.  This is where the meat of the README is.  Redis-objects really fits organically in an existing ActiveRecord model.  That means Rails.  In this case though, I don't want an entire Rails app.  I can see the value though in a plain old Rails app.  Just look at the examples if you want to see more.
+
+Anyway, continuing on with the spiking, I tried to integrate the Supermodel gem with Redis-objects.  That sort of worked.  You just `class User < Supermodel::Base` and you can sort of get it to work.  This is great because Supermodel gives you finders like `User.find_by_email('bob@yahoo.com')` to make it act like ActiveRecord but you can't use `.create(email: 'bob@yahoo.com')` to begin with because of the same errors as I mentioned above.  Redis-objects really wants the record to have an ID already.  Even using Supermodel's RandomID mixin didn't work.  The initialize order and callback hooks don't really work (or at least I couldn't get them to work).
+
+Finally, I tried combining just redis-objects and datamapper redis.  That worked.  And it's pretty nice.  Check it out.
 
 {% highlight ruby %}
 require 'redis-objects'
@@ -79,16 +84,15 @@ end
 User.finalize
 {% endhighlight %}
 
-
-<p>So using this is pretty easy.</p>
+So using this is pretty easy.
 
 {% highlight ruby %}
 u = User.create(email: 'test@test.com')
 u.name = 'Testy McTesterson'
 {% endhighlight %}
 
+When you look at Redis, the keys are already composited for you and magic has happened.
 
-<p>When you look at Redis, the keys are already composited for you and magic has happened.</p>
 <pre>
 redis 127.0.0.1:6379> keys *
 user:test@test.com:name
@@ -97,10 +101,13 @@ redis 127.0.0.1:6379> get user:test@test.com:name
 Testy McTesterson
 </pre>
 
-<p>Yay!</p>
-<p>The name field is from redis-objects and the create uses datamapper.  This is a really odd pairing but I like the fact that I have no sql database in the mix but still have finders similar to an ORM.  Something to keep in mind, datamapper's finders are a bit different than the Rails 3 ones (no .where method).</p>
-<h2>Benchmarking A Million Things</h2><p>
-Ok fine.  So maybe this works, maybe it doesn't.  Maybe it's not the right idea.  What about the good stuff?  Like, how fast can we load a whole lot of names into MySQL versus Redis using  the above code and techniques?  Is it even relevant?</p>
+Yay!
+
+The name field is from redis-objects and the create uses datamapper.  This is a really odd pairing but I like the fact that I have no sql database in the mix but still have finders similar to an ORM.  Something to keep in mind, datamapper's finders are a bit different than the Rails 3 ones (no .where method).
+
+## Benchmarking A Million Things
+
+Ok fine.  So maybe this works, maybe it doesn't.  Maybe it's not the right idea.  What about the good stuff?  Like, how fast can we load a whole lot of names into MySQL versus Redis using  the above code and techniques?  Is it even relevant?
 
 <pre>
 Summary
@@ -121,11 +128,11 @@ Redis:    00:14.50
 Redis PL: 00:02.72
 </pre>
 
-A gist of these <a href="https://gist.github.com/squarism/5234519">test results is here</a>.
+A gist of these [test results is here](https://gist.github.com/squarism/5234519).
 
-<h2>A More Complete Example</h2>
-<p>
-If you know the ID and don't need something like an auto-incrementing column outside your code/control then you can greatly simplify the code above by getting rid of Datamapper.  You can simply use redis-objects to fake an ORM.  I had great success using it as long as you <em>USE NATIVE REDIS TYPES</em>.  Listen to the redis-objects author, don't try to force the tool into the use case.</p>
+## A More Complete Example
+
+If you know the ID and don't need something like an auto-incrementing column outside your code/control then you can greatly simplify the code above by getting rid of Datamapper.  You can simply use redis-objects to fake an ORM.  I had great success using it as long as you _USE NATIVE REDIS TYPES_.  Listen to the redis-objects author, don't try to force the tool into the use case.
 
 {% highlight ruby %}
 # What if we want to use redis-objects as a database but
