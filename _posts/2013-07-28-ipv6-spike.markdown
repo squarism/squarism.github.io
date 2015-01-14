@@ -20,71 +20,81 @@ comments: []
 ---
 A spike is when you play around with something and then throw it away for the purposes of learning.  So, let's play around with IPv6.  I had read a little bit about it but essentially my working experience with IPv6 was nothing except for disabling it.  Let's learn some stuff!
 
-<p>I'm going to skip over all the history of IPv6 and assume that you agree with me and think that this is important and relevant to the future of the Internet.</p>
-<h2>Setup</h2>
-<p>
-First, build 4 Ubuntu VMs.  I'm using 13.04 but any current Linux distro should work, just the packages and paths will change.  I found the best way is to build a simple VM and then clone it 3 more times (in Fusion this is copy/paste and resetting the MAC address).  You'll need four machines to simulate a local network.  You won't need any network hardware and VMware will be able to simulate everything we need.  You can actually do this whole experiment on one real box (cool stuff)!</p>
-<p>The goal of this spike is:</p>
-<ul>
-<li>Build 4 VMs</li>
-<li>Make a router, a web server, a dns server and a client</li>
-<li>Hit a web page between two network boundaries over IPv6 only</li>
-</ul>
+I'm going to skip over all the history of IPv6 and assume that you agree with me and think that this is important and relevant to the future of the Internet.
+
+## Setup
+
+First, build 4 Ubuntu VMs.  I'm using 13.04 but any current Linux distro should work, just the packages and paths will change.  I found the best way is to build a simple VM and then clone it 3 more times (in Fusion this is copy/paste and resetting the MAC address).  You'll need four machines to simulate a local network.  You won't need any network hardware and VMware will be able to simulate everything we need.  You can actually do this whole experiment on one real box (cool stuff)!
+
+The goal of this spike is:
+
+*   Build 4 VMs
+*   Make a router, a web server, a dns server and a client
+*   Hit a web page between two network boundaries over IPv6 only
 
 <!-- more -->
 
-<h2>Super practical IPv6 primer</h2>
-<p>
-Addressing is WEIRD.  That's really what I wanted to spike on.  Getting comfortable with the addressing length, hexadecimal and understanding the addressing layout.</p>
-<p>In IPv4, a network segment might look like this: <code>   10.0.0.0/24</code>
-So a box with an IP on that network might be this: <code> ip: 10.0.0.136  netmask:255.255.255.0</code></p>
-<p>IPv6 is a lot different.  Private addresses don't start with 192.168., 172. or 10.  Private addresses start with fc00 (from what I've read).  So I made up two network segments called
-<code>fc00:deed:d34d:b33f
-fc00:deee:deee:deee
-</code>
-</p>
+## Super practical IPv6 primer
 
-<p>But that's only 4 sets of hex.  IPv6 addresses have 8 sets of 4 hex bytes like this:</p>
+Addressing is WEIRD.  That's really what I wanted to spike on.  Getting comfortable with the addressing length, hexadecimal and understanding the addressing layout.
+
+In IPv4, a network segment might look like this: `   10.0.0.0/24`
+So a box with an IP on that network might be this: ` ip: 10.0.0.136  netmask:255.255.255.0`
+
+IPv6 is a lot different.  Private addresses don't start with 192.168., 172. or 10.  Private addresses start with fc00 (from what I've read).  So I made up two network segments called
+`fc00:deed:d34d:b33f
+fc00:deee:deee:deee
+`
+
+But that's only 4 sets of hex.  IPv6 addresses have 8 sets of 4 hex bytes like this:
+
 <pre highlight="false">
 nnnn:nnnn:nnnn:nnnn:hhhh:hhhh:hhhh:hhhh
 (where n's are the network parts and h's are the host parts in a /64)
 </pre>
 
-<p>So let's configure a box with an ip.  Our boxes are named after onomatopoeias (boing, wap, rawr and piff).  Boing's address is "dot" 10.
-<code>boing: fc00:deed:d34d:b33f::10/64</code></p>
-<p>So there's a box that's configured with an IP.  Notice the double colons.  That just means it fills in the zeros between.  It's shorthand.  The /64 is the network segment.  Like in ipv4 192.168.0.1/24 is a common private ip.  The /24 is out of 32.  So it means X.X.X.Y where Y is the host part and X.X.X is the network part.  So 192.168.0.* is the network and .1 is the host.  In IPv6 it's /64 out of a total /128.</p>
-<p>So my private address space is just like an IPv4 private range.  I'm assigning this IPv6 space and I have 18 trillion private address for my ONE SUBNET.  For a router to work, I need two subnets.  So now I have 36 TRILLION free private addresses.  O_o</p>
-<h2>Address Configuration</h2><p>
-I'm using ipv4 just for remote admin and installing things through apt.  So you'll have to add another ip to your vm's network card.  Ubuntu does this in the file /etc/network/interfaces.  Here's an example.</p>
+So let's configure a box with an ip.  Our boxes are named after onomatopoeias (boing, wap, rawr and piff).  Boing's address is "dot" 10.
+`boing: fc00:deed:d34d:b33f::10/64`
+
+So there's a box that's configured with an IP.  Notice the double colons.  That just means it fills in the zeros between.  It's shorthand.  The /64 is the network segment.  Like in ipv4 192.168.0.1/24 is a common private ip.  The /24 is out of 32.  So it means X.X.X.Y where Y is the host part and X.X.X is the network part.  So 192.168.0.* is the network and .1 is the host.  In IPv6 it's /64 out of a total /128.
+
+So my private address space is just like an IPv4 private range.  I'm assigning this IPv6 space and I have 18 trillion private address for my ONE SUBNET.  For a router to work, I need two subnets.  So now I have 36 TRILLION free private addresses.  O_o
+
+## Address Configuration
+
+I'm using ipv4 just for remote admin and installing things through apt.  So you'll have to add another ip to your vm's network card.  Ubuntu does this in the file /etc/network/interfaces.  Here's an example.
+
 <pre highlight="false">
 boing - dns (10.0.0.137)
-	/etc/network/interfaces
-	  iface eth0 inet6 static
-	  	address fc00:deed:d34d:b33f::10
-	  	netmask 64
-	  	gateway fc00:deed:d34d:b33f::1
+    /etc/network/interfaces
+      iface eth0 inet6 static
+        address fc00:deed:d34d:b33f::10
+        netmask 64
+        gateway fc00:deed:d34d:b33f::1
 </pre>
 
-<p>
-If you type ifconfig or `ip addr` you will see that it has two IPs now.  One IPv4 and one IPv6 address.  We're not quite done.  I drew a picture of the network layout and you'll have to configure all the VMs like this.</p>
-<p><img src="/uploads/2013/07/ipv6_lab.png" alt="ipv6_lab" width="539" height="401" class="aligncenter size-full wp-image-2028" /></p>
-<h2>Router Configuration</h2>
-<p>
-This is really easy.  You just need the Rawr box to forward IPv6 packets like a router but not like a firewall.  So Linux can do that will a simple kernel switch.  But first, you'll need to add a second network card in VMWare.  So:</p>
-<ul>
-<li>Shutdown rawr</li>
-<li>Add a second network card</li>
-<li>Boot rawr</li>
-<li>Edit /etc/sysctl.conf, change net.ipv6.conf.all.forwarding = 1</li>
-<li>Run sysctl -p</li>
-</ul>
+If you type ifconfig or `ip addr` you will see that it has two IPs now.  One IPv4 and one IPv6 address.  We're not quite done.  I drew a picture of the network layout and you'll have to configure all the VMs like this.
 
-<p>
-Routing through rawr should work at this point.  For example, from piff, you should be able to ping boing through ipv6 even though they aren't on the same network segment.  Use ping6 and traceroute6 to sanity check.</p>
+![ipv6_lab](/uploads/2013/07/ipv6_lab.png)
 
-<h2>DNS Configuration</h2><p>
-Boing is our DNS server so let's make some changes.  First, apt-get install bind9.  Then edit these files below.  I configured a temporary subdomain on squarism.com called ipv6.squarism.com but this can be anything you want.</p>
-<pre title="/etc/bind/named.conf.local" toolbar="always">
+## Router Configuration
+
+This is really easy.  You just need the Rawr box to forward IPv6 packets like a router but not like a firewall.  So Linux can do that will a simple kernel switch.  But first, you'll need to add a second network card in VMWare.  So:
+
+*   Shutdown rawr
+*   Add a second network card
+*   Boot rawr
+*   Edit /etc/sysctl.conf, change net.ipv6.conf.all.forwarding = 1
+*   Run sysctl -p
+
+Routing through rawr should work at this point.  For example, from piff, you should be able to ping boing through ipv6 even though they aren't on the same network segment.  Use ping6 and traceroute6 to sanity check.
+
+## DNS Configuration
+
+Boing is our DNS server so let's make some changes.  First, apt-get install bind9.  Then edit these files below.  I configured a temporary subdomain on squarism.com called ipv6.squarism.com but this can be anything you want.
+
+{% highlight text %}
+// /etc/bind/named.conf.local
 zone "ipv6.squarism.com" {
         type master;
         file "/etc/bind/db.ipv6.squarism.com";
@@ -93,11 +103,12 @@ zone "f.3.3.b.d.4.3.d.d.e.e.d.0.0.c.f.ip6.arpa" {
         type master;
         file "/etc/bind/db.fc00_deed_d34d_b33f";
 };
-</pre>
+{% endhighlight %}
 
 Notice that the reverse zone (ip6.arpa) is super annoying to type out.  It needs to be the reverse bytes (afaik).
 
-<pre>
+{% highlight text %}
+// /etc/bind/db.ipv6.squarism.com
 $TTL 2D ; zone default 2 days
 $ORIGIN ipv6.squarism.com.
 
@@ -121,12 +132,12 @@ piff                    IN      AAAA    fc00:deee:deee:deee::6
 
 ; aliases
 www                     IN      CNAME   wap
-</pre>
+{% endhighlight %}
 
-<p>
-Here we're using the AAAA records for IPv6.  In IPv4 these would be A records.  Bind has supported AAAA records for a long time.  CNAME records don't change.  Notice that you could easily run a DNS server that serves both stacks.</p>
+Here we're using the AAAA records for IPv6.  In IPv4 these would be A records.  Bind has supported AAAA records for a long time.  CNAME records don't change.  Notice that you could easily run a DNS server that serves both stacks.
 
-<pre title="/etc/bind/db.fc00_deed_d34d_b33f" toolbar="always">
+{% highlight text %}
+// /etc/bind/db.fc00_deed_d34d_b33f
 ; fc00:deed:d34d:b33f::/64
 $TTL 1h ; Default TTL
 @       IN      SOA     ns1.ipv6.squarism.com.  hostmaster.squarism.com. (
@@ -147,52 +158,56 @@ $TTL 1h ; Default TTL
 1.1.0.0.0.0.0.0.0.0.0.0.0.0.f.3.3.b.d.4.3.d.d.e.e.d.0.0.c.f.ip6.arpa.    IN    PTR    wap.ipv6.squarism.com.
 1.0.0.0.0.0.0.0.0.0.0.0.0.0.f.3.3.b.d.4.3.d.d.e.e.d.0.0.c.f.ip6.arpa.    IN    PTR    rawr.ipv6.squarism.com.
 6.0.0.0.0.0.0.0.0.0.0.0.0.0.e.e.e.d.e.e.e.d.e.e.e.d.0.0.c.f.ip6.arpa.    IN    PTR    piff.ipv6.squarism.com.
-</pre>
+{% endhighlight %}
 
-I used a reverse zone generator <a href="http://rdns6.com/zone">at rdns6.com</a> for this last time.  It's amazingly annoying to type out.  I'm not sure if there's a more convenient form that could be used.
+I used a reverse zone generator [at rdns6.com](http://rdns6.com/zone) for this last time.  It's amazingly annoying to type out.  I'm not sure if there's a more convenient form that could be used.
 
-<p>Restart bind: <code>sudo services bind9 restart</code>  Check the logs in /var/log/syslog for any `named:` errors.  I had a few typos I had to chase down.  DNS can be tricky to set up so take your time.</p>
-<h2>See DNS working</h2>
-<p>
-Ok, let's take a quick break from this infinite configuration and see how we are doing so far.  At this point we should have routing and DNS working.  So that means that Piff should be able to ping a DNS name and it should work.</p>
-<p>But first, we need to tell Piff and all the other boxes to use our new dns server.  Edit /etc/network/interfaces again and add</p>
+Restart bind: `sudo services bind9 restart`  Check the logs in /var/log/syslog for any `named:` errors.  I had a few typos I had to chase down.  DNS can be tricky to set up so take your time.
 
-<p><code>
+## See DNS working
+
+Ok, let's take a quick break from this infinite configuration and see how we are doing so far.  At this point we should have routing and DNS working.  So that means that Piff should be able to ping a DNS name and it should work.
+
+But first, we need to tell Piff and all the other boxes to use our new dns server.  Edit `/etc/network/interfaces` again and add
+
+{% highlight text %}
 dns-search ipv6.squarism.com
 dns-nameservers fc00:deed:d34d:b33f::10
-</code></p>
+{% endhighlight %}
 
-<p>For example, your eth0 block will look like this</p>
-<pre lang="diff">
+For example, your eth0 block will look like this
+
+{% highlight text %}
 # The primary network interface
 auto eth0
 iface eth0 inet dhcp
 iface eth0 inet6 static
-	address fc00:deed:d34d:b33f::11
-	netmask 64
-	gateway fc00:deed:d34d:b33f::1
-	dns-search ipv6.squarism.com
-	dns-nameservers fc00:deed:d34d:b33f::10
-</pre>
+    address fc00:deed:d34d:b33f::11
+    netmask 64
+    gateway fc00:deed:d34d:b33f::1
+    dns-search ipv6.squarism.com
+    dns-nameservers fc00:deed:d34d:b33f::10
+{% endhighlight %}
 
-<p>Restart networking.  Even if your VMs are running DHCP (they are by default), we're just adding a DNS server to the static IPv6 address.  In other Linux distros, this file will be different (sry).</p>
+Restart networking.  Even if your VMs are running DHCP (they are by default), we're just adding a DNS server to the static IPv6 address.  In other Linux distros, this file will be different (sry).
 
-<pre>
+{% highlight text %}
 piff:~$ ping6 www.ipv6.squarism.com
 PING www.ipv6.squarism.com(fc00:deed:d34d:b33f::11) 56 data bytes
 64 bytes from fc00:deed:d34d:b33f::11: icmp_seq=1 ttl=64 time=1.12 ms
 64 bytes from fc00:deed:d34d:b33f::11: icmp_seq=2 ttl=64 time=0.553 ms
-</pre>
+{% endhighlight %}
 
-<p>Ok great.  DNS and routing are working.  Now we are ready for the final part.</p>
-<h2>Web Server Configuration</h2>
-<p>
+Ok great.  DNS and routing are working.  Now we are ready for the final part.
+
+## Web Server Configuration
+
 Get dependencies installed on Wap (the web server).
-<code>aptitude install zlib1g-dev libssl-dev libpcre3-dev</code>
-</p>
+`aptitude install zlib1g-dev libssl-dev libpcre3-dev`
 
-<p>We need ipv6 support built in and I'm not sure if the OS packages are going to come with it out of the box.  Installing nginx is easy.  So let's download nginx, configure, compile.
-<pre>
+We need ipv6 support built in and I'm not sure if the OS packages are going to come with it out of the box.  Installing nginx is easy.  So let's download nginx, configure, compile.
+
+{% highlight text %}
 # download latest stable and untar ...
 ./configure --with-ipv6 --prefix=/opt/nginx
 make install
@@ -200,100 +215,98 @@ cd /opt/nginx
 vi conf/nginx.conf
   # change this line
   listen       [::]:80 default ipv6only=on;
-</pre>
-</p>
+{% endhighlight %}
 
-<p>Start nginx:
-<code>/opt/nginx/sbin/nginx -c /opt/nginx/conf/nginx.conf</code>
+Start nginx:
+`/opt/nginx/sbin/nginx -c /opt/nginx/conf/nginx.conf`
 Normally, I'd write a init.d script here but whatever.  You can stop nginx like this:
-<code>sudo /opt/nginx/sbin/nginx -s stop</code></p>
-<p>Sanity check:
-<code>netstat -nlp | grep nginx
-tcp6   0  0 :::80  :::*  LISTEN  24618/nginx.conf</code></p>
-<p>Let's create a dummy web page on Wap (the nginx box).  We'll test this page in the next section.</p>
+`sudo /opt/nginx/sbin/nginx -s stop`
+
+Sanity check:
+`netstat -nlp | grep nginx
+tcp6   0  0 :::80  :::*  LISTEN  24618/nginx.conf`
+
+Let's create a dummy web page on Wap (the nginx box).  We'll test this page in the next section.
 
 {% highlight html %}
 <html>
-<h1>This is only viewable over ipv6!</h1>
+# This is only viewable over ipv6!
 </html>
 {% endhighlight %}
 
+## End to end test
 
-<h2>End to end test</h2>
-<p>
-Ok, everything is set up.  So let's see it work end to end.  Our goal was to hit an IPv6 web server through DNS and a router.</p>
+Ok, everything is set up.  So let's see it work end to end.  Our goal was to hit an IPv6 web server through DNS and a router.
 
-<p>Here you can see I'm pinging the webserver from the web client (piff -> wap).</p>
+Here you can see I'm pinging the webserver from the web client (piff -> wap).
 
-<pre highlight="false">
+{% highlight text %}
 piff:~$ ping 10.0.0.139
 PING 10.0.0.139 (10.0.0.139) 56(84) bytes of data.
 64 bytes from 10.0.0.139: icmp_req=1 ttl=64 time=0.341 ms
-</pre>
+{% endhighlight %}
 
-<p>IPv4 is routable directly because of vmware.  But IPv6 traffic is split, the client isn't on the same IPv6 segment as the web server.  So I can ping directly with IPv4.  So that's our IPv4 sanity test but not why we did all this.</p>
-<p>You can see when I try to hit that ipv6.html test page we created earlier it won't work.</p>
+IPv4 is routable directly because of vmware.  But IPv6 traffic is split, the client isn't on the same IPv6 segment as the web server.  So I can ping directly with IPv4.  So that's our IPv4 sanity test but not why we did all this.
 
-<pre highlight="false">
+You can see when I try to hit that ipv6.html test page we created earlier it won't work.
+
+{% highlight text %}
 piff:~$ curl http://10.0.0.139
 curl: (7) Failed connect to 10.0.0.139:80; Connection refused
-</pre>
+{% endhighlight %}
 
-<p>It actually says connection refused and this makes sense if you look at the netstat information from Wap.  It's not listening on 0.0.0.0:80, it's listening on :::80.  Crazy!</p>
-<p>If I use ipv6 (curl needs some special settings for the URL)</p>
+It actually says connection refused and this makes sense if you look at the netstat information from Wap.  It's not listening on 0.0.0.0:80, it's listening on :::80.  Crazy!
+
+If I use ipv6 (curl needs some special settings for the URL)
 
 {% highlight html %}
 piff:~$ curl -g http://[fc00:deed:d34d:b33f::11]/ipv6.html
 <html>
-<h1>This is only viewable over ipv6!</h1>
+# This is only viewable over ipv6!
 </html>
 {% endhighlight %}
 
-
-<p>And ipv6 DNS is working.</p>
+And ipv6 DNS is working.
 
 {% highlight html %}
 piff:~$ curl -g http://wap.ipv6.squarism.com/ipv6.html
 <html>
-<h1>This is only viewable over ipv6!</h1>
+# This is only viewable over ipv6!
 </html>
 {% endhighlight %}
 
+You can see it's going through a router:
 
-<p>You can see it's going through a router:</p>
-<pre highlight="false">
+{% highlight text %}
 piff:~$ traceroute6 wap.ipv6.squarism.com
 traceroute to wap.ipv6.squarism.com (fc00:deed:d34d:b33f::11)
 from fc00:deee:deee:deee::6, 30 hops max, 24 byte packets
  1  fc00:deee:deee:deee::1 (fc00:deee:deee:deee::1)  0.739 ms  0.651 ms  0.185 ms
  2  fc00:deed:d34d:b33f::11 (fc00:deed:d34d:b33f::11)  1.266 ms  0.278 ms  0.262 ms
-</pre>
+{% endhighlight %}
 
+Wget works too
 
-<p>Wget works too</p>
-<pre highlight="false">
+{% highlight text %}
 piff:~$ wget -O- http://wap.ipv6.squarism.com/ipv6.html
-</pre>
+{% endhighlight %}
 
+Ssh has no special flags, it just works.
 
-<p>Ssh has no special flags, it just works.</p>
-<pre highlight="false">
+{% highlight text %}
 piff:~$ ssh wap.ipv6.squarism.com
 The authenticity of host 'wap.ipv6.squarism.com (fc00:deed:d34d:b33f::11)' can't be established.
 ECDSA key fingerprint is -----.
 Are you sure you want to continue connecting (yes/no)? yes
-</pre>
+{% endhighlight %}
 
+## Victory Lap
 
-<h2>Victory Lap</h2>
-<p>
 Even firefox works.
-</p>
 
-<p>
-<img src="/uploads/2013/07/ipv6_firefox_dns-580x303.png" alt="ipv6_firefox_dns" width="580" height="303" class="aligncenter size-large wp-image-2056" /></p>
+![ipv6_firefox_dns](/uploads/2013/07/ipv6_firefox_dns-580x303.png)
 
-<p>Just to prove that this isn't IPv4, let's use the weird numerical URL format for the IP.
-<img src="/uploads/2013/07/ipv6_firefox_ip.png" alt="ipv6_firefox_ip" width="620" height="293" class="aligncenter size-full wp-image-2057" /></p>
+Just to prove that this isn't IPv4, let's use the weird numerical URL format for the IP.
+![ipv6_firefox_ip](/uploads/2013/07/ipv6_firefox_ip.png)
 
-<p>Well this was a fun spike and I feel like I understand IPv6 a whole lot more and it doesn't strike fear into my heart to think about big scary addressing.  I think the key is to actually use DNS instead of fudging it with typing manual addresses or managing crazy hosts files.  It should be interesting to see when ISPs and cloud providers start offering serious options for IPv6.</p>
+Well this was a fun spike and I feel like I understand IPv6 a whole lot more and it doesn't strike fear into my heart to think about big scary addressing.  I think the key is to actually use DNS instead of fudging it with typing manual addresses or managing crazy hosts files.  It should be interesting to see when ISPs and cloud providers start offering serious options for IPv6.
