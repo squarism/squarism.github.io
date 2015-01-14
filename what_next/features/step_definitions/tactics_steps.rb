@@ -10,7 +10,7 @@ end
 Given(/^we need to collaborate$/) do
   @team.each {
     Proc.new {
-      has_different_ideas_about approach 
+      has_different_ideas_about approach
       even_team_members_do_things different day_to_day
     }
   }
@@ -52,7 +52,7 @@ Then(/^I've love a stand\-up to load our brains and get to work$/) do
   }
 end
 
-Given(/^I'm trying to learn how things work at Puppet Labs$/) do
+Given(/^I'm trying to learn how things work at (.*)$/) do |new_place|
   newbie = true
   # Picture of I have no idea what I'm doing dog
 end

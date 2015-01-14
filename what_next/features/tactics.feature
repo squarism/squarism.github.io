@@ -15,7 +15,7 @@ Feature: Tactics
     Then I've love a stand-up to load our brains and get to work
 
   Scenario: Communication is hard
-    Given I'm trying to learn how things work at Puppet Labs
+    Given I'm trying to learn how things work at a new place
     When I'm seeking help
     Then I've love IRC/Wikis/Bots and internal tools to help team dynamics (github strategy)
 
