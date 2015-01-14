@@ -21,9 +21,12 @@ categories:
 tags: []
 comments: []
 ---
-<p><img src="/uploads/2013/02/bttf.png" alt="bttf" width="188" height="91" class="alignright size-full wp-image-1803" /></p>
-<p>As I've <a href="http://squarism.com/2011/12/04/hash-of-hashes-and-captain-planet/">previously talked about</a>, <em>Hashes of Hashes</em> are weird to work with.  In the previous post about Captain Planet, I showed how to select, filter and manipulate 2D hashes and arrays but ultimately concluded that a hash of hashes is both weird and unnecessary (most of the time).</p>
-<p>If you can control the data, inline your key into the hash data and make an <em>Array of Hashes</em>.  It's really where it belongs.  If you don't, you'll find yourself doing a few extra iterations or work.  Below you'll see a simple example of the two data structures.</p>
+![bttf](/uploads/2013/02/bttf.png)
+
+As I've [previously talked about](http://squarism.com/2011/12/04/hash-of-hashes-and-captain-planet/), _Hashes of Hashes_ are weird to work with.  In the previous post about Captain Planet, I showed how to select, filter and manipulate 2D hashes and arrays but ultimately concluded that a hash of hashes is both weird and unnecessary (most of the time).
+
+If you can control the data, inline your key into the hash data and make an _Array of Hashes_.  It's really where it belongs.  If you don't, you'll find yourself doing a few extra iterations or work.  Below you'll see a simple example of the two data structures.
+
 {% highlight ruby %}
 # Hash of Hashes
 {
@@ -31,7 +34,6 @@ comments: []
   :tony => { :age => 1, :height => 2 }
 }
 {% endhighlight %}
-
 
 {% highlight ruby %}
 # Better --> Array of Hashes
@@ -43,7 +45,7 @@ comments: []
 
 <!-- more -->
 
-<p>In this case of an array of hashes, the data is easier to manipulate with array operations and filters.  But before talking about matching on arrays of hashes, I want to talk about matching on dates.</p>
+In this case of an array of hashes, the data is easier to manipulate with array operations and filters.  But before talking about matching on arrays of hashes, I want to talk about matching on dates.
 
 {% highlight ruby %}
 doc = Date.parse "Nov 12 1955"
@@ -53,23 +55,21 @@ doc < marty
 => true
 {% endhighlight %}
 
+So comparisons with dates work like you might expect.  But fuzzy matches do not.  Take this example.  Is Marty in between Doc Brown and the distant future?  The answer should be true.
 
-<p>So comparisons with dates work like you might expect.  But fuzzy matches do not.  Take this example.  Is Marty in between Doc Brown and the distant future?  The answer should be true.</p>
-<p>We use a Range (x..y) object to make a date range.  Then we can use === to check if we get a match.</p>
+We use a Range (x..y) object to make a date range.  Then we can use === to check if we get a match.
 
 {% highlight ruby %}
 marty === (doc .. future)  # wrong, wrong, wrong
 => nil
 {% endhighlight %}
 
-
-<p>But wait, === on Date is different than === on Range.  The method === on Date checks to see if it's the same Date whereas === on Range checks to see if the argument is within the range.  So if you flip it, it returns true.</p>
+But wait, === on Date is different than === on Range.  The method === on Date checks to see if it's the same Date whereas === on Range checks to see if the argument is within the range.  So if you flip it, it returns true.
 
 {% highlight ruby %}
 (doc .. future) === marty
 => true
 {% endhighlight %}
-
 
 {% highlight ruby %}
 require 'date'
@@ -99,5 +99,4 @@ puts "Winter holidays"
 puts holiday_array.select {|h| winter === h[:date] }
 {% endhighlight %}
 
-
-<p>So what we did in the middle there was flatten the hash of hashes into an array of hashes by merging the key with the 'data' part of the hash.  Hopefully that makes sense.</p>
+So what we did in the middle there was flatten the hash of hashes into an array of hashes by merging the key with the 'data' part of the hash.  Hopefully that makes sense.
