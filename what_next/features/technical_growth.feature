@@ -3,7 +3,7 @@ Feature: Technical Growth
   As an engineer and writer
   I want to learn new tools
 
-  Scenario: DevOps have become a thing since I was a sysadmin back in the day
+  Scenario: DevOps has become a thing since I was a sysadmin back in the day
     Given there are a ton of tools out there
     And I know generic technologies
     And I don't really grok how Docker works
