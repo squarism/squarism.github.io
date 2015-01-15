@@ -21,13 +21,16 @@ categories:
 tags: []
 comments: []
 ---
-<p>I'm sure you have seen something like this when you have connected to a ssh host.</p>
-<p><code>
+I'm sure you have seen something like this when you have connected to a ssh host.
+
+`
 The authenticity of host 'host (1.2.3.4)' can't be established.
 RSA key fingerprint is 44:99:ff:33:66:88:cc:66:aa:22:00:00:ee:11:99:33.
 Are you sure you want to continue connecting (yes/no)?
-</code></p>
-<p>Great.  Now what?  What to do with that cryptic garbage up top?  Log into the box or call the admin over the phone and verify the key.</p>
-<p><code>
+`
+
+Great.  Now what?  What to do with that cryptic garbage up top?  Log into the box or call the admin over the phone and verify the key.
+
+`
 $ ssh-keygen -l -f /etc/ssh/ssh_host_key.pub
-</code></p>
+`

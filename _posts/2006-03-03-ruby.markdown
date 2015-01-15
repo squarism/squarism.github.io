@@ -21,7 +21,10 @@ categories:
 tags: []
 comments: []
 ---
-<p><a href="http://squarism.com/2006/03/03/ruby/x-succ/"><img src="/uploads/2006/03/x.succ_-300x232.png" alt="x.succ" title="x.succ" width="300" height="232" class="alignnone size-medium wp-image-1281" /></a> </p>
-<p><code>[ "H", "A", "L" ].collect {|x| puts x.succ }</code></p>
-<p>Prints out:</p>
-<p>HAL, plus one letter up, equals IBM. Pretty funny.</p>
+[![x.succ](/uploads/2006/03/x.succ_-300x232.png "x.succ")](http://squarism.com/2006/03/03/ruby/x-succ/)
+
+`[ "H", "A", "L" ].collect {|x| puts x.succ }`
+
+Prints out:
+
+HAL, plus one letter up, equals IBM. Pretty funny.

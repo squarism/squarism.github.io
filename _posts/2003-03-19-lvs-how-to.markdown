@@ -12,7 +12,7 @@ author_login: chris
 author_email: squarism@gmail.com
 excerpt: ! "<p>\r\nThis is a short guide on how to build a Linux Virtual Server cluster.
   \ What you'll end up with is a cluster that is good for load balancing web pages
-  and any other simple services.\r\n</p>\r\n\r\n"
+  and any other simple services.\r\n\r\n\r\n"
 wordpress_id: 16
 wordpress_url: http://squarism.com/2003/03/19/lvs-how-to/
 date: !binary |-
@@ -24,95 +24,124 @@ categories:
 tags: []
 comments: []
 ---
-<p>
 This is a short guide on how to build a Linux Virtual Server cluster.  What you'll end up with is a cluster that is good for load balancing web pages and any other simple services.
-</p></p>
-<p><a id="more"></a><a id="more-16"></a></p>
-<h2>Introduction</h2></p>
-<p><font color="red">This is not a one-size-fits-all HOWTO.</font>  This is how I did it, and if you want the same result, you can follow these steps.  I use specific software versions, so be sure to use the same ... unless of course you are an expert (then you could send me some tips and suggestions- they are no doubt needed).  No warranty, batteries not included, your mileage may vary ...  :)
-</p></p>
-<p>
-<b>What, why?</b><br>
-I wanted to build a cluster of linux boxes to provide faster and redundant Apache service.  I realized that a quick way to add PCs was needed.  My goal was to bring in a PC and with minimal typing and effort have another node in my cluster.</p>
-<p>First, I needed to get kickstart working.  Then I need to build a cluster.  Then I can customize my kickstart to make building a cluster node easier.  At the end of the kickstart, you are given an opportunity to kick off a script of your design.
-</p></p>
-<p>
-<b>What is kickstart?</b><br>
+
+
+
+<!-- more -->
+
+## Introduction
+
+
+<font color="red">This is not a one-size-fits-all HOWTO.</font>  This is how I did it, and if you want the same result, you can follow these steps.  I use specific software versions, so be sure to use the same ... unless of course you are an expert (then you could send me some tips and suggestions- they are no doubt needed).  No warranty, batteries not included, your mileage may vary ...  :)
+
+
+
+**What, why?**
+
+I wanted to build a cluster of linux boxes to provide faster and redundant Apache service.  I realized that a quick way to add PCs was needed.  My goal was to bring in a PC and with minimal typing and effort have another node in my cluster.
+
+First, I needed to get kickstart working.  Then I need to build a cluster.  Then I can customize my kickstart to make building a cluster node easier.  At the end of the kickstart, you are given an opportunity to kick off a script of your design.
+
+
+
+**What is kickstart?**
+
 If you are familiar with Micro$oft's unattended installs on NT4 and 2000, then this is the Linux equivalent.  A kickstart config answers all the questions that the RedHat installer asks you.  You stick a boot disk in, the Linux kernel boots, you give the kernel a parameter of where to find the kickstart config file and hopefully that's it.
-</p></p>
-<p>
-<b>What do I need?</b></p>
-<ul>
-<li>Three computers that you don't care about</li>
-<li>RedHat 7.2 - cdroms or your own repository</li>
-<li>a switch or hub</li>
-<li>some way to see all three systems (KVM switch or three monitors)</li>
-<li>a few floppy disks</li>
-</ul></p>
-<p><b>What will I get?</b></p>
-<ul>
-<li>A high-availability system that can survive many disasters - <i>One real-server goes down, the others still run (there are other methods not covered here to create redundant directors)</i></li>
-<li>You'll get a cluster-like group of Linux machines - <i>Imagine moving to a new office location, or hosting center.  You can easily move computers out one at a time while keeping the service alive</i></li>
-<li>Making use of old machines - <i>although fast machines are nice, using lots of cheap slow machines can still make for a nice LVS</i></li>
-<li>Don't have to buy expensive proprietary solution</li>
-</ul></p>
-<h3>Physical Layout</h3></p>
+
+
+
+**What do I need?**
+
+*   Three computers that you don't care about
+*   RedHat 7.2 - cdroms or your own repository
+*   a switch or hub
+*   some way to see all three systems (KVM switch or three monitors)
+*   a few floppy disks
+
+**What will I get?**
+
+*   A high-availability system that can survive many disasters - _One real-server goes down, the others still run (there are other methods not covered here to create redundant directors)_
+*   You'll get a cluster-like group of Linux machines - _Imagine moving to a new office location, or hosting center.  You can easily move computers out one at a time while keeping the service alive_
+*   Making use of old machines - _although fast machines are nice, using lots of cheap slow machines can still make for a nice LVS_
+*   Don't have to buy expensive proprietary solution
+
+### Physical Layout
+
 <pre>
            ____
            |  |
            |  | director &amp;
            |  | NAT Router
-           ----</p>
-<p>     |-------+-------|</p>
-<p>  RealServer1    RealServer2
+           ----
+
+     |-------+-------|
+
+  RealServer1    RealServer2
 (real servers - machines that do the real work)
-</pre></p>
-<h3>Network Layout</h3></p>
+</pre>
+
+### Network Layout
+
 <pre>
  Director
  eth0: 192.168.X.X (from corporate LAN DHCP - to Internet)
- eth1: 172.16.0.1 (DHCP listening on this interface, NAT)</p>
-<p> RS1
- eth0: 172.16.0.21 (DHCP reservation)</p>
-<p> RS2
+ eth1: 172.16.0.1 (DHCP listening on this interface, NAT)
+
+ RS1
+ eth0: 172.16.0.21 (DHCP reservation)
+
+ RS2
  eth0: 172.16.0.22 (DHCP reservation)
-</pre></p>
-<p><h2>The Director Setup</h2><p>
-Install 7.2 on the director.  Install <b>everything</b>, it's easy and it's simple (yes, lazy).</p>
+</pre>
+
+## The Director Setup
 <p>
-<b>DHCP</b><br>
-First, I got the physical addresses for the interfaces of rs1 &amp; rs2 by booting off a linux rescue disk (<a href="http://lbt.linuxcare.com/downloads/lxcr-lbt-2_0.iso">linuxcare.com has an iso</a>)that got me to a shell where I could issue the ifconfig command.  I wrote them down (it's listed under HWaddr), then I setup DHCP on the Director:</p>
-<p>
-In /etc/dhcpd.conf:</p>
+Install 7.2 on the director.  Install **everything**, it's easy and it's simple (yes, lazy).
+
+**DHCP**
+
+First, I got the physical addresses for the interfaces of rs1 &amp; rs2 by booting off a linux rescue disk ([linuxcare.com has an iso](http://lbt.linuxcare.com/downloads/lxcr-lbt-2_0.iso))that got me to a shell where I could issue the ifconfig command.  I wrote them down (it's listed under HWaddr), then I setup DHCP on the Director:
+
+In /etc/dhcpd.conf:
+
 <pre>subnet 172.16.0.0 netmask 255.255.0.0 {
         range 172.16.0.10 172.16.0.254;
         option subnet-mask 255.255.0.0;
         option broadcast-address 172.16.0.255;
         option routers 172.16.0.1;
         option domain-name-servers 172.16.0.1;
-        option domain-name "domain.com";</p>
-<p>        host rs1.domain.com {
+        option domain-name "domain.com";
+
+        host rs1.domain.com {
                 hardware ethernet 00:60:08:cf:bd:6d;
                 fixed-address 172.16.0.21;
-        }</p>
-<p>        host rs2.domain.com {
+        }
+
+        host rs2.domain.com {
                 hardware ethernet 00:a0:24:c5:e7:de;
                 fixed-address 172.16.0.22;
         }
 }
-</pre></p>
-<p>I restarted DHCP:</p>
-<pre>#/etc/rc.d/init.d/dhcpd restart</pre></p>
-<p>
+</pre>
+
+I restarted DHCP:
+
+<pre>#/etc/rc.d/init.d/dhcpd restart</pre>
+
 Now both boxes have reservations as well as a router address pointing to the internal interface of the Director which is acting as a NAT box.  Alternatively, I also read that I could make a kickstart config file that would be named "172.16.0.21-kickstart" for rs1 and if I didn't specify a file name, the kickstart install would grab that one.  I didn't do it that way, but an alternative.
-</p></p>
-<p>
-<b>NAT</b><br>
+
+
+
+**NAT**
+
 Then I set up NAT routing for the real servers.  This keeps my little project off the company LAN while giving the boxes net access.
-</p></p>
-<p>
+
+
+
 IP-Masq rules are written into a file. Let's call it '/etc/rc.d/rc.masq'. The location of this file will be the directory '/etc/rc.d/', which contains all the scripts started at boot time. A very simple 'rc.masq' file may look like this (each rule on one line):
-</p></p>
+
+
 <pre>
 #!/bin/sh
 echo -n "Setting IP chains..."
@@ -125,140 +154,166 @@ echo "1" > /proc/sys/net/ipv4/ip_forward
 /sbin/modprobe ip_masq_ftp
 echo "1" > /proc/sys/net/ipv4/ip_dynaddr
 echo "Ready to go."
-</pre></p>
-<p>
-Lines seven and eight were those who actually required some work to find out ;-). For some reason Windows clients issue requests via these ports from time to time, leading to involuntary dial-ups (if you're running dial-up). These two lines stop this annoying behavior.  Line nine loads the ftp module. Only load those modules you need! This is more secure and lighter on system resources.  Line ten enables masquerading for interfaces with dynamically assigned addresses (like most modem lines nowadays). If you have a static IP, you don't need it.  Now, there are just three more things to do: edit '/etc/sysconfig/network' and change</p>
-<p><pre>FORWARD_IPV4=false to FORWARD_IPV4=true</pre></p>
-<p>
-Make the script executable</p>
+</pre>
+
+Lines seven and eight were those who actually required some work to find out ;-). For some reason Windows clients issue requests via these ports from time to time, leading to involuntary dial-ups (if you're running dial-up). These two lines stop this annoying behavior.  Line nine loads the ftp module. Only load those modules you need! This is more secure and lighter on system resources.  Line ten enables masquerading for interfaces with dynamically assigned addresses (like most modem lines nowadays). If you have a static IP, you don't need it.  Now, there are just three more things to do: edit '/etc/sysconfig/network' and change
+
+<pre>FORWARD_IPV4=false to FORWARD_IPV4=true</pre>
+
+Make the script executable
+
 <pre>chmod +x /etc/rc.d/rc.masq</pre>
-Then add the 'rc.masq' script to the boot process. Open /etc/rc.d/rc.local and add this line:</p>
-<pre>if [ -x /etc/rc.d/rc.masq ]; then /etc/rc.d/rc.masq; fi</pre></p>
-<p>
-Finally, some security measures:</p>
-<p>
-Only 'root' should be allowed to execute 'ipchains':</p>
+Then add the 'rc.masq' script to the boot process. Open /etc/rc.d/rc.local and add this line:
+<pre>if [ -x /etc/rc.d/rc.masq ]; then /etc/rc.d/rc.masq; fi</pre>
+
+Finally, some security measures:
+
+Only 'root' should be allowed to execute 'ipchains':
+
 <pre>chmod 700 /sbin/ipchains </pre>
-Only 'root' should be allowed to see, edit and execute the 'rc.masq' script:</p>
+Only 'root' should be allowed to see, edit and execute the 'rc.masq' script:
 <pre>chmod 700 /etc/rc.d/rc.masq </pre>
-If you want to test your set up right now, run (as 'root')</p>
-<pre>/etc/rc.d/rc.masq</pre></p>
-<p>
-<b>HTTPD</b><br>
+If you want to test your set up right now, run (as 'root')
+<pre>/etc/rc.d/rc.masq</pre>
+
+**HTTPD**
+
 Like I said, I had a horrible time with NFS as the install source.  Anyone is welcome to try, but it would error out during the install.  I figure 'http' is a lighter weight protocol anyway (though someone can correct me).  I made a dir /var/www/html/RH72 and did a
 <pre>cp -rv /mnt/cdrom/RedHat /var/www/html/RH72</pre> with both disc1 and disc2.  So that takes care of our source directory, now we just need some kickstart configs and an easy way to update / distribute them to new booting nodes.
-</p></p>
-<p>
-<b>NFS</b><br>
-Make a directory called /kickstart.  This will hold all of the config files for specific clients.  You can use the following config for rs1:</p>
+
+
+
+**NFS**
+
+Make a directory called /kickstart.  This will hold all of the config files for specific clients.  You can use the following config for rs1:
+
 <pre>
 #localized stuff
 lang en_US
 langsupport --default en_US
 timezone America/New_York
 keyboard us
-mouse generic3ps/2</p>
-<p>auth --enablemd5 --useshadow
+mouse generic3ps/2
+
+auth --enablemd5 --useshadow
 bootloader --location=mbr
 clearpart --all
 deviceprobe
-firewall --disabled</p>
-<p># This is how you can do an NFS install, but I had problems
+firewall --disabled
+
+# This is how you can do an NFS install, but I had problems
 #nfs --server 172.16.0.1 --dir /kickstart/redhat
 url --url http://172.16.0.1/RH72
-network --bootproto dhcp --device eth0 --hostname rs1</p>
-<p>part swap --size 128
-part / --size 400 --grow --fstype ext3 --ondisk hda</p>
-<p>rootpw --iscrypted Xa.ikIAyi3mTk
-skipx</p>
-<p>%packages
+network --bootproto dhcp --device eth0 --hostname rs1
+
+part swap --size 128
+part / --size 400 --grow --fstype ext3 --ondisk hda
+
+rootpw --iscrypted Xa.ikIAyi3mTk
+skipx
+
+%packages
 @ Network Managed Workstation
 @ Utilities
 @ Software Development
 @ Kernel Development
 @ Web Server
-</pre></p>
-<p>You can make the 'Xa.ikIAyi3mTk' string from the following perl one-liner (it doesn't have to be 'mypassword'):</p>
+</pre>
+
+You can make the 'Xa.ikIAyi3mTk' string from the following perl one-liner (it doesn't have to be 'mypassword'):
+
 <pre>perl -e 'print crypt("mypassword", "Xa")."\n";'</pre>
-So your root password isn't plainly viewable in a flat text file.  :)</p>
-<p>
-Save the rs1 config as /kickstart/rs1.cfg.  Copy rs1.cfg to a new file 'rs2.cfg'.  Then change the hostname in rs2.cfg to rs2.  This way, you can easily manage your install scripts.</p>
-<p>
-<i>A full list of kickstart options is <a href="http://www.redhat.com/docs/manuals/linux/RHL-7.2-Manual/custom-guide/s1-kickstart2-options.html">here</a></i></p>
-<p>
-Edit /etc/exports to export /kickstart via NFS:</p>
+So your root password isn't plainly viewable in a flat text file.  :)
+
+Save the rs1 config as /kickstart/rs1.cfg.  Copy rs1.cfg to a new file 'rs2.cfg'.  Then change the hostname in rs2.cfg to rs2.  This way, you can easily manage your install scripts.
+
+_A full list of kickstart options is [here](http://www.redhat.com/docs/manuals/linux/RHL-7.2-Manual/custom-guide/s1-kickstart2-options.html)_
+
+Edit /etc/exports to export /kickstart via NFS:
+
 <pre>
 # kickstart shares
 /kickstart 172.16.0.0/16(ro,no_root_squash)
 </pre>
-Export it:</p>
+Export it:
 <pre>
  exportfs -a
 </pre>
-Make sure NFS and HTTPD is running:</p>
+Make sure NFS and HTTPD is running:
 <pre>
  /etc/rc.d/init.d/nfs status
  /etc/rc.d/init.d/httpd status
 </pre>
-And then we start the kickstart...</p>
-<h2>The Kickstart</h2><p>
-<b>Make a bootdisk</b><br>
-Stick your RedHat 7.2 disc1 and a floppy into your Director.</p>
+And then we start the kickstart...
+
+## The Kickstart
+
+**Make a bootdisk**
+
+Stick your RedHat 7.2 disc1 and a floppy into your Director.
+
 <pre>
  mount /mnt/cdrom
  mount /mnt/floppy
  dd if=/mnt/cdrom/RedHat/images/bootnet.img of=/dev/fd0 bs=1440k
  umount /mnt/floppy
  eject
-</pre></p>
-<p><b>Start the kickstart</b><br>
-Boot rs1 off the floppy.  At the linux boot prompt type:</p>
+</pre>
+
+**Start the kickstart**
+
+Boot rs1 off the floppy.  At the linux boot prompt type:
+
 <pre>
 linux ks=nfs:172.16.0.1:/kickstart/rs1.cfg
-</pre></p>
-<p>
+</pre>
+
 Do the same for rs2, but use rs2.cfg.  Hopefully, the install will go smoothly.  If you get a 'cannot find ks.cfg' error, then test your nfs server by trying to mount /kickstart on a machine that's on the 172.16.0.0 network.
-</p>
-<br><br></p>
-<p><h2>The Cluster</h2><p>
-Now that we have the real servers set up, the hard part starts.</p>
+
+
+
+## The Cluster
 <p>
-<b>Software</b></p>
-<ul>
-<li><a href="http://www.linuxvirtualserver.org/software/index.html">Linux Virtual Server</a></li>
-<li><a href="ftp://ftp.kernel.org/pub/linux/kernel/v2.2">Linux Kernel 2.2.19</a></li>
-</ul></p>
-<p>
-<b>Patching the Kernel Source</b>
-Download the linux kernel to /usr/src (I had samba running, so I downloaded from IE to a samba share and then moved the tarball).  I found that RedHat had made a symlink of linux-2.4 -> linux-2.4.2.  The linux-2.2.19.tar.gz tarball extracts to ./linux so it's ok to just do</p>
+Now that we have the real servers set up, the hard part starts.
+
+**Software**
+
+*   [Linux Virtual Server](http://www.linuxvirtualserver.org/software/index.html)
+*   [Linux Kernel 2.2.19](ftp://ftp.kernel.org/pub/linux/kernel/v2.2)
+
+**Patching the Kernel Source**
+Download the linux kernel to /usr/src (I had samba running, so I downloaded from IE to a samba share and then moved the tarball).  I found that RedHat had made a symlink of linux-2.4 -> linux-2.4.2.  The linux-2.2.19.tar.gz tarball extracts to ./linux so it's ok to just do
+
 <pre>
  mv [where you downloaded linux-2.2.19.tar.gz] /usr/src
  cd /usr/src
  tar xvzf linux-2.2.19.tar.gz
 </pre>
-in the /usr/src directory, it will extract to /usr/src/linux.  Also extract the ipvs patch:</p>
+in the /usr/src directory, it will extract to /usr/src/linux.  Also extract the ipvs patch:
 <pre>
  mv [where you downloaded ipvs-1.0.8-2.2.19.tar.gz] /usr/src
  tar xvzf ipvs-1.0.8-2.2.19.tar.gz
 </pre>
-That should expand to /usr/src/ipvs-1.0.8-2.2.19.  Now patch the kernel source with (from README included with the ipvs patch):</p>
+That should expand to /usr/src/ipvs-1.0.8-2.2.19.  Now patch the kernel source with (from README included with the ipvs patch):
 <pre>
  cat ../ipvs-1.0.8-2.2.19/ipvs-1.0.9-2.2.19.patch | patch -p1
 </pre>
-If you are running X, you might prefer</p>
+If you are running X, you might prefer
 <pre>
  make xconfig
 </pre>
-from within an xterm (or equivalent) window instead of the menuless text-mode</p>
+from within an xterm (or equivalent) window instead of the menuless text-mode
 <pre>
  make menuconfig
-</pre></p>
-<p>(from ipvs README)
+</pre>
+
+(from ipvs README)
 <P>Here's the kernel config
 <P>
 <PRE>
-Kernel Compile Options:</p>
-<p>Code maturity level options ---
+Kernel Compile Options:
+
+Code maturity level options ---
         [*] Prompt for development and/or incomplete code/drivers
 Networking options ---
         [*] Network firewalls
@@ -281,13 +336,15 @@ Networking options ---
 </PRE>
 Before you save the kernel config, be sure to enable all the other features that you want.  Especially check that your
 network cards are supported and installed as loadable kernel modules (M).  You may want USB support as well.  Try to keep your kernel light while providing yourself enough functionality.  After you are done,
-save the kernel configuration and do</p>
+save the kernel configuration and do
+
 <pre>
  make dep; make clean; make bzImage; make modules; make install; make modules_install
 </pre>
-<b>Get some coffee.</b></p>
-<p>
-When it's done, delete the old symbolic links, copy the new kernel system files and create new sym links like this:</p>
+**Get some coffee.**
+
+When it's done, delete the old symbolic links, copy the new kernel system files and create new sym links like this:
+
 <pre>
  cd /boot
  rm System.map -f
@@ -299,9 +356,10 @@ When it's done, delete the old symbolic links, copy the new kernel system files 
  ln -s System.map-2.2.19 System.map
  ln -s vmlinuz-2.2.19 vmlinuz
  ln -s kernel.h kernel.h-2.2.19
-</pre></p>
-<p>
-If you use lilo for you boot loader (7.2 can use grub too) Edit /etc/lilo.conf to look like this:</p>
+</pre>
+
+If you use lilo for you boot loader (7.2 can use grub too) Edit /etc/lilo.conf to look like this:
+
 <pre>
 boot=/dev/hda
 map=/boot/map
@@ -314,21 +372,24 @@ vga=787
 #vga = normal
 message=/boot/message
 linear
-default=linux-2.2.19</p>
-<p>image=/boot/vmlinuz-2.4.2-2
+default=linux-2.2.19
+
+image=/boot/vmlinuz-2.4.2-2
         label=linux-2.4.2-2
         read-only
-        root=/dev/hdb1</p>
-<p>image=/boot/vmlinuz-2.2.19
+        root=/dev/hdb1
+
+image=/boot/vmlinuz-2.2.19
         label=linux-2.2.19
         read-only
         root=/dev/hdb1
 </pre>
-Run:</p>
+Run:
+
 <pre>
  /sbin/lilo -v
 </pre>
-If you use grub, then /etc/grub.conf should look like this:</p>
+If you use grub, then /etc/grub.conf should look like this:
 <pre>
 # grub.conf generated by anaconda
 #
@@ -349,18 +410,22 @@ title Red Hat Linux (2.4.7-10)
 title Red Hat Linux (2.2.19)
         root (hd0,0)
         kernel /boot/vmlinuz-2.2.19 ro root=/dev/hda1
-</pre></p>
-<p>It should run without errors and then you are ready to reboot:</p>
+</pre>
+
+It should run without errors and then you are ready to reboot:
+
 <pre>
  /sbin/init 6
-</pre></p>
-<p>
+</pre>
+
 Get DNS Perl module
 http://www.fuhr.org/~mfuhr/perldns/
 perl Makefile.PL; make; make test; make install
-</p></p>
-<p>
-LVS configure script</p>
+
+
+
+LVS configure script
+
 <pre>
 #----------lvs_nat.conf------------------------------------
 LVSCONF_FORMAT=1.1
@@ -390,24 +455,27 @@ SERVER_NET_DEVICE=eth0
 #SERVER_GW=
 #----------end lvs_nat.conf---------------------------------
 </pre>
-</p></p>
-<p>
+
+
 Add /etc/hosts
-</p></p>
-<p>
+
+
+
  ipvsadm -A -t 192.168.155.50:ssh -s wlc
  ipvsadm -a -t 192.168.155.50:ssh -r rs1:ssh -m
  ipvsadm -a -t 192.168.155.50:ssh -r rs2:ssh -m
  ipvsadm -L
-</p></p>
-<p>
-I put the following in a directory called /opt/lvs_software:</p>
+
+
+
+I put the following in a directory called /opt/lvs_software:
+
 <pre>
 [root@guestntdt public]# ls /opt/lvs_software/
 configure-lvs_0.9.2  ipvsadm              Net-DNS-0.12
 ipvs-1.0.8-2.2.19    linux-2.2.19.tar.gz
 </pre>
-Then made the nfs export:</p>
+Then made the nfs export:
 <pre>
 /etc/exports:
 # kickstart shares
@@ -415,13 +483,16 @@ Then made the nfs export:</p>
 # LVS stuff
 /opt/lvs_software 172.16.0.0/16(ro,no_root_squash)
 </pre>
-</p></p>
-<p>
-Start nfs server:</p>
+
+
+Start nfs server:
+
 <pre>
  /etc/rc.d/init.d/nfs start
-</pre></p>
-<p><h2>RS1 &amp; RS2 setup</h2><p>
+</pre>
+
+## RS1 &amp; RS2 setup
+<p>
  mkdir /mnt/nfs
  mount dir1:/opt/lvs_software /mnt/nfs
  cd /mnt/nfs
@@ -429,29 +500,36 @@ Start nfs server:</p>
  cd /usr/src/linux
  cat /mnt/nfs/ipvs-1.0.8-2.2.19/ipvs-1.0.8-2.2.19.patch | patch -p1
  make menuconfig
-</pre></p>
-<p>
+</pre>
+
 Follow the instructions as listed above for the director.  Be sure to set up your NIC correctly.  If you don't know what kind of NIC you have, do an `lspci`.
 Reboot after editing grub as listed above.  Be sure to watch the startup.  I got a few errors because of the different modules.
 The important things to watch are your partitions mounting and your NIC (eth0) coming up.
-</p></p>
-<h3>Screen</h3></p>
-<p>
-I used the "screen" program to make my life easier.  I would SSH into the director using <a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/">PuTTY</a> and then run screen so I wouldn't have to use the KVM switch.  I put the following in /root/.screenrc:</p>
+
+
+
+### Screen
+
+
+I used the "screen" program to make my life easier.  I would SSH into the director using [PuTTY](http://www.chiark.greenend.org.uk/~sgtatham/putty/) and then run screen so I wouldn't have to use the KVM switch.  I put the following in /root/.screenrc:
+
 <pre>
 screen -t rs1 2 ssh rs1
 screen -t rs2 3 ssh rs2
 shelltitle '> |bash'
 screen 1
 </pre>
-Then I ran "screen" and it makes term1 the dir1 term, term2 the rs1 term and term3 the rs2 term.  You can switch with CTRL-A, [number].  You can add a terminal with CTRL-A, [minus], CTRL-A, CTRL-C.  Screen is a great but somewhat confusing program.  Take a look at the shortcut keys in "man screen".</p>
-<h3>More RS1 Setup</h3><p>
-Mount the nfs drive again on each of the realservers (rs1, rs2)</p>
+Then I ran "screen" and it makes term1 the dir1 term, term2 the rs1 term and term3 the rs2 term.  You can switch with CTRL-A, [number].  You can add a terminal with CTRL-A, [minus], CTRL-A, CTRL-C.  Screen is a great but somewhat confusing program.  Take a look at the shortcut keys in "man screen".
+
+### More RS1 Setup
+
+Mount the nfs drive again on each of the realservers (rs1, rs2)
+
 <pre>
 mount dir1:/opt/lvs_software /mnt/nfs
 cd /mnt/nfs
 </pre>
-There are premade configs files there but I didn't find them useful.  Instead I used this modified one:</p>
+There are premade configs files there but I didn't find them useful.  Instead I used this modified one:
 <pre>
 #----------lvs_nat.conf------------------------------------
 LVSCONF_FORMAT=1.1
@@ -465,9 +543,10 @@ SERVER_NET_DEVICE=eth0
 SERVICE=t http wlc rs1:http,3 rs2:http,1
 #----------end lvs_nat.conf---------------------------------
 </pre>
-Then run ./configure lvs_nat.conf.  This will produce a file call rc.lvs_nat.  This script can detect if you are running it on either the director or the realservers.</p>
-<p>
-Run the script on the director.  "ipvsadm -L" should show you:</p>
+Then run ./configure lvs_nat.conf.  This will produce a file call rc.lvs_nat.  This script can detect if you are running it on either the director or the realservers.
+
+Run the script on the director.  "ipvsadm -L" should show you:
+
 <pre>
 Prot LocalAddress:Port Scheduler Flags
   -> RemoteAddress:Port             Forward Weight ActiveConn InActConn
@@ -475,7 +554,7 @@ TCP  192.168.155.50:http wlc
   -> rs2:http                       Masq    1      0          0
   -> rs1:http                       Masq    3      0          0
 </pre>
-And ifconfig should show you the aliased eth0 [note the same hw address in the eth0 devices]:</p>
+And ifconfig should show you the aliased eth0 [note the same hw address in the eth0 devices]:
 <pre>
 [root@dir1 configure-lvs_0.9.2]# ifconfig
 eth0      Link encap:Ethernet  HWaddr 00:10:4B:2E:C4:36
@@ -484,28 +563,35 @@ eth0      Link encap:Ethernet  HWaddr 00:10:4B:2E:C4:36
           RX packets:205476 errors:0 dropped:0 overruns:0 frame:0
           TX packets:28906 errors:0 dropped:0 overruns:0 carrier:0
           collisions:0 txqueuelen:100
-          Interrupt:10 Base address:0xfcc0</p>
-<p>eth0:50   Link encap:Ethernet  HWaddr 00:10:4B:2E:C4:36
+          Interrupt:10 Base address:0xfcc0
+
+eth0:50   Link encap:Ethernet  HWaddr 00:10:4B:2E:C4:36
           inet addr:192.168.155.50  Bcast:192.168.155.255  Mask:255.255.255.255
           UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
-          Interrupt:10 Base address:0xfcc0</p>
-<p>eth1      Link encap:Ethernet  HWaddr 00:01:03:E9:6C:FF
+          Interrupt:10 Base address:0xfcc0
+
+eth1      Link encap:Ethernet  HWaddr 00:01:03:E9:6C:FF
           inet addr:172.16.0.1  Bcast:172.16.255.255  Mask:255.255.0.0
           UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
           RX packets:31574 errors:0 dropped:0 overruns:0 frame:0
           TX packets:46073 errors:0 dropped:0 overruns:0 carrier:0
           collisions:1814 txqueuelen:100
-          Interrupt:3 Base address:0xfc00</p>
-<p>lo        Link encap:Local Loopback
+          Interrupt:3 Base address:0xfc00
+
+lo        Link encap:Local Loopback
           inet addr:127.0.0.1  Mask:255.0.0.0
           UP LOOPBACK RUNNING  MTU:3924  Metric:1
           RX packets:171 errors:0 dropped:0 overruns:0 frame:0
           TX packets:171 errors:0 dropped:0 overruns:0 carrier:0
           collisions:0 txqueuelen:0
-</pre></p>
-<p>You can always up/down the VIP with:</p>
-<pre>ifconfig eth0:0 192.168.155.50 netmask 255.255.252.0 broadcast 192.168.155.50 up</pre></p>
-<h3>Login easier with no passwords</h3></p>
+</pre>
+
+You can always up/down the VIP with:
+
+<pre>ifconfig eth0:0 192.168.155.50 netmask 255.255.252.0 broadcast 192.168.155.50 up</pre>
+
+### Login easier with no passwords
+
 <pre>
 ssh-keygen -t rsa
 # [enter for blank password]
@@ -513,12 +599,17 @@ scp ~/.ssh/id_rsa.pub rs1:/root/.ssh/authorized_keys2
 scp ~/.ssh/id_rsa.pub rs2:/root/.ssh/authorized_keys2
 ssh rs1
 ssh rs2
-</pre></p>
-<p><br><br></p>
-<p><h1>Other Resources</h1>
-<a href="http://www.linuxnewbie.org/nhf/intel/distros/mandrake/mdk_kernel_upgrade.html">Linuxnewbie.org kernel upgrade guide</a>
-<a href="http://www.linuxdoc.org/HOWTO/KickStart-HOWTO.html">linuxdoc</a> - KickStart HOWTO in a nice, one-page format<br>
-<a href="http://www.redhat.com/support/resources/howto/piranha/example-layout.html">LVS Cluster example</a><br>
-<a href="http://gen100.imb-jena.de/cluster/software/">Larger clustering</a><br>
-<a href="http://www.reptechnic.com.au/kickstart.html">How to make a kickstart bootdisk</a><br>
-<a href="http://www.linux-mag.com/2001-08/traffic_01.html">Linux Magazine LVS How-to</a><br></p>
+</pre>
+
+# Other Resources
+
+[Linuxnewbie.org kernel upgrade guide](http://www.linuxnewbie.org/nhf/intel/distros/mandrake/mdk_kernel_upgrade.html)
+[linuxdoc](http://www.linuxdoc.org/HOWTO/KickStart-HOWTO.html) - KickStart HOWTO in a nice, one-page format
+
+[LVS Cluster example](http://www.redhat.com/support/resources/howto/piranha/example-layout.html)
+
+[Larger clustering](http://gen100.imb-jena.de/cluster/software/)
+
+[How to make a kickstart bootdisk](http://www.reptechnic.com.au/kickstart.html)
+
+[Linux Magazine LVS How-to](http://www.linux-mag.com/2001-08/traffic_01.html)

@@ -21,17 +21,21 @@ categories:
 tags: []
 comments: []
 ---
-<p>A quick script that can be triggered to email administrators (ie: using nagios) the largest subdirectories from a parent directory.  Can also simply print the results to STDOUT.</p>
-<p>Doesn't work with the Solaris versions of `du' and `sort'.  :(</p>
-<pre lang="bash">
+A quick script that can be triggered to email administrators (ie: using nagios) the largest subdirectories from a parent directory.  Can also simply print the results to STDOUT.
+
+Doesn't work with the Solaris versions of `du' and `sort'.  :(
+
+{% highlight bash %}
 #!/bin/sh
 TOP=20
 DIR=/home/*
-ADMIN=admin@host.com</p>
-<p>if [ $1 == "-p" ]
+ADMIN=admin@host.com
+
+if [ $1 == "-p" ]
 then
   du -sc $DIR|sort -rg|grep -v total|head -n $TOP
   exit
-fi</p>
-<p>mail -s "**Space Utilization Report for `hostname`**" $ADMIN
-</pre></p>
+fi
+
+mail -s "**Space Utilization Report for `hostname`**" $ADMIN
+{% endhighlight %}

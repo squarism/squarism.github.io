@@ -44,23 +44,29 @@ comments:
     \    Use the BigInteger parameter constructor     \n\n    }\n    \n    return
     bigE;\n}\n\n\n"
 ---
-<p>A small class to generate the mathematical constant "e".  Complete with timer and digits per second clock.  Unpolished.  Here's a quick benchmark and you can see that it doesn't scale.</p>
-<p><img src="/files/eBenchmark.png"></p>
-<pre>
+A small class to generate the mathematical constant "e".  Complete with timer and digits per second clock.  Unpolished.  Here's a quick benchmark and you can see that it doesn't scale.
+
+![](/files/eBenchmark.png)
+
+{% highlight java %}
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Date;</p>
-<p>/**
+import java.util.Date;
+
+/**
  * calculate mathmatical constant e
- */</p>
-<p>public class ECalculator {
-	private static final int numberOfDigits = 1000;
-	public static void main(String[] args) {
-		ECalculator myEClass = new ECalculator();
-		System.out.println("Calculating e to " + numberOfDigits + " digits ...\n");
-		Date start = new Date();
-		BigDecimal e = myEClass.doCalculation();
-		Date stop = new Date();
-		long elapsedSeconds = (stop.getTime()-start.getTime()) / 1000;
-		System.out.println("e is: \n" + e);
-		if (elapsedSeconds </p>
+ */
+
+public class ECalculator {
+  private static final int numberOfDigits = 1000;
+  public static void main(String[] args) {
+    ECalculator myEClass = new ECalculator();
+    System.out.println("Calculating e to " + numberOfDigits + " digits ...\n");
+    Date start = new Date();
+    BigDecimal e = myEClass.doCalculation();
+    Date stop = new Date();
+    long elapsedSeconds = (stop.getTime()-start.getTime()) / 1000;
+    System.out.println("e is: \n" + e);
+    if (elapsedSeconds
+
+{% endhighlight %}

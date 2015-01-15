@@ -21,8 +21,10 @@ categories:
 tags: []
 comments: []
 ---
-<p>No joke.  Here's a snippet out of an E15k manual.</p>
-<p><code>
+No joke.  Here's a snippet out of an E15k manual.
+
+`
 Internal SRAM protection inside the UltraSPARC III Cu CPU. With higherdensity CPUs and lower-core voltages, SRAM cells have become more vulnerable to bit flips from cosmic-ray disturbances. Single-bit errors for the majority of the internal SRAMs are detected and are recoverable.
-</code></p>
-<p>I'm sure <a href="http://www.everything2.com/index.pl?node=cosmic%20rays">it happens</a>.  I just find it funny that Sun has to design its chips to withstand interstellar high energy particles (or what-not).  I'm no physicist.</p>
+`
+
+I'm sure [it happens](http://www.everything2.com/index.pl?node=cosmic%20rays).  I just find it funny that Sun has to design its chips to withstand interstellar high energy particles (or what-not).  I'm no physicist.

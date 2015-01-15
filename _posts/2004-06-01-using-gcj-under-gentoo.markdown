@@ -26,20 +26,28 @@ categories:
 tags: []
 comments: []
 ---
-<p>If you follow the instructions off of gentoo's website (they are very good instructions) for x86 on 2004.1 then you end up with a system that doesn't have gcj.  Here's what I did to get it working.
-<a id="more"></a><a id="more-43"></a>
-This takes a while to run.  I suggest starting the emerge under "screen".  Type `screen' to start screen and then follow these instructions.  If you don't have screen, type `emerge screen'.  If you don't know what screen is <a href="http://squarism.com/archives/cat_unix.html#000014">see this post</a>, number 6 on the list.</p>
-<p>First, emerge gcc again like this:</p>
-<p><code>
+If you follow the instructions off of gentoo's website (they are very good instructions) for x86 on 2004.1 then you end up with a system that doesn't have gcj.  Here's what I did to get it working.
+
+<!-- more -->
+
+This takes a while to run.  I suggest starting the emerge under "screen".  Type `screen' to start screen and then follow these instructions.  If you don't have screen, type `emerge screen'.  If you don't know what screen is [see this post](http://squarism.com/archives/cat_unix.html#000014), number 6 on the list.
+
+First, emerge gcc again like this:
+
+`
 USE="java gcj" emerge gcc
-</code></p>
-<p>At the time, this emerged 3.3.2-r5</p>
-<p><code>
+`
+
+At the time, this emerged 3.3.2-r5
+
+`
 sys-devel/gcc
       Latest version available: 3.3.2-r5
       Latest version installed: 3.3.2-r5
-</code></p>
-<p>Then create your little java app:</p>
+`
+
+Then create your little java app:
+
 <pre>
 user@server /tmp $ cat HelloWorld.java
 public class HelloWorld {
@@ -47,17 +55,21 @@ public class HelloWorld {
         System.out.println("hi");
     }
 }
-</pre></p>
-<p>Next, compile it like this:
-<code>
+</pre>
+
+Next, compile it like this:
+`
 gcj --main=HelloWorld -o Hello HelloWorld.java
-</code></p>
-<p>Finally, run it:
-<code>
+`
+
+Finally, run it:
+`
 user@server /tmp $ ./Hello
 hi
-</code></p>
-<p>Then you can move that file to another Linux box (provided all the libc libraries match and other stuff I don't know about) and run it.  Very cool.</p>
-<p>More info here:
-<a href="http://www.linuxjournal.com/article.php?sid=4860">Linux Journal</a>
-<a href="http://gcc.gnu.org/java/faq.html">GCJ FAQ</a></p>
+`
+
+Then you can move that file to another Linux box (provided all the libc libraries match and other stuff I don't know about) and run it.  Very cool.
+
+More info here:
+[Linux Journal](http://www.linuxjournal.com/article.php?sid=4860)
+[GCJ FAQ](http://gcc.gnu.org/java/faq.html)

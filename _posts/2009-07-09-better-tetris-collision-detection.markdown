@@ -35,7 +35,10 @@ comments:
     which did not use a bitmap for player position, instead it used real 2d space
     of x,y. [...]'
 ---
-<p><img src="/uploads/2009/07/deadgrid.png" alt="deadgrid" title="deadgrid" width="336" height="358" class="aligncenter size-full wp-image-247" /></p>
-<p>As I said in the TODO part of the <a href="http://squarism.com/2009/06/22/making-tetris/4/">Making Tetris post</a>, a better way to do collision detection is to have the blocks on the field be bits.  This is typically what I saw in academic assignments and student presentations.  This is probably the right way to do it in other words.  It's more efficient and it's more simple (<a href="http://en.wikipedia.org/wiki/KISS_principle">KISS</a>).</p>
-<p>Even though this isn't how I did it in the game, I still wanted to play around with the concept so I made a little prototype that demonstrates the basic gist.  Instead of a piece, it's a single block.  Instead of a tetris grid of finished blocks, it's random blocks.  It's really the same thing, it just looks and plays with different shapes.</p>
-<p>So here it is.  Space randomizes the grid and the arrow keys move.  <a href="http://squarism.com/files/deadgrid">Play It!</a></p>
+![deadgrid](/uploads/2009/07/deadgrid.png "deadgrid")
+
+As I said in the TODO part of the [Making Tetris post](http://squarism.com/2009/06/22/making-tetris/4/), a better way to do collision detection is to have the blocks on the field be bits.  This is typically what I saw in academic assignments and student presentations.  This is probably the right way to do it in other words.  It's more efficient and it's more simple ([KISS](http://en.wikipedia.org/wiki/KISS_principle)).
+
+Even though this isn't how I did it in the game, I still wanted to play around with the concept so I made a little prototype that demonstrates the basic gist.  Instead of a piece, it's a single block.  Instead of a tetris grid of finished blocks, it's random blocks.  It's really the same thing, it just looks and plays with different shapes.
+
+So here it is.  Space randomizes the grid and the arrow keys move.  [Play It!](http://squarism.com/files/deadgrid)

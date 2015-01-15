@@ -30,18 +30,22 @@ comments:
     MjAxMC0wMS0yNCAyMzozNzowMyAtMDUwMA==
   content: ! "mysql> select count(*) from care;\r\n+----------+\r\n|    0 |\r\n+----------+"
 ---
-<p>Man.  I need to finish this ruby project I started.  I've had this RSS loader running on a box since 7/10/2009 and:</p>
+Man.  I need to finish this ruby project I started.  I've had this RSS loader running on a box since 7/10/2009 and:
+
 <pre>mysql> select count(*) from jobs;
 +----------+
 |  1414595 |
 +----------+</p>
-<p>mysql> select count(*) from entries;
+
+mysql> select count(*) from entries;
 +----------+
 |   184149 |
-+----------+</p>
-<p>mysql> select count(*) from batches;
++----------+
+
+mysql> select count(*) from batches;
 +----------+
 |    35170 |
 +----------+
-</pre></p>
-<p>1.4 millions jobs with 184k RSS posts.  Eep.  I need to finish the analyzer part and turn this off.  It's only a 200mb DB right now but my procrastination could cause /var to fill up.  Heh.</p>
+</pre>
+
+1.4 millions jobs with 184k RSS posts.  Eep.  I need to finish the analyzer part and turn this off.  It's only a 200mb DB right now but my procrastination could cause /var to fill up.  Heh.

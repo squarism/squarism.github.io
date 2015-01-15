@@ -21,4 +21,4 @@ categories:
 tags: []
 comments: []
 ---
-<p>Researching this <a href="http://www.theserverside.com/articles/article.tss?l=SpringFramework">Spring  Framework</a>.  Most interesting so far is it's touting of being modular.  As in, you might only use it for a single feature and it wouldn't be bloated.</p>
+Researching this [Spring  Framework](http://www.theserverside.com/articles/article.tss?l=SpringFramework).  Most interesting so far is it's touting of being modular.  As in, you might only use it for a single feature and it wouldn't be bloated.

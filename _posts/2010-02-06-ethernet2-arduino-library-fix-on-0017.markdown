@@ -42,15 +42,21 @@ comments:
   content: Thanks so much for your help. Your tip saved a hell of a lot of potential
     aggravation for me.
 ---
-<p><img src="/uploads/2010/02/arduino_0017.png" alt="arduino_0017" title="arduino_0017" width="425" height="300" class="aligncenter size-full wp-image-316" />
-Ethernet2 lib.  It's a lighterweight and better Ethernet class.  Head into your ~/Documents/Arduino/libraries (or Windows equivalent) and checkout the SVN project:</p>
-<p><code>$ svn co http://tinkerit.googlecode.com/svn/trunk/Ethernet2%20library/Ethernet2</code></p>
-<p>Now change your sketch to use Ethernet2.h instead of Ethernet.h.  Wondeful?  No.  You'll get this error in 0017.</p>
-<p><code>'EthernetClass' has not been declared</code></p>
-<p>Ok, the forums have a fix.  But it didn't work for the longest time because I didn't know what they meant by Server.cpp.  There's two of them!  The original or the new one?!  If you edit the old one you'll get this:</p>
-<p><code>Print.cpp:129: first defined here</code></p>
-<p>So:
+![arduino_0017](/uploads/2010/02/arduino_0017.png "arduino_0017")
+Ethernet2 lib.  It's a lighterweight and better Ethernet class.  Head into your ~/Documents/Arduino/libraries (or Windows equivalent) and checkout the SVN project:
+
+`$ svn co http://tinkerit.googlecode.com/svn/trunk/Ethernet2%20library/Ethernet2`
+
+Now change your sketch to use Ethernet2.h instead of Ethernet.h.  Wondeful?  No.  You'll get this error in 0017.
+
+`'EthernetClass' has not been declared`
+
+Ok, the forums have a fix.  But it didn't work for the longest time because I didn't know what they meant by Server.cpp.  There's two of them!  The original or the new one?!  If you edit the old one you'll get this:
+
+`Print.cpp:129: first defined here`
+
+So:
 1. Edit Server.cpp in Ethernet2 to include Ethernet2.h and not Ethernet.h.
 2. Delete the Print.cpp and Print.h files from Ethernet2.
 3. Compile.
-4. Have some yay.</p>
+4. Have some yay.

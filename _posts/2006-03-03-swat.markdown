@@ -21,7 +21,9 @@ categories:
 tags: []
 comments: []
 ---
-<p><a href="http://squarism.com/2006/03/03/swat/pagination/"><img src="/uploads/2006/03/pagination-300x246.png" alt="pagination" title="pagination" width="300" height="246" class="alignnone size-medium wp-image-1280" /></a>
-Swat, a nice PHP toolkit at <a href="http://silverorange.com">silverorange.com</a> has caught my attention a few times.</p>
-<p>First, they (or someone in their group) designed the firefox and thunderbird vector icons. Next, they've released a few webapps (PHP). I ran into a demo they have online that showcases some widgets they've built.</p>
-<p>It's a fantastic little page full of good UI components that would really help out usability. Unfortunately, I'm not using PHP really anymore but I hope to find (or build) something similar to this in Ruby and Java. And not ugly components either, similar quality. I'm sure there are widgets and components that are not up to this quality.</p>
+[![pagination](/uploads/2006/03/pagination-300x246.png "pagination")](http://squarism.com/2006/03/03/swat/pagination/)
+Swat, a nice PHP toolkit at [silverorange.com](http://silverorange.com) has caught my attention a few times.
+
+First, they (or someone in their group) designed the firefox and thunderbird vector icons. Next, they've released a few webapps (PHP). I ran into a demo they have online that showcases some widgets they've built.
+
+It's a fantastic little page full of good UI components that would really help out usability. Unfortunately, I'm not using PHP really anymore but I hope to find (or build) something similar to this in Ruby and Java. And not ugly components either, similar quality. I'm sure there are widgets and components that are not up to this quality.

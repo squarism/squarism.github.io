@@ -30,39 +30,55 @@ categories:
 tags: []
 comments: []
 ---
-<p>After starting with a 386 back in 1990 and moving to Linux/Solaris professionally, I decided to jump into OSX when a requirement for a laptop came up in my new job.</p>
-<p>What follows are my initial impressions after about a week.  I provide mostly unseen screenshots, info, the good, the bad and the ugly.
-<a id="more"></a><a id="more-33"></a>
-I think everyone knows the basics.  OSX is FreeBSD and a modified Mach kernel.  It comes with many standard Unix like utilities (cat, grep, vi, less, man) but not quite as loaded as a default RedHat install.</p>
-<p>The interface is what Apple is selling.  Otherwise, it's a FreeBSD box and I was quick to start testing what I can and can't do in my <b>first week of owning a Mac</b></p>
-<p>Networking is a snap - I have CAT5 at home and at the office.  The DHCP client is quick to recognize a new connection on the Ethernet side as well as on the wireless side.  I easily got the AirPort card talking to my Linksys DSL router with 128 bit keys.  I get good reception, very little problems there.  The ability to plug in CAT5 or not is a huge plus.  Never yet done an `ifconfig' trying to fix a net problem.</p>
-<p>Installing Mac software is a snap - let's say that you click on a .dmg file from the net attempting to install something ... Safari automatically uncompresses it, mounts it and puts it on the desktop.  This is really great.  With winzip or tar, I'd probably follow the same steps.  This automation just saves me the trouble.</p>
-<p>Installing open source software is a snap too - I found a project called <a href="http://fink.sourceforge.net/">Fink</a> which allows you to install debian packages through the familiar apt-get interface.  Their site lists all the packages available, you'll see quite a lot.  I easily installed a binary version of mysql for dev purposes and easily checked the status of the service starting with `daemonic --list'.  Very good.  Other packages are easy to grab as well.  Fink also can update packages quickly.  I'm looking into this for work purposes...</p>
-<h3>The Good (and good pictures)</h3></p>
-<ol>
-<li>No multiple desktops - found an app called <a href="http://wsmanager.sourceforge.net/">desktop manager</a> that gives you multiple desktops like Gnome or KDE.  Even does keyboard switching with "option+apple+left or right".  Excellent.  You can move apps from one desktop to the other by ctrl clicking on the pager.  You can't drag apps from one desktop to another though.  Small detail :(</li>
-<li>Expose really helps you move windows quickly.  Haven't used it much with multiple desktops running</li>
-<li>Safari is a GREAT browser.  You can command click on the menu bar and it will show you a hierarchy of the website
-<a href="http://www.squarism.com/archives/osx_titlebar.html">View image</a></li></p>
-<li>This is also true for Finder and regular folders.
-<a href="http://www.squarism.com/archives/osx_titlebar2.html">View image</a></li></p>
-<li>Safari has tabs.  You can make tab folders and "open all links in tabs all at once.  For example, if you have a daily set of sites (yahoo.com, slashdot.org, cnn.com) it will open the group up.
-<a href="http://www.squarism.com/archives/osx_safari.html">View image</a></li></p>
-<li>Safari has a really sweet bookmark page where folders you create show up in a polished bookmark bar.
-<a href="http://www.squarism.com/archives/osx_bookmarks.html">View image</a>
-</li></p>
-<li>You can easily see disk space, network space on the desktop.
-<a href="http://www.squarism.com/archives/osx_desktop.html">View image</a></li></p>
-<li>Fonts look great.  Notice that the cursive in this below picture is not an image.
-<a href="http://www.squarism.com/archives/osx_font.html">View image</a>
-</li>
-</ol></p>
-<p>Stability - a few apps have frozen but they were a bit shady.  I've had Linux crash in X a few times as well so you can't be perfect all the time.  All I can say is, <b>Sleep actually works!</b>  If I close the lid, it goes to sleep.  The laptop doesn't "prepare for standby" or anything else.  Windows can't do that.  I tell people not to use Windows standby.  Because it doesn't work on all hardware.  Behold the power of Apple control.</p>
-<p>Speed - some things are a lot faster, some things are a bit slower.  Some apps hang a bit when a lot is going on and you have no choice but to watch a color wheel spin.  Windows would at least painfully try to draw the GUI components.  Linux would give you the chance to drop to a shell.  On the positive side, boot time is quick.  There isn't any residual loading.  After you enter your password in Windows, there is a lot of crunching going on in the background.  OSX reminds me of BeOS.  When it's loaded, it's loaded.  (yes I have startup items in both OSs')</p>
-<p>Development - Eclipse runs on osx.  Perl, PHP, MySQL, JBoss (comes on the XCode CD), cvs, gcc (XCode CD).  What more do you want?</p>
-<h3>The Bad</h3><p>
-I'm not as fast without Windows+R for Run, Windows+M for minimize all.  Dual booting is probably going to be hard but really all these things are just experience bound.</p>
-<p>$$$ - it's not cheap.  You can easily guy an equal PC for 1/3 the cost.  BUT you don't get as much software with it (excepting if you ran linux - which wouldn't have the functionality).  So although it's still no contest (macs are expensive), consider all the costs.</p>
-<p>Software - most things are available but I really had to do some hunting for a good GUI text editor like TextPad.  I finally found <a href="http://www.codingmonkeys.de/subethaedit/">SubEthaEdit</a>.  Very decent.</p>
-<p>No VMWare - haven't played with Virtual PC yet but VMWare doesn't exist on Mac.</p>
-<p>Games - don't care about this but there are less of the boring bad PC titles.  All the good titles you can get for Mac (unreal, the sims) although I don't play many computer games  (( buy a console! ))</p>
+After starting with a 386 back in 1990 and moving to Linux/Solaris professionally, I decided to jump into OSX when a requirement for a laptop came up in my new job.
+
+What follows are my initial impressions after about a week.  I provide mostly unseen screenshots, info, the good, the bad and the ugly.
+
+<!-- more -->
+
+I think everyone knows the basics.  OSX is FreeBSD and a modified Mach kernel.  It comes with many standard Unix like utilities (cat, grep, vi, less, man) but not quite as loaded as a default RedHat install.
+
+The interface is what Apple is selling.  Otherwise, it's a FreeBSD box and I was quick to start testing what I can and can't do in my **first week of owning a Mac**
+
+Networking is a snap - I have CAT5 at home and at the office.  The DHCP client is quick to recognize a new connection on the Ethernet side as well as on the wireless side.  I easily got the AirPort card talking to my Linksys DSL router with 128 bit keys.  I get good reception, very little problems there.  The ability to plug in CAT5 or not is a huge plus.  Never yet done an `ifconfig' trying to fix a net problem.
+
+Installing Mac software is a snap - let's say that you click on a .dmg file from the net attempting to install something ... Safari automatically uncompresses it, mounts it and puts it on the desktop.  This is really great.  With winzip or tar, I'd probably follow the same steps.  This automation just saves me the trouble.
+
+Installing open source software is a snap too - I found a project called [Fink](http://fink.sourceforge.net/) which allows you to install debian packages through the familiar apt-get interface.  Their site lists all the packages available, you'll see quite a lot.  I easily installed a binary version of mysql for dev purposes and easily checked the status of the service starting with `daemonic --list'.  Very good.  Other packages are easy to grab as well.  Fink also can update packages quickly.  I'm looking into this for work purposes...
+
+### The Good (and good pictures)
+
+
+1.  No multiple desktops - found an app called [desktop manager](http://wsmanager.sourceforge.net/) that gives you multiple desktops like Gnome or KDE.  Even does keyboard switching with "option+apple+left or right".  Excellent.  You can move apps from one desktop to the other by ctrl clicking on the pager.  You can't drag apps from one desktop to another though.  Small detail :(
+2.  Expose really helps you move windows quickly.  Haven't used it much with multiple desktops running
+3.  Safari is a GREAT browser.  You can command click on the menu bar and it will show you a hierarchy of the website
+[View image](http://www.squarism.com/archives/osx_titlebar.html)
+4.  This is also true for Finder and regular folders.
+[View image](http://www.squarism.com/archives/osx_titlebar2.html)
+5.  Safari has tabs.  You can make tab folders and "open all links in tabs all at once.  For example, if you have a daily set of sites (yahoo.com, slashdot.org, cnn.com) it will open the group up.
+[View image](http://www.squarism.com/archives/osx_safari.html)
+6.  Safari has a really sweet bookmark page where folders you create show up in a polished bookmark bar.
+[View image](http://www.squarism.com/archives/osx_bookmarks.html)
+
+7.  You can easily see disk space, network space on the desktop.
+[View image](http://www.squarism.com/archives/osx_desktop.html)
+8.  Fonts look great.  Notice that the cursive in this below picture is not an image.
+[View image](http://www.squarism.com/archives/osx_font.html)
+
+Stability - a few apps have frozen but they were a bit shady.  I've had Linux crash in X a few times as well so you can't be perfect all the time.  All I can say is, **Sleep actually works!**  If I close the lid, it goes to sleep.  The laptop doesn't "prepare for standby" or anything else.  Windows can't do that.  I tell people not to use Windows standby.  Because it doesn't work on all hardware.  Behold the power of Apple control.
+
+Speed - some things are a lot faster, some things are a bit slower.  Some apps hang a bit when a lot is going on and you have no choice but to watch a color wheel spin.  Windows would at least painfully try to draw the GUI components.  Linux would give you the chance to drop to a shell.  On the positive side, boot time is quick.  There isn't any residual loading.  After you enter your password in Windows, there is a lot of crunching going on in the background.  OSX reminds me of BeOS.  When it's loaded, it's loaded.  (yes I have startup items in both OSs')
+
+Development - Eclipse runs on osx.  Perl, PHP, MySQL, JBoss (comes on the XCode CD), cvs, gcc (XCode CD).  What more do you want?
+
+### The Bad
+
+I'm not as fast without Windows+R for Run, Windows+M for minimize all.  Dual booting is probably going to be hard but really all these things are just experience bound.
+
+$$$ - it's not cheap.  You can easily guy an equal PC for 1/3 the cost.  BUT you don't get as much software with it (excepting if you ran linux - which wouldn't have the functionality).  So although it's still no contest (macs are expensive), consider all the costs.
+
+Software - most things are available but I really had to do some hunting for a good GUI text editor like TextPad.  I finally found [SubEthaEdit](http://www.codingmonkeys.de/subethaedit/).  Very decent.
+
+No VMWare - haven't played with Virtual PC yet but VMWare doesn't exist on Mac.
+
+Games - don't care about this but there are less of the boring bad PC titles.  All the good titles you can get for Mac (unreal, the sims) although I don't play many computer games  (( buy a console! ))

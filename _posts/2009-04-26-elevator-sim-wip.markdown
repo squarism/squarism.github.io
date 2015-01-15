@@ -43,8 +43,10 @@ comments:
     (which has been blogged about previously). Really stale project, don&#039;t know
     why I started thinking about it, I realized I got stuck on it [...]'
 ---
-<p>Car idle:
-<img src="/uploads/2009/04/elevator_sim_wip_1.png" alt="elevator_sim_wip_1" title="elevator_sim_wip_1" width="480" height="302" class="aligncenter size-full wp-image-184" /></p>
-<p>Car called, doors open.
-<img src="/uploads/2009/04/elevator_sim_wip_2.png" alt="elevator_sim_wip_2" title="elevator_sim_wip_2" width="480" height="302" class="aligncenter size-full wp-image-185" /></p>
-<p>Some shots from a work in progress.  Elevator simulator.  People are going to get on and off and ride the cars down.  It's an exercise in 3d, queuing, event detection (without using events) and a boat load of other stuff.  It's coming along nicely.  The car motion is really convincing.</p>
+Car idle:
+![elevator_sim_wip_1](/uploads/2009/04/elevator_sim_wip_1.png "elevator_sim_wip_1")
+
+Car called, doors open.
+![elevator_sim_wip_2](/uploads/2009/04/elevator_sim_wip_2.png "elevator_sim_wip_2")
+
+Some shots from a work in progress.  Elevator simulator.  People are going to get on and off and ride the cars down.  It's an exercise in 3d, queuing, event detection (without using events) and a boat load of other stuff.  It's coming along nicely.  The car motion is really convincing.

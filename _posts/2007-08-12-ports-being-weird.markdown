@@ -21,8 +21,9 @@ categories:
 tags: []
 comments: []
 ---
-<p>When I typed port, portmirror or anything related to darwinports (macports), I got a strange error with no google hits.</p>
-<p><code> # portmirror
+When I typed port, portmirror or anything related to darwinports (macports), I got a strange error with no google hits.
+
+` # portmirror
 can't find package macports
     while executing
 "package require macports"
@@ -32,15 +33,20 @@ can't find package macports
     while executing
 "package require macports"
     (file "/opt/local/bin/port" line 42)
-</code></p>
-<p>The solution was to <a href="http://svn.macports.org/repository/macports/downloads/MacPorts-1.5.0/">download macports 1.5</a> and run it again.  It's been a while since I had used ports on my Mac and maybe the project got renamed or changed.  I dunno.</p>
-<p>Then "port selfupdate" failed with "Directory not empty" errors from mv:rename so I did this:</p>
-<p><code>mv /opt/local/var/db/dports/distfiles/ /opt/local/var/macports/distfiles
+`
+
+The solution was to [download macports 1.5](http://svn.macports.org/repository/macports/downloads/MacPorts-1.5.0/) and run it again.  It's been a while since I had used ports on my Mac and maybe the project got renamed or changed.  I dunno.
+
+Then "port selfupdate" failed with "Directory not empty" errors from mv:rename so I did this:
+
+`mv /opt/local/var/db/dports/distfiles/ /opt/local/var/macports/distfiles
 mv /opt/local/var/db/dports/receipts/ /opt/local/var/macports/receipts/
-mv /opt/local/var/db/dports/software/ /opt/local/var/macports/software/</code></p>
-<p>Then it seemed to work:</p>
-<p><code># port selfupdate
+mv /opt/local/var/db/dports/software/ /opt/local/var/macports/software/`
+
+Then it seemed to work:
+
+`# port selfupdate
 MacPorts base version 1.5 installed
 Downloaded MacPorts base version 1.510
 Configuring, Building and Installing new MacPorts base
-selfupdate done!</code></p>
+selfupdate done!`

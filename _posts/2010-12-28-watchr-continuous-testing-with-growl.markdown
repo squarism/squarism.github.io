@@ -54,13 +54,16 @@ comments:
     MjAxMS0wMy0wOSAxOTo1MTo0NCAtMDUwMA==
   content: Cool!  Thanks for the follow-up.
 ---
-<p>An improvement to <a href="http://squarism.com/2010/05/23/watchr-unit-tests-growl-doomguy/">the post I did</a> about the doom faces for growl status and watchr config with ruby testing.  This improvement will give you a pass screen that is a bit easier to read because it will have a slight green or red tint to it.
-<img src="/uploads/2010/12/watchr_improved_pass-580x67.png" alt="" title="watchr_improved_pass" width="580" height="67" class="aligncenter size-large wp-image-863" />
-<img src="/uploads/2010/12/watchr_improved_fail-580x66.png" alt="" title="watchr_improved_fail" width="580" height="66" class="aligncenter size-large wp-image-861" /></p>
-<p>First, it requires a bit of Growl set up.  You just need to change the severity colors from all black to look like this.  You can keep the normal level as black and hopefully this will keep your normal growl messages from other programs as normal black.
-<img src="/uploads/2010/12/watchr_improved_growl_setup.png" alt="" title="watchr_improved_growl_setup" width="748" height="629" class="aligncenter size-full wp-image-862" />
-Note that the high severity color in that screenshot is a really dark red.  This is important to get that slight red tint from the dead doomguy shot above.</p>
-<p>This also requires and new and improved <a href="http://squarism.com/files/combo_guesser/watchr.rb">watchr.rb file</a> to go along with it.</p>
+An improvement to [the post I did](http://squarism.com/2010/05/23/watchr-unit-tests-growl-doomguy/) about the doom faces for growl status and watchr config with ruby testing.  This improvement will give you a pass screen that is a bit easier to read because it will have a slight green or red tint to it.
+![](/uploads/2010/12/watchr_improved_pass-580x67.png "watchr_improved_pass")
+![](/uploads/2010/12/watchr_improved_fail-580x66.png "watchr_improved_fail")
+
+First, it requires a bit of Growl set up.  You just need to change the severity colors from all black to look like this.  You can keep the normal level as black and hopefully this will keep your normal growl messages from other programs as normal black.
+![](/uploads/2010/12/watchr_improved_growl_setup.png "watchr_improved_growl_setup")
+Note that the high severity color in that screenshot is a really dark red.  This is important to get that slight red tint from the dead doomguy shot above.
+
+This also requires and new and improved [watchr.rb file](http://squarism.com/files/combo_guesser/watchr.rb) to go along with it.
+
 {% highlight ruby %}
 def growl(message)
   growlnotify = `which growlnotify`.chomp
@@ -73,15 +76,19 @@ def growl(message)
   system %(#{growlnotify} #{options} &)
 end
 {% endhighlight %}</p>
-<h2>Optional Bit</h2><p>
-My previous post was inside a rails project, which is fine and good until you want to write a command-line ruby program or something outside of rails.  First, you'll need some tests and then you'll need a Rakefile that invokes your tests.  I have an example project <a href="http://squarism.com/files/combo_guesser/">here</a>.  There's also a zip archive <a href="http://squarism.com/files/combo_guesser.zip">here</a>. It's a non-rails app with a rake file that you can run for testing:
-<code>combo-guesser$ rake
+
+## Optional Bit
+
+My previous post was inside a rails project, which is fine and good until you want to write a command-line ruby program or something outside of rails.  First, you'll need some tests and then you'll need a Rakefile that invokes your tests.  I have an example project [here](http://squarism.com/files/combo_guesser/).  There's also a zip archive [here](http://squarism.com/files/combo_guesser.zip). It's a non-rails app with a rake file that you can run for testing:
+`combo-guesser$ rake
 (in ./combo_guesser)
 /bin/ruby ./test/combo_guesser_test.rb
 Loaded suite ./test/combo_guesser_test
 Started
 .
-Finished in 0.000755 seconds.</p>
-<p>1 tests, 10 assertions, 0 failures, 0 errors, 0 skips
-</code></p>
-<p>All this makes for a really fast testing feedback loop.</p>
+Finished in 0.000755 seconds.
+
+1 tests, 10 assertions, 0 failures, 0 errors, 0 skips
+`
+
+All this makes for a really fast testing feedback loop.

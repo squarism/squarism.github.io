@@ -21,5 +21,6 @@ categories:
 tags: []
 comments: []
 ---
-<p>If you have a SSH account someplace outside of your locked down network, try <a href="http://www.vastrange.com/">safe passage</a>.</p>
-<p>If you want to try to tunnel everything through port 80, check out <a href="http://www.nocrew.org/software/httptunnel.html">gnu httptunnel</a> but your program will have to support something like a proxy.</p>
+If you have a SSH account someplace outside of your locked down network, try [safe passage](http://www.vastrange.com/).
+
+If you want to try to tunnel everything through port 80, check out [gnu httptunnel](http://www.nocrew.org/software/httptunnel.html) but your program will have to support something like a proxy.

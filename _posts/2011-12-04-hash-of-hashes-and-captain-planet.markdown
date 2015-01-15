@@ -31,17 +31,24 @@ comments:
   content: ! '[...] I&#8217;ve previously talked about, hashes of hashes are weird
     to work with. If you can avoid having a structure like [...]'
 ---
-<p><img src="/uploads/2011/11/Don-Cheadle-Captain-Planet.jpg" alt="" title="Don-Cheadle-Captain-Planet" width="150" height="150" class="alignright size-full wp-image-1458" /></p>
-<p>Don Cheadle is the best version of Captain Planet there is.  I hope you've already seen <a href="http://www.funnyordie.com/videos/5876f2aced/don-cheadle-is-captain-planet">the video</a>.  If not, go now.  I'll wait.</p>
-<p>As it typically happens, I was creating some nested data structure and was reminded of all the different combinations that there are.  For example:</p>
-<ul>
-<li>An array of arrays.<br><code>[ [1,2,3], [4,5,6] ]</code></li>
-<li>A hash of arrays.<br><code>{ :lucky => [77,42], :unlucky => [666,13] }</code></li>
-<li>An array of hashes.<br><code>[ {:cat=>"meow"}, {:dog=>"ruff"} ]</code></li>
-<li>A hash of hashes.<br><code>{ :best_in_life => {:enemies => "crushed"}, :worst => { :meatloaf => "old"} }</code></li>
-<p></ul></p>
-<p>And I realized that I hadn't really played with a hash of hashes much.  And now I realize why.  It's really pretty useless.  It's hard to work with and the additional key really isn't all that useful.  I found it much better to just denormalize the key into the data attributes.  Anyway, you can see what I mean by reading and running what's below.</p>
-<p>We're going to create Captain Planet and the planeteers in a 2D hash of hashes and do some searching, iterating and other simple things.  This should illustrate also how an array of hashes is a bit better.  You'll see halfway through the program we redefine the planeteers.</p>
+![](/uploads/2011/11/Don-Cheadle-Captain-Planet.jpg "Don-Cheadle-Captain-Planet")
+
+Don Cheadle is the best version of Captain Planet there is.  I hope you've already seen [the video](http://www.funnyordie.com/videos/5876f2aced/don-cheadle-is-captain-planet).  If not, go now.  I'll wait.
+
+As it typically happens, I was creating some nested data structure and was reminded of all the different combinations that there are.  For example:
+
+*   An array of arrays.
+`[ [1,2,3], [4,5,6] ]`
+*   A hash of arrays.
+`{ :lucky => [77,42], :unlucky => [666,13] }`
+*   An array of hashes.
+`[ {:cat=>"meow"}, {:dog=>"ruff"} ]`
+*   A hash of hashes.
+`{ :best_in_life => {:enemies => "crushed"}, :worst => { :meatloaf => "old"} }`
+
+And I realized that I hadn't really played with a hash of hashes much.  And now I realize why.  It's really pretty useless.  It's hard to work with and the additional key really isn't all that useful.  I found it much better to just denormalize the key into the data attributes.  Anyway, you can see what I mean by reading and running what's below.
+
+We're going to create Captain Planet and the planeteers in a 2D hash of hashes and do some searching, iterating and other simple things.  This should illustrate also how an array of hashes is a bit better.  You'll see halfway through the program we redefine the planeteers.
 
 {% highlight ruby %}
 # search a 2d hash
@@ -105,8 +112,7 @@ end
 planeteers.pop
 {% endhighlight %}
 
-
-Here's what it spits out:</p>
+Here's what it spits out:
 <pre>
 --------------------------------------------------
 Here are our planeteers and their elements:
@@ -115,15 +121,18 @@ Here are our planeteers and their elements:
 {:wheeler=>"fire"}
 {:linka=>"wind"}
 {:gi=>"water"}
-{:ma_ti=>"heart"}</p>
-<p>Find the fire planeteer:
-wheeler</p>
-<p>--------------------------------------------------
+{:ma_ti=>"heart"}
+
+Find the fire planeteer:
+wheeler
+
+--------------------------------------------------
 Let's do this a bit cleaner with a better data structure.
 --------------------------------------------------
 Find the heart planeteer:
-ma_ti</p>
-<p>--------------------------------------------------
+ma_ti
+
+--------------------------------------------------
 Let's summon Captain Planet!
 --------------------------------------------------
 Kwame: Earth!
@@ -132,4 +141,4 @@ Linka: Wind!
 Gi: Water!
 Ma_ti: Heart!
 All: Go planet!
-</pre></p>
+</pre>

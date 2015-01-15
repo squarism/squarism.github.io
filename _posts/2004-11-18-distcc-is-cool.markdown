@@ -21,6 +21,8 @@ categories:
 tags: []
 comments: []
 ---
-<p><a href="http://distcc.samba.org/">Distcc</a> is a distributed C/C++ compiler.  You can easily use a bunch of machines' power to compile stuff.  The setup isn't bad at all.  It's just a non-root network service.</p>
-<p>Gentoo.org has some <a href="http://www.gentoo.org/doc/en/distcc.xml">nice instructions</a> on setting up distcc for builds.  Here, we have 2x Pentium 3 machines and 1x dual xeon helping me build <a href="http://www.nethack.org/">nethack</a>.  Don't have numbers on how much faster it was but it seemed faster.  Most makes/compiles are annoyingly slow, this seemed ok.</p>
-<p><a href="http://squarism.com/archives/distcc_full.html"><img alt="distcc_thumb.jpg" src="http://squarism.com/wp-content/photos/distcc_thumb.jpg" width="239" height="267" /></a></p>
+[Distcc](http://distcc.samba.org/) is a distributed C/C++ compiler.  You can easily use a bunch of machines' power to compile stuff.  The setup isn't bad at all.  It's just a non-root network service.
+
+Gentoo.org has some [nice instructions](http://www.gentoo.org/doc/en/distcc.xml) on setting up distcc for builds.  Here, we have 2x Pentium 3 machines and 1x dual xeon helping me build [nethack](http://www.nethack.org/).  Don't have numbers on how much faster it was but it seemed faster.  Most makes/compiles are annoyingly slow, this seemed ok.
+
+[![distcc_thumb.jpg](http://squarism.com/wp-content/photos/distcc_thumb.jpg)](http://squarism.com/archives/distcc_full.html)

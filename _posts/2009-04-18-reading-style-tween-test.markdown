@@ -30,6 +30,7 @@ comments:
     MjAwOS0wNC0yMyAwMDowODo1NiAtMDQwMA==
   content: People should read this.
 ---
-<p><img src="/uploads/2009/04/tweentest.png" alt="tweentest" title="tweentest" width="280" height="302" class="aligncenter size-full wp-image-151" />
-Using the <a href="http://www.megamu.com/processing/shapetween/">tween library from megamu</a>, I think I finally get how to use it.  Going to use it for an elevator sim.  Yes, I'm building an elevator.  It just struck me while riding one.  "I could make this."</p>
-<p>Anyway, check out the reading thing <a href="http://squarism.com/files/TweenTest/">here</a>.</p>
+![tweentest](/uploads/2009/04/tweentest.png "tweentest")
+Using the [tween library from megamu](http://www.megamu.com/processing/shapetween/), I think I finally get how to use it.  Going to use it for an elevator sim.  Yes, I'm building an elevator.  It just struck me while riding one.  "I could make this."
+
+Anyway, check out the reading thing [here](http://squarism.com/files/TweenTest/).

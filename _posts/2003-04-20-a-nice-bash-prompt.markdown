@@ -21,8 +21,9 @@ categories:
 tags: []
 comments: []
 ---
-<p>Throw this into your /etc/bashrc for all users to pick up this more interesting bash prompt.  If you just want to test it out on a single user's profile, add to ~/.bashrc (at the end is good).</p>
-<pre lang="bash">
+Throw this into your /etc/bashrc for all users to pick up this more interesting bash prompt.  If you just want to test it out on a single user's profile, add to ~/.bashrc (at the end is good).
+
+{% highlight bash %}
 # a ruley rule bash prompt
 COLOR1="\[33[1;37m\]"
 COLOR2="\[33[0;37m\]"
@@ -32,5 +33,6 @@ then
 COLOR2="\[33[1;34m\]"
 fi
 PS1="$COLOR2($COLOR1\u@\h$COLOR2)-($COLOR3\W$COLOR2)\\$ $COLOR1"
-</pre></p>
-<p><img src="/files/ruley_rule_bash_prompt.jpg"></p>
+{% endhighlight %}
+
+![](/files/ruley_rule_bash_prompt.jpg)

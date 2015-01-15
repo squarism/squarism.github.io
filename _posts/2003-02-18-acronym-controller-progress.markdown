@@ -10,15 +10,6 @@ author:
   url: ''
 author_login: chris
 author_email: squarism@gmail.com
-excerpt: ! '<p>
-
-  Finally got a useful action map coded.  Before, the controller was just simply printing
-  Strings.  Now, Classes are being instantiated from a Properties file and the Action
-  interface is working as it should.  The latest version of the Controller is posted.
-
-  </p>
-
-'
 wordpress_id: 10
 wordpress_url: http://squarism.com/2003/02/18/acronym-controller-progress/
 date: !binary |-
@@ -30,16 +21,18 @@ categories:
 tags: []
 comments: []
 ---
-<p>
 Finally got a useful action map coded.  Before, the controller was just simply printing Strings.  Now, Classes are being instantiated from a Properties file and the Action interface is working as it should.  The latest version of the Controller is posted.
-</p>
-<a id="more"></a><a id="more-10"></a></p>
-<p>
+
+<!-- more -->
+
 You can see that I have a default Action set up too.  If for unknown reasons, a user finds themselves in a place the Controller can't handle, the default Action kicks in.  This could be caused by a user mistype or by a dead link.
-</p></p>
-<pre>
-package net.fuzzylemon.acronym;</p>
-<p>/**
+
+
+
+{% highlight java %}
+package net.fuzzylemon.acronym;
+
+/**
  * @file 	Controller.java
  * @Author 	chris
  * @date	Dec 8, 2002
@@ -51,35 +44,47 @@ package net.fuzzylemon.acronym;</p>
  * 	- invokes JavaBeans
  * 	- controls error handling
  * 	- controls module flow
- */</p>
-<p>import java.io.IOException;
+ */
+
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
-import java.util.Properties;</p>
-<p>import javax.servlet.ServletConfig;
+import java.util.Properties;
+
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;</p>
-<p>import net.fuzzylemon.acronym.action.Action;
-import net.fuzzylemon.util.UrlParser;</p>
-<p>public class Controller extends HttpServlet {</p>
-<p>	private Properties actionMap = new Properties();</p>
-<p>	private Action action = null;</p>
-<p>	public void doGet(HttpServletRequest req, HttpServletResponse res)
+import javax.servlet.http.HttpSession;
+
+import net.fuzzylemon.acronym.action.Action;
+import net.fuzzylemon.util.UrlParser;
+
+public class Controller extends HttpServlet {
+
+	private Properties actionMap = new Properties();
+
+	private Action action = null;
+
+	public void doGet(HttpServletRequest req, HttpServletResponse res)
 		throws ServletException, IOException {
 		doPost(req, res);
-	}</p>
-<p>	public void doPost(HttpServletRequest req, HttpServletResponse res)
-		throws ServletException, IOException {</p>
-<p>		PrintWriter out = res.getWriter();
+	}
+
+	public void doPost(HttpServletRequest req, HttpServletResponse res)
+		throws ServletException, IOException {
+
+		PrintWriter out = res.getWriter();
 		HttpSession session = req.getSession();
-		String pathInfo = UrlParser.stripLeadingCharacter(req.getPathInfo());</p>
-<p>		res.setContentType("text/plain");</p>
-<p>		out.println("action was: " + session.getAttribute("action"));</p>
-<p>		// if no matching action is found, set action to be default
+		String pathInfo = UrlParser.stripLeadingCharacter(req.getPathInfo());
+
+		res.setContentType("text/plain");
+
+		out.println("action was: " + session.getAttribute("action"));
+
+		// if no matching action is found, set action to be default
 		try {
 			action = setAction(pathInfo);
 			session.setAttribute("action", actionMap.getProperty(pathInfo));
@@ -88,19 +93,24 @@ import net.fuzzylemon.util.UrlParser;</p>
 			action = setAction("default");
 			session.setAttribute("action", actionMap.getProperty("default"));
 			action.perform(this, req, res);
-		}</p>
-<p>		out.println("session ID: " + session.getId());
-		out.println("action is: " + session.getAttribute("action"));</p>
-<p>	}</p>
-<p>	public void init() {
+		}
+
+		out.println("session ID: " + session.getId());
+		out.println("action is: " + session.getAttribute("action"));
+
+	}
+
+	public void init() {
 		try {
 			ServletConfig config = getServletConfig();
 			ServletContext context = config.getServletContext();
 			String actionMapFile = config.getInitParameter("actionMapFile");
-			System.out.println("actionMapFile is " + actionMapFile);</p>
-<p>			//load file from jar file
-			InputStream in = context.getResourceAsStream(actionMapFile);</p>
-<p>			actionMap.load(in);
+			System.out.println("actionMapFile is " + actionMapFile);
+
+			//load file from jar file
+			InputStream in = context.getResourceAsStream(actionMapFile);
+
+			actionMap.load(in);
 			in.close();
 		} catch (IOException e) {
 			log("cannot open action map.");
@@ -109,8 +119,9 @@ import net.fuzzylemon.util.UrlParser;</p>
 			log("null action map!");
 			ne.printStackTrace();
 		}
-	}</p>
-<p>	private Action setAction(String string)
+	}
+
+	private Action setAction(String string)
 		throws NullPointerException {
 		Action action = null;
 		try {
@@ -126,4 +137,4 @@ import net.fuzzylemon.util.UrlParser;</p>
 		return action;
 	}
 }
-</pre></p>
+{% endhighlight %}

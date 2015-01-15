@@ -49,10 +49,8 @@ comments:
 
 '
 ---
-<p>Update on new functionality.</p>
-<p>
-Received my <a href="http://www.oreilly.com/catalog/jextprockbk/">XP programming book</a> in the mail.  It is fabulous.  I spent all day reading it.  Wonderfully written.  Great advice.  Real world examples and overviews.
-</p></p>
-<p>
+Update on new functionality.
+
+Received my [XP programming book](http://www.oreilly.com/catalog/jextprockbk/) in the mail.  It is fabulous.  I spent all day reading it.  Wonderfully written.  Great advice.  Real world examples and overviews.
+
 With XP advice in belt, I cleaned up many things in the Voting actions and I have cookies working to prevent people from voting twice on an acronym response.  I'll post an updated version soon.
-</p></p>

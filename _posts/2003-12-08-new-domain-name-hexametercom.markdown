@@ -21,6 +21,8 @@ categories:
 tags: []
 comments: []
 ---
-<p>Was thinking about writing a Perl script to check dictionary domain names still available when I found that <a href="http://waxy.org">waxy.org</a> had already thought of it.</p>
-<p>So I found <a href="http://hexameter.com">hexameter.com</a> was still available so I spent the $7 to get it and been playing around with a really, really simple artsy type layout just to blow off some minimalism steam.</p>
-<p>*shrug*</p>
+Was thinking about writing a Perl script to check dictionary domain names still available when I found that [waxy.org](http://waxy.org) had already thought of it.
+
+So I found [hexameter.com](http://hexameter.com) was still available so I spent the $7 to get it and been playing around with a really, really simple artsy type layout just to blow off some minimalism steam.
+
+*shrug*
