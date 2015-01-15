@@ -112,4 +112,4 @@ explode.  But I still like this style when I can do it
 because I avoid changing state.
 
 The end-game to this line of thinking is switching to or at least
-playing with a function language like Clojure, Rust or Scala.
+playing with a functional language like Clojure, Rust or Scala.
