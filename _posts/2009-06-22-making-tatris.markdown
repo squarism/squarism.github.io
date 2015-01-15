@@ -10,73 +10,6 @@ author:
   url: ''
 author_login: chris
 author_email: squarism@gmail.com
-excerpt: ! "<img src=\"/uploads/2009/04/tatris_03.png\"
-  alt=\"tatris_03\" title=\"tatris_03\" width=\"400\" height=\"598\" class=\"aligncenter
-  size-full wp-image-235\" />\r\n\r\n<h2>Backstory</h2>\r\nIn my last job,
-  I was a hourly contractor who had finished a project and was transitioning off to
-  other things.  By a chance of fortune, I had an opportunity to take some time off
-  and do whatever.  I had one week on, one week off for a period of over a month.
-  \ I was extremely excited because I have a lot of hobbies that are bound by time
-  and this was exactly what I wanted.  Time to do whatever.  I was curious to see
-  whether I'd waste it or actually produce something.  I'm happy to say that I did
-  not waste the time I had and I produced the most intense gamedev learning experience
-  I've ever had.  By no means, am I claiming to be an expert.  I'm just documenting
-  a very large personal effort.\r\n\r\nOk, enough of all that personal crap.  In reading
-  game development community sites (like gamedev.net and idevgames.com), something
-  that was a near cosmological constant is the post \"OMG I wnt to make mmo, pls halp!\".
-  \ It's like a nuclear clock.  Someone does some subscription revenue math, gets
-  excited with dreams of being rich, tries to start something ridiculously complicated,
-  gets stuck and runs to a forum looking for members or advice.  On a forum like idevgames.com,
-  there are exceptional members (who should be praised for their patience and humanity)
-  that take the time to respond to this never-ending line of questioning.  The most
-  effective response is, \"have you made tetris yet?\".  Usually the person has not
-  made a simple game and I doubt that they end up doing so.  However, eventually this
-  idea sunk in and I realized: <em>I do not want to make an MMO but I should make
-  Tetris</em>.  Because someday I might want to make something more complicated
-  (not an MMO).  So let's do this.\r\n\r\n<h2>The Plan</h2>\r\nFirstly, I had
-  been doing Java at my job for a while now and am fairly comfortable with it.  Outside
-  of this, I had been messing around with a project called <a href=\"http://processing.org\">Processing</a>
-  which makes graphics and generative art really easy.  I knew this was going to be
-  complicated so instead of diving into code, I made a plan first.  I started breaking
-  down what Tetris is and mapped out classes and responsibility.  This planning bit
-  I've always been bad at and I spent maybe a day thinking and writing down like \"what
-  a tetris piece is\" and what minimal features there should be.  The gameplay and
-  design is already done and this fact is a big step compared to coming up with something
-  by yourself.\r\n\r\nFor sure, the lesson I learned is: \"it's just a plan\".  You
-  can change it as you go and eventually it's best to throw it away after things are
-  sufficiently started.  As the code grew, the plan was put away; which is good because
-  my plan wasn't really all that special or well organized.  I had some ideas about
-  pieces to be written and what the hard parts were but honestly the best lesson I
-  learned was \"it's just a plan\".  You're not going to pre-write and pre-solve all
-  the problems.\r\n\r\nNext was research and learning.  I studied other processing
-  games (like <a href=\"http://lux.vu/blog/2005/01/06/monkey-patrol/\">MonkeyPatrol</a>
-  by Joshua Minor) and white papers from university CS classes.  I played Quinn (a
-  mac OSX clone) a bit.  I knew a few things to start with.  For example, game objects
-  should draw themselves.  There are 7 piece types (which look similar to the letters:
-  I L O J S Z T) and many things are similar between them so I planned for a base
-  Piece class and named the pieces after the letters they looked like (IPiece, LPiece,
-  etc).  I collected some screenshots of existing games to use as inspiration.\r\n\r\n<h2>Drawing
-  a Piece</h2>\r\nOk, I had my plan and similar stuff done.  Ok, where to start?
-  \ I like to start from the top down.  IE: from the interface backwards.  So I start
-  with a graphical mockup and then make the mockup actually function.  So started
-  out with drawing.  First, I created a Block class.  This is a single square with
-  an x,y,height,width,color etc.  It's a component of a Piece.  Before going any further.
-  \ I have to explain that I intentionally did not do Tetris the easy way.  The easy
-  way is having a bitmap style grid of blocks and simply moving the bits down and
-  around.  Then you just represent the bitmap with graphics.  I did not do it this
-  way because I wanted an excuse to do sorta a \"2d model\" where the piece is constructed
-  from a central point, rotated etc more like what someone would do with a 3d model
-  in a modern game.  This single decision made things extremely complicated for me
-  but it also made it a more useful learning experience for when I want to do something
-  like a platformer or a shooter because these game types use collision detection
-  in a 2d/3d space similar to how I did it.  So a Piece consists of Blocks with
-  a model describing the shape of the Piece.  For example, an LPiece looks like this:\r\n\r\n<code>1\r\n2\r\n34</code>\r\n\r\nAnd
-  the IPiece looks like this:\r\n<code>1\r\n2\r\n3\r\n4</code>\r\n\r\nAnd the
-  OPiece looks like this:\r\n<code>12\r\n34</code>\r\n\r\nSo I created all the
-  Pieces and eventually had a test app that looked like this:\r\n<img src=\"/uploads/2009/04/tatris_block_test-189x300.png\"
-  alt=\"tatris_block_test\" title=\"tatris_block_test\" width=\"189\" height=\"300\"
-  class=\"aligncenter size-medium wp-image-233\" />\r\n\r\nNext, let's move on
-  to piece movement.\r\n\r\n"
 wordpress_id: 153
 wordpress_url: http://squarism.com/?p=153
 date: !binary |-
@@ -151,7 +84,6 @@ In my last job, I was a hourly contractor who had finished a project and was tra
 
 Ok, enough of all that personal crap.  In reading game development community sites (like gamedev.net and idevgames.com), something that was a near cosmological constant is the post "OMG I wnt to make mmo, pls halp!".  It's like a nuclear clock.  Someone does some subscription revenue math, gets excited with dreams of being rich, tries to start something ridiculously complicated, gets stuck and runs to a forum looking for members or advice.  On a forum like idevgames.com, there are exceptional members (who should be praised for their patience and humanity) that take the time to respond to this never-ending line of questioning.  The most effective response is, "have you made tetris yet?".  Usually the person has not made a simple game and I doubt that they end up doing so.  However, eventually this idea sunk in and I realized: _I do not want to make an MMO but I should make Tetris_.  Because someday I might want to make something more complicated (not an MMO).  So let's do this.
 
-
 ### The Plan
 
 Firstly, I had been doing Java at my job for a while now and am fairly comfortable with it.  Outside of this, I had been messing around with a project called [Processing](http://processing.org") which makes graphics and generative art really easy.  I knew this was going to be complicated so instead of diving into code, I made a plan first.  I started breaking down what Tetris is and mapped out classes and responsibility.  This planning bit I've always been bad at and I spent maybe a day thinking and writing down like "what a tetris piece is" and what minimal features there should be.  The gameplay and design is already done and this fact is a big step compared to coming up with something by yourself.
@@ -160,33 +92,37 @@ For sure, the lesson I learned is: "it's just a plan".  You can change it as you
 
 Next was research and learning.  I studied other processing games (like [MonkeyPatrol}(http://lux.vu/blog/2005/01/06/monkey-patrol/) by Joshua Minor) and white papers from university CS classes.  I played Quinn (a mac OSX clone) a bit.  I knew a few things to start with.  For example, game objects should draw themselves.  There are 7 piece types (which look similar to the letters: I L O J S Z T) and many things are similar between them so I planned for a base Piece class and named the pieces after the letters they looked like (IPiece, LPiece, etc).  I collected some screenshots of existing games to use as inspiration.
 
-
 ### Drawing a Piece
 
 Ok, I had my plan and similar stuff done.  Ok, where to start?  I like to start from the top down.  IE: from the interface backwards.  So I start with a graphical mockup and then make the mockup actually function.  So started out with drawing.  First, I created a Block class.  This is a single square with an x,y,height,width,color etc.  It's a component of a Piece.  Before going any further.  I have to explain that I intentionally did not do Tetris the easy way.  The easy way is having a bitmap style grid of blocks and simply moving the bits down and around.  Then you just represent the bitmap with graphics.  I did not do it this way because I wanted an excuse to do sorta a "2d model" where the piece is constructed from a central point, rotated etc more like what someone would do with a 3d model in a modern game.  This single decision made things extremely complicated for me but it also made it a more useful learning experience for when I want to do something like a platformer or a shooter because these game types use collision detection in a 2d/3d space similar to how I did it.  So a Piece consists of Blocks with a model describing the shape of the Piece.  For example, an LPiece looks like this:
 
+`
     1
     2
     34
+`
 
 And the IPiece looks like this:
 
+`
     1
     2
     3
     4
+`
 
 And the OPiece looks like this:
 
+`
     12
     34
+`
 
 So I created all the Pieces and eventually had a test app that looked like this:
 
 ![block test](/uploads/2009/04/tatris_block_test-189x300.png)
 
 Next, let's move on to piece movement.
-
 
 ### Moving and Rotating a Piece
 
@@ -202,12 +138,10 @@ At zero degrees rotation, cos(0+0) is 0 and sin(180+0) = 1, so block1 is above b
 
 Because this was taking me a while, I worked with LPiece by itself for a few days.  Eventually I had the LPiece block moving, rotating and drawing.  Next, I needed a gamefield so I could start on motion and the basic game loop of dropping a piece onto the bottom of the gamefield.  So I created a few variables that described the gamefield and created drawing routines for a grid pattern that could be used for debugging.  The grid looked nice so I kept it.  After LPiece worked, I made all the other pieces work in a similar fashion.  When the inheritance design was refactored and working right, maintaining all the pieces was quite easy because lots of code was being reused and most editing only needed to be done in one place.
 
-Then I moved onto motion and interactivity.  I used processing's <code>keyPressed()</code> method to detect when a key was pressed and then called <code>Piece.setRotation(90)</code> if UP was pressed for example.  The left arrow key (key code LEFT) was mapped to <code>Piece.setX(Piece.getX() - blockSize)</code>.  This worked for now and interactivity was done for now.  Later the key presses will be delegated and less hard wired.  But for now, there's a proof of concept that works.
-
+Then I moved onto motion and interactivity.  I used processing's `keyPressed()` method to detect when a key was pressed and then called `Piece.setRotation(90)` if UP was pressed for example.  The left arrow key (key code LEFT) was mapped to `Piece.setX(Piece.getX() - blockSize)`.  This worked for now and interactivity was done for now.  Later the key presses will be delegated and less hard wired.  But for now, there's a proof of concept that works.
 
 I had a test app that showed rotation of a simple piece:
-<img src="/uploads/2009/04/tatris_build_test.png" alt="tatris_build_test" title="tatris_build_test" width="592" height="614" class="aligncenter size-full wp-image-234" />
-
+![tatris_build_test](/uploads/2009/04/tatris_build_test.png "tatris_build_test")
 
 ### The Game State
 
@@ -215,7 +149,7 @@ But now, I needed to set up the game architecture properly.  What was a simple t
 
 Firstly, I needed an interface.  The interface for GameState would contain a few methods:
 
-The most important one is nextState() which returns itself if we need to stay where we are and returns a new state for whatever's next.  For example, if the player has filled up the board we need to return a state of GameOver.  If the player is not losing then return PlayState.  The main class simply calls the nextState() method of the GameState interface and it doesn't know where the game is, it's just calling nextState() which every GameState is required to have because that's how an interface works.  <a href="http://en.wikipedia.org/wiki/Interface_(computer_science)">Interfaces</a> are really useful for abstracting away implementation and creating a boundry between inside and outside.
+The most important one is nextState() which returns itself if we need to stay where we are and returns a new state for whatever's next.  For example, if the player has filled up the board we need to return a state of GameOver.  If the player is not losing then return PlayState.  The main class simply calls the nextState() method of the GameState interface and it doesn't know where the game is, it's just calling nextState() which every GameState is required to have because that's how an interface works.  [Interfaces](http://en.wikipedia.org/wiki/Interface_(computer_science)) are really useful for abstracting away implementation and creating a boundry between inside and outside.
 
 For example, the main game loop is PlayState.  It's when the game is playing.  If the player presses ESC, the game pauses into the menu screen called MenuState.  If the player loses, the game switches to GameOverState.  It looks like this:
 
@@ -239,11 +173,9 @@ public GameState nextState() {
 }
 {% endhighlight %}
 
-
 This code above is the gameState setting up the in-game menu if inMenu is true.  Notice that it creates a new MenuState and then sets some local variables on that new object.  setNextState() copies the current game into a local variable which is returned and played when the game is unpaused.  The setScreenshot method is used to create the illusion of the game paused in the background of the menu text.
 
 The game over screen follows a similar pattern except there's no coming back or unpausing from game over.  GameOverState creates a new game and displays a "sorry buddy" type message.
-
 
 ### Collision Detection
 
@@ -254,8 +186,6 @@ Then I did collision detection.  This meant checking for a few cases:
 - A piece hits the stationary tetris blocks (deadGrid[])?  Piece sticks and then new piece.
 - A piece rotates into the Dead Grid?  Prevent the rotation.
 - A piece moves left or right into the Dead Grid?  Prevent the movement.  So the active piece can rub up against the pile of blocks but only sticks if it falls down on one.
-
-
 
 Developing these checks took a lot of time.  It was an iterative process that turned out to be non trivial.  I created a few methods that did the various checks.  First, in PlayState:
 
@@ -300,16 +230,13 @@ public boolean rotateCollideY(float roomStart, float roomWidth)
 public boolean rotateCollideYHit(float roomStart, float roomWidth)
 {% endhighlight %}
 
-
 I didn't include all the code for readability.  It's pretty simple, when these return true the piece doesn't move.  So the "clamping" makes the piece appear to stay on the screen.
-
 
 ### Lines and Removing Lines
 
 So now pieces for the most part have motion and collide right.  I had created some tests during this development that "precreate" the DeadGrid with blocks.  For example, the game starts with 4 lines on the field etc.  This was handy for testing and I kept the tests commented so I could turn them on or off.
 
 So I could pile up lines but now how was I going to remove them?  A player completes a line only when it hits the DeadGrid and when they drop a piece etc.  Ok.  So I created this method called copyToGrid().  It's very long and does many things.  But in psuedocode, here's the gist of the Tetris line removing algorithm.
-
 
 - Method is: void copyToGrid()
 - First, get a temp copy of the current piece to test with
@@ -347,7 +274,6 @@ The needToFall map would contain the following values:
 
 ![tatris_clear_lines_4](/uploads/2009/04/tatris_clear_lines_4.png)
 
-
 With the needToFall map in hand, it's easy to loop through the grid and make the falling happen.
 
 ![tatris_clear_lines_5](/uploads/2009/04/tatris_clear_lines_5.png)
@@ -357,7 +283,6 @@ Then the piece blocks are copied to the DeadGrid.
 ![tatris_clear_lines_6](/uploads/2009/04/tatris_clear_lines_6.png)
 
 Then a new piece is created and the game continues.
-
 
 ### The Options Menu
 
@@ -371,12 +296,11 @@ ESC brings up the menu but also exits the menu and moves up the menu selection t
 
 I absolutely loved seeing this state pattern work.  I had forever wondered how games transitioned scenes and created save game files.  Now I grok it.
 
-
 ### The Piece Bag
 
 At this point I had pieces falling, rotating, stacking etc.  I next did gameplay feel (where the player has a chance to move a piece at the last second, preventing cheating with "infinite spin").  This also included polishing when a piece sticks and when the timer says a new piece is coming.  In reality, it came down to procedural code ordering and some if statements.
 
-Gameplay feel was nice so next I polished it some more with a nicer way of generating random pieces.  I read a thread on Quinn's official forums (a Mac Tetris clone) where they described a better method of getting random pieces <a href="http://www.tetrisconcept.com/wiki/index.php?title=Random_Generator">detailed on tetrisconcept</a>.  It's simple enough:
+Gameplay feel was nice so next I polished it some more with a nicer way of generating random pieces.  I read a thread on Quinn's official forums (a Mac Tetris clone) where they described a better method of getting random pieces [detailed on tetrisconcept](http://www.tetrisconcept.com/wiki/index.php?title=Random_Generator "Random_Generator").  It's simple enough:
 
 - put 7 pieces in a bag
 - jumble
@@ -389,32 +313,32 @@ import java.util.Random;
 
 public class PieceBag {
 
-	Piece pieceBag[] = new Piece[7];		// a bag of 7 tetris pieces
-	int pieceBagI;
+  Piece pieceBag[] = new Piece[7];    // a bag of 7 tetris pieces
+  int pieceBagI;
 
-	float x;	// piece origin
-	float y;	// piece origin
+  float x;  // piece origin
+  float y;  // piece origin
 
-	public PieceBag(float x, float y) {
-		this.x = x;
-		this.y = y;
-		initPieces();
-		jumble();
-		pieceBagI = 0;
-	}
+  public PieceBag(float x, float y) {
+    this.x = x;
+    this.y = y;
+    initPieces();
+    jumble();
+    pieceBagI = 0;
+  }
 
-	void initPieces() {
-		pieceBag[0] = new LPiece(this.x, this.y);
-		pieceBag[1] = new OPiece(this.x, this.y);
-		pieceBag[2] = new TPiece(this.x, this.y);
-		pieceBag[3] = new SPiece(this.x, this.y);
-		pieceBag[4] = new ZPiece(this.x, this.y);
-		pieceBag[5] = new IPiece(this.x, this.y);
-		pieceBag[6] = new JPiece(this.x, this.y);
-	}
+  void initPieces() {
+    pieceBag[0] = new LPiece(this.x, this.y);
+    pieceBag[1] = new OPiece(this.x, this.y);
+    pieceBag[2] = new TPiece(this.x, this.y);
+    pieceBag[3] = new SPiece(this.x, this.y);
+    pieceBag[4] = new ZPiece(this.x, this.y);
+    pieceBag[5] = new IPiece(this.x, this.y);
+    pieceBag[6] = new JPiece(this.x, this.y);
+  }
 
-	public void jumble() {
-		Random rng = new Random();   // i.e., java.util.Random.
+  public void jumble() {
+    Random rng = new Random();   // i.e., java.util.Random.
         int n = pieceBag.length;        // num of items left to shuffle
         while (n > 1)
         {
@@ -425,24 +349,23 @@ public class PieceBag {
             pieceBag[k] = temp;
         }
 
-	}
+  }
 
-	// get piece from bag
-	public Piece getPiece() {
-		// if we are on piece 7 then jumble the bag again
-		if (pieceBagI == pieceBag.length) {
-			initPieces();
-			jumble();
-			pieceBagI = 0;
-		}
+  // get piece from bag
+  public Piece getPiece() {
+    // if we are on piece 7 then jumble the bag again
+    if (pieceBagI == pieceBag.length) {
+      initPieces();
+      jumble();
+      pieceBagI = 0;
+    }
 
-		Piece piece = pieceBag[pieceBagI];
-		pieceBagI++;
-		return piece;
-	}
+    Piece piece = pieceBag[pieceBagI];
+    pieceBagI++;
+    return piece;
+  }
 }
 {% endhighlight %}
-
 
 ### Offscreen Drawing and Performance
 
@@ -473,7 +396,6 @@ Update: 0.3.1 has the collision detection bug fixed.  It was a procedural orderi
 
 There are 2 types of code (according to the [Stack Overflow podcast](https://stackoverflow.fogbugz.com/default.asp?W29049):
 
-
 > Spolsky: Well, I think everybody feels that way, and that is actually true that
 > there is - there's kind of two levels of code: there's the level where it runs
 > and it's debugged and you're kinda happy with it and you can continue to work on
@@ -489,7 +411,6 @@ There are 2 types of code (according to the [Stack Overflow podcast](https://sta
 > smoothly, seamlessly flow with the code so you can figure out what's going on.
 
 Well I classify this project as a mix between what Joel Spolsky says is "bad" and "middle".  Because I'm not done with it, I don't want to remove all the comments and code blocks that are there.  There are tests and debug statements in there.  There are parts that are very ugly to read.  But there there are completed parts that are extremely clean and I wouldn't be ashamed of.  In fact, I think the Game State pattern I did is very slick and extensible.  I'd have no problem adding a splash loading screen or some new "scene".  But because I still need to do things, I can't clean-up or refactor yet.  Which brings me to the TODO list.
-
 
 ### TODO
 

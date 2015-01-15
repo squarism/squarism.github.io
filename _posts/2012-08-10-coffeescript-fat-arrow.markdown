@@ -21,7 +21,7 @@ categories:
 tags: []
 comments: []
 ---
-<p>I found myself in a situation where coffeescript was complaining that Object has no method foo when it clearly did.  What is going on?  Why is it so hard to call a class method from within a class?</p>
+I found myself in a situation where coffeescript was complaining that Object has no method foo when it clearly did.  What is going on?  Why is it so hard to call a class method from within a class?
 
 {% highlight ruby %}
 class Car
@@ -52,31 +52,34 @@ car = new Car
 car.get_in_accident()
 {% endhighlight %}
 
-<p>What you see in this example is:
-<code>
+What you see in this example is:
+`
 HON...
 imma deploying mah airbag!
-aaaa!</p>
-<p>timers.js:103
+aaaa!
+
+timers.js:103
             if (!process.listeners('uncaughtException').length) throw e;
                                                                       ^
 TypeError: Object # has no method 'honk_horn'
     at Object._onTimeout (.:29:14)
     at Timer.list.ontimeout (timers.js:101:19)
-</code></p>
-<p>@honk_horn is supposed to refer to the instance variable when yell is called.  It doesn't know about it's self?  Well, there's a good chapter about this (Chapter 6 of <a href="http://www.amazon.com/gp/product/032182010X/ref=as_li_qf_sp_asin_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=032182010X&linkCode=as2&tag=squarism-20" title="Programming in Coffeescript">this book</a>) on Binding and the <a href="http://coffeescript.org/#fat_arrow">Fat Arrow</a> in coffeescript.  It's a simple fix to a confusing problem.  The method that is called later (the callback method) needs to have a fat arrow => which generates a __bind function in javascript when the coffescript is compiled.  This saves you a lot of time and effort.  All you have to remember is to use the fat arrow when a callback is going to be called out of scope.</p>
+`
 
-<p>So just change the setTimeout line to have a => instead of ->:</p>
+@honk_horn is supposed to refer to the instance variable when yell is called.  It doesn't know about it's self?  Well, there's a good chapter about this (Chapter 6 of [this book](http://www.amazon.com/gp/product/032182010X/ref=as_li_qf_sp_asin_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=032182010X&linkCode=as2&tag=squarism-20 "Programming in Coffeescript")) on Binding and the [Fat Arrow](http://coffeescript.org/#fat_arrow) in coffeescript.  It's a simple fix to a confusing problem.  The method that is called later (the callback method) needs to have a fat arrow => which generates a __bind function in javascript when the coffescript is compiled.  This saves you a lot of time and effort.  All you have to remember is to use the fat arrow when a callback is going to be called out of scope.
+
+So just change the setTimeout line to have a => instead of ->:
+
 {% highlight ruby %}
   yell: (message, wait_time) ->
     setTimeout =>
 {% endhighlight %}
 
-<p>Now it works right.  Also notice that the "aaaa!" yell is happening before the "HON..." log statement in both examples.
-<code>
+Now it works right.  Also notice that the "aaaa!" yell is happening before the "HON..." log statement in both examples.
+`
 HON...
 imma deploying mah airbag!
 aaaa!
 HONK HONK
 You jerk!
-</code></p>
+`

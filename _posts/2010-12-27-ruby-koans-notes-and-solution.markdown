@@ -76,11 +76,16 @@ comments:
     MjAxMS0wOC0xNiAxNjozNDowNyAtMDQwMA==
   content: ! 'A better link: http://www.ruby-forum.com/topic/1393096'
 ---
-<p><img src="/uploads/2010/12/rubykoans-150x150.png" alt="" title="rubykoans" width="150" height="150" class="alignright size-thumbnail wp-image-869" />Just finished EdgeCase UK's rubykoans test/project.  It's a test driven development style learning session that you should really check out even if you're only partial curious in what ruby is.  If you've got some ruby experience under your belt, you should go through the exercise too because it's good practice, reference and you'll probably learn something new.  </p>
-<p>I'm not posting this so someone can cheat.  I'm posting this for the me out there who wants to see if they did it the same.  There were many "THINK ABOUT IT" sections that were open-ended or tricky.  The whole thing took me about 4 days while on vacation.  Maybe 16-20 hours of solid work.  It's good, just do it!</p>
-<p>I used auto_enlighten.rb which I nabbed from <a href="http://www.davesquared.net/2010/08/continually-running-script-with-ruby.html">davesquared.net</a>.  It was really handy.  Using watchr, all I had to do was save an .rb file and the test ran again.  So I could just try my answer and continually monitor my progress and get feedback on errors.  This was very much the #1 bullet point in the Ted talk <a href="http://blog.vongraf.com/2010/11/06/7-ways-games-reward-the-brain/">7 ways games reward the brain</a>.  The whole exercise is one long experience bar with continuous feedback.  Excellent!  Books should be this way!</p>
-<p>I definitely had some learning experiences along the way and I've posted my solutions with notes on gotchas to <a href="https://github.com/squarism/rubykoans">github</a>.  And there were many gotchas.  Sometimes, I would nail a solution, first shot, very elegantly.  Other times, I would churn on a test for many minutes and research for more information.  There were some very, very deep and specific issues that I would read more about.</p>
-<p>For example, take this excerpt one of the early tests: test_slicing_arrays.  For the ruby koans, they created a special __ method that is equal to "FILL ME IN" (slick move EdgeCase).  So you just have to change the __ for the test to pass.  In this case, I expected it to be nil.  So I filled in nil and it failed.</p>
+![](/uploads/2010/12/rubykoans-150x150.png "rubykoans")Just finished EdgeCase UK's rubykoans test/project.  It's a test driven development style learning session that you should really check out even if you're only partial curious in what ruby is.  If you've got some ruby experience under your belt, you should go through the exercise too because it's good practice, reference and you'll probably learn something new.
+
+I'm not posting this so someone can cheat.  I'm posting this for the me out there who wants to see if they did it the same.  There were many "THINK ABOUT IT" sections that were open-ended or tricky.  The whole thing took me about 4 days while on vacation.  Maybe 16-20 hours of solid work.  It's good, just do it!
+
+I used auto_enlighten.rb which I nabbed from [davesquared.net](http://www.davesquared.net/2010/08/continually-running-script-with-ruby.html).  It was really handy.  Using watchr, all I had to do was save an .rb file and the test ran again.  So I could just try my answer and continually monitor my progress and get feedback on errors.  This was very much the #1 bullet point in the Ted talk [7 ways games reward the brain](http://blog.vongraf.com/2010/11/06/7-ways-games-reward-the-brain/).  The whole exercise is one long experience bar with continuous feedback.  Excellent!  Books should be this way!
+
+I definitely had some learning experiences along the way and I've posted my solutions with notes on gotchas to [github](https://github.com/squarism/rubykoans).  And there were many gotchas.  Sometimes, I would nail a solution, first shot, very elegantly.  Other times, I would churn on a test for many minutes and research for more information.  There were some very, very deep and specific issues that I would read more about.
+
+For example, take this excerpt one of the early tests: test_slicing_arrays.  For the ruby koans, they created a special __ method that is equal to "FILL ME IN" (slick move EdgeCase).  So you just have to change the __ for the test to pass.  In this case, I expected it to be nil.  So I filled in nil and it failed.
+
 {% highlight ruby %}
 def test_slicing_arrays
     array = [:peanut, :butter, :and, :jelly]
@@ -90,5 +95,6 @@ def test_slicing_arrays
     # snip for blog post
 end
 {% endhighlight %}
-Notice my Learned: note there in the middle.  This was surprising.  If you open up irb and follow along, you'll find that slicing an array of 4 things from 4 to 0 gives you an empty array.  Wow.  That's a bug if you ask me.  There's a bunch of notes marked "Learned:" like this in the <a href="https://github.com/squarism/rubykoans">github</a> project.  The README has a grep example you can use to find all the things I thought were gotchas.  But do them yourself first!  It's way more fun to do this interactively.</p>
-<p>BTW, Internet, I would love a node.js koans project.</p>
+Notice my Learned: note there in the middle.  This was surprising.  If you open up irb and follow along, you'll find that slicing an array of 4 things from 4 to 0 gives you an empty array.  Wow.  That's a bug if you ask me.  There's a bunch of notes marked "Learned:" like this in the [github](https://github.com/squarism/rubykoans) project.  The README has a grep example you can use to find all the things I thought were gotchas.  But do them yourself first!  It's way more fun to do this interactively.</p>
+
+BTW, Internet, I would love a node.js koans project.

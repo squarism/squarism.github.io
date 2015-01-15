@@ -21,7 +21,7 @@ categories:
 tags: []
 comments: []
 ---
-<p>Some examples of rspec2 output formats.  If you are using Guard and Spork to speed up your test suite, you pass --format blah in the Guardfile.  For example:</p>
+Some examples of rspec2 output formats.  If you are using Guard and Spork to speed up your test suite, you pass --format blah in the Guardfile.  For example:
 
 {% highlight ruby %}
 guard 'rspec', :version => 2, :cli => '--drb --color --format doc' do
@@ -30,16 +30,23 @@ guard 'rspec', :version => 2, :cli => '--drb --color --format doc' do
 end
 {% endhighlight %}
 
-<p>You can specify multiple formats with <code>--format one --format two</code>.</p>
-<p>Anyway, here are some shots of what the output looks like:</p>
-<p><code>--format doc</code>
-<img src="/uploads/2011/11/rspec_format_doc.png" alt="" title="rspec_format_doc" width="480" height="113" class="aligncenter size-full wp-image-1404" /></p>
-<p><code>--format progress</code>
-<img src="/uploads/2011/11/rspec_format_progress.png" alt="" title="rspec_format_progress" width="348" height="69" class="aligncenter size-full wp-image-1407" /></p>
-<p><code>--format nested --format progress</code>
-<img src="/uploads/2011/11/rspec_format_progress_nested.png" alt="" title="rspec_format_progress_nested" width="487" height="130" class="aligncenter size-full wp-image-1408" /></p>
-<p><code>--format nested</code>
-<img src="/uploads/2011/11/rspec_format_nested.png" alt="" title="rspec_format_nested" width="485" height="91" class="aligncenter size-full wp-image-1406" /></p>
-<p><code>--format html</code>
-<img src="/uploads/2011/11/rspec_format_html.png" alt="" title="rspec_format_html" width="483" height="103" class="aligncenter size-full wp-image-1405" /></p>
-<p>HTML format is also the same as the Textmate format.  I couldn't get the output to go to a file like the documentation says.  Maybe it hasn't been updated for rspec2?</p>
+You can specify multiple formats with `--format one --format two`.
+
+Anyway, here are some shots of what the output looks like:
+
+`--format doc`
+![](/uploads/2011/11/rspec_format_doc.png "rspec_format_doc")
+
+`--format progress`
+![](/uploads/2011/11/rspec_format_progress.png "rspec_format_progress")
+
+`--format nested --format progress`
+![](/uploads/2011/11/rspec_format_progress_nested.png "rspec_format_progress_nested")
+
+`--format nested`
+![](/uploads/2011/11/rspec_format_nested.png "rspec_format_nested")
+
+`--format html`
+![](/uploads/2011/11/rspec_format_html.png "rspec_format_html")
+
+HTML format is also the same as the Textmate format.  I couldn't get the output to go to a file like the documentation says.  Maybe it hasn't been updated for rspec2?

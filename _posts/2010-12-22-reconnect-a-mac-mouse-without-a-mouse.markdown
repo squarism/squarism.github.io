@@ -68,15 +68,17 @@ comments:
   content: Found everything per your directions easily. Still not pair lye even though
     the green light is blinking.
 ---
-<p><img src="/uploads/2010/12/bluetooth_connected.png" alt="" title="bluetooth_connected" width="96" height="84" class="alignright size-full wp-image-850" />So you've replaced the batteries, restarted your mouse or whatever.  You have a bluetooth mouse that you need to reconnect or re-pair but you don't have a mouse to get to the bluetooth icon in the notification area or status bar location.</p>
-<p>Here what you do:</p>
-<ol>
-<li><em>Command Key + Shift + /</em> - gets you into the help area in any menu</li>
-<li><em>Right arrow</em> - gets you to the Apple menu</li>
-<li><em>Down arrow until System Preferences</em></li>
-<li><em>Enter</em> - opens System Preferences</li>
-<li><em>Type mouse</em> - in the search box and hit enter will open the mouse pane</li>
-<li><em>Hit enter at the "no mouse found" screen</em> - this will pair your mouse if it's powered on and trying to pair</li>
-</ol></p>
-<p><img src="/uploads/2010/12/bluetooth_found_mouse-300x167.png" alt="" title="bluetooth_found_mouse" width="300" height="167" class="aligncenter size-medium wp-image-851" /></p>
-<p>Problem solved.  Leave a comment if it works or a similar problem but different solution worked for you.  If you can't click in the comment box, just scream really loud towards my email address.  :)</p>
+![](/uploads/2010/12/bluetooth_connected.png "bluetooth_connected")So you've replaced the batteries, restarted your mouse or whatever.  You have a bluetooth mouse that you need to reconnect or re-pair but you don't have a mouse to get to the bluetooth icon in the notification area or status bar location.
+
+Here what you do:
+
+1.  _Command Key + Shift + /_ - gets you into the help area in any menu
+2.  _Right arrow_ - gets you to the Apple menu
+3.  _Down arrow until System Preferences_
+4.  _Enter_ - opens System Preferences
+5.  _Type mouse_ - in the search box and hit enter will open the mouse pane
+6.  _Hit enter at the "no mouse found" screen_ - this will pair your mouse if it's powered on and trying to pair</p>
+
+![](/uploads/2010/12/bluetooth_found_mouse-300x167.png "bluetooth_found_mouse")
+
+Problem solved.  Leave a comment if it works or a similar problem but different solution worked for you.  If you can't click in the comment box, just scream really loud towards my email address.  :)

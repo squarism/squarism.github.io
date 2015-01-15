@@ -21,5 +21,6 @@ categories:
 tags: []
 comments: []
 ---
-<p>Started a side project on rails, many guides on how to upgrade a Mac.  Every OS has it's weirdness.  Ubuntu wants to control ruby and the gems.  OSX has an older version included.  Macports sometimes doesn't add the PATH.  It was all really muddy.</p>
-<p><a href="http://www.davesouth.org/stories/install-ruby-on-rails-using-macports">Then I found a page by Dave South</a>.  The article's post date is old but at the bottom you'll see he keeps it updated.  Thanks Dave!</p>
+Started a side project on rails, many guides on how to upgrade a Mac.  Every OS has it's weirdness.  Ubuntu wants to control ruby and the gems.  OSX has an older version included.  Macports sometimes doesn't add the PATH.  It was all really muddy.
+
+[Then I found a page by Dave South](http://www.davesouth.org/stories/install-ruby-on-rails-using-macports).  The article's post date is old but at the bottom you'll see he keeps it updated.  Thanks Dave!

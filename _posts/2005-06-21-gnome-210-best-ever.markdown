@@ -21,10 +21,12 @@ categories:
 tags: []
 comments: []
 ---
-<p><a href="http://pics.squarism.com/geek/Gnome_2_10"><img src="http://pics.squarism.com/albums/screenshots/Gnome_2_10.thumb.png"></a></p>
-<p>- they rearranged some of the main menu bar items,more logical now
+<!-- ![](http://pics.squarism.com/albums/screenshots/Gnome_2_10.thumb.png) -->
+
+- they rearranged some of the main menu bar items,more logical now
 - you can mount volumes over ssh, that is just crazy.  I was looking at thumbnails on my server at home through ssh.  Insanely useful, although I can't figure out how to text edit in read/write mode.
 - video player
 - ripper
-- many other little things</p>
-<p><a href="http://www.gnome.org/start/2.10/notes/rnwhatsnew.html">More details here</a>.</p>
+- many other little things
+
+[More details here](http://www.gnome.org/start/2.10/notes/rnwhatsnew.html).

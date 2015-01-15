@@ -79,11 +79,16 @@ comments:
   content: ! '[...] SQUARISM &Acirc;&raquo; Scroll Lock Button on OSX.        Be Sociable,
     Share!           [...]'
 ---
-<p>Here's an esoteric fix for something I wanted to do.  In a certain game, right click will move the camera.  For some reason, when hosting synergy on the Mac (as the server) and connecting a Windows client, the right clicking gets whacked.  It works fine the other way (don't ask me).</p>
-<p>So I want to hit scroll lock to lock the screen so that mouse-looking works.  Except there's no scroll lock button on a Mac keyboard!  Doh.  But I find a solution:</p>
-<p><code>
+Here's an esoteric fix for something I wanted to do.  In a certain game, right click will move the camera.  For some reason, when hosting synergy on the Mac (as the server) and connecting a Windows client, the right clicking gets whacked.  It works fine the other way (don't ask me).
+
+So I want to hit scroll lock to lock the screen so that mouse-looking works.  Except there's no scroll lock button on a Mac keyboard!  Doh.  But I find a solution:
+
+`
 keystroke(f13) = lockCursorToScreen(toggle)
-</code></p>
-<p>Found on <a href="http://www.mattcutts.com/blog/how-to-configure-synergy-in-six-steps/">mattcutts.com</a>, this is the option I need.  I use SynergyKM, which is a Mac-ified app to control synergy.  It doesn't use the conf file of synergy but instead uses a .plist property file.  So I edited it to look like this:</p>
-<p><a href="http://squarism.com/2008/03/12/scroll-lock-button-on-osx/synergy-scrolllock/"><img src="/uploads/2008/03/Synergy_Scrolllock-300x97.png" alt="Synergy Scrolllock" title="Synergy Scrolllock" width="300" height="97" class="alignnone size-medium wp-image-1295" /></a> </p>
-<p>And viola, roll over to the XP box from Mac, hit F13 and mouse look works in WoW (or probably any other drag-tracking app).</p>
+`
+
+Found on [mattcutts.com](http://www.mattcutts.com/blog/how-to-configure-synergy-in-six-steps/), this is the option I need.  I use SynergyKM, which is a Mac-ified app to control synergy.  It doesn't use the conf file of synergy but instead uses a .plist property file.  So I edited it to look like this:
+
+[![Synergy Scrolllock](/uploads/2008/03/Synergy_Scrolllock-300x97.png "Synergy Scrolllock")](http://squarism.com/2008/03/12/scroll-lock-button-on-osx/synergy-scrolllock/)
+
+And viola, roll over to the XP box from Mac, hit F13 and mouse look works in WoW (or probably any other drag-tracking app).

@@ -35,11 +35,14 @@ comments:
     require another ([\\W]+)\r\n                 # and the splitting of sentence into
     sentence,space\r\n                 # for more generic inter sentence space handling."
 ---
-<p>A question came up today about how to reverse a sentence.  Word by word, preserving periods etc.  I've done stuff like this before but I really saw an opportunity to solve this <em>contrived</em> quiz type question with <a href="http://en.wikipedia.org/wiki/Test-driven_development">TDD</a>.  It's perfect really.  Tedious string checking?  Screw it.  Let my test tell me when I'm done.</p>
-<p>Ok so I could have probably done this more comfortably in Java but it would have been more lines.  I banged this out in Ruby, including "learning" test cases (it's really easy) in about an hour.  At one point I realized how easy string manipulation is in Ruby for this and I literally said, "holy shit Ruby is amazing".  And then the edge cases started happening.  I was only handling periods and my algorithm fell over flat on three sentences because I was trying to do a string[start, end] when it's really string[start, length].  I fixed it with learning the String#slice syntax.</p>
-<p>Ok enough fanboi service.  There's two files.  One's the test and one's the class.  Run the test and not the class (ie: ruby tc_reverser.rb).</p>
+A question came up today about how to reverse a sentence.  Word by word, preserving periods etc.  I've done stuff like this before but I really saw an opportunity to solve this _contrived_ quiz type question with [TDD](http://en.wikipedia.org/wiki/Test-driven_development).  It's perfect really.  Tedious string checking?  Screw it.  Let my test tell me when I'm done.
 
-<p>tc_reverser.rb:</p>
+Ok so I could have probably done this more comfortably in Java but it would have been more lines.  I banged this out in Ruby, including "learning" test cases (it's really easy) in about an hour.  At one point I realized how easy string manipulation is in Ruby for this and I literally said, "holy shit Ruby is amazing".  And then the edge cases started happening.  I was only handling periods and my algorithm fell over flat on three sentences because I was trying to do a string[start, end] when it's really string[start, length].  I fixed it with learning the String#slice syntax.
+
+Ok enough fanboi service.  There's two files.  One's the test and one's the class.  Run the test and not the class (ie: ruby tc_reverser.rb).
+
+tc_reverser.rb:
+
 {% highlight ruby %}
 require 'test/unit'
 require 'reverser'
@@ -95,9 +98,9 @@ class TestReverser < Test::Unit::TestCase
 end
 {% endhighlight %}
 
+I have to apologize for the scrollbars in the above posted code.  I tried many different ways of escaping carriage returns for better formatting but it would have required a lot of changes to deal with the \n and so on in the tests.  I had something nicely formatted working but the tabs and spaces for alignment then screwed the test and broke the pretty formatting a different way.
 
-<p>I have to apologize for the scrollbars in the above posted code.  I tried many different ways of escaping carriage returns for better formatting but it would have required a lot of changes to deal with the \n and so on in the tests.  I had something nicely formatted working but the tabs and spaces for alignment then screwed the test and broke the pretty formatting a different way.</p>
-<p>reverser.rb:</p>
+reverser.rb:
 
 {% highlight ruby %}
 # A class that reverses sentences.
@@ -171,7 +174,7 @@ class Reverser
 end
 {% endhighlight %}
 
-<p>When you run the test case it looks like this:</p>
+When you run the test case it looks like this:
 
 <pre>
 Loaded suite ~/src/ruby/tc_reverser
@@ -191,14 +194,15 @@ TEST_REVERSER OK!
 .
 Finished in 0.003567 seconds.
 </pre>
-<code>
+`
   <font color="green">4 tests, 4 assertions, 0 failures, 0 errors</font>
-</code>
+`
 
+Marty McFly would be proud.  So, some limitations.  First, I don't handle elipsis (...) characters at all.  It splits on sentence delimiters which one is a period.  The eplisis would cause major weirdness.  I also don't handle recapitalizing the word "Dad" as you can see in the "test_everything" test.  This would require language parsing or a massive pick list.  I also don't handle slang or abbreviations.  For example, "You told 'em?"  would turn into "'em told you?" which might not be exactly right.
 
-<p>Marty McFly would be proud.  So, some limitations.  First, I don't handle elipsis (...) characters at all.  It splits on sentence delimiters which one is a period.  The eplisis would cause major weirdness.  I also don't handle recapitalizing the word "Dad" as you can see in the "test_everything" test.  This would require language parsing or a massive pick list.  I also don't handle slang or abbreviations.  For example, "You told 'em?"  would turn into "'em told you?" which might not be exactly right.</p>
-<p>There are many other edge cases that this thing would fall flat on.  My test case tests what functionality I wanted and nothing more.</p>
-<p>Ruby's String#slice was super handy on this as well as capitalize, reverse and even a regex split that I didn't use (amazing!).  You can see it here.  It would split text into an array really easily:</p>
+There are many other edge cases that this thing would fall flat on.  My test case tests what functionality I wanted and nothing more.
+
+Ruby's String#slice was super handy on this as well as capitalize, reverse and even a regex split that I didn't use (amazing!).  You can see it here.  It would split text into an array really easily:
 
 {% highlight ruby %}
 sentence_array = @text.split(/[\.\!\?]/)  # split with regular expression
@@ -210,4 +214,4 @@ puts sentence_array[2]
 return
 {% endhighlight %}
 
-<p>But then I'd lose the delimiter character (!?. etc) and would have to save it, search it or some other nonsense.  Still, really neat that you can split on a regex.</p>
+But then I'd lose the delimiter character (!?. etc) and would have to save it, search it or some other nonsense.  Still, really neat that you can split on a regex.

@@ -21,4 +21,4 @@ categories:
 tags: []
 comments: []
 ---
-<p>I removed the unwieldly wu-ftp stuff from the server today (wieldiness is proportional to my own knowledge) and replaced it with the ever promising <a href="http://www.proftpd.net/">ProFTP</a> server.  Of notability is its ability to avoid recursive DNS lookups which were slowing things down.  If I see an attack, I'll just do a whois.</p>
+I removed the unwieldly wu-ftp stuff from the server today (wieldiness is proportional to my own knowledge) and replaced it with the ever promising [ProFTP](http://www.proftpd.net/) server.  Of notability is its ability to avoid recursive DNS lookups which were slowing things down.  If I see an attack, I'll just do a whois.

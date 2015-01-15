@@ -51,9 +51,11 @@ categories:
 tags: []
 comments: []
 ---
-<p><img src="/uploads/2011/04/ruby_enum.png" alt="" title="ruby_enum" width="150" height="139" class="alignright size-full wp-image-1175" /></p>
-<p>Sometimes when I'm fumbling around in irb on an API I don't know, or with Active Record queries, I get an Enumerator object back when I don't want to.  So if I save this Enumerator as a variable, what the heck do I do with it?  And why do I get an Enumerator anyway?</p>
-<p>So what we'll do is play around with a hash of elements.  Elements have a name, color and what happens when you touch them attributes.  We'll iterate through them and print out the values as normal but we'll also store the Enumerator by itself and iterate through it later.</p>
+![](/uploads/2011/04/ruby_enum.png "ruby_enum")
+
+Sometimes when I'm fumbling around in irb on an API I don't know, or with Active Record queries, I get an Enumerator object back when I don't want to.  So if I save this Enumerator as a variable, what the heck do I do with it?  And why do I get an Enumerator anyway?
+
+So what we'll do is play around with a hash of elements.  Elements have a name, color and what happens when you touch them attributes.  We'll iterate through them and print out the values as normal but we'll also store the Enumerator by itself and iterate through it later.
 
 {% highlight ruby %}
 # enumerator test
@@ -99,21 +101,29 @@ puts "\nNice hash associating element to color: "
 puts h
 {% endhighlight %}
 
-<p><a id="more"></a><a id="more-1161"></a>
-Run this and you get:</p>
+<!-- more -->
+
+Run this and you get:
+
 <pre>What do you use a Ruby enumerator for?
 #<Enumerator:0x00000100859c28></p>
-<p>You don't get an enumerator if you pass a block in:
-{:name=>"wind", :color=>"white", :touch=>"I'm flying."}</p>
-<p>Delayed enum search:
-I'm dirty., I'm flying., I'm on fire!, I'm wet., Brr!</p>
-<p>Standard collect with no enumerator:
-brown,white,red,blue,blue</p>
-<p>Nice hash associating element to color:
+
+You don't get an enumerator if you pass a block in:
+{:name=>"wind", :color=>"white", :touch=>"I'm flying."}
+
+Delayed enum search:
+I'm dirty., I'm flying., I'm on fire!, I'm wet., Brr!
+
+Standard collect with no enumerator:
+brown,white,red,blue,blue
+
+Nice hash associating element to color:
 {"earth"=>"brown", "wind"=>"white", "fire"=>"red", "water"=>"blue", "ice"=>"blue"}
-</pre></p>
-<p>Very simple example but for me, this was confusing and helped me to understand that many things can return an Enumerator and many methods can work with an Enumerator.  But what we're doing here is just really seeing that the find method returns an Enumerator.  What if we want to do something more original?</p>
-<p>Let's create a class that mixes-in the Enumerable module.</p>
+</pre>
+
+Very simple example but for me, this was confusing and helped me to understand that many things can return an Enumerator and many methods can work with an Enumerator.  But what we're doing here is just really seeing that the find method returns an Enumerator.  What if we want to do something more original?
+
+Let's create a class that mixes-in the Enumerable module.
 
 {% highlight ruby %}
 class StagesOfLife
@@ -177,5 +187,6 @@ puts stages_of_life.collect {|s| s}.join(", ")
 # => As array: nothing, egg, baby, toddler, kid, teenager, adult, dead
 {% endhighlight %}
 
-<p>I've included the output in the comments above.  We define our stages of life and include a value 0-7 for each stage.  I used a value in the @stages hash as the sort key so we could implement a custom sort for the #max and #min methods.  Also notice that we have to sort our hash by value in #each because otherwise our hash would have to be defined in order (ie: nothing, egg, baby ...).</p>
-<p>So there you go, a very basic tour of Enumerable in Ruby.  If this is interesting also look at how to mixin and implement your own Comparable.</p>
+I've included the output in the comments above.  We define our stages of life and include a value 0-7 for each stage.  I used a value in the @stages hash as the sort key so we could implement a custom sort for the #max and #min methods.  Also notice that we have to sort our hash by value in #each because otherwise our hash would have to be defined in order (ie: nothing, egg, baby ...).
+
+So there you go, a very basic tour of Enumerable in Ruby.  If this is interesting also look at how to mixin and implement your own Comparable.

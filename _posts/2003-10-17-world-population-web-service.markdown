@@ -21,5 +21,6 @@ categories:
 tags: []
 comments: []
 ---
-<p>Found <a href="http://www.abundanttech.com/webservices/population/population.asmx/getWorldPopulation">this </a>and I'm sure it's old news to anyone who's used soap.</p>
-<p>It's from <a href="http://www.xmethods.net/">the xmethods website</a> which has a list of web services, some work, others don't.</p>
+Found [this ](http://www.abundanttech.com/webservices/population/population.asmx/getWorldPopulation)and I'm sure it's old news to anyone who's used soap.
+
+It's from [the xmethods website](http://www.xmethods.net/) which has a list of web services, some work, others don't.

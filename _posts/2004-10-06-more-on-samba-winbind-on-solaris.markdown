@@ -14,7 +14,7 @@ excerpt: ! '<p>
 
   Here''s how you can get the samba home directories to be created on the fly:
 
-  </p>
+
 
 '
 wordpress_id: 47
@@ -28,22 +28,23 @@ categories:
 tags: []
 comments: []
 ---
-<p>
 Here's how you can get the samba home directories to be created on the fly:
-</p>
-<a id="more"></a><a id="more-47"></a></p>
-<p>
+
+<!-- more -->
+
 http://keutel.de/pam_mkhomedir/
-Download from the <a href="http://keutel.de/pam_mkhomedir/pam_mkhomedir.solaris.tar.gz">first link</a> and copy the binary to /usr/lib/security. You might want to check to see if the binary is going to work with ldd pam_mkhomedir.so.1
-</p></p>
+Download from the [first link](http://keutel.de/pam_mkhomedir/pam_mkhomedir.solaris.tar.gz) and copy the binary to /usr/lib/security. You might want to check to see if the binary is going to work with ldd pam_mkhomedir.so.1
+
+
 <pre>
 #sshd auth required  pam_unix_account.so.1 try_first_pass
 #sshd account sufficient /usr/lib/security/pam_winbind.so debug
 #sshd session sufficient /usr/lib/security/pam_winbind.so debug
-</pre></p>
-<p>
+</pre>
+
 Then edit /etc/pam.conf (make a backup) and edit the section
-</p></p>
+
+
 <pre>
 #
 # Default definition for Session management
@@ -52,13 +53,13 @@ Then edit /etc/pam.conf (make a backup) and edit the section
 other session required pam_mkhomedir.so.1 skel=/etc/skel umask=0022
 other session required pam_unix_session.so.1
 other session sufficient /usr/lib/security/pam_winbind.so try_first_pass debug
-</pre></p>
-<p>
-I got a hint on this (I take no credit) from <a href="http://groups.google.com/groups?hl=en&#38;lr=&#38;selm=1lyeh-KT-1%40gated-at.bofh.it&#38;rnum=4">this newsgroup posting</a>. I'm glad, 'cause I know <strong>jack</strong> about messing with PAM.
-</p>
-<p>
+</pre>
+
+I got a hint on this (I take no credit) from [this newsgroup posting](http://groups.google.com/groups?hl=en&#38;lr=&#38;selm=1lyeh-KT-1%40gated-at.bofh.it&#38;rnum=4). I'm glad, 'cause I know **jack** about messing with PAM.
+
 Here's a working pam.conf file for Solaris that works with winbind. Very hard information to find on the Internet. Order seriously matters in this file.
-</p></p>
+
+
 <pre>
 #
 #ident  "@(#)pam.conf   1.20    02/01/23 SMI"
@@ -156,4 +157,4 @@ other   password required       pam_authtok_store.so.1
 #other          account optional        pam_krb5.so.1
 #other          session optional        pam_krb5.so.1
 #other          password optional       pam_krb5.so.1 try_first_pass
-</pre></p>
+</pre>

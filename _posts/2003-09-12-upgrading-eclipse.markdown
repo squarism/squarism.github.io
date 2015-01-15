@@ -21,6 +21,4 @@ categories:
 tags: []
 comments: []
 ---
-<p>
 Nothing notable, just trying to get Eclipse3.0M3 to work with Lomboz, new version of JBoss and importing all my old projects.  Lomboz was really flaky in previous versions and I'm hoping for some reliability improvements.
-</p></p>

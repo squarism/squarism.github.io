@@ -21,16 +21,18 @@ categories:
 tags: []
 comments: []
 ---
-<p><strong>Update: This is incredibly not accurate anymore.  Posterity</strong></p>
-<p>
-I've deployed the 1st version of the Acronym Challenge webapp to the server at <a href="http://www.fuzzylemon.net:8080/acronym/controller">this location</a>.
-</p></p>
-<p>
+**Update: This is incredibly not accurate anymore.  Posterity**
+
+I've deployed the 1st version of the Acronym Challenge webapp to the server at [this location](http://www.fuzzylemon.net:8080/acronym/controller).
+
+
+
 The controller passes off the request to an Action class.  The URL is preserved because it forwards the whole request object along to the action object.  See the code below:
-</p></p>
+
+
 <pre>
 action.perform(this, req, res);
-</pre></p>
-<p>
+</pre>
+
 The action object above is an interface.  Action objects have to have this perform method in it.  'this' refers to the servlet itself so the hand off is transparent (by design).  The user is handed off to an Action servlet based on the URL (hover over the plus and minus signs to see the href) and then forwarded back to the controller in one motion.
-</p></p>
+

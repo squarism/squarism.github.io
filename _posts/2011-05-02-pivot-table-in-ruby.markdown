@@ -34,8 +34,9 @@ categories:
 tags: []
 comments: []
 ---
-<p>Sometimes you need to transpose data from columns to rows or vice-versa.  In the SQL world, this is called a pivot table.  Usually this happens when you're coming from a key-value store and want to turn it into something more structured but it can also happen in poorly designed or legacy databases.  The idea is pretty simple, pivot the data from rows into columns.  For example, here's a listing of CDs:</p>
-<pre>
+Sometimes you need to transpose data from columns to rows or vice-versa.  In the SQL world, this is called a pivot table.  Usually this happens when you're coming from a key-value store and want to turn it into something more structured but it can also happen in poorly designed or legacy databases.  The idea is pretty simple, pivot the data from rows into columns.  For example, here's a listing of CDs:
+
+`
 -------------------------------------
 DJ Shadow       |  electronica
 DJ Shadow       |  1996
@@ -44,18 +45,24 @@ The Avalanches  |  Since I Left You
 The Avalanches  |  2000
 The Avalanches  |  electronica
 -------------------------------------
-</pre></p>
-<p>There are really only two CDs here but the data is presented to us as artist:attribute pairs.  We want the data to look like this:</p>
-<pre>
+`
+
+There are really only two CDs here but the data is presented to us as artist:attribute pairs.  We want the data to look like this:
+
+`
 Artist         | Genre       | Album            | Year
 ------------------------------------------------------
 DJ Shadow      | electronica | Entroducing      | 1996
 The Avalanches | electronica | Since I Left You | 2000
-</pre>
-<a id="more"></a><a id="more-1238"></a></p>
-<h3>First Example</h3><p>
-First of all, the starting data (the first key value pair listing) doesn't have the data labeled so this creates a problem.  We have to assume that the key is the artist and label that accordingly.  After that, the attributes are not labeled so we're not going to be able to create the column headings without more information.  So I'll show two examples here, one with unlabeled data and the second with proper labeling.</p>
-<p>The first example makes an assumption that the order of the attributes is significant.  IE: album, year, genre.  We have to make this assumption for the pretty table printing.  If this is not the case, the logical impact is minimal and you can ignore this.</p>
+`
+
+<!-- more -->
+
+### First Example
+
+First of all, the starting data (the first key value pair listing) doesn't have the data labeled so this creates a problem.  We have to assume that the key is the artist and label that accordingly.  After that, the attributes are not labeled so we're not going to be able to create the column headings without more information.  So I'll show two examples here, one with unlabeled data and the second with proper labeling.
+
+The first example makes an assumption that the order of the attributes is significant.  IE: album, year, genre.  We have to make this assumption for the pretty table printing.  If this is not the case, the logical impact is minimal and you can ignore this.
 
 {% highlight ruby %}
 # FIRST EXAMPLE where data is associated by unique strings but
@@ -134,17 +141,22 @@ end
 puts ""
 {% endhighlight %}
 
-<p>This code will output:</p>
-<pre>
+This code will output:
+
+`
 Pivoted Unlabeled:
 --------------------------------------------------------
 DJ Shadow      | Endtroducing     | 1996 | electronica |
 The Avalanches | Since I Left You | 2000 | electronica |
-</pre></p>
-<p>Nice bit of pretty printing there.  Completely unnecessary but gives a nice feel of a pivot table even if we are not working with a database or activerecord.</p>
-<h3>Second Example</h3><p>
-The second example of pivoting data involves a data structured that is related by a primary key and each subelement has a field with a name.  This could be a 2D data structure from a database or anything that is highly structured and organized.  The ID field in this case is barely significant.  It just acts as a label, in this example it is the ID of the album as pulled from freedb.org.</p>
-<p>This code takes a different approach of creating a hash of hashes to pivot the data.  After that, it creates a 2D array for tablular printing.  The maximum column size is computed for pretty printing.</p>
+`
+
+Nice bit of pretty printing there.  Completely unnecessary but gives a nice feel of a pivot table even if we are not working with a database or activerecord.
+
+### Second Example
+
+The second example of pivoting data involves a data structured that is related by a primary key and each subelement has a field with a name.  This could be a 2D data structure from a database or anything that is highly structured and organized.  The ID field in this case is barely significant.  It just acts as a label, in this example it is the ID of the album as pulled from freedb.org.
+
+This code takes a different approach of creating a hash of hashes to pivot the data.  After that, it creates a 2D array for tablular printing.  The maximum column size is computed for pretty printing.
 
 {% highlight ruby %}
 # SECOND EXAMPLE where data is labeled.  This is easier / cleaner.
@@ -234,12 +246,15 @@ end
 puts ""
 {% endhighlight %}
 
-<p>This code will produce this text:</p>
-<pre>Pivoted Labeled:
+This code will produce this text:
+
+`Pivoted Labeled:
 -------------------------------------------------------------------
 ID       | ARTIST         | GENRE       | YEAR | ALBUM            |
 a70eb30d | DJ Shadow      | electronica | 1996 | Endtroducing     |
 090e6012 | The Avalanches | electronica | 2000 | Since I Left You |
-</pre></p>
-<h3>Conclusion</h3><p>
-Both examples are very procedural.  There might be opportunities to make this code more OO or even functional by breaking up common tasks.  However, the problem I ran into was of the structure itself.  I don't see a generic way of creating code reuse except for creating methods that can handle a "hash of hashes" or other pre-defined types.  I wanted to post a copy and paste template that would help anyone out there trying to pivot data (or even find this name for a problem like this) but unfortunately the solutions are tightly bound to the data structure you are starting out with.  In the case of database rows, example #1 will probably work for you with minimal changes.</p>
+`
+
+### Conclusion
+
+Both examples are very procedural.  There might be opportunities to make this code more OO or even functional by breaking up common tasks.  However, the problem I ran into was of the structure itself.  I don't see a generic way of creating code reuse except for creating methods that can handle a "hash of hashes" or other pre-defined types.  I wanted to post a copy and paste template that would help anyone out there trying to pivot data (or even find this name for a problem like this) but unfortunately the solutions are tightly bound to the data structure you are starting out with.  In the case of database rows, example #1 will probably work for you with minimal changes.

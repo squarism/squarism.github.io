@@ -21,5 +21,6 @@ categories:
 tags: []
 comments: []
 ---
-<p>On a slashdot thread I was discussing whether I should roll my own data structure or try to use one of the many, many Sun data structures.</p>
-<p>Someone recommended this <a href="http://he-cda.wiley.com/WileyCDA/HigherEdTitle/productCd-0471469831.html">book</a>.</p>
+On a slashdot thread I was discussing whether I should roll my own data structure or try to use one of the many, many Sun data structures.
+
+Someone recommended this [book](http://he-cda.wiley.com/WileyCDA/HigherEdTitle/productCd-0471469831.html).

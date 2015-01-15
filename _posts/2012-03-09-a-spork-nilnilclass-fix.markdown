@@ -52,16 +52,19 @@ comments:
   content: Thanks a lot man!  I had the exact same problem coming from an ubuntu edited
     version of my gemfile to working on a mac.
 ---
-<p><img src="/uploads/2012/03/wtf_is_going_on.png" alt="" title="wtf_is_going_on" width="272" height="31" class="alignright size-full wp-image-1572" />
-This might not be your issue.  I had a really weird problem that was ungoogleable so I thought I'd post it.</p>
-<p>With a combination of spork, guard and rspec, none of my testing stuff was working.  The spork prefork block was throwing this error.
-<code>
+![](/uploads/2012/03/wtf_is_going_on.png "wtf_is_going_on")
+This might not be your issue.  I had a really weird problem that was ungoogleable so I thought I'd post it.
+
+With a combination of spork, guard and rspec, none of my testing stuff was working.  The spork prefork block was throwing this error.
+`
 Using RSpec
 Preloading Rails environment
 undefined method `gsub' for nil:NilClass (NoMethodError)
-</code></p>
-<p>The solution was to comment all my test gems one at a time.  And then I realized that my Ubuntu edited version of my Gemfile was conflicting with my Mac edited version of this same file.</p>
-<p>So I made my Gemfile a little smarter.</p>
+`
+
+The solution was to comment all my test gems one at a time.  And then I realized that my Ubuntu edited version of my Gemfile was conflicting with my Mac edited version of this same file.
+
+So I made my Gemfile a little smarter.
 
 {% highlight ruby %}
 group :test do
@@ -77,4 +80,4 @@ group :test do
 end
 {% endhighlight %}
 
-<p>Then things started to work again.  With any weird bugs in Rails, try commenting out gems one at a time.</p>
+Then things started to work again.  With any weird bugs in Rails, try commenting out gems one at a time.

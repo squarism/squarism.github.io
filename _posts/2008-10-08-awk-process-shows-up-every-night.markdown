@@ -21,27 +21,36 @@ categories:
 tags: []
 comments: []
 ---
-<p>We had a weird problem at work towards the end of a java development / identity management project turn up.  The symptom was every night, an awk process would show up with some weird program arguments in the process table.</p>
-<p>It was similar to this:
-<code>ps auxww|grep awk
+We had a weird problem at work towards the end of a java development / identity management project turn up.  The symptom was every night, an awk process would show up with some weird program arguments in the process table.
+
+It was similar to this:
+`ps auxww|grep awk
  0 13076 12539 16 0 2456 264 pipe_w S ? 0:00 awk -v progname=/etc/cron.daily/logrotate progname {????? print progname ":\n"????? progname="";???? }???? { print; }
-</code></p>
-<p>Of course, it wouldn't happen when logrotate would be forced to run, it would simply happen at night only.  So we had to wait a day, try something and wait again.  So after many tests and troubleshooting we figured out that it was related to file permissions.  This was a surprise.  Why would file permissions cause something to hang forever like this?  Permissions usually cause black/white problems like "cannot open file" or "horrific death exception".</p>
-<p>I figured out why this happens and satisfied my inquisitiveness so that I could return to sanity.  It has to do with <a href="http://examples.oreilly.com/upt3/split/run-parts">run-parts</a>.  It has logic in it that detects executable files and runs awk.  You can see the "awk -v progname" string inside the if() statement eight lines from the bottom.</p>
-<pre>
-#!/bin/bash</p>
-<p># run-parts - concept taken from Debian</p>
-<p># keep going when something fails
-set +e</p>
-<p>if [ $# -lt 1 ]; then
+`
+
+Of course, it wouldn't happen when logrotate would be forced to run, it would simply happen at night only.  So we had to wait a day, try something and wait again.  So after many tests and troubleshooting we figured out that it was related to file permissions.  This was a surprise.  Why would file permissions cause something to hang forever like this?  Permissions usually cause black/white problems like "cannot open file" or "horrific death exception".
+
+I figured out why this happens and satisfied my inquisitiveness so that I could return to sanity.  It has to do with [run-parts](http://examples.oreilly.com/upt3/split/run-parts).  It has logic in it that detects executable files and runs awk.  You can see the "awk -v progname" string inside the if() statement eight lines from the bottom.
+
+{% highlight bash %}
+#!/bin/bash
+
+# run-parts - concept taken from Debian
+
+# keep going when something fails
+set +e
+
+if [ $# -lt 1 ]; then
         echo "Usage: run-parts <dir>"
         exit 1
-fi</p>
-<p>if [ ! -d $1 ]; then
+fi
+
+if [ ! -d $1 ]; then
         echo "Not a directory: $1"
         exit 1
-fi</p>
-<p># Ignore *~ and *, scripts
+fi
+
+# Ignore *~ and *, scripts
 for i in $1/*[^~,] ; do
         [ -d $i ] && continue
         # Don't run *.{rpmsave,rpmorig,rpmnew,swp} scripts
@@ -49,8 +58,9 @@ for i in $1/*[^~,] ; do
         [ "${i%.rpmorig}" != "${i}" ] && continue
         [ "${i%.rpmnew}" != "${i}" ] && continue
         [ "${i%.swp}" != "${i}" ] && continue
-        [ "${i%,v}" != "${i}" ] && continue</p>
-<p>        if [ -x $i ]; then
+        [ "${i%,v}" != "${i}" ] && continue
+
+        if [ -x $i ]; then
                 $i 2>&1 | awk -v "progname=$i" \
                               'progname {
                                    print progname ":\n"
@@ -58,7 +68,9 @@ for i in $1/*[^~,] ; do
                                }
                                { print; }'
         fi
-done</p>
-<p>exit 0
-</pre></p>
-<p>...Mystery solved.</p>
+done
+
+exit 0
+{% endhighlight %}
+
+...Mystery solved.

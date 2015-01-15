@@ -21,27 +21,30 @@ categories:
 tags: []
 comments: []
 ---
-<p>Following this tutorial over at <a href="http://www.mongovue.com/2010/11/03/yet-another-mongodb-map-reduce-tutorial/">mongovue</a> about mapreduce in mongodb.  They have you export data from MySQL to MongoDB using their .NET tool.  I'm on a Mac so here's what I did instead.</p>
-<p>If you followed the instructions, you have the .txt files (which are CSVs) in your MySQL data directory (weird but ok).  Importing CSV is really easy in MongoDB.  Just make sure you are in the directory with the .txt files.</p>
-<p><code>
+Following this tutorial over at [mongovue](http://www.mongovue.com/2010/11/03/yet-another-mongodb-map-reduce-tutorial/) about mapreduce in mongodb.  They have you export data from MySQL to MongoDB using their .NET tool.  I'm on a Mac so here's what I did instead.
+
+If you followed the instructions, you have the .txt files (which are CSVs) in your MySQL data directory (weird but ok).  Importing CSV is really easy in MongoDB.  Just make sure you are in the directory with the .txt files.
+
+`
 mongoimport -d geobytes -c cities --type csv --file cities.txt --headerline
 mongoimport -d geobytes -c regions --type csv --file regions.txt --headerline
 mongoimport -d geobytes -c dmas --type csv --file dmas.txt --headerline
 mongoimport -d geobytes -c countries --type csv --file countries.txt --headerline
-</code></p>
-<p>Now you can continue with the tutorial.
-<code>
+`
+
+Now you can continue with the tutorial.
+`
 > db.cities.findOne();
 {
-	"_id" : ObjectId("4fa2a734779f0ea93dd13df6"),
-	"CityId" : 42231,
-	"CountryID" : 1,
-	"RegionID" : 833,
-	"City" : "Herat",
-	"Latitude" : 34.333,
-	"Longitude" : 62.2,
-	"TimeZone" : "+04:30",
-	"DmaId" : 0,
-	"Code" : "HERA"
+  "_id" : ObjectId("4fa2a734779f0ea93dd13df6"),
+  "CityId" : 42231,
+  "CountryID" : 1,
+  "RegionID" : 833,
+  "City" : "Herat",
+  "Latitude" : 34.333,
+  "Longitude" : 62.2,
+  "TimeZone" : "+04:30",
+  "DmaId" : 0,
+  "Code" : "HERA"
 }
-</code></p>
+`

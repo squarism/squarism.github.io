@@ -42,17 +42,22 @@ comments:
     only work in certain situations or when vi thinks you are working in a specific
     programming language?
 ---
-<p>When you paste a block of text into a Putty window, many times you'll get an increasing number of leading tabs.  Not so if you use gnome-terminal (IIRC).  Quite annoying in a Windows world.</p>
-<p>Strip tabs and spaces out from current position to the end of the file with:
-<code>
+When you paste a block of text into a Putty window, many times you'll get an increasing number of leading tabs.  Not so if you use gnome-terminal (IIRC).  Quite annoying in a Windows world.
+
+Strip tabs and spaces out from current position to the end of the file with:
+`
 :.,$s/^[<tab>]*\s*//
-</code></p>
-<p>Or perhaps you only want a small block in the middle of the file changed.  First, turn on line numbers.</p>
-<p><code>
+`
+
+Or perhaps you only want a small block in the middle of the file changed.  First, turn on line numbers.
+
+`
 :set number
-</code></p>
-<p>Then search and replace on specific line numbers (in this example lines 15 through 41).
-<code>
+`
+
+Then search and replace on specific line numbers (in this example lines 15 through 41).
+`
 :15,41s/^[<tab>]*\s*//
-</code></p>
-<p>Then use Ctrl-V (down arrow or h,j,k,l keys to select block) and hit ">" to re-indent.  Works much better than reformatting by hand.</p>
+`
+
+Then use Ctrl-V (down arrow or h,j,k,l keys to select block) and hit ">" to re-indent.  Works much better than reformatting by hand.

@@ -21,8 +21,9 @@ categories:
 tags: []
 comments: []
 ---
-<p>You want to use Perl to process things on the command line but you don't want to write/save a file.  You want to replace sed with something more clunky.  :)</p>
-<p><code>
+You want to use Perl to process things on the command line but you don't want to write/save a file.  You want to replace sed with something more clunky.  :)
+
+`
 [user@server tmp]$ ls / | perl -e 'while (){ print $_; }'
 bin
 boot
@@ -59,4 +60,4 @@ var
 /tmp
 /usr
 /var
-</code></p>
+`
