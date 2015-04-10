@@ -120,10 +120,9 @@ Unapologetic isn't alarming in that I deserve and apology.  It's alarming becaus
 
 There's no black and white.  I'm probably anti-DC right now because I'm trying to move.  As painful as it is to admit, I've spent a lot of time here and _haven't died from emo_ so it can't be that bad.
 
-- I met the love of my life here.
 - I sat on Bush's desk and set up Cheney's Wife's computer.  That was nuts.  My personal politics aside, it was cool to help people that were going to the White House.
 - I got to travel and see the country including Alaska which was awesome.
-- I helped some people catch some child molesters (may they burn in hell).  There's a lot of work in DC that isn't about catching terrorists and other ethereal goals.
+- Social Justice.  There's a lot of work in DC that isn't about catching terrorism and other infinite goals.
 - Once, someone asked me if I wanted to work on a quantum computer project.  They were serious.
 - I've met some people that worked on The Internet.  Like, the actual Internet.  Everyday people have had historic roles.  A lot of them are humble.  I'm not sure the valley does that all the time.  Who knows.
 - Was able to guide some (not all) projects away from rocks.  If my goal was to influence from within, I did.
@@ -161,7 +160,7 @@ There's no black and white.  I'm probably anti-DC right now because I'm trying t
 
 ### Traffic
 
-I would swear very offensively here but I'm trying to cut back on my bad language.  I can't describe how bad the traffic is.  Above is a picture of what you can expect on a Saturday (or maybe not, who knows!).  My wife and I exclaim in horror at what we find when we go out.  "Traffic on a Sunday.  Wow."  The rush hour is insane.  You will plan around the traffic.  You will not take jobs because of the commute.  You will find people who hate downtown.  You will find recruiters who ask you where you live FIRST because they know you will never take a job where your commute is one hour if you are any good.  And some  people would kill for a 1 hour commute!  I know people that commute from Leesburg downtown and it's like 2 hours each  way for them every day.  What.  How can people even.
+Peoples of the worlds, I can't describe how bad the traffic is.  Above is a picture of what you can expect on a Saturday (or maybe not, who knows!).  My wife and I exclaim in horror at what we find when we go out.  "Traffic on a Sunday.  Wow."  The rush hour is insane.  You will plan around the traffic.  You will not take jobs because of the commute.  You will find people who hate downtown.  You will find recruiters who ask you where you live FIRST because they know you will never take a job where your commute is one hour if you are any good.  And some  people would kill for a 1 hour commute!  I know people that commute from Leesburg downtown and it's like 2 hours each  way for them every day.  What.  How can people even.
 
 ### Weird Cobweb Jobs
 
@@ -169,7 +168,7 @@ Infinite [Sharepoint Administrator](http://www.washingtonpost.com/jobs/JobSearch
 
 ### Sprawl
 
-The Metro ride out to suburbia is pretty awful.  You probably can't afford to live downtown or close in.  "Normal" houses cost $600-700k (there are places so much more) in the suburbs.  It's insanity.
+The Metro ride out to suburbia is pretty awful.  You probably can't afford to live downtown or close in.  "Normal" houses cost $600-700k (there are places that are so much more) in the suburbs.  It's insanity.
 
 You can spend one million dollars on a house anywhere.  I think what is unique about DC is the average cost and wealth is very high compared to the rest of the country.
 
