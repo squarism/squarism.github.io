@@ -82,7 +82,9 @@ $ cd /opt/docker_data
 $ wget https://raw.githubusercontent.com/docker/distribution/master/cmd/registry/config.yml
 $ mv config.yml registry.yml
 
-$ docker run -it --rm -e STORAGE_PATH=/registry -v /opt/docker_data:/data -v /opt/docker_data/registry:/registry registry:2.0 /data/registry.yml
+$ docker run -d -p 5000:5000 -e STORAGE_PATH=/registry -v \
+  /opt/docker_data:/data -v /opt/docker_data/registry:/registry \
+  --restart=always --name docker_registry registry:2.0 /data/registry.yml
 
 # set it to autostart, bob's your uncle
 # see below for usage with boot2docker
@@ -161,3 +163,4 @@ The docker image is the best way to run the registry but it requires a tiny bit 
 * Authentication / reverse proxy / webgate
 
 Regardless, happy to see a golang version of the registry.
+
