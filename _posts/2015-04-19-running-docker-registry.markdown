@@ -99,7 +99,7 @@ Once you are running a private registry, it's up to you to generate an SSL cert.
 
     FATA[0000] Error response from daemon: v1 ping attempt failed with error: Get https://hostname:5000/v1/_ping: tls: oversized record received with length 20527. If this private registry supports only HTTP or HTTPS with an unknown CA certificate, please add `--insecure-registry hostname:5000` to the daemon's arguments. In the case of HTTPS, if you have access to the registry's CA certificate, no need for the flag; simply place the CA certificate at /etc/docker/certs.d/hostname:5000/ca.crt
 
-This is like your browser warning message on a unknown self-signed cert.  But how do we add an exception?  The official [boot2docker docs](https://github.com/boot2docker/boot2docker) have an answer but I have an addition.  Add the port number to the hostname.  If you server is called `bleep` then add `bleep:5000` to the boot2docker image file at `/var/lib/boot2docker/profile`
+This is like your browser warning message on a unknown self-signed cert.  But how do we add an exception?  The official [boot2docker docs](https://github.com/boot2docker/boot2docker) have an answer but I have an addition.  Add the port number to the hostname.  If your server is called `bleep` then add `bleep:5000` to the boot2docker image file at `/var/lib/boot2docker/profile`
 
 {% highlight bash %}
 # on your mac
@@ -131,7 +131,7 @@ $ curl -XGET http://private-host:5000/v2/busybox/manifests/latest
 # GET included for effect only  :)
 {% endhighlight %}
 
-The API doc says that DELETE should work. So I just substitute above and get:
+The API doc says that DELETE should work. So I just substitute http verbs above and get an unexpected error:
 
 {% highlight bash %}
 $ curl -XDELETE http://private-host:5000/v2/busybox/manifests/latest
@@ -151,7 +151,7 @@ I ran into a weird issue while testing Distribution on ubuntu.
 
 My disk has plenty of space.  `docker info` shows it using aufs which I believe doesn't have the same disk space limits that devicemapper (like CentOS) has.  By that, I mean the docker host + kernel combination.  I'm actually not sure of where that interaction lies.  I just know that `docker info` on different kernels show different output.
 
-So how do I start over?  I have my docker data in a docker directory.  For this case, when all your data is safe and secure then you can just blow away everything and start over.  For me, this was the fix.  I had some package garbage (docker.io and lxc-docker packages installed).  So I `apt-get remove --purge`-d everything and installed docker 1.6 through apt-get.  That fixed this weird problem and kept my containers/data in tact.
+So how do I start over?  I have my docker data in a docker directory.  For this case, when all your data is safe and secure then you can just blow away everything and start over.  For me, this was the fix.  I had some package garbage (docker.io and lxc-docker packages installed).  So I `apt-get remove --purge`-d everything and installed docker 1.6 through apt-get.  That fixed this croup problem and kept my containers/data in tact.  I feel like this was an edge case.
 
 ## Conclusion
 
