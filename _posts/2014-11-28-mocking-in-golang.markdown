@@ -75,7 +75,7 @@ func (m *MockGateway) Charge() {
 }
 
 func TestCharging(t *testing.T) {
-    m := MockGateway{}
+    m := &MockGateway{}
     ChargeCustomer(m)
 }
 {% endhighlight %}
