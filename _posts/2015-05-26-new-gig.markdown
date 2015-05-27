@@ -1,0 +1,119 @@
+---
+layout: post
+status: published
+published: true
+title: New Gigs, New Digs
+---
+Started a new gig about three weeks ago.  Sad to leave the old team and
+friends.  It was awesome and I grew in a lot of ways.  But this new
+place is probably what I was looking for.
+
+It's way too early to call or judge or even sum up because it takes me
+about _three months to settle into any new job and place_.  You might
+think that's ridiculous but I've unsciencely tracked this and it holds
+up.  Slow burn man.  It's three months.
+
+The new place is [Goldstar](goldstar.com).  We sell discount tickets
+fill events and have amazing customer service in and around this domain.
+From the tech side, the app is Rails and mobile with a set of *amazing*
+devs and ops peeps.  We have expanded the tech team very recently and
+I'm one of the new recruits.
+
+Learning a codebase is rough.  Building a codebase and learning along
+the way is much more natural and comes with an advantage that needs to
+be cared for and not abused.  _"Can you not code?"_  This isn't
+happening at the new place.  I'm more amplifying what Katrina Owen said
+on Ruby Rogues about [a book](http://www.amazon.com/Vehicles-Experiments-Psychology-Valentino-Braitenberg/dp/0262521121)
+that explains _downhill synthesis, uphill analysis_.  It's way easier to
+understand a system when you've built it.  Not even because the code is
+fresh in your mind.  But because you hold the structure and general
+layout and design, connected by memories and breadcrumbs.  When starting
+from the outside, it's code splunking.  Even if there are tests.  Most
+of the time, I'll break the test and see what happens.  And then fix it.
+This simulates the synthesis part!  Take it apart and put it back
+together for the *put it back together part*.  This didn't really click
+until Katrina enlightened me.  I thanked her on Twitter.  She was happy.
+Happy time.
+
+So let's talk about something pretty serious.  This perceived skill gap.
+It wasn't as bad as I thought it would be.  I'm hanging with smart
+people but have a massive case of impostor syndrome.  But right before
+this job, I wondered if the small-shop world had accelerated way past
+the big-scary enterprise world.  And it has.  But it's not a huge deal!
+Do you know why?  Because C, Unix, TCP/IP, Sockets, CAP Theorem, I/O
+speeds, SOLID, ACID and all the other
+non-science-laws-this-is-the-best-we-can-do-guys stuff of computer
+science is forever.  It's the bedrock.  It's what's really happening.
+And once you know or even have a previous story/tale about these things
+then learning today's Hipsterware™ is no big deal.
+
+What's Riak?  I don't know!  It's consistent and available?  Oh!  It
+must be really slow.  Yep!  Great!  Right there I can knock it out of a
+few use cases where Redis or Memcached would be put in there.  I could
+blather on about this.  It's really not healthy.  It's pretty arrogant
+actually.  Most of the work is not in the initial introduction and
+overview.  It's in the deep and long lived implementation where your
+cherished newlywed tech betrays you in your most dire moment of
+edge-case mortality.  There are so many things that I think are really
+great because I haven't seen them blow up in my face in prod.  There are
+lots of things that I used to think are great, which now I say "yeah
+..." unsurely because I've seen them blow up or not be a good fit.
+
+I still have many miles to walk.  Here some things that I'm predicting
+WITH MY MIND POWERS that I'll learn and or gain from this new gig.
+
+* vim - My vimfiles and dotfiles have been challenged.  Not even an
+  editor war.  An editor civil war.  Are leader keys evil?  Is nerdtree
+  evil?  Yes!?  What?!  I submit.  I yield!  I see the speed at which
+  you are navigating files.  I have thought about your strategy before
+  and not seen it in action.  Fine.  I will delete my `.vimrc` and use
+  yours.  I've done it before with
+  [janus](https://github.com/carlhuda/janus).  I can start over again.
+  Each time, I learn something new.  The goal now is to stay as close to
+  vanilla vim as possible.
+
+* Ruby - looking forward to pairing with lots of folks.  I've been
+hearing a lot of great discussion.  Lots of end-game topics.
+_"What is intention revealing?  What is this actually doing?  What is the
+difference between these two classes?  Let's measure how fast this runs
+if we try it this way."_
+
+* AWS - A bigger setup than I'm used to.  VPC I've done.  But not so
+  many objects.  Learning lots of integrations within AWS.  Pulling and
+  syncing to buckets and stuff.  I'm sure I'll be flexing the `fog` gem
+  at some point.
+
+* Instrumentation - It's a big deal.  There are many cloud services in
+  action.  Some are overlapping.  It's neat.  It's real.  Retros where
+  we look at code climate scores.  Custom dashboards.  I donated a
+  raspberry pi for the cause.  "Hook it up to the TV!  Give me real
+  insight.  Get it done.  Yay!"  Pretty sweet.
+
+* Automation and CM - Chef is being used in a really nice way.  It's
+  changing and evolving.  No sacred cows.  Custom tooling.  Chef server
+  is a bit slow, so move everything out.  Put state somewhere else.  We
+  need to beef up the custom bits of this.  We're also working on other
+  tools around containers.  There's no single tool really.  It's very
+  practical.  No sacred tools.  I'm very impressed with the ops folks.
+  It's kind of beautiful.
+
+* The Business - It's so easy to drown in tech.  I'm looking forward to
+  seeing all the pieces come together and watch something real happen.
+  Ernie Miller said it best:
+
+  > Humane Development, to me, means the acknowledgement that we are
+  > humans working with humans to develop software for the benefit of
+  > humans.
+
+  To me, this is where you see the user story get run not by your test
+  suite but by a real customer or person.  It's the best part for lots
+  of reasons.
+
+
+Everyone is really good.  That's the job.  The digs part is, our rental
+is coming to a close and we've bought a house.  The next time I post
+might be from a different location.  But not so far from where I'm at
+now.  We love Portland.  I miss friends/family but we're staying.
+
+I hope this town becomes a tech sanctuary for Bay Area and Seattle burnouts.
+
