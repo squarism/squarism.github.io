@@ -13,7 +13,7 @@ about _three months to settle into any new job and place_.  You might
 think that's ridiculous but I've unsciencely tracked this and it holds
 up.  Slow burn man.  It's three months.
 
-The new place is [Goldstar](goldstar.com).  We sell discount tickets
+The new place is [Goldstar](http://goldstar.com).  We sell discount tickets
 fill events and have amazing customer service in and around this domain.
 From the tech side, the app is Rails and mobile with a set of *amazing*
 devs and ops peeps.  We have expanded the tech team very recently and
