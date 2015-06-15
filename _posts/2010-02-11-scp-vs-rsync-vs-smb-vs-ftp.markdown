@@ -12,10 +12,7 @@ author_login: chris
 author_email: squarism@gmail.com
 wordpress_id: 327
 wordpress_url: http://squarism.com/?p=327
-date: !binary |-
-  MjAxMC0wMi0xMSAyMzo1NTowMCAtMDUwMA==
-date_gmt: !binary |-
-  MjAxMC0wMi0xMiAwNDo1NTowMCAtMDUwMA==
+date: 2010-02-12
 categories:
 - Blog
 tags: []
@@ -179,33 +176,11 @@ user  0m5.452s
 sys 0m2.032s`
 
 ### Conclusion
-<table width=75%>
-<th></th>
-<th>rsync</th>
-<th>SMB</th>
-<th>FTP</th>
-<th>SCP</th>
-<th>SCP arcfour</th>
-<tr>
 
-<td>time</td>
-<td>17.694</td>
-<td>32.649</td>
-<td>26.507</td>
-<td>24.303</td>
-<td>21.653</td>
-</tr>
-
-<tr>
-<td>MB/sec</td>
-<td>57.87</td>
-<td>31.36</td>
-<td>38.63</td>
-<td>42.13</td>
-<td>47.29</td>
-</tr>
-
-</table>
+|        | rsync  | SMB    | FTP    | SCP    | SCP arcfour |
+| -----  | -----  | ---    | ---    | ---    | ----------- |
+| time   | 17.694 | 32.649 | 26.507 | 24.303 | 21.653      |
+| MB/sec | 57.87  | 31.36  | 38.63  | 42.13  | 47.29       |
 
 So RSync is pretty quick and SMB is pretty slow.  @fearthepenguin was right.
 
