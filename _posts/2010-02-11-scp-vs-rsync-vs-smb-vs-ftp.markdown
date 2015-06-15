@@ -179,22 +179,23 @@ user  0m5.452s
 sys 0m2.032s`
 
 ### Conclusion
-</p>
 <table width=75%>
 <th></th>
 <th>rsync</th>
 <th>SMB</th>
 <th>FTP</th>
 <th>SCP</th>
-<th>SCP arcfour</th></p>
+<th>SCP arcfour</th>
 <tr>
+
 <td>time</td>
 <td>17.694</td>
 <td>32.649</td>
 <td>26.507</td>
 <td>24.303</td>
 <td>21.653</td>
-</tr></p>
+</tr>
+
 <tr>
 <td>MB/sec</td>
 <td>57.87</td>
@@ -202,8 +203,9 @@ sys 0m2.032s`
 <td>38.63</td>
 <td>42.13</td>
 <td>47.29</td>
-</tr></p>
+</tr>
 
 </table>
 
 So RSync is pretty quick and SMB is pretty slow.  @fearthepenguin was right.
+
