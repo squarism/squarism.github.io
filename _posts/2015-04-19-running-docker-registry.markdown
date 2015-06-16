@@ -138,7 +138,9 @@ $ curl -XDELETE http://private-host:5000/v2/busybox/manifests/latest
 {"errors":[{"code":"UNSUPPORTED","message":"The operation is unsupported."}]}
 {% endhighlight %}
 
-So I'm not sure what's up there.
+<del>So I'm not sure what's up there.</del>
+
+<strong>Update:</strong> this is being tracked at [this issue](https://github.com/docker/distribution/issues/461) and it seems that deletes (of some kind) will be released in version 2.1
 
 
 ## Sidenote
