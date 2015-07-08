@@ -4,7 +4,7 @@ status: published
 published: true
 title: Encoding in Ruby and Everywhere
 ---
-I gave a lightning talk as pdxruby recently and felt like it was just
+I gave a lightning talk at pdxruby recently and felt like it was just
 terri-bad.  I was trying to explain the gotchas but was doing live coding in
 pry and it wasn't enough time for me to figure out some nice succinct
 take-aways.  My bigger point was something like _"our industry seems to keep
