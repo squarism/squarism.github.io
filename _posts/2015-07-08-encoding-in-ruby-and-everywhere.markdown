@@ -104,7 +104,7 @@ All these things are the same bytes because we (sort of) got lucky on our
 history, where ASCII came from (A is for American) and kind of how computer
 keyboards and alphabets work.  Someone had a good counter argument to this
 statement at the meetup and I agree.  What I mean is, some of this is
-a bit [culturically sensitive](https://modelviewculture.com/pieces/i-can-text-you-a-pile-of-poo-but-i-cant-write-my-name)
+a bit [culturally sensitive](https://modelviewculture.com/pieces/i-can-text-you-a-pile-of-poo-but-i-cant-write-my-name)
 and complicated.
 
 What I really mean is:
@@ -198,7 +198,7 @@ Because ASCII fits inside the beginning of utf-8.
 {% endhighlight %}
 
 We could do this all day and not flip a bit.  It's just not modifying the byte
-sequnce and that's really what the data is.
+sequence and that's really what the data is.
 
 So that's the happy path with ASCII.  It just sort of luckily works
 because of history and other things that are complicated.  The more
