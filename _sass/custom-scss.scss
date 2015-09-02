@@ -41,7 +41,7 @@
 }
 
 .business_card .name_area {
-  height: 50%;
+  height: 28%;
   padding-bottom: 1em;
   text-align: center;
 }
@@ -52,10 +52,10 @@
 }
 
 .name_area .mug {
-  margin-left: 25%;
+  margin-left: 42%;
   margin-right: 50%;
-  width: 160px;
-  height: 160px;
+  width: 64px;
+  height: 64px;
   margin-top: 20px;
   margin-bottom: 5px;
   background: url('/images/mug.png');
@@ -67,9 +67,11 @@
   margin-left: 25%;
   margin-right: 50%;
   z-index: 3;
-  font-size: 24px;
+  font-size: 14px;
   font-weight: bold;
   text-align: center;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 2em;
 }
 
 .business_card ul {
@@ -123,7 +125,8 @@
   position: relative;
   font-size: 48px;
   float: right;
-  left: -20px;
+  left: -50px;
+  top: -28px;
   z-index: 1;
 }
 
