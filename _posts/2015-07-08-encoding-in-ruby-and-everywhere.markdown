@@ -120,11 +120,12 @@ So, world, I'm sorry (empathy not apology).
 ## What Encoding Is
 
 Take this string `"\x20"`.  It's a space character.  If you look at `man ascii`
-you'll see that 20 is " " in ASCII.  You might recognize this from `%20` in URLs.
-20 decimal is 20 in hex too.  The `\x` bit means hex.  It just comes out that 20 is 20 in hex.
-If I pick something higher in the codepage like `"\xC3"`, things are going to get weird.
-"\xC3" by itself isn't valid utf-8.  And that's fine.  Until I try to do something with it.
-If I print it, it's nothing.  Puts just gives me the normal newline.
+you'll see that 20 is " " in ASCII.  You might recognize this from `%20` in
+URLs.  20 decimal is 20 in hex too.  The `\x` bit means hex.  URL encoding is
+hex too so 20 is the same 20.  If I pick something higher in the codepage
+like `"\xC3"`, things are going to get weird.  "\xC3" by itself isn't valid
+utf-8.  And that's fine until I try to do something with it.  If I print it,
+it's nothing.  Puts just gives me the normal newline.
 
 {% highlight ruby %}
 puts "\xC3"
@@ -147,7 +148,7 @@ Encoding::InvalidByteSequenceError: "\xC3" followed by " " on UTF-8
 from (pry):108:in `encode'
 {% endhighlight %}
 
-And not that this can't be done.  If I use something that definitely fits in the ascii range, everything is fine.
+And not that this can't be done.  If I use something that definitely fits in the ascii range (low bytes), everything is fine by implicit coincidence.
 
 {% highlight text %}
 pry> "\x20".encode('us-ascii')
