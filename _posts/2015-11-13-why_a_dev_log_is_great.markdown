@@ -13,7 +13,7 @@ date: 2015-11-13
 I have this problem a lot at work.  I'm cranking on stuff, figuring things out
 day to day but if someone asks me what I've done, I have no clue.  Being put
 on the spot sucks.  When something sucks, it's a problem.  Put it on the
-tool sharpening list.
+[tool sharpening list](https://devchat.tv/ruby-rogues/129-rr-sharpening-tools-with-ben-orenstein).
 
 So what can we do?  It's pretty easy and I don't want to drone on about it.
 Just keep a *diary*.  But there are some specifics that I've worked out because
