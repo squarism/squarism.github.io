@@ -1,0 +1,265 @@
+Not expert - this is hard
+
+This talk probably won't explain this forever
+  Encoding problems will still happen.  We'll get to why in a second.
+
+What is Encoding anyway, why do we need it
+  Because there's no such thing as plain text.
+  There's an assumption of encoding just like language.
+  This talk is in English.  I didn't say that.
+  It doesn't seem weird if you speak English.
+  I would seem weird if this talk was in Chinese.
+
+History made us surprisable.  English / ASCII made us lazy.
+
+  In ruby, I can write a file like this:
+  File.open('/tmp/awesome.txt', 'w') {|file| file.puts "awesome" }
+
+  I can also specify the encoding.  By default it's utf-8:
+  File.open('/tmp/awesome.txt', 'w:utf-8') {|file| file.puts "awesome" }
+
+
+Humans want to work in characters.
+Computers want to work in bytes.  So this only happens when things are written.
+Written might not even mean to disk.  It might be written to a socket.
+
+Why can't we just write "fuzzy bunny" to disk?  Why do we even need
+encoding?  Well, there really isn't anything called plain text.
+There's a huge assumption when you say "why can't it just be 'fuzzy bunny'.
+
+So encoding is always required.
+  Why?  Why can't we just write a byte for a character?
+  Well, computers can't store letters.  They store bits.
+  Bits get turned into bytes.  So I'll skip any binary notation
+  but remember that 97 is 1100001
+
+  We could just have A be a number and B could be a number.
+
+  65 could be A
+  66 could be B
+  67 could be C
+
+But wait!  A is different than a.  So:
+
+  97 could be a
+  98 could be b
+
+Well, we did that already.
+  Nothing begat EBCDIC (punchcards).
+  EBCDIC begat ASCII.
+  ASCII begat IBM Code Pages / ANSI but obstensibly weren't really standards.
+
+You can see that 8bit is the same as binary.
+  Encoding.aliases["BINARY"]
+  => "ASCII-8BIT"
+
+You can get a list of encodings like this:
+  pry> ls Encoding
+  constants:
+  ANSI_X3_4_1968   CP869   IBM862   KOI8_U       US_ASCII
+  ASCII            CP874   IBM863   MacCentEuro  UTF8_DOCOMO
+
+  These encodings also have short names.
+  pry> Encoding::ISO8859_1.names
+  => ["ISO-8859-1", "ISO8859-1"]
+
+  Module names in Ruby cannot have - in the name so standard
+  encodings with - in the name are snake cased.
+    "asdf".force_encoding(Encoding::UTF_8)
+
+  The short names can be used in place of the constant names
+    "asdf".force_encoding("utf-8")
+
+  Upper and lower case doesn't matter.
+    "asdf".force_encoding("UTF-8")
+
+  Although you have to do something like this.
+    File.open("/tmp/hi.txt", "w:#{Encoding::UTF_8}") {|file| file.puts "hi" }
+
+  Which is less idiomatic than this:
+    File.open("/tmp/hi.txt", "w:UTF-8") {|file| file.puts "hi" }
+
+
+XXD is your friend
+  Why?  Well, what if we want to read a file that's in big-5 (chinese).
+  Our terminal is in utf-8 probably.  So we can't even display it using `cat`.
+  But, at its core, xxd is useful because it shows you bytes from files
+  and files won't lie to you despite locale and terminal settings.
+
+
+  We can write a space to a file
+  File.open("/tmp/space.txt", "w") {|file| file.puts " " }
+  /tmp > xxd space.txt
+  00000000: 200a
+
+  0a is the newline.
+  pry> File.open("/tmp/space.txt", "w") {|file| file.puts "\u0020" }
+  $ file space.txt
+  space.txt: very short file (no magic)
+
+  $ /tmp > xxd space.txt
+  00000000: 20
+
+  File.open("/tmp/space.txt", "w") {|file| file.print "\n\n\n" }
+  xxd space.txt
+  00000000: 0a0a 0a                                  ...
+
+  Wait!  Why do we have a space there!  If we look at a bigger file,
+  you'll see that xxd just breaks up bytes into character pairs.
+  This is much more useful when dealing with UTF-8 because most of the time
+  UTF-8 is two bytes (but not always because utf-8 is variable length).
+
+  001f3f70: 3a20 4174 7461 6368 696e 6720 4950 7636  : Attaching IPv6
+  001f3f80: 206f 6e20 6177 646c 300a 4d6f 6e20 4a61   on awdl0.Mon Ja
+  001f3f90: 6e20 2034 2031 303a 3237 3a33 322e 3032  n  4 10:27:32.02
+  001f3fa0: 3920 496e 666f 3a20 3c61 6972 706f 7274  9 Info: <airport
+  001f3fb0: 645b 3632 5d3e 2050 5249 4f52 4954 5920  d[62]> PRIORITY
+  001f3fc0: 4c4f 434b 2041 4444 4544 205b 636c 6965  LOCK ADDED [clie
+  001f3fd0: 6e74 3d61 6972 706f 7274 642c 2074 7970  nt=airportd, typ
+  001f3fe0: 653d 342c 2069 6e74 6572 6661 6365 3d65  e=4, interface=e
+  001f3ff0: 6e30 2c20 7072 696f 7269 7479 3d37 5d0a  n0, priority=7].
+
+
+  Remember, string are utf-8 by default, so the above is the same as this:
+  pry> File.open("/tmp/space.txt", "w:utf-8") {|file| file.print "\u0020" }
+  $ /tmp > xxd space.txt
+  00000000: 20
+
+  [71] pry(main)> " ".eql? "\u0020"
+  => true
+
+
+  pry> File.open("/tmp/space.txt", "w:iso-8859-1") {|file| file.print "\u0020" }
+  $ /tmp > xxd space.txt
+  00000000: 20
+
+  pry> File.open("/tmp/space.txt", "w:us-ascii") {|file| file.print "\u0020" }
+  $ /tmp > xxd space.txt
+  00000000: 20
+
+  But Ruby will actually transcode the string for us.  So we first of all are asking
+  it to transcode unicode bytes into ASCII in that last one.  So dropping down to \u0020
+  isn't really any more low level or anything.  What we really need is the codepoints
+  for ascii space.
+
+  Ruby literals come in these flavors:
+  \uNNNN Unicode codepoint U+NNNN
+  \xNN   Character with hexidecimal value NN
+  \nNN   Character with octal value NN
+
+  So now we can do this:
+  pry> File.open("/tmp/space.txt", "w:us-ascii") {|file| file.print "\x20" }
+  $ /tmp > xxd space.txt
+  00000000: 20
+
+  Great.  This is still the same but all this is going to come in handy
+  when we want to do something fancier.  First, let's print an "H" in ASCII.
+  We can type `man ascii` on mac (and linux) and see that 48 is "H".  We'll write
+  "Hello World" in a second.
+
+  pry> File.open("/tmp/hello.txt", "w:us-ascii") {|file| file.print "\x48\x65" }
+  /tmp > xxd hello.txt
+  00000000: 4865                                     He
+
+  And so we could continue with this until we got:
+  /tmp > xxd hello.txt
+  00000000: 4865 6c6c 6f20 576f 726c 64              Hello World
+
+  So now let's do something with all this.  We'll find a "russian backwards R"
+  https://en.wikipedia.org/wiki/KOI8-R
+  This same character is in UTF-8, but we're going to intentionally use KOI8-R,
+  an older encoding roughly equivalent to ASCII.
+  R is 209.  209 in hex is D1.
+  209.to_s(16)
+  => d1
+
+  Now what happens if we write this string without telling Ruby we're trying to write
+  KOI8?  It's going to try to transcode a hex code into UTF-8 but there's no path.
+  Even though the same character is representable in UTF-8, it doesn't mean this hex code is.
+
+  pry> File.open("/tmp/rus.txt", "w:koi8-r") {|file| file.print "\xD1" }
+  Encoding::InvalidByteSequenceError: incomplete "\xD1" on UTF-8
+
+  We need to tell ruby that these bytes aren't UTF-8.
+  File.open("/tmp/rus.txt", "w:koi8-r") {|file| file.print "\xD1".force_encoding("koi8-r") }
+
+  Then we need to open a terminal and set our encoding to KOI8-R and then do this:
+  File.open("/tmp/rus.txt", "w:koi8-r") {|file| file.print
+  And we'll get this:
+  ruskie.png
+
+  Ok, recap:
+  - strings have implicit encoding
+  - strings are bytes
+  - some bytes can't convert
+
+
+  More relevant.  Here is a pants API.
+
+  class PantsController < ApplicationController
+    skip_before_filter :verify_authenticity_token, :only => [:create]
+    respond_to :json
+
+    def index
+      respond_to do |format|
+        format.json { render json: Pant.all }
+      end
+    end
+
+    def create
+      render text: request.body.to_s.encoding
+      # => ASCII-8BIT
+    end
+
+  end
+
+
+  $ curl -X POST -H 'Content-Type:application/json' -d '{"title":"Nice Pants", "size":38}' http://localhost:3000/pants
+  ASCII-8BIT
+  You can even try this:
+  $ curl -X POST -H "Content-Type:application/json;charset=UTF-8" -H "Accept-Charset:UTF-8" -d '{"title":"Nice Pants", "size":38}' http://localhost:3000/pants
+
+  Why?  Why?  Why!
+  It's in the spec.  Rails is doing the right thing.  It's in the spec.  POST has no encoding (binary).
+
+  So forcing UTF-8 is fine.  We're just putting a line in the sand.  We don't accept
+  chinese (non utf-8 versions).  Remember, everything can fit in utf-8.  But KOI8-R and BIG5 or GBK doesn't.
+
+
+Data Corruption
+  Let’s set up the failure scenario.
+  wizard = "마법사"
+  wizard.bytes
+
+  File.open("/tmp/mysql-backup.sql", "w:UTF-8") {|file| file.puts wizard.force_encoding('iso-8859-1') }
+  import = File.open("/tmp/mysql-backup.sql", encoding:Encoding::ISO_8859_1).readlines.first
+  => "\xC3\xAB\xC2\xA7\xC2\x88\xC3\xAB\xC2\xB2\xC2\x95\xC3\xAC\xC2\x82\xC2\xAC\n"
+  import.force_encoding('utf-8')
+  # nope
+
+  # undo the wrong file read     # undo the file write     # undo the force in the file.puts block
+  import.force_encoding('utf-8').encode('iso-8859-1').force_encoding('utf-8')
+  => "바나나\n"
+
+
+UTF-8 does not solve everything.  Using UTF-8 is smart.  It's fine.  But encoding problems will still happen.
+As long as there are multiple encodings in the world it will still happen.  And that doesn't mean "foreign".
+Here's Base64 betraying us.
+
+require 'base64'
+encoded = Base64.encode64 'bacon is great'
+=> "YmFjb24gaXMgZ3JlYXQ=\n"
+decoded = Base64.decode64(encoded)
+=> "bacon is great"
+# Yay for ascii?
+
+# Wait a minute ...
+encoded = Base64.encode64 '마법사'
+=> "66eI67KV7IKs\n"
+decoded = Base64.decode64(encoded)
+decoded.force_encoding('utf-8')
+# The bytes didn't change, so force_encoding is correct here
+'마법사'.bytes
+
+
+

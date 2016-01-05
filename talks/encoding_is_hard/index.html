@@ -1,0 +1,487 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>Encoding is Hard</title>
+
+    <meta name="description" content="impress.js is a presentation tool based on the power of CSS3 transforms and transitions in modern browsers and inspired by the idea behind prezi.com." />
+    <meta name="author" content="Bartek Szopka" />
+
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic" rel="stylesheet" />
+
+    <!--
+
+        Impress.js doesn't depend on any external stylesheets. It adds all of the styles it needs for the
+        presentation to work.
+
+        This style below contains styles only for demo presentation. Browse it to see how impress.js
+        classes are used to style presentation steps, or how to apply fallback styles, but I don't want
+        you to use them directly in your presentation.
+
+        Be creative, build your own. We don't really want all impress.js presentations to look the same,
+        do we?
+
+        When creating your own presentation get rid of this file. Start from scratch, it's fun!
+
+    -->
+    <link href="css/main.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="css/tomorrow-night.css">
+    <script src="js/highlight.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <link rel="shortcut icon" href="favicon.png" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+</head>
+
+<!--
+
+    Body element is used by impress.js to set some useful class names, that will allow you to detect
+    the support and state of the presentation in CSS or other scripts.
+
+    First very useful class name is `impress-not-supported`. This class means, that browser doesn't
+    support features required by impress.js, so you should apply some fallback styles in your CSS.
+    It's not necessary to add it manually on this element. If the script detects that browser is not
+    good enough it will add this class, but keeping it in HTML means that users without JavaScript
+    will also get fallback styles.
+
+    When impress.js script detects that browser supports all required features, this class name will
+    be removed.
+
+    The class name on body element also depends on currently active presentation step. More details about
+    it can be found later, when `hint` element is being described.
+
+-->
+<body class="impress-not-supported">
+
+<!--
+    For example this fallback message is only visible when there is `impress-not-supported` class on body.
+-->
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<!--
+
+    Now that's the core element used by impress.js.
+
+    That's the wrapper for your presentation steps. In this element all the impress.js magic happens.
+    It doesn't have to be a `<div>`. Only `id` is important here as that's how the script find it.
+
+    You probably won't need it now, but there are some configuration options that can be set on this element.
+
+    To change the duration of the transition between slides use `data-transition-duration="2000"` giving it
+    a number of ms. It defaults to 1000 (1s).
+
+    You can also control the perspective with `data-perspective="500"` giving it a number of pixels.
+    It defaults to 1000. You can set it to 0 if you don't want any 3D effects.
+    If you are willing to change this value make sure you understand how CSS perspective works:
+    https://developer.mozilla.org/en/CSS/perspective
+
+    But as I said, you won't need it for now, so don't worry - there are some simple but interesting things
+    right around the corner of this tag ;)
+
+-->
+<div id="impress" data-transition-duration=250>
+    <div id="intro" class="step title" data-x="0" data-y="0" data-scale="2">
+        <q>
+            <h1>Encoding is Hard.</h1>
+        </q>
+    </div>
+
+    <div id="title" class="step" data-x="0" data-y="1000" data-z="100">
+        <h1 class="title">Expert Level</h1>
+
+        <ol class="bullets-forever">
+          <li>I am not expert level</li>
+          <li>Not <em>"Yer Doing It Wrong"</em></li>
+          <li>Just funny that Encoding is one of those forever problems</li>
+        </ol>
+    </div>
+
+    <div class="step" data-x="0" data-y="2000" data-z="100">
+        <h1 class="title">You Get Nothing</h1>
+
+        <ol class="bullets-forever">
+          <li>Encoding problems will still happen even after this talk</li>
+          <li>^^ Why?</li>
+        </ol>
+    </div>
+
+
+    <div class="step" data-x="1200" data-y="800" data-z="200">
+      <h1>Encoding is always required.</h1>
+
+      <p class="notes">Encoding is always there.</p>
+      <ol class="bullets-forever">
+        <li>vim - <code>set encoding=utf-8; set fileencoding=utf-8</code></li>
+        <li>iTerm - <code>Terminal --> Character Encoding</code></li>
+        <li>your shell - <code>export LC_LOCALE</code></li>
+        <li>tmux - <code>set-window-option -g utf8 on</code></li>
+        <li>Language strings and IO - Ruby / ObjC</li>
+        <li>Database defaults, table defaults</li>
+        <li>Database client defaults</li>
+        <li>HTTP payloads</li>
+        <li>Payloads modified by our users' browser</li>
+        <li>Files</li>
+      </ol>
+    </div>
+
+    <div class="step" data-x="1200" data-y="1600" data-z="200">
+      <h1>Encoding happens.  There's no such thing as plain text.</h1>
+      <pre><code class="ruby">
+      File.open('/tmp/awesome.txt', 'w') {|f| file.puts "awesome" }
+
+      # same
+      File.open('/tmp/awesome.txt', 'w:utf-8') {|f| file.puts "awesome" }
+      </code></pre>
+    </div>
+
+    <div class="step" data-x="1200" data-y="2100" data-z="200">
+      <p>What is Encoding</p>
+      <p class="notes">
+        Humans --> "hi"
+      </p>
+      <p class="notes">
+        Computers --> Bytes
+      </p>
+    </div>
+
+    <div class="step" data-x="200" data-y="3000" data-z="-3200">
+      <h1>Whyyyy</h1>
+
+      <p class="notes">Super Fast History</p>
+      <p>
+        <img src="images/ascii.png"/>
+      </p>
+      <p class="small">
+        ASCII mapped characters straight to numbers.
+        Those numbers could be stored in 7 bits.  Eventually people
+        realized you could store extra stuff in 127+ because
+        you had an extra bit.
+      </p>
+    </div>
+
+    <div class="step" data-x="1000" data-y="3000" data-z="-3200">
+      <p class="aside">
+        EBCDIC (punchards) begat ASCII begat IBM Code Pages
+      </p>
+    </div>
+
+    <div class="step" data-x="1800" data-y="3000" data-z="-3200">
+      <p class="aside">
+        ANSI standard.  Move to code pages for higher bit characters.
+      </p>
+    </div>
+
+    <div class="step" data-x="2600" data-y="3000" data-z="-3200">
+      <p class="aside">
+        Unicode.  <code>U+0041</code>
+      </p>
+      <p class="aside">
+        Abstraction of number and encoding.
+        Unicode represents "A" to a code point.  A code point
+        doesn't have an encoding.  Unicode is 16-bit but
+        that's not why it can store so many characters.  Unicode
+        defines the code points and has many planes.  An encoding
+        then later makes decisions about byte length.
+      </p>
+    </div>
+
+    <div class="step" data-x="3600" data-y="3000" data-z="-3200">
+      <h1 class="title">Byte Abstraction</h1>
+      <p>
+        <pre><code class="markdown">
+          H      E      L      L      O
+          U+0048 U+0065 U+006C U+006C U+006F (unicode code points)
+
+          00 48  00 65  00 6C  00 6C  00 6F  (little endian)
+          48 00  65 00  6C 00  6C 00  6F 00  (big endian)
+        </code> </pre>
+      </p>
+      <p>
+        If we just map code points to bytes we already have two ways
+        to store bytes.
+      </p>
+      Instead put a byte-order mark:<br>
+      <span class="inline-code">FE FF 00 48</span><br>
+      Bytes abstracted.
+    </div>
+
+    <div class="step" data-x="4600" data-y="3000" data-z="-3200">
+      <h1 class="title">UTF-8</h1>
+      <p class="aside">
+        Now we can talk about UTF-8.  Variable length byte size.
+        Lucky coincidence that ASCII haps to characters below 127.
+        Weee!  English speakers don't have to think.
+        This is also why we are surprised.
+      </p>
+    </div>
+
+    <div class="step" data-x="5600" data-y="3000" data-z="-3200">
+      <pre><code class="ruby">
+      # This is why in Ruby, you have unicode literals
+      \xNNN - hex - codepage coupled
+      \uNNN - unicode
+      </code></pre>
+    </div>
+
+    <div class="step" data-x="1000" data-y="4000" data-z="-3200">
+      <pre><code class="ruby">
+      # Exploring with Ruby
+
+      # You can see that 8bit is the same as binary.
+      Encoding.aliases["BINARY"]
+      # => "ASCII-8BIT"
+
+      # You can get a list of encodings like this:
+      pry> ls Encoding
+      constants:
+      ANSI_X3_4_1968   CP869   IBM862   KOI8_U       US_ASCII
+      ASCII            CP874   IBM863   MacCentEuro  UTF8_DOCOMO
+
+    # These encodings also have short names.
+    pry> Encoding::ISO8859_1.names
+    => ["ISO-8859-1", "ISO8859-1"]
+      </code></pre>
+    </div>
+
+    <div class="step" data-x="2500" data-y="4000" data-z="-3200">
+      <pre><code class="ruby">
+    # Module names in Ruby cannot have - in the name so standard
+    # encodings with - in the name are snake cased.
+    "asdf".force_encoding(Encoding::UTF_8)
+
+    # The short names can be used in place of the constant names
+    "asdf".force_encoding("utf-8")
+
+    # Upper and lower case doesn't matter.
+    "asdf".force_encoding("UTF-8")
+
+    # Although you have to do something like this.
+    File.open("/tmp/hi.txt", "w:#{Encoding::UTF_8}") {|file| file.puts "hi" }
+
+    # Which is less idiomatic than this:
+    File.open("/tmp/hi.txt", "w:UTF-8") {|file| file.puts "hi" }
+
+      </code></pre>
+    </div>
+
+    <div class="step" data-x="4000" data-y="4000" data-z="-3200">
+      <div class="aside">xxd is your friend</div>
+      <pre><code class="ruby">
+      File.open("/tmp/space.txt", "w") {|file| file.puts " " }
+      # $ /tmp > xxd space.txt
+      # 00000000: 200a
+
+      # 0a is the newline.
+
+      pry> File.open("/tmp/space.txt", "w") {|file| file.print "\u0020" }
+
+      # $ file space.txt
+      # space.txt: very short file (no magic)
+
+      # $ /tmp > xxd space.txt
+      # 00000000: 20
+      </code></pre>
+    </div>
+
+    <div class="step" data-x="5500" data-y="4000" data-z="-3200">
+      <pre><code class="ruby">
+  File.open("/tmp/space.txt", "w") {|file| file.print "\n\n\n" }
+
+  # xxd space.txt
+  # 00000000: 0a0a 0a                                  ...
+      </code></pre>
+
+
+      <pre><code class="markdown">
+  001f3f70: 3a20 4174 7461 6368 696e 6720 4950 7636  : Attaching IPv6
+  001f3f80: 206f 6e20 6177 646c 300a 4d6f 6e20 4a61   on awdl0.Mon Ja
+  001f3f90: 6e20 2034 2031 303a 3237 3a33 322e 3032  n  4 10:27:32.02
+  001f3fa0: 3920 496e 666f 3a20 3c61 6972 706f 7274  9 Info: <airport
+  001f3fb0: 645b 3632 5d3e 2050 5249 4f52 4954 5920  d[62]> PRIORITY
+  001f3fc0: 4c4f 434b 2041 4444 4544 205b 636c 6965  LOCK ADDED [clie
+  001f3fd0: 6e74 3d61 6972 706f 7274 642c 2074 7970  nt=airportd, typ
+  001f3fe0: 653d 342c 2069 6e74 6572 6661 6365 3d65  e=4, interface=e
+  001f3ff0: 6e30 2c20 7072 696f 7269 7479 3d37 5d0a  n0, priority=7].
+      </code></pre>
+    </div>
+
+    <div class="step" data-x="7000" data-y="4000" data-z="-3200">
+      <pre><code class="ruby">
+      
+  pry> File.open("/tmp/space.txt", "w:utf-8") {|file| file.print "\u0020" }
+
+  $ /tmp > xxd space.txt
+  00000000: 20
+
+  pry> " ".eql? "\u0020"
+  => true
+      </code></pre>
+    </div>
+
+    <div class="step" data-x="8500" data-y="4000" data-z="-3200">
+      <pre><code class="ruby">
+  pry> File.open("/tmp/space.txt", "w:iso-8859-1") {|file| file.print "\u0020" }
+  $ /tmp > xxd space.txt
+  00000000: 20
+
+  pry> File.open("/tmp/space.txt", "w:us-ascii") {|file| file.print "\u0020" }
+  $ /tmp > xxd space.txt
+  00000000: 20
+      </code></pre>
+    </div>
+
+    <div class="step" data-x="10000" data-y="4000" data-z="-3200">
+      <pre><code class="markdown">
+ Ruby literals come in these flavors:
+  \uNNNN Unicode codepoint U+NNNN
+  \xNN   Character with hexidecimal value NN
+  \nNN   Character with octal value NN
+      </pre></code>
+      <pre><code class="ruby">
+
+  # So now we can do this:
+  pry> File.open("/tmp/space.txt", "w:us-ascii") {|file| file.print "\x20" }
+  $ /tmp > xxd space.txt
+  00000000: 20
+      </code></pre>
+    </div>
+
+    <div class="step" data-x="11500" data-y="4000" data-z="-3200">
+      <pre><code class="ruby">
+  pry> File.open("/tmp/hello.txt", "w:us-ascii") {|file| file.print "\x48\x65" }
+  /tmp > xxd hello.txt
+  00000000: 4865                                     He
+
+  And so we could continue with this until we got:
+  /tmp > xxd hello.txt
+  00000000: 4865 6c6c 6f20 576f 726c 64              Hello World
+
+  209.to_s(16)
+  => d1
+      </code></pre>
+    </div>
+
+    <div class="step" data-x="13000" data-y="4000" data-z="-3200">
+      <pre><code class="ruby">
+       pry> File.open("/tmp/rus.txt", "w:koi8-r") {|file| file.print "\xD1" }
+       Encoding::InvalidByteSequenceError: incomplete "\xD1" on UTF-8
+
+       # We need to tell ruby that these bytes aren't UTF-8.
+       File.open("/tmp/rus.txt", "w:koi8-r") {|f| f.print "\xD1".force_encoding("koi8-r") }
+      </code></pre>
+
+      <img src="images/ruskie.png"/>
+
+    </div>
+
+    <div class="step" data-x="14500" data-y="4000" data-z="-3200">
+      <ul>
+        <li>strings have implicit encoding</li>
+        <li>strings are bytes</li>
+        <li>some bytes can't convert</li>
+      </ul>
+    </div>
+
+    <div class="step" data-x="16000" data-y="4000" data-z="-3200">
+      <pre><code class="ruby">
+
+  class PantsController < ApplicationController
+    skip_before_filter :verify_authenticity_token, :only => [:create]
+    respond_to :json
+
+    def index
+      respond_to do |format|
+        format.json { render json: Pant.all }
+      end
+    end
+
+    def create
+      render text: request.body.to_s.encoding
+      # => ASCII-8BIT
+    end
+
+  end
+      </code></pre>
+    </div>
+
+
+  <div class="step" data-x="17500" data-y="4000" data-z="-3200">
+    <pre><code class="markdown">
+     $ curl -X POST -H 'Content-Type:application/json' -d '{"title":"Nice Pants", "size":38}'
+     http://localhost:3000/pants
+       ASCII-8BIT
+
+     $ curl -X POST -H "Content-Type:application/json;charset=UTF-8" 
+     -H "Accept-Charset:UTF-8" -d '{"title":"Nice Pants", "size":38}'
+     http://localhost:3000/pants
+       ASCII-8BIT
+    </code></pre>
+  </div>
+
+
+  <div class="step" data-x="19000" data-y="4000" data-z="-3200">
+    <h1>Data Corruption</h1>
+    <pre><code class="ruby">
+  # Let’s set up the failure scenario.
+  wizard = "마법사"
+  wizard.bytes
+
+  File.open("/tmp/mysql-backup.sql", "w:UTF-8") 
+     {|file| file.puts wizard.force_encoding('iso-8859-1') }
+  import = File.open("/tmp/mysql-backup.sql", 
+    encoding:Encoding::ISO_8859_1).readlines.first
+  => "\xC3\xAB\xC2\xA7\xC2\x88\xC3\xAB\xC2\xB2\xC2\x95\xC3\xAC\xC2\x82\xC2\xAC\n"
+  import.force_encoding('utf-8')
+  # nope
+
+  import.force_encoding('utf-8').  # undo the wrong file read
+      encode('iso-8859-1').        # undo the file write 
+      force_encoding('utf-8')     # undo the force in the file.puts block
+  => "바나나\n"
+    </code></pre>
+  </div>
+
+  <div class="step" data-x="20500" data-y="4000" data-z="-3200">
+    <h1>UTF-8 No Silver Bullet</h1>
+    <pre><code class="ruby">
+require 'base64'
+encoded = Base64.encode64 'bacon is great'
+=> "YmFjb24gaXMgZ3JlYXQ=\n"
+decoded = Base64.decode64(encoded)
+=> "bacon is great"
+# Yay for ascii?
+
+# Wait a minute ...
+encoded = Base64.encode64 '마법사'
+=> "66eI67KV7IKs\n"
+decoded = Base64.decode64(encoded)
+decoded.force_encoding('utf-8')
+# The bytes didn't change, so force_encoding is correct here
+'마법사'.bytes
+    </code></pre>
+  </div>
+
+
+
+  <div class="step" data-x="8000" data-y="8000" data-z="00">
+    <h1>The End</h1>
+    <a href="https://danielmiessler.com/study/encoding/">Daniel Miessler's blog post</a>
+    <a href="http://squarism.com/2015/07/08/encoding-in-ruby-and-everywhere/">Encoding in Ruby and Everywhere</a>
+  </div>
+
+
+</div>
+
+<script src="js/impress.js"></script>
+<script>impress().init();</script>
+
+
+</body>
+</html>
