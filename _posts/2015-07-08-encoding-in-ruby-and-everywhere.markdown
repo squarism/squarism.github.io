@@ -44,9 +44,7 @@ ISO8859_6         SJIS_DoCoMo     ASCII        EMACS_MULE
 ISO8859_7         SJIS_KDDI       ASCII_8BIT   EUC_CN
 ISO8859_8         SJIS_SoftBank   Big5         EUC_JIS_2004
 ISO8859_9         SJIS_SOFTBANK   BIG5         EUC_JISX0213
-ISO_2022_JP       ...
-
-UTF_8
+ISO_2022_JP       ...             UTF_8
 {% endhighlight %}
 
 There's also a shorthand versions of these encoding names that you can use but I like using
@@ -60,20 +58,21 @@ File.open('/tmp/awesome.txt', 'w:utf-8') {|file| file.puts "awesome" }
 This is pretty straight-forward.  It creates a file with awesome in it, encoded
 in utf-8.
 
-```
+{% highlight text %}
 $ cat /tmp/awesome.txt
 awesome
-```
+{% endhighlight %}
 
 {% highlight ruby %}
 File.open('/tmp/awesome.txt', 'w:iso-8859-1') {|file| file.puts "awesome" }
 {% endhighlight %}
 
-You can't say 'w:latin-1' here.  That's what iso-8859-1 is but it doesn't work
-here for writing the file.
+You can't say 'w:latin-1' here.  That's another name for iso-8859-1 but `latin-1` doesn't work
+here for the file writing mode.
 
-Now this is where culture/language trickiness comes in.
-
+You can write a few modes in different encodings and the bytes come out
+exactly the same.  There's a historical reason for this.  EBDIC begat ASCII begat ANSI
+(sort of) begat Unicode.  All along the way, the lowest bytes stayed backwards compatible.
 {% highlight text %}
 # utf-8 written
 $ xxd /tmp/awesome.txt
@@ -88,6 +87,11 @@ $ xxd /tmp/awesome.txt
 00000000: 6177 6573 6f6d 650a                      awesome.
 {% endhighlight %}
 
+This is also why English speaking programmers are surprised by encoding
+errors because you can get away with a lot by sticking with these low order bytes
+and remaining ignorant (slightly strong word but intended in its opportunity sense).
+It's only when "weird" data comes in that we have to think about encoding right?
+
 Here's another friend.  If you do `Encoding::BINARY.to_s` you'll get
 'ASCII-8BIT'.  This is the same as saying "I don't know".  It's not
 the same as `Encoding::ASCII`.  You can tell because `.to_s` says
@@ -97,6 +101,8 @@ There is a method called `.encode`.  This takes the place of Iconv
 in the stdlib.  It works just like the unix command `iconv`.  It
 takes one encoding and converts the bytes into another.  This
 isn't the same as `.force_encoding` as we'll see in a second.
+
+Now this is where culture/language trickiness comes in.
 
 ## Lucky
 
