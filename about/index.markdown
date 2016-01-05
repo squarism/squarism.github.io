@@ -58,11 +58,24 @@ comments:
     your site - squarism - hope you're loving Portland. Or should I say \"Portal-land\"
     while you figure things out.\r\n\r\nCheers,\r\n\r\nDrew."
 ---
-<p>I'm Chris Dillon.  This is my productivity blog.  This is where I share things I've gotten done, figured out or want to do for myself and others.  This blog applies the <a href="http://gapingvoid.com/2004/08/29/nobody-cares-do-it-for-yourself/">do it for yourself</a> rule in a major way.  If you find something useful here then this blog has succeeded.  This blog is also about practicing my craft.  Runners train, musicians practice.</p>
-<p>This is a personal weblog. The opinions expressed here represent my own and not those of my employer.</p>
-<p>By day, I do software development and systems integration.  It just means I'm a jack of all trades.  By night, I'm a technologist looking to work on bleeding edge or "trendy" tech.  In some sense, I do tech art (simple OpenGL on Mac, processing.org sketches and sound production and web prototyping.  I've been hacking quite a bit on Ruby and Rails creating small projects that serve as a proof of concept or learning device.  Other times, I actually build tools and toys so solve a problem I have.  I have a lot of other hobbies but code is the thing I mostly blog about.</p>
-<p>I don't work with recruiters or placement agencies.</p>
-<ul>
-<li>See <a href="/questions">my page of boundries</a> to see specifics on my experience border.</li>
-<li>See <a href="http://github.com/squarism">my github page</a> to see some projects I have published.  This list is far shorter than my projects I'm "secretly" working on.  :)</li>
-<p></ul></p>
+
+I'm Chris Dillon.  I live in Portland but I'm from DC.  This is my productivity blog.  This is where I share things I've gotten done, figured out or want to do for myself and others.  This blog applies the [do it for yourself](http://gapingvoid.com/2004/08/29/nobody-cares-do-it-for-yourself/) rule in a major way.  If you find something useful here then this blog has succeeded.  This blog is also about practicing my craft.  Runners train, musicians practice.
+
+This is a personal weblog. The opinions expressed here represent my own and not those of my employer.
+
+By day, I do software development and devops.  It just means I'm a jack of all
+trades.  By night, I'm a technologist looking to get better at stuff.
+But not all the time.  Sometimes I just want to build stuff (either real or virtual).
+I don't talk about gaming or playing music on this blog.  I found that to be not
+interesting to people (or at least the way I did it).
+
+Sometimes, I do creative coding, procedural sketch toys, sound prod or prototypes.
+Other times, I actually build tools and toys so solve a problem I have.
+I have a lot of other hobbies like a lot of other people but code is the
+thing I mostly blog about.
+
+I don't work with recruiters or placement agencies.  I'm probably not looking for "a job" but
+that doesn't mean I won't help you.
+
+* See [my page of boundaries](/questions) to see specifics on my experience border.
+* See [my github page](http://github.com/squarism) to see some projects I have published.  This list is far shorter than my projects I'm "secretly" working on.  :)

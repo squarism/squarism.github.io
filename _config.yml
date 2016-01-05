@@ -17,6 +17,10 @@ links:
     url: /about
     external: false
     icon: home
+  - title: Talks
+    url: /talks
+    external: false
+    icon: home
 
 projects:
   - title: Tatris - A tetris clone
