@@ -54,8 +54,8 @@
 .name_area .mug {
   margin-left: 42%;
   margin-right: 50%;
-  width: 64px;
-  height: 64px;
+  width: 80px;
+  height: 80px;
   margin-top: 20px;
   margin-bottom: 5px;
   background: url('/images/mug.png');
@@ -102,15 +102,15 @@
   z-index: 5;  /* putting this under 0 makes the links unclickable */
   padding-top: 3px;
   padding-bottom: 7px;
-  padding-left: 10px;
+  padding-left: 14px;
   padding-right: 10px;
   margin-right: 18px;
-  font-weight: bold;
-  font-size: 16px;
+  font-size: 14px;
   width: 30%;
   float: right;
   position: relative;
-  left: -80px;
+  left: -95px;
+  border-bottom: #e2e2e2 1px solid;
 }
 
 .business_card .gutter_bar {
@@ -162,14 +162,14 @@
   height: 100%;
 }
 
-/* Good Enough Theme
+/* Good Enough Theme - 70% lighter
  * #304140 #2e5949 #759857 #89bc86 #2e3b3d #3b0902 #e17811 #db3012 #8a8c54 #0e191d #dc3112 #6e0604
  */
-#stripe-1 { background: #3b0902; }
-#stripe-2 { background: #0e191d; }
-#stripe-3 { background: #2e3b3d; }
-#stripe-4 { background: #304140; }
-#stripe-5 { background: #2e5949; }
-#stripe-6 { background: #8a8c54; }
-#stripe-7 { background: #759857; }
-#stripe-8 { background: #89bc86; }
+#stripe-1 { background: #1F282C; }
+#stripe-2 { background: #424429; }
+#stripe-3 { background: #5B5E3C; }
+#stripe-4 { background: #787746; }
+#stripe-5 { background: #B4AF91; }
+#stripe-6 { background: #D8D4BC; }
+#stripe-7 { background: #E3E3E3; }
+#stripe-8 { background: #F5f5f5; }
