@@ -9,6 +9,8 @@ date: 2016-02-12
 
 Sidekiq Enterprise has a rate limiting feature.  Note that this is not throttling.  The perfect use case is the exact one that's mentioned in [the wiki](https://github.com/mperham/sidekiq/wiki/Ent-Rate-Limiting#concurrent): limit outbound connections to an API.  We had a need for this between two of our own services.  I spiked a little bit and I thought the behavior was interesting so I thought I'd share.
 
+<!-- more -->
+
 When people talk about buckets, jobs, limiters and these very generic and often used terms; it's good to clarify.  I think [Mike](https://github.com/mperham) does a great job of explaining what Sidekiq *isn't*.  So make sure you find out what your own problem *isn't* too.  We didn't want a throttler.  A throttler would throttle even a single job with respect to a resource.  A rate limiter limits things to a very specific resource: time.  Sidekiq Enterprise has a concurrent rate limiter that limits your workers to N concurrent operations at any moment in time.  The limiter is shared just like any ruby object is shared.  The wiki uses a constant variable.
 
 {% highlight ruby %}
