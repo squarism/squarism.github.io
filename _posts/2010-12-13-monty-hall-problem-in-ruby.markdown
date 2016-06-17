@@ -28,9 +28,11 @@ I was reading a thread on stackoverflow about randomness and cryptography securi
 The take away from the probability puzzle is that you should switch.  It's completely unintuitive and I didn't really get it even after reading about it for some time until I watched [this youtube video](http://www.youtube.com/watch?v=mhlc7peGlGg).  It's a bit slow paced but it's the best explanation and visuals out there.
 
 So even after grok'ing the concept, I wanted to prove it.  So I wrote a ruby program to simulate the game show.  Here's the results from one run:
-`Monty Hall Games Played: 1000
+```
+Monty Hall Games Played: 1000
 Player 1 (switches): 675/1000 : 67.50%
-Player 2 (stays)   : 325/1000 : 32.50%`
+Player 2 (stays)   : 325/1000 : 32.50%
+```
 
 The code is pretty simple and quick.  Of note is that I sort of use the same game and player_2 just picks the same door of the same game using the same rand(3) number.  So this is like two people playing at the same time and one always switches.  I used the sleep statement near the bottom to keep the terminal from blinking.  Seems to not blink on Mac or Linux but I remember having some weird behavior somewhere.
 
