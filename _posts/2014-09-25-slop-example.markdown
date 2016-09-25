@@ -7,7 +7,7 @@ title: Ruby Slop Example
 
 > This is all about Slop 3 (ruby 1.9 era).  Slop 4 has changed the API.
 > See the [README](https://github.com/leejarvis/slop/blob/master/README.md)
-> And see my new blog post about a [Slop 4 example](https://squarism.com/2016-04-06-ruby-slop-example).
+> And see my new blog post about a [Slop 4 example](http://squarism.com/2016/04/06/ruby-slop-example/).
 
 One of my favorite features of slop is the automatic help generation.
 But it's not intuitive.  It doesn't print out the help when the parsing
