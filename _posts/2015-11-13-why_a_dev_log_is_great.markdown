@@ -57,7 +57,8 @@ ruby script to figure out what 'tomorrow' means.  It's aware of the weekend.
 
 {% highlight ruby %}
 #!/usr/bin/env ruby
-# put this in your path like ~/bin or something
+# put this in your path like ~/bin/tomorrow.rb or something
+# make it executable: chmod u+x ~/bin/tomorrow.rb
 
 require 'date'
 
@@ -126,4 +127,26 @@ down is like a tiny "hurrah" but also a breadcrump to *future me* what the hold-
 
 I don't think about work on the weekend.  Monday me hates this.  With a dev log, this
 isn't a problem.  I just review Friday and that's enough to jog my memory.
+
+
+### Advice Time
+
+I've been using this for a year and it's been amazing.  I've done it everyday.
+So let me hand out some advice.
+
+- Don't create multiple files.  If you work in multiple teams, don't try to orgranize
+your thoughts into teams.  Just split it up by day.  Embrace the chaos.  This is
+quick.  Hit key, brain dump, hit key, keep working.  If you hate this and it keeps
+you from logging then change this advice.  I think most people would hate having
+to categorize work into separate files.
+
+- Don't worry about tagging or searching.  I only tag things like TIL so it jumps out.
+Not even for retrevial.  Text search works fine.  I have 7500 lines from 1.5 years of
+content and I can find anything just with vim text search.
+
+- Make it yours.  If you don't want to call it dev_log.md, call it something else.
+
+- Whatever you hate about this blog post, change it.  The real idea is: solve a problem for you,
+in my case and most people's on my team it has been remembering what you did and remembering your wins.
+
 
