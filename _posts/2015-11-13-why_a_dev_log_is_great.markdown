@@ -15,15 +15,15 @@ day to day but if someone asks me what I've done, I have no clue.  Being put
 on the spot sucks.  When something sucks, it's a problem.  Put it on the
 [tool sharpening list](https://devchat.tv/ruby-rogues/129-rr-sharpening-tools-with-ben-orenstein).
 
-So what can we do?  It's pretty easy and I don't want to drone on about it.
-Just keep a *diary*.  But there are some specifics that I've worked out because
-I've had lists of lists before.
+So what can we do?  It's pretty easy, just keep a *diary*.  But there are some specifics that I've worked out because
+I've had _Lists of Lists™_ before.  I've learned that _Lists of Lists™_ do not work.
 
 I want to:
 
 * Keep it simple.
 * Have it be easy to use, non disruptive.
 * Actually use it.  Something that I'm not going to hate, throw away or give up on.
+
 
 ### A Nice Setup
 
@@ -46,6 +46,7 @@ Voilà!
 
 Combine this with a quick vim script to insert the date headers (including knowing what weekends are),
 it's pretty nice.
+
 
 #### Vim Setup
 
@@ -113,6 +114,17 @@ During standups or retros, I can convert this quickly into a summary:
 * What I'm waiting on
 
 Whatever your format is, your log is what you did and you won't forget stuff.
+
+As a bonus, after using this log for a while, it also can show you how hard you've been working and keep
+yourself from being too hard on yourself.  That _thing_ you really tried hard on that you forgot where you
+left it, maybe you chunked it as a failure *when it was not a failure*.  Maybe you left yourself enough detail
+to show:
+
+> I could keep going on this experiment but the point was proven.
+> I ran into a limitation beyond my control.
+> I tried many different options and approaches but the technology isn't ready or something else is up.
+
+As time goes on, this chunking effect is more dramatic.  Wait until you forget how hard you tried.
 
 
 #### No more forgetting that cool command you typed
