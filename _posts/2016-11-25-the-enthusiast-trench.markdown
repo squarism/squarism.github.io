@@ -46,6 +46,8 @@ physical.  Photography is one but it can be demonstrated physically (maybe not t
 The abstract trenches are really tricky.  So, naturally, being a software person I can think of a lot of
 software trenches.
 
+### Examples
+
 A working irc client in minecraft using mods.
 ![minecraft irc](/uploads/2016/trench_minecraft.jpg)
 
@@ -57,10 +59,7 @@ A development board with the PCB shape of a Lego minifig
 
 These examples pictured above are easily demonstrable because they are visual or physical.  Abstract things are not.
 
-I follow the [City Skylines subreddit](https://www.reddit.com/r/CitiesSkylines/) but I don't play the game.  I
-know people are having fun. I sort of understand the game mechanics and the game loop. But there are a lot of mods and deep
-mechanics I don't get.  This is true of a lot of games with "mods".  The community is digging its own
-trenches from within a trench by extending the game.  But I really don't grok the fun.
+### Libs
 
 This is true for software libraries in every language I can think of.  Maybe I'm not in some of these communities.
 Maybe I'm haven't been in the communities for a long time.  I might ask the question "what are modern
@@ -70,8 +69,20 @@ left.  People are extending tunnels that can't easily be explained.
 > Python Trench: "oh, nobody uses urllib2, everyone uses requests
 > and there's this great requests addon that makes uploads so easy, it really .." (etc etc).
 
-Maybe software libraries aren't fun.  But people can be enthusiastic about them because they are amazing in
-their eyes but if you are an outsider, you won't be able to see into the interior tunnels of their trench.
-There is definitely a relation to the fear of missing out.  You could feel bad about not being in all
-trenches and many times I do.  That's sort of a different discussion.  Sometimes, I just let the weight of
-the trenches flow over me and appreciate the complexity.
+Maybe software libraries aren't purely _fun_.  But people can be enthusiastic about them because they are amazing in
+their eyes.  If you are an outsider, you won't be able to see the fun in the interior tunnels of their trench.
+
+### Fear of Missing Out
+
+There is definitely a relation to the fear of missing out (FOMO).
+You could feel bad about not being in all trenches and many times I do.
+I don't want to encourage FOMO.  I don't want to give FOMO any more fuel.
+I don't really have a solution to FOMO and really that's a different topic.
+
+I follow the [City Skylines subreddit](https://www.reddit.com/r/CitiesSkylines/) but I don't play the game.  I
+know people are having fun. I sort of understand the game mechanics and the game loop. But there are a lot of mods and deep
+mechanics I don't get.  This is true of a lot of games with "mods".  The community is digging its own
+trenches from within a trench by extending the game.  But I really don't grok the fun.
+
+Sometimes, I just let the weight of the trenches flow over me and appreciate the complexity.
+Like looking at a landscape from really far away.  It's beautiful because it's missing the details.
