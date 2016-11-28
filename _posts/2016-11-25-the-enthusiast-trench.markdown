@@ -58,7 +58,7 @@ A development board with the PCB shape of a Lego minifig
 These examples pictured above are easily demonstrable because they are visual or physical.  Abstract things are not.
 
 I follow the [City Skylines subreddit](https://www.reddit.com/r/CitiesSkylines/) but I don't play the game.  I
-know people are having fun and I sort of understand the game mechanics but there are a lot of mods and deep
+know people are having fun. I sort of understand the game mechanics and the game loop. But there are a lot of mods and deep
 mechanics I don't get.  This is true of a lot of games with "mods".  The community is digging its own
 trenches from within a trench by extending the game.  But I really don't grok the fun.
 
