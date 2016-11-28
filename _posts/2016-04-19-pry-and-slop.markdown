@@ -45,7 +45,7 @@ This is true for pry `0.10.2` too.  There are two options I've found that works:
 
 _tl;dr_ Do this
 
-Install 0.10.3 or newer.  Make sure you bundle is resolving to that exact version.
+Install 0.10.3 or newer.  Make sure your bundle is resolving to that exact version.
 This means
 
 {% highlight ruby %}
