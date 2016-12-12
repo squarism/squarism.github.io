@@ -30,6 +30,10 @@ projects:
     # description: Overengineered cat watering thing.
   - title: 595 Chip with Redis
     url: /2014/09/24/redis-595-timer-states/
+  - title: Minecraft Metrics with Redis
+    url: https://github.com/squarism/minecraft_metrics
+  - title: Spikes in the "Lab"
+    url: http://squarism.com/lab
 
 gems:
   - jemoji

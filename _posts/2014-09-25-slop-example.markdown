@@ -14,6 +14,8 @@ But it's not intuitive.  It doesn't print out the help when the parsing
 fails.  This isn't very unix-y.  So every time I want to use slop, I have to look up this snippet I saved for myself.  So I'm posting it here.  This is the only slop example
 you'll ever need.
 
+<!-- more -->
+
 #### Unix style CLI program in Ruby
 
 {% highlight ruby %}

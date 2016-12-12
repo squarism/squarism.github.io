@@ -70,7 +70,7 @@ I don't talk about gaming or playing music on this blog.  I found that to be not
 interesting to people (or at least the way I did it).
 
 Sometimes, I do creative coding, procedural sketch toys, sound prod or prototypes.
-Other times, I actually build tools and toys so solve a problem I have.
+Other times, I actually build tools and toys so solve a problem.
 I have a lot of other hobbies like a lot of other people but code is the
 thing I mostly blog about.
 

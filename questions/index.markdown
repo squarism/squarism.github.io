@@ -26,6 +26,8 @@ This is a list of personal boundaries.  That is, as I learn or work in a particu
 
 <em>"The fool can ask more questions than the wise man can answer."</em>
 
+**This list is pretty old (2011 or earlier activity).  I now track a list of spikes to hack on on a personal trello board.**
+
 ### Ruby and Rails
 
 
@@ -40,19 +42,19 @@ This is a list of personal boundaries.  That is, as I learn or work in a particu
 - <del datetime="2010-08-13T16:39:19+00:00">Put a project on github.</del>
 - <del>Write a textile README file for doc instead of .txt.</del>
 - <del>Use bundler to freeze gems.</del>
-- Grok freezing rails.
+- <del>Grok freezing rails.</del> Solved with bundler and vendoring even with private gems.
 - <del>Write or use an ORM type layer for LDAP.</del>  Done: used activeldap, a little messy.
 - <del datetime="2014-05-31T19:05:04+00:00">Play with memcache.</del>
 - Understand <del datetime="2010-09-02T18:48:40+00:00">.collect, .map</del> and .lambda methods.
 - <del>Understand the splat operator.</del>
 - <del>Write a rake task.</del>
-- Write a module as if designing an API and publishing as gem
+- <del>Write a module as if designing an API and publishing as gem</del> Done this multiple times at this point.  Start with a README.
 - <del datetime="2011-08-28T15:11:36+00:00">Write a web service as if designing an API and publishing over HTTP</del>  <a href="http://squarism.com/2011/04/01/how-to-write-a-ruby-rails-3-rest-api/">Done</a>.
 - <del datetime="2011-08-28T15:11:36+00:00">Is publishing a test gem to rubygems bad form?</del>  Yes, there's no need for it because you can gem install a local file for testing.
 - <del datetime="2011-08-28T15:11:36+00:00">Write a gem for a rails controller, a mix in lib to do security.</del>  This little hint is what became the <a href="https://github.com/squarism/firewool">Firewool</a> gem, a rails firewall plugin.
 - Do joins across datasources.  YAML to MySQL to MongoDB to Redis.  Use datamapper or activerecord or both.  Obviously the data has to be logically connected.  What performance tradeoffs are there?  Do any of these gems help with migration?  Could we temporarily load all data into Redis and switch to that datastore type exclusively?
-- Play with better ways of passing data between rails and JS.  Usually I create a hidden form element or use a DOM element for a key for, say, an ajax call to get some other data.  There has to be a better way like the Gon gem.
-- Try an <a href="http://www.unlimitednovelty.com/2012/04/introducing-dcell-actor-based.html">actor-based concurrency model</a> like dcell.  I've used threads and eventmachine but I'm still jealous of node.js.  Many ruby-centric articles extoll ruby options but invariably seem to fall short on real solutions.  How good is celluloid and dcell?  How native does it feel?
+- <del datetime="2016-12-11">Play with better ways of passing data between rails and JS.  Usually I create a hidden form element or use a DOM element for a key for, say, an ajax call to get some other data.  There has to be a better way like the Gon gem.</del>This has WAY been solved by rest and SPAs.
+- <del datetime="2016-12-11">Try an <a href="http://www.unlimitednovelty.com/2012/04/introducing-dcell-actor-based.html">actor-based concurrency model</a> like dcell.  I've used threads and eventmachine but I'm still jealous of node.js.  Many ruby-centric articles extoll ruby options but invariably seem to fall short on real solutions.  How good is celluloid and dcell?  How native does it feel?</del> Still no actor model on rails.  Currently things are moving towards Elixir/Phoenix.
 - <del>Write a DSL.   Here's an example: <a href="https://www.destroyallsoftware.com/screencasts/catalog/building-rspec-from-scratch">Building Rspec from Scratch</a>.  Write a DSL to rename a bunch of files in a directory.  For example, the mp3 rename problem.  Or vacation photo problem.  Take files named "DSC709.jpg" and rename to hawaii_709.jpg.</del>
 - Close a Rails bug.
 
