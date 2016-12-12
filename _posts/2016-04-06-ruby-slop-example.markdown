@@ -12,6 +12,10 @@ I had an older post about ruby and slop but that's with Slop 3 which is basicall
 No doubt, this post will bitrot too so please pay attention to the post date.  The current ruby
 is about `2.3.0`, slop `4.3` is current, it's 2016 and Trump is going to be our next president.
 
+**update:** _Oh god, he really is our next president ..._
+
+<!-- more -->
+
 ### It's ok that you need help
 
 I think the most confusing thing about slop is that it has great examples and documentation but

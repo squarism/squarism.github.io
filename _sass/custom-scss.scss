@@ -15,16 +15,14 @@
 
 
 .sidebar {
-  margin-left: 5em;
   width: 100%;
 }
 
 .sidebar li {
-  line-height: 0.75em;
-  margin-top: 4em;
-  margin-top: 0px;
-  padding-bottom: 0px;
-  padding-top: 0px;
+  line-height: 0.5em;
+  margin: 0px;
+  padding: 0px;
+  width: 150%;
 }
 
 .debug {
@@ -42,75 +40,75 @@
 
 .business_card .name_area {
   height: 28%;
-  padding-bottom: 1em;
-  text-align: center;
+  border-bottom: 1px solid #eee;
 }
 
-.business_card .contact_details {
-  height: 50%;
-  padding-top: 1em;
+.business_card .hi {
+  font-family: "Arial", sans;
+  color: #aca68d;
+  font-size: 11px;
+  position: relative;
+  left: 7.4em;
+  top: -1.2em;
 }
 
 .name_area .mug {
-  margin-left: 42%;
-  margin-right: 50%;
   width: 80px;
   height: 80px;
-  margin-top: 20px;
-  margin-bottom: 5px;
   background: url('/images/mug.png');
 }
 
 .name_area .name {
   width: 160px;
   height: 20px;
-  margin-left: 25%;
-  margin-right: 50%;
   z-index: 3;
   font-size: 14px;
   font-weight: bold;
-  text-align: center;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 2em;
+  color: #846a51;
 }
+
+.business_card .contact_details {
+  height: 50%;
+  width: 75%;
+  padding-top: 0.5em;
+  margin-right: 1em;
+  margin-left: 2em;
+}
+
+
 
 .business_card ul {
   list-style-type: none;
 }
 
-.business_card li {
-}
-
-
 .contact_details .detail_key {
-  background: #0e191d;
+  position: relative;
+  float: left;
+  left: -5.1em;
+  width: 70%;
   padding-top: 5px;
   padding-left: 10px;
   padding-right: 20px;
   padding-bottom: 5px;
+  margin-bottom: 0.2em;   /* line spacing between contact detail ribbons */
+  background: #0e191d;
   color: white;
   font-weight: bold;
   font-size: 14px;
-  width: 50%;
-  float: left;
-  margin-bottom: 0.75em;   /* line spacing between contact detail ribbons */
-  position: relative;
-  left: -80px;
+}
+
+.contact_details .detail_key i {
+  padding-right: 1em;
 }
 
 .contact_details .detail_value {
-  z-index: 5;  /* putting this under 0 makes the links unclickable */
-  padding-top: 3px;
-  padding-bottom: 7px;
-  padding-left: 14px;
-  padding-right: 10px;
-  margin-right: 18px;
-  font-size: 14px;
-  width: 30%;
-  float: right;
   position: relative;
-  left: -95px;
-  border-bottom: #e2e2e2 1px solid;
+  left: -4.5em;
+  width: 30%;
+  margin-top: 0.4em;
+  padding-bottom: 0.4em;
+  z-index: 5;  /* putting this under 0 makes the links unclickable */
+  font-size: 14px;
 }
 
 .business_card .gutter_bar {
@@ -123,28 +121,22 @@
 
 .business_card .talk_icon {
   position: relative;
-  font-size: 48px;
   float: right;
-  left: -50px;
-  top: -28px;
+  left: -2.2em;
+  top: -0.55em;
   z-index: 1;
+  font-size: 64px;
+  color: #ebe6d0;
 }
 
+/*
 .business_card .talk_icon_bg {
   left: 25px;
   top: -7px;
   z-index: 0;
 }
+*/
 
-.business_card .hi {
-  font-family: "Arial", sans;
-  font-weight: light;
-  color: #ccc;
-  font-size: 11px;
-  margin-bottom: -20px;
-  left: 20px;
-  position: relative;
-}
 
 .business_card #vertical_stripes {
   z-index: -1;
@@ -173,3 +165,25 @@
 #stripe-6 { background: #D8D4BC; }
 #stripe-7 { background: #E3E3E3; }
 #stripe-8 { background: #F5f5f5; }
+
+
+[class*='col-'] {
+  float: left;
+}
+
+.col-1-2 {
+  width: 50%;
+}
+
+.col-2-3 {
+  width: 66.66%;
+}
+.col-1-3 {
+  width: 33.33%;
+}
+
+.grid:after {
+  content: "";
+  display: table;
+  clear: both;
+}
