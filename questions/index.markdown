@@ -22,7 +22,7 @@ tags: []
 comments: []
 ---
 
-This is a list of personal boundaries.  That is, as I learn or work in a particular area, I reach a limit and some questions remain.  This is also a list of things I want to [grok](http://en.wikipedia.org/wiki/Grok).
+This is a list of personal boundaries.  That is, as I learn or work in a particular area, I reach a limit and some questions remain.  This is also a list of things I want to [grok](http://en.wikipedia.org/wiki/Grok).  This list is incredibly hard to keep up to date.  Which is probably why it's an oddball on the web.  People want this but maybe people don't want to do it.
 
 <em>"The fool can ask more questions than the wise man can answer."</em>
 
@@ -64,19 +64,27 @@ This is a list of personal boundaries.  That is, as I learn or work in a particu
 - Use CSS resets
 - Understand HTML5 <a href="https://github.com/Modernizr/Modernizr/wiki/HTML5-Cross-Browser-Polyfills">polyfills</a>
 - Do a <a href="https://github.com/paulirish/lazyweb-requests">lazyweb_request</a> for Paul
+- Understand sass/bourbon/etc.
 
 
-### Ajax/Javascript
+### Javascript
 
-- <del datetime="2012-09-06T15:42:02+00:00">Use comet for pubsub, ie: database trigger, avoid polling in client.  Can use in many projects: cat_faucet, daemonizing punc (screen scraping) and others.</del>  I create a polling avoidance app called <a href="https://github.com/squarism/pollpole">pollpole</a> which used Faye instead.
+- <del datetime="2012-09-06T15:42:02+00:00">Use comet for pubsub, ie: database trigger, avoid polling in client.  Can use in many projects: cat_faucet, daemonizing punc (screen scraping) and others.</del>  I create a polling avoidance app called <a href="https://github.com/squarism/pollpole">pollpole</a> which used Faye instead.  This entry was so old is was filed under AJAX which no one even talks like that anymore.
+- Grok React.  A todo app to start with.  Finish udemy course.
+- React shopping cart.  I could do the API in 3 languages (eventually) but the frontend would be a struggle.
 
 
 ### Node
 
-- Take an example Sinatra app from the web and write it in Node.
+- <del datetime="2017-01-12">Take an example Sinatra app from the web and write it in Node.</del>  No one cares.  Alt-rails is Go/Elixir right now.
 - How could I write an app that reacts to events like when nodes come online?  I mean, behave like Zeroconf.  Peer up etc.
-- Is the sweet spot low-level message routing?
+- Is the sweet spot low-level message routing and small utilities?
 - Rails gives you so much, why and when would I pick Node?  What's the killer use case?
+
+
+### Elixir
+- Everything.  Read the book.
+- Start on phoenix.  Translate rails experience -> phoenix.
 
 
 ### Golang
@@ -84,12 +92,15 @@ This is a list of personal boundaries.  That is, as I learn or work in a particu
 - Write a file system trigger app (in-progress now).
 - Expand on Martini until it reaches Sinatra or Rails levels or functionality.  Can it be my go-to tool for web stuff?
 - How do you think at a lower level?  <a href="http://programmers.stackexchange.com/questions/220391/help-me-think-in-c">I've asked this before about C++</a>.
+- Finish integrating a few packages and ship it as a single binary (ringu project).
+- Rewrite `whatthefi` as golang because it has Slop dependencies which is annoying.  Then blog about it.
 
 
 ### NOSQL
 
-- Hadoop cluster setup (with VMs or small atom boxes)
-- Write a simple map/reduce job.
+- <del datetime="2017-01-12">Hadoop cluster setup (with VMs or small atom boxes)</del> _high level distributions are the way.  I'm not interested._
+- Write a simple map/reduce job other than wordcount.  I stopped at an ecommerce example because it was the
+  wrong use case and I understood how many transformations would be required.
 - Use a schema-less CouchDB store in a simple rails app.
 - <del>Use an ORM layer like Mongoid with MongoDB.</del>
 - Write a hotel finder / reservation system using Cassandra / rails.
@@ -97,9 +108,11 @@ This is a list of personal boundaries.  That is, as I learn or work in a particu
 
 ### Cloudish
 
-- Use EC2.  Grok the tools.  Find out how many instances I can spin up.
-- Figure out if EC2 is cheaper than my servers.
-- EC2 with capistrano?
+- <del datetime="2017-01-12">Use EC2.  Grok the tools.  Find out how many instances I can spin up.</del>AWS is
+  large and complicated.  EC2/S3/SNS/VPC (less so)/Data Pipeline are under mybelt now.
+- <del datetime="2017-01-12">Figure out if EC2 is cheaper than my servers.</del>  No.  Having a Digital Ocean box is nice though.
+- <del datetime="2017-01-12">EC2 with capistrano?</del>Cancelled.  Build with packer.  Deploy with terraform.  Small projects just use heroku.
+- How would I admin one million hosts?
 
 
 ### GameDev
@@ -156,12 +169,22 @@ This is a list of personal boundaries.  That is, as I learn or work in a particu
 - How to write a device driver.
 - Understanding "man vga.h".  I think I understand it <a href="http://groups.google.com/group/comp.os.linux.misc/browse_thread/thread/329d5a0b9416440d/0b47c8032c02a39d?lnk=st&q=vga.h&rnum=6&hl=en#0b47c8032c02a39d">more now than I did before</a>.
 - Sharing with without a SAN.  GFS2 + DRBD?  Or sharing spare local disk in a cluster cheaply.
-- How to sudo ALL except /bin/bash?  Improactical?  Impossible?
+- How to sudo ALL except /bin/bash?  Impractical?  Impossible?
 - Distributed filesystems, can you reclaim free space?  Does this work as something that would consolidate commodity hardware easily?
 - How virtual memory works vs real mode OS.  IE: what would happen if you wrote zeros to every device?
-- How would I admin one million hosts?
+
+
+### Hardware
+
 - Is there any chance that ethernet can be a fast interconnect?
 - Why do commodity southbridges suck?  Why are ASICs better?  Are ASICs better or maybe the custom concept has gone to FPGAs?
+
+
+### Networking
+
+- Spanning tree?
+- Never did Cat-6 wiring.
+- Optical networks.  Just did uplinks between switches.
 
 
 ### Music Production
@@ -175,6 +198,8 @@ This is a list of personal boundaries.  That is, as I learn or work in a particu
 - OSC from iPad to Ableton
 - Doing a live show with Ableton and a laptop, including optimization and stability (bouncing intense plugins tracks to straight WAVs) to avoid crashes.
 - Writing an Ableton script to control a song's energy, for example a slider that mixes in more and more layers.
+- Modeling a sound with an analog synth.
+- More plugins like Izotope's latest.
 
 
 ### Computer Science
@@ -190,7 +215,8 @@ This is a list of personal boundaries.  That is, as I learn or work in a particu
 ### Electronics Hacking
 
 - <del>How to use an Xbee and Arduino.</del>
-- How to power an Arduino using solar power and Xbee for a completely wireless sensor thing.
+- How to power an Arduino using solar power and Xbee for a completely wireless sensor thing.  Power
+  calculations etc for it to survive the night.
 - How to create a mesh or robot swarm.
 - <del datetime="2014-05-31T19:18:04+00:00">Reading input from an old notebook keyboard into an arduino.</del>  Tried and failed, it's too hard because of the ribbon cable.
 - <del>Creating a servo powered cat faucet.  How to make a simple robot arm?</del>
@@ -199,8 +225,9 @@ This is a list of personal boundaries.  That is, as I learn or work in a particu
 
 ### Security
 
-- How to publish a CA into LDAP for a poor man's PKI.
+- <del>How to publish a CA into LDAP for a poor man's PKI.</del>  I did this at home.  It wasn't really that exciting.
 - <del>How to publish a user certificate into LDAP.</del>
 - Find someone who monitors SANS for 0-day exploits and ask them how they think or work.  How do these people have jobs like that?  What are they called?  Grok it, not just get it answered.
 - How does a buffer overflow work?  And not just an overview.  Grok it.  Do it.  Audit existing code.
 - Write a certificate storage device for the iPhone.  Or a secure document reader with strong auth (I don't know which strong auth you could use ... maybe a face chooser).
+
