@@ -52,55 +52,22 @@ it's pretty nice.
 
 _(completely optional)_
 
-Here's a shortcut that will add a header like `# 1999-99-99` at the top of the file.
-Assign it to a shortcut and hit that at the beginning of the day.  It requires a sister
-ruby script to figure out what 'tomorrow' means.  It's aware of the weekend.
-
-{% highlight ruby %}
-#!/usr/bin/env ruby
-# put this in your path like ~/bin/tomorrow.rb or something
-# make it executable: chmod u+x ~/bin/tomorrow.rb
-
-require 'date'
-
-# pass a date string like 2020-12-25 to this script and it will increment it by
-# a day
-starting_date = nil
-if ARGV[0]
-  starting_date = ARGV[0]
-else
-  starting_date = Date.today.to_s
-end
-
-original_date = Date.parse starting_date
-
-# if today is Monday, increment by 3 because of the weekend
-if (Date.today.wday == 1)
-  puts original_date + 3
-else
-  puts original_date + 1
-end
-{% endhighlight %}
-
-Vim shortcut
+Here's a shortcut that will add a header like `# 3000-12-25 - Thursday` at the top of the file.
+Assign it to a shortcut and hit that at the beginning of the day.  Put this in your `.vimrc` or `.vimrc.local`
+depending on how you have vim setup.
 
 {% highlight vim %}
-" Increment the date from yesterday.  Used for my development log (journal).
-" If today is Monday, this should jump ahead three days.
-function! NextDate()
-  " get top line number
-  let topline = getline(1)
-  " trim the '# ' from a markdown header.  '# 2015-02-12' becomes '2015-02-12'
-  let trimmed_line = substitute(topline, '\v^\#\s+(.*)', '\1', '')
+" Insert the date at the top of a development log.
+nmap <leader>N ggi# <C-R>=strftime("%Y-%m-%d - %A")<CR><CR><CR>
+{% endhighlight %}
 
-  silent let next_date = system("tomorrow.rb " . trimmed_line)
-  " trim newline from output
-  let trimmed_next_date = substitute(next_date, '\n\+$', '', '')
-  call append(0, [ ("# " . trimmed_next_date), "" ] )
-  call append(1, "")
-  execute "normal! ggjo"
-endfunction
-map <leader>N  :call NextDate()<CR>
+Now, in command mode, hit `,N` for next date.  It will jump you to the top and start today's entry.
+It's fast, it's nice and it stays out of your way.  You'll do this all the time so this is important.
+
+{% highlight text %}
+1 # 2017-01-26 - Thursday
+2
+3 █
 {% endhighlight %}
 
 
