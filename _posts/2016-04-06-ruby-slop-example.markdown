@@ -47,9 +47,9 @@ end
 
 I disagree with `-h` here for hosts.  I think `-h` should always be help.  This is especially true
 when switching contexts.  When I switch to java or node or go or python, I have no idea
-what those communities' standards are.  I rely on what unix expects: *dash aitch*.
-I disagree also with this example because figuring out how to handle `-h` for help
-is the most confusing thing about using slop because you have to use exceptions
+what those communities' standards are.  I rely on what unix expects: *dash h*.
+I also disagree with the slop readme example because figuring out how to handle `-h` for help
+is the most _confusing thing_ about using slop because you have to use exceptions
 as flow control (sort of an anti-pattern).
 
 
