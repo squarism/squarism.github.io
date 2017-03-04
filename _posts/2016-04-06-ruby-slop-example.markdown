@@ -14,7 +14,9 @@ is about `2.3.0`, slop `4.3` is current, it's 2016 and Trump is going to be our 
 
 **update:** _Oh god, he really is our next president ..._
 
-<!-- more -->
+**update** _This CLI has since been ported to crystal as an example of that process._
+[Porting a Rubygem to Crystal]()
+
 
 ### It's ok that you need help
 
@@ -52,6 +54,8 @@ I also disagree with the slop readme example because figuring out how to handle 
 is the most _confusing thing_ about using slop because you have to use exceptions
 as flow control (sort of an anti-pattern).
 
+<!-- more -->
+
 
 ### A real example
 
@@ -72,7 +76,7 @@ Here's how you use it.
 {% highlight sh %}
 # paste in the script below into a file named whatthefi
 # put it in ~/bin if you want, or put it $PATH
-wget -O ~/bin/whatthefi https://raw.githubusercontent.com/squarism/whatthefi/master/whatthefi
+wget -O ~/bin/whatthefi https://raw.githubusercontent.com/squarism/whatthefi/v0.1.0/whatthefi
 
 # make it executable
 chmod u+x ~/bin/whatthefi
@@ -141,7 +145,9 @@ end
 ### Full Example
 
 I hesitate to post the whole script here because it is very long.  But here it is anyway.  If you prefer
-a git repo to puruse like a sane and reasonable person then [here it is](https://github.com/squarism/whatthefi).
+a git repo to puruse like a sane and reasonable person then [here it is](https://github.com/squarism/whatthefi/tree/v0.1.0).
+
+_Note that master has switched to Crystal for a [different blog post]()_.
 
 {% highlight ruby %}
 #!/usr/bin/env ruby
