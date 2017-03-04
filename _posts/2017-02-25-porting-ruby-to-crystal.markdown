@@ -3,7 +3,7 @@ layout: post
 status: published
 published: true
 title: Porting Ruby to Crystal
-date: 2017-02-24
+date: 2017-02-25
 ---
 
 So let's say I have some CLI I want to exist ...
@@ -94,7 +94,7 @@ upgrades).  Then I'm missing a gem.
 {% highlight bash %}
 # My own goddamn project
 ~ > whatthefi
-~/bin/whatthefi:80:in `main': 
+~/bin/whatthefi:80:in `main':
   uninitialized constant Slop::Parser (NameError)
   from ~/bin/whatthefi:136:in `<main>'
 {% endhighlight %}
@@ -396,9 +396,6 @@ from static typing or the changes between gems to shards.
 
 Overall this is the most port-y port I've ever done.  So that's cool.
 
-{% highlight ruby %}
-{% endhighlight %}
-
 
 ## Creating a Homebrew Formula for Crystal or Ruby
 
@@ -521,9 +518,9 @@ whatthefi > file whatthefi
 whatthefi: Mach-O 64-bit executable x86_64
 
 whatthefi > zip whatthefi-0.2.0.osx.zip whatthefi
-  adding: whatthefi (deflated 68%)
+adding: whatthefi (deflated 68%)
 
-whatthefi > ls -lh whatthefi*
+whatthefi > ls -lh whatthefi\*
 -rwxr-xr-x  1 user staff   723K Mar  1 19:24 whatthefi
 -rw-r--r--  1 user staff   232K Mar  1 19:25 whatthefi-0.2.0.osx.zip
 {% endhighlight %}
