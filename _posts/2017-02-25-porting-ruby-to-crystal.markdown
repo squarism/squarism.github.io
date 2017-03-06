@@ -1,15 +1,15 @@
 ---
 layout: post
 status: published
-published: false
+published: true
 title: Porting Ruby to Crystal
 date: 2017-02-25
 ---
 
 So let's say I have some CLI I want to exist ...
 
-The concrete example I'm going to use is [my previous blog
-post](http://squarism.com/2016/04/06/ruby-slop-example/) about Slop where I demonstrated how to use the slop
+The concrete example I'm going to use is [my previous blog post](http://squarism.com/2016/04/06/ruby-slop-example/)
+about Slop where I demonstrated how to use the slop
 gem.  The code in that post is slightly contrived and certainly not clean but I think it demonstrates how to
 test CLI _scripts_ which suffer from some testability problems (how do you capture STDOUT?).  The thing that
 it *does not* demonstrate is long term maintenance problems that happen after it's written once for a blog
