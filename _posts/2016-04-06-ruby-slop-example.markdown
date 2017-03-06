@@ -10,12 +10,10 @@ date: 2016-04-06
 
 I had an older post about ruby and slop but that's with Slop 3 which is basically locked to Ruby 1.9.
 No doubt, this post will bitrot too so please pay attention to the post date.  The current ruby
-is about `2.3.0`, slop `4.3` is current, it's 2016 and Trump is going to be our next president.
-
-**update:** _Oh god, he really is our next president ..._
+is about `2.3.0`, slop `4.3` is current, it's 2016 and the US election cycle is awful.
 
 **update** _This CLI has since been ported to crystal as an example of that process._
-[Porting a Rubygem to Crystal]()
+[Porting a Rubygem to Crystal](http://squarism.com/2017/02/25/porting-ruby-to-crystal/)
 
 
 ### It's ok that you need help
