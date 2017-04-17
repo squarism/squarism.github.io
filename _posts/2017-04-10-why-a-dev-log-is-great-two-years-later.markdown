@@ -8,9 +8,9 @@ date: 2017-04-10
 
 ![pensieve from harry potter](/uploads/2017/pensieve.jpg)
 
-I wrote about setting up a Dev Log about two years ago.  At this point, I've been using
-this setup for two years so I thought I'd write a little bit about it as a follow up.
-After all, I hate [uninvolved advice](https://twitter.com/squarism/status/851568859232350212).
+[I wrote about](http://squarism.com/2015/11/13/why-a-dev-log-is-great/) setting up a Dev Log about two years
+ago.  At this point, I've been using this setup for two years so I thought I'd write a little bit about it as
+a follow up.  After all, I hate [uninvolved advice](https://twitter.com/squarism/status/851568859232350212).
 
 
 ## What Have I Learned
