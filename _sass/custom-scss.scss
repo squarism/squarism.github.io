@@ -1,6 +1,8 @@
 // Add your own custom CSS here.
 @import "pygments-tomorrow";
 
+$rust: #846a51;
+
 .post-content img,
 .post-excerpt-home img,
 .post-nav img {
@@ -186,4 +188,9 @@
   content: "";
   display: table;
   clear: both;
+}
+
+.post-excerpt-home a, .post-content a {
+  color: $rust;
+  text-decoration: underline;
 }
