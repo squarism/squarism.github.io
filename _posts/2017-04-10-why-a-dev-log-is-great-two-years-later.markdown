@@ -48,6 +48,10 @@ The URL didn't jump out to me as _wrong_.  It's obvious now but the dev log help
 some clues around this.  The clues were also in the git log but not the surrounding context
 that we were working on making the site SSL-only.
 
+It especially didn't seem wrong as redirects are supported.  It turns out the service we are using
+doesn't handle redirects (or at least seems to not).  Just looking at the URL as `http://` doesn't
+seem _wrong_ at all.  But with the dev log context, it does.  *This* is what changed.
+
 
 ## The Surprise of the Double Me
 
@@ -60,36 +64,42 @@ _TO MYSELF_ as whining.  This is amazing.  Let me say this again.
 I still think this is good if it's a healthy outlet.  It's *not good* if it lets you polish your whining so it
 can be delivered as a pithy zinger to an unexpecting listener.  The dev log is about capturing your thoughts.
 Be careful what your thoughts are, you might get what you want.  I still like to capture task changes as this
-represents time lost or spent.
+represents time lost or spent.  Maybe this sounds like whining in the log but that's ok.
 
 
 ## Do Not
 
 Don't tag or organize your thoughts into an ontology or fancy structure.  The idea is to get in and get out.
 One friend is good enough with org-mode that he was able to structure his log more than me.  That's fine.
-Make it your own.  But don't start making per-project logs, I think it would just self-destruct.
+Make it your own.  But don't start making per-project logs, I think it would just self-destruct under ceremony
+burdens.  The dev log is something I write in during context switches.  Get in and get out.  See my previous
+post for shortcut keys.
 
 I however would leave clues for myself like `LEARNED:` or `TIL` which could be used for retros.  Or `PR: S3
 refactor` if I opened a pull request.  The idea is to capture _what have you been doing_ or _what is your time
 being spent on_.  I capture interruptions or helping someone too.  That's a great thing to jot down when you
 first come back to your desk or switch from Slack.
 
+> Helped Dumbledore with Docker
+
+
 ## Two Years Later
 
-`10435 lines` and two years.  My intention or goal was never length.  It was always the pensieve.
+`10435 lines` of text and two years.  My intention or goal was never length.  It was always the pensieve.
 Reading back on it is a massive log of bugs, TILs, tech gotchas and a frustration heat-sink.  There are
 face-palm mistakes, logs of miscommunications, "this library doesn't do that" notes and details.
 
-> # 2017-02-28 - Tuesday
-> Trying to do a deploy, S3 goes down.
+> ### 2017-02-28 - Tuesday
+> Trying to do a deploy, S3 goes down hard and breaks the Internet.
 
 There are rabbit hole results with fantastic details right before you come back from the rabbit hole:
 
 > Envconsul won't work for us because of our combination of unicorn zero downtime deployment configs, how we
-> want to handle ENV restarts and a limitation of Go (golang).
->   envconsul won't work because it does in fact restart the app correctly if -once
->   is passed and you -QUIT the worker.  But since -once has been passed, you can't reload the environment.
->   https://github.com/hashicorp/envconsul/issues/52
+> want to handle ENV restarts and a limitation of Go.  Envconsul won't work because it does in fact restart
+> the app correctly if -once is passed and you -QUIT the worker.  But since -once has been passed, you can't
+> reload the environment.
+> 
+> https://github.com/hashicorp/envconsul/issues/52
 
 This is the detail I wanted to capture so I can chunk it later as "we can't use envconsul" and then I can just
 text search for this later.  This is how it actually worked many times.
