@@ -45,14 +45,14 @@ FATAL: command "build" failed: no packages supplied
 So, delete that directory and let's do something more useful.
 
 Gb wants a subdirectory for a package under src to tell it what to build.  For our examples let's make a pretend calculator.
-Our working directory is going to be `pretend_calculator`.  This can be anywhere.  Under your home, tmp,
-Desktop.  Put it wherever you want.  Just assume we're in `pretend_calculator` after this point.
+Our working directory is going to be `pretend_calculator`.  This can be anywhere.  Under your home, tmp or
+Desktop.  Put it wherever you want.  Just assume we're in `pretend_calculator` as the project root after this point.
 
 {% highlight bash %}
 $ mkdir -p pretend_calculator/src/calculator
 {% endhighlight %}
 
-Create minimal code for this to build.
+Let's write minimal code for this to build.
 {% highlight go %}
 // src/calculator/calculator.go
 package main
@@ -74,11 +74,11 @@ So our project tree looks like this:
         └── calculator
             └── calculator.go
 
-When you `gb build`, it will create a binary `./bin/calculator` that doesn't print anything (our main is
-empty).  This project layout isn't that great because the main is really a `cmd`.  If we wanted to add more than one
-binary or CLI command, we'd have to change where main is and rename directories and files.  So this isn't
-great if we're building an equivalent of _Hello World_, it's hard to tell where `func main()` is if you just
-look at the filesystem.
+When you `gb build`, it will create a binary `./bin/calculator` that doesn't print anything (not surprising,
+our main is empty).  This project layout isn't that great because the main is really a `cmd`.  If we wanted to
+add more than executable, we'd have to change where the `main()` is and rename a few directories and files.
+So this isn't great if we're building an equivalent of _Hello World_, it's hard to tell where `func main()` is
+if you just look at the filesystem.
 
     $ tree -I pkg
     .
@@ -101,9 +101,9 @@ to run from `./bin`.
 Now this is a bit tricky.  If you name your source file `src/cmd/calculator.go` then you'll get a binary
 called `cmd`.  So what I'd do is name it something like `src/cmd/calculator/main.go` just show that this is
 where the main lives for this binary.  You can name the file something other than `main.go` but it needs to be
-in a subdirectory.  [The gb docs](https://getgb.io/examples/sample-project/) are a bit vague in the tree
-output describing this.  Also, note that binaries will always show up in `./bin`.  So I'm skipping that output
-in the tree listings.
+in a subdirectory.  [The gb docs](https://getgb.io/examples/sample-project/) are a bit vague in their example
+tree output describing this.  Also, note that binaries will always show up in `./bin`.  So I'm skipping that
+output in the tree listings.
 
 {% highlight go %}
 // src/cmd/calculator/main.go
