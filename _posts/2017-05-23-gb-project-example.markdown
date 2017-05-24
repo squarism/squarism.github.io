@@ -144,7 +144,7 @@ to different packages later.
 Let's move some of the app logic to another file and package.  This can be super confusing and yet it's the
 most common thing to do (in my opinion) when working with Go projects.  We're going to make an add function in
 a new file and a new package called `calculator`.  Note that this package is sort of arbitrary, it doesn't
-need to make your project name or anything.  Packages are subfolders under src.  This will be more clear in
+need to be your project folder name or anything.  Packages are subfolders under src.  This will be more clear in
 the next gb project examples.
 
 {% highlight go %}
