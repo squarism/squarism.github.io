@@ -322,7 +322,7 @@ What does a more complicated project look like?
 ## Larger Gb Example
 
 Let's split out every function into a file to make the project very easy to navigate.  Intuition should drive
-file search.  Add and subtract will go in functions.go.  We'll add the concept of a tape to display
+file search.  Add and subtract will go in their own files.  We'll add the concept of a tape to display
 information that will also have the opportunity to save state that will make the memory feature more realistic
 to how physical calculators work.
 
