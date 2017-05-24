@@ -16,7 +16,7 @@ own creations next to libraries.  You could even code directly in Dropbox if you
 about source control and sharing.  Overall, I really like gb for projects.  It's more normal to other
 languages and I don't have to have Go be the exception to my project backups / paths / scripts / everything.
 
-But I think examples a lacking.  The gb docs are great, I'm not saying that.  I just wanted to walk through
+But I think examples are lacking.  The gb docs are great, I'm not saying that.  I just wanted to walk through
 growing a project from small to medium to large and see how organization changes.  First, we'll start by
 building a fake calculator with no working pieces so it doesn't need a lot of organization.  Then as we add
 features, we'll pretend that it needs lots of separation and structure for future expansion and work.
@@ -42,7 +42,7 @@ $ gb build
 FATAL: command "build" failed: no packages supplied
 {% endhighlight %}
 
-So, delete that last one and let's do something more useful.
+So, delete that directory and let's do something more useful.
 
 Gb wants a subdirectory for a package under src to tell it what to build.  For our examples let's make a pretend calculator.
 Our working directory is going to be `pretend_calculator`.  This can be anywhere.  Under your home, tmp,
