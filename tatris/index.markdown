@@ -36,18 +36,11 @@ comments:
 
 <p>I wrote a tetris clone using Processing.org.  I used no game framework and simply graphic and tweening libraries.  I did it in about 6 weeks during a vacation between contracts.  It was the hardest thing I had ever done at the time.  I wrote <a href="http://squarism.com/2009/06/22/making-tatris/">a lengthy post</a> about how I constructed it.</p>
 
-The source code is available [here](https://github.com/squarism/tatris) but it is not reference code by any stretch.
+The source code is available [here](https://github.com/squarism/tatris) *but it is not reference code by any stretch*.
 
-<!--
 <p>
   <strong>Downloads</strong>
-  <a href="/files/tatris_0.3.1_mac.zip">Tatris 0.3.1 for Mac</a>
-  <a href="/files/tatris_0.3.1_win.zip">Tatris 0.3.1 for Windows</a>
-  <a href="/files/tatris_0.3.1_linux.zip">Tatris 0.3.1 for Linux</a>
+  <a href="https://www.dropbox.com/s/mgq0ph5s83o7zou/tatris-0.5.0-mac.zip?dl=0">Tatris 0.5.0 for Mac</a>
 </p>
-
-<p>Or you can play online (opens a popup).  Click <a href="http://squarism.com/files/tatris_applet/">here</a>. -->
-
-<em>Downloads relocated ... will have them up again soon.</em>
 
 <p><em>This game study has no associate with the Tetris LLC or it's properties.  If the name constitutes a breach of copyright, please contact @squarism on twitter.</em></p>
