@@ -1,9 +1,10 @@
 baseurl: "" # The subpath of your site. Use "" if you're hosting a blog at the root level.
 # url: "http://squarism.com" # the base hostname & protocol for your site
-title: "[ squarism ]"
+title: "□▢ SQUARISM"
 
 # This is used by feed.xml. Uncomment if you want to use it.
 description: "I'm from the valley of the heavy heads."
+
 links:
   - title: Home
     url: /
@@ -23,20 +24,20 @@ links:
     icon: home
 
 projects:
-  - title: Tatris - A tetris clone
-    url: /tatris
+  - title: Dream - A pixel animation in Ruby
+    url: https://github.com/squarism/dream
   - title: Arduino Cat Faucet
     url: /2011/03/09/arduino-cat-faucet-with-mongodb-and-rails
-    # description: Overengineered cat watering thing.
-  - title: 595 Chip with Redis
-    url: /2014/09/24/redis-595-timer-states/
   - title: Minecraft Metrics with Redis
     url: https://github.com/squarism/minecraft_metrics
-  - title: Spikes in the "Lab"
+  - title: Tatris - A tetris clone
+    url: /tatris
+  - title: Spikes in the Lab
     url: http://squarism.com/lab
 
 gems:
   - jemoji
+  - jekyll-seo-tag
 exclude:
   - "README.md"
   - "CHANGELOG.md"
