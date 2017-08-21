@@ -24,7 +24,7 @@ links:
     icon: home
 
 projects:
-  - title: Dream - A pixel animation in Ruby
+  - title: Dream - A Ruby pixel animation
     url: https://github.com/squarism/dream
   - title: Arduino Cat Faucet
     url: /2011/03/09/arduino-cat-faucet-with-mongodb-and-rails
