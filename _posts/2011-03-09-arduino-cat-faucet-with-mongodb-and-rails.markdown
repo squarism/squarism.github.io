@@ -3,13 +3,6 @@ layout: post
 status: publish
 published: true
 title: Arduino Cat Faucet with Mongodb and Rails
-author:
-  display_name: squarism
-  login: chris
-  email: squarism@gmail.com
-  url: ''
-author_login: chris
-author_email: squarism@gmail.com
 excerpt: ! "I built a robot arm for my cat during a month-long geekcation.  :) Here
   are some shots of the web interface.  The graph shows the percentage of the day
   that she drinks.\r\n<img src=\"/uploads/2011/03/cat_faucet_final-580x412.png\"
@@ -30,13 +23,6 @@ excerpt: ! "I built a robot arm for my cat during a month-long geekcation.  :) H
 wordpress_id: 874
 wordpress_url: http://squarism.com/?p=874
 date: 2011-03-09
-categories:
-- Ruby
-- Noteworthy
-- Arduino
-- Rails
-tags: []
-
 ---
 I built a robot arm for my cat during a month-long geekcation.  :) Here are some shots of the web interface.  The graph shows the percentage of the day that she drinks.
 
