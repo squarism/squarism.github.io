@@ -210,14 +210,15 @@ key difference to TDD that I will get to.
 
 You can start top-down or bottom up.  You can start a top-down test first:
 ```
+# top-down starts with a story
 When a user logs into the site
 Then they see a logout button
 ```
 
 Or you can start a bottom-up test first:
 ```
-This function/method returns a token
-  (expectation matcher for a unit testing library goes here)
+# bottom-up starts with low level details
+describe "login controller returns a token on success"
 ```
 It doesn't matter.  The thing you don't do is write any code in `src` or `lib`.
 You don't even start.  You don't even spike.  You write a test.  Hopefully your
@@ -227,7 +228,7 @@ executable format that is checked in and lives and acts.  Compare this with an
 email or a Slack message which sits and rots.
 
 Pros/Cons: I don't know many projects doing purely this.  I guess the pro is not
-being religious about letting tests drive the design
+being religious about letting tests drive the design.
 
 
 ### Test Driven Development
@@ -241,8 +242,7 @@ question.  See how testing is the thing?
 
 You don't really need to do TDD to have confidence before deployment.  But it's
 trying to fight human behavior.  Almost each step is trying to fight some
-historically problematic behavior.  Except for manual and no testing.  Those
-aren't doing a lot (unless testing has become an anti-pattern).
+historically problematic behavior (except for manual and no testing).
 
 You probably need a tight feedback loop, tooling and automation to make this
 happen.  It's also *not the best way to test* just because it's at the end of
@@ -329,7 +329,7 @@ from the previous example?  Can it handle numbers that are strings?  It can't!
 Did you write that down? Can you, yourself remember in a few months?  Tests
 really aren't docs but they are executable and they can stand-in as docs,
 especially as API usage.  So until you write docs (and maybe you won't), tests
-can act as capability documentation.  "What was the developer thinking"
+can act as capability documentation, ala "What was the developer thinking".
 
 
 ### Hooks and Addons
