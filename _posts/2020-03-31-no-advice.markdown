@@ -1,0 +1,32 @@
+---
+layout: post
+status: published
+published: true
+title: No Advice
+date: 2020-03-31
+---
+
+My new year's resolution was not to do advice for one fiscal quarter. That ends tomorrow. I thought I'd share what I've learned and what happened generally.
+
+Why? Advice to me is very uninvolved. It's fire and forget.
+
+> "I won the lottery, use the numbers I did."
+
+This is advice.  Give me a break. In addition to this, advice is exhausting to me because I worry the most **after** delivering advice. I continue to think about what we both said. Advice is inaccurate because I actually don't know everything and your project or your life really is unique. I've learned this the most when answering the question "what's the best git workflow?". Advice is in demand, there is so much information and tooling available but very little filtering and recommendation engines. People want advice because they want to save themselves the time to find out. Advice is almost always sought ahead of time when we haven't tried anything. Every once and a while, we want advice for when we are stuck but this just doesn't seem to happen that much.
+
+So my new year's resolution was to not do advice of any kind for 3 months. How did it go? _I failed miserably._  I think I broke the rule 5 times. Even though I said no advice and explained it very plainly to people, I ended up telling stories as plain facts but would wander into summaries that were advice actions. Advice is easy to avoid. Just never say "you should". For example, an intern asked me if they should switch to CS in college. There's no answer here but "you should" advice. I avoided it. I told them my early career stories and how I had very bad jobs in the early Internet / IT age. But ultimately this conversation and conversations like this would have me slip up with "you should study CS because it sounds like you're into it". Whoops.
+
+But it was nice having this goal. I chimed in a lot less on Slack. I have essentially quit twitter so that's that. I ignored flamewar bait of any kind, even pre-flame-war bait. "It's going to turn into advice". It was good practice. My opinion doesn't matter was the general mindset and that was good.
+
+Unfortunately, in the abstract world of software and sometimes being in a senior position, advice is what it comes down to. People are looking for optimization. They want lessons learned and stories.  You have something to say and they know it.  You can't just be quiet.  They want advice because they want to pre-learn.  So do I!  I want advice.  I want to pre-learn instead of bumbling my way through first-hand experiences.  But I also know that these questions are so insanely hard to answer without a few paragraphs of context and history.
+
+* "Should I learn Rust?"
+* "What's the best tech stack for rapid web development?"
+* "What's wrong with pipenv?"
+* "Is Ruby dead?"
+* "You are critical of Flask, what's so bad about it?"  (this is a trap that leads to "you should")
+* (a project underwater) "What do you think we should do?"
+
+These are questions that Quora will accept but Stackoverflow won't. People want to know these things. But they are valid and terrible questions to me.  Mostly because the answer is so long it would be a book. Not because the asker is stupid/evil but because software is too abstract and too rapid. If we could measure anything then there wouldn't be bias, guesses and we all wouldn't have to give advice that ultimately, changes with time and perspective.
+
+Advice bit-rots and it wasn't very good content to begin with.  A real mystery is if this experiment taught me anything.  Will I chime in less?  Will I avoid opinion threads?  Will I try to die on hills / represent?  I don't know.  It was a good experiment either way.  More mindfulness.
