@@ -85,4 +85,4 @@ mechanics I don't get.  This is true of a lot of games with "mods".  The communi
 trenches from within a trench by extending the game.  But I really don't grok the fun.
 
 Sometimes, I just let the weight of the trenches flow over me and appreciate the complexity.
-Like looking at a landscape from really far away.  It's beautiful because it's missing the details.
+Like looking at a landscape from really far away.  It's beautiful to me because I am missing the details.
