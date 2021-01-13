@@ -54,7 +54,7 @@ that thing!
 
 > Someone: I hate javascript.
 
-I know what they mean to say but … what if it changes?  Software can change.  Software can change.  Culture is forever but software usually changes.
+I know what they mean to say but … what if it changes?  Software can change.  Software will change.  Culture is forever but software usually changes.
 
 > Sprinkle Time on it:
 > - When's the last time you used javascript?
