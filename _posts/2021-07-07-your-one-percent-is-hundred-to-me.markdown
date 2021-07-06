@@ -33,7 +33,7 @@ In _Fast and the Furious_ everything is cars.  Cars solve all problems.  There a
 
 Ok, back to the youtube red popup.  Even if we could design a popup with memory (this absolutely could be a thing), no for-profit company will use it.  We could absolutely design a popup component that has memory.  "How many times has Chris dismissed me?  Maybe I'm annoying!".  No one would use it.  Certainly not at scale.  At scale, 1% is amazing.  It enables projects, it destroys worry.
 
-<img alt="youtube red popup" style="margin: auto; width: 100%; " src="/uploads/2021/error_boundary.png" />
+<img alt="error boundary" style="margin: auto; width: 100%; " src="/uploads/2021/error_boundary.png" />
 
 There's [this great talk from Velocity NY 2013](https://www.youtube.com/watch?v=PGLYEDpNu60) where Richard Cook explains that businesses never know where the failure line is.  This isn't really in the same domain as reliability but I think it applies.  It's a great talk, you should watch it.
 
