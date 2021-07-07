@@ -14,13 +14,20 @@ I'll also say that every project is different and as much as I want there to be 
 
 Git is really dumb (I mean the cli utility, not the "wrapper frontends" like Github or Gitlab).  It's in the name.  It's in the slogan: "stupid content tracker".  It only really knows how to work with text.  You can teach it to understand [machine learning binaries](https://dvc.org/) and possibly image assets but this is fighting the default.  Game developers know this well (I don't).  So it's interesting when I see other people trying to do it anyway.  What I see is a lack of tooling in the language they are using.
 
-Let me give some concrete examples.  First, someone that is trying to do Git tricks for a game project.  The answer is go inside your editor (in this case, Unity).  They probably continued with git submodules, I'm not sure.  Second, someone who was trying to track what code is in what place.  They have current releases apparently.  The answer here is probably a spreadsheet, automation software or feature flags (this whole project was a bit of an oddball).  Third, someone who is trying to run code automatically on the repo (git hooks).  The answer here is CI.  Finally, someone who wants to share code between projects so they want to use submodules.  The answer here might be to look at your language's packaging and produce a library just like the ones you are consuming from the Internet.
+Let me give some concrete examples.
+
+1. Someone that is trying to do Git tricks for a game project.  The answer is go inside your editor (in this case, Unity).  They probably continued with git submodules, I'm not sure.
+2. Someone who was trying to track what code is in what place.  They have parallel supported releases apparently.  The answer here is probably a spreadsheet, automation software or feature flags (this whole project was a bit of an oddball).  
+3. Someone who is trying to run code automatically on the repo (git hooks).  The answer here is CI.  
+4. Someone who wants to share code between projects so they want to use submodules.  The answer here might be to look at your language's packaging and produce a library just like the ones you are consuming from the Internet.
 
 In each case, the details don't matter too much.  Someone is trying to trick Git into doing something.  It's almost like a challenge.  "If I can sneak past the guard then I can ...".  Just stop for a minute.  Listen to other projects and how they are doing it.  Explore other languages.  You don't have to learn the whole thing.  If you are stuck in Java or C++, learn about Yarn/Cargo/Bundler.  Look at what Go went through.
 
 <img alt="git is a water pipe" style="margin: auto; width: 65%; " src="/uploads/2021/kool-aid.png" />
 
-But most of all, move up a level.  Go into your language, your IDE, your framework or your engine.  Git is this plumbing bringing you water and you need to add the Kool-Aid packet for your Kool-Aid.  It's so much closer to what you are trying to make.
+But most of all, move up a level.  Instead of hatching a Git plot, move toward your language, your IDE, your framework or your engine.  Git is this plumbing bringing you water and you need to add the Kool-Aid packet for your Kool-Aid.  It's so much closer to what you are trying to make.
+
+Let me give you two more examples while sharing a couple of neat tips.
 
 ## Getting Out of Yarn.lock Hell
 
