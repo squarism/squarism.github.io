@@ -25,7 +25,7 @@ Flipper.enable_percentage_of_actors :youtube_red_popup, 1
 
 But now in this (long established) digital world everything is like this.  I get sampled so often that I get popups as not occasional crackles and pops but as constant noise.  This is aggregate personalized noise across all the services I use.  I get the random sampling so often that I approach the constant random noise that the feature flags were trying to avoid from their perspective.  But this is the problem, it's just one perspective.
 
-> If I am 1% sampled 100 times, I get 100% random sampling because I'm using 100 services making 100 decisions.
+> If I am 1% sampled 100 times, I experience 100% random sampling because I'm using 100 services.
 
 The particular numbers I'm using are being cute.  I'm sorry.  My point is, it's not 1% sampling to me.  I'm a part of many things but the single **things** think that they are everything.
 
