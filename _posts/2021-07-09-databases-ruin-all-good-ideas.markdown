@@ -10,18 +10,19 @@ Stop me if you've heard this one before ...
 
 <img alt="a typical three tier setup" style="margin: auto; width: 80%; " src="/uploads/2021/databases_ruin_01.png" />
 
-Here is a three tier web stack.  It has lots of web and app servers but only one database box.  You can substitute this with cloud things but the principles are the same.  I bet your infrastructure looks really similar.
+Here is a three tier web stack.  It has lots of web and app servers but only one database box.  You can substitute this with cloud things but the principles are the same.  I bet your infrastructure looks really similar.  For the remainder of the post, assume I mean a traditional RDMS when I say database.
 
-Why is there always only `db01`?  Your box might be called `prod-db1` or `mysql-01`.  You know the one I mean.  Maybe you have a `db02` but I bet it's running in a special mode.  It is another exception to the exception.
+Why is there always only `db01`?  Your box might be called `prod-db1` or `mysql-01`.  You know the one I mean.  Maybe you have a `db02` but I bet it's running in a special mode.  Db02 is another exception to the exception (maybe a read-only replica for reporting).  Whatever the case, I bet there's only one `db01` but there are so many of the other things.  Why?
 
-In fact we can summarize this whole stack like this:
+We can summarize scaling each tier in this whole stack like this:
 
 * clients: not our problem, there's millions of them
 * web tier: easy-peasy, it's a daemon plus a config file
-* app tier: it's our "code", it's the most work but we have it in a pool
-* database tier: don't touch it!
+* app tier: it's our code / stuff; it's in a load balancer pool even if it has state we have tricks to scale it
+* database tier: don't touch it!  there can only be one!
 
-You might even have a team for the database tier.  What is going on here?
+Each tier is either easy to reason about scaling out horizontally except for the database.  What is going on here?  I'm going to go over a few _good ideas_ and why they die on the database tier.
+
 
 ## The Good Ideas
 
@@ -29,19 +30,23 @@ You might even have a team for the database tier.  What is going on here?
 
 Load balancer pools work great for tiers without state.  You can even use tricks like sticky sessions when you have some state.  But the request is short.  A database resists these ideas because connections are long and the data is local.  You can't put database volumes on a shared drive and expect it to work.  So the problem is state.
 
+
 ### Let's Dockerize
 
 Docker works great for tiers without state.  You can dockerize your database but you don't get the scaling and uniformity advantages of the other tiers.  Docker is great for production and deployment but you are not deploying your database that often without a lot of fancy uptime tooling.  In addition, you have footguns with non-obvious behavior around volumes.  You **can** do it but it's the exception when the app and web tiers are so easy to explain and reason about.
 
+
 ### Let's Go Active-Active
 
-Horizontal scaling doesn't work on the database tier.  You can't easily have a read/write (active) pair.  There are alternate daemons and methods but here I mean common relational SQL databases.
+Horizontal scaling doesn't work on the database tier.  You can't easily have a read/write (active) pair.  There are alternate daemons and methods (NewSQL) but here I mean common relational SQL databases.
+
 
 ### Let's Do Immutable or Config Management
 
-What about NixOS?  Or some other hot and trendy new idea?  My first concern and question is about the database layer.  I have [asked this question about NixOS](https://lobste.rs/s/2ayklq/erase_your_darlings_immutable) and apparently it's ok to do so.  I don't completely grok it.
+What about NixOS?  Or some other hot and trendy new idea?  My first concern and question is about the database layer.  I have [asked this question about NixOS](https://lobste.rs/s/2ayklq/erase_your_darlings_immutable) and apparently it's ok to do so.  I don't completely grok this but I guess this is part of my point.  The database tier is a special case again.
 
-You definitely can't do the [cattle thing](https://devops.stackexchange.com/questions/653/what-is-the-definition-of-cattle-not-pets) because you can't have a load balancer.  You wouldn't do the cattle thing in the app tier if you didn't have a load balancer.
+You definitely can't do the [cattle thing](https://devops.stackexchange.com/questions/653/what-is-the-definition-of-cattle-not-pets) because you can't have a load balancer.  You probably wouldn't do the cattle thing in the app tier if you didn't have a load balancer.  You only do the pets/cattle thing because you have a pool with a health check.
+
 
 ### Let's Mock Our Database
 
@@ -56,18 +61,18 @@ So your project might have fake adapters but not for mysql/postgres.
 
 ### Let's Use The Cloud
 
-Renting large boxes usually doesn't make sense financially.  You'd be better off just buying.  The same is true for performance clusters and GPUs.
+Renting large boxes usually doesn't make sense financially.  You'd be better off just buying.  The same is true for performance clusters and GPUs.  The scaling and pooling problems from above don't change.  Even a SaaS has the same issue.
 
 
 ## A Horrible Story
 
-I once worked on an Oracle cluster that required a ton of specialized software, hardware, admin and configuration.  Almost the entire idea was about availability and performance.  The CEO just couldn't stand the fact that half of the system is wasting money being read-only.  He wanted read-write on both nodes.  Active active.  This was a long time ago but the CAP theorum isn't going to change.  I learned a ton about splitbrain mostly through trauma.
+Very long ago, I worked on an Oracle cluster that required a ton of specialized software, hardware, admin and configuration.  Almost the entire idea was about availability and performance.  The CEO just couldn't stand the fact that half of the system is wasting money being read-only.  He wanted read-write on both nodes.  Active active.  This was a long time ago but the CAP theorum isn't going to change.  I learned a ton about splitbrain mostly through trauma.
 
-You couldn't just download a (relational) database that will do horizontal scaling.  You had to buy all these options and stuff.  It was super expensive.  I forget the price, probably $40k for the db license and $20k for the clustering addon.  And then you needed specialized disk.  The hardware was really pricey because it was Sun at the time.
+At the time, you couldn't just download a relational database that will do horizontal scaling.  You had to buy all these vendor options and stuff.  It was super expensive.  I forget the price, probably $40k for the db license and $20k for the clustering addon.  And then you needed specialized disk and volume software.  The hardware was really pricey too because it was Sun at the time.
  
-During install it tells you to plug in a crossover cable to a dedicated NIC.  Like, you had eth1 just sitting there or you had to buy a NIC for it.  The install isn't going to work unless you do this.  In addition, you need to set up a quorum disk on your SAN to act as a tiebreaker (more on that later).  All the traffic over this crossover cable is ssh.  All it's doing is doing relational database agreement.  There's no data sharding or splitting you have to do so it's all or nothing.  This is why you have a dedicated NIC.
+During cluster install it tells you to plug in a crossover cable to a dedicated NIC.  Like, you had eth1 just sitting there free or you had to buy a NIC for it.  I think we bought a NIC.  The install isn't going to work unless you do this crossover thing.  In addition, you need to set up a quorum disk on your SAN to act as a tiebreaker (more on that later).  All the traffic over this crossover cable is SSH.  All it's doing is doing relational database agreement over SSH.  There's no data sharding or splitting you have to do so it's all or nothing.  Full-on ACID agreement, all the time.  This is why you have a dedicated NIC because of network load.
 
-So you finally beat the CAP theorum.  You got your active-active database and you didn't have to change your app at all.  Now comes the trade off the the devil details.  ACID means we have to 100% agree on every query.  That means, all nodes, all the time.  Your nervous system is this crossover cable (actually a pair).  What happens if I take some scissors to it?  
+So you finally beat the CAP theorum.  You got your active-active database and you didn't have to change your app at all.  Now comes the trade off, the the devil's details.  ACID means we have to 100% agree on every query.  That means, all nodes, all the time.  This is why scaling nodes was so bad.  You got about 50% on the second node and then +25% on the third node.  It stopped scaling after 4.  Remember, each node is incredibly expensive.  Also, your nervous system is this crossover cable (actually a pair).  What happens if I take some scissors to it?  
 
 Well, db01 thinks it's up.  And db02 thinks it's up.  But db02 thinks db01 is gone.  And db01 thinks db02 is gone.  So, now what?  What happens if a write comes in to both db01 and db02?
 
@@ -80,6 +85,6 @@ What's foo supposed to be?  _s p l i t b r a i n_
 
 So this is why you configured a quorum disk.  When the cluster looses quorum, there's a race to the quorum disk.  It writes a magic number to the start of the disk sector (not even like in the normal part of the disk iirc) and whoever arrives 2nd, panics on purpose.  Now you have survived split brain.  But you needed crazy shared disk technology to even do this for arbitrary reasons.
 
-It was a crazy time and I should share this as production horror chops sometime later.  A lot of the technology in this story is super old.  But some of it hasn't changed.  When I learned Mongo, I had a high degree of context and I didn't have to ask "yeah but why" a lot.
+It was a crazy time and I should share this as production horror chops sometime later.  A lot of the technology in this story is super old.  But some of it hasn't changed.  When I learned Mongo, I had a high degree of context from this horror and I didn't have to ask "yeah but why" a lot.
 
-Way back when, our CEO couldn't stand to have half the hardware sitting around doing nothing.  He wanted it involved.  It's not like it's a "dumb idea".  It's a good idea and a lot of people have good ideas around the database but databases ruin all good ideas.
+Way back when, our CEO couldn't stand to have half the hardware sitting around doing nothing.  He wanted it involved.  It's not like it's a "dumb idea".  It's a good idea and a lot of people have good ideas around the database.  To me though, databases ruin all good ideas.
