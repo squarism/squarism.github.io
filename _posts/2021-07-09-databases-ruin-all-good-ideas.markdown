@@ -52,18 +52,18 @@ You definitely can't do the [cattle thing](https://devops.stackexchange.com/ques
 
 ### Let's Mock Our Database
 
-During unit testing you might want your tests not to hit an API.  You can mock out the HTTP interface and test against a mock response.  This is basically mocking out someone else's (or your own) app server.  So why don't people do this with the database?
+During unit testing you might want your tests not to hit an API.  You can mock out the HTTP interface and test against a mock response (or even better, ignore the response entirely).  This is basically mocking out someone else's (or your own) app server.  So why don't people do this with the database?  Is it because the response is so important?  It's more of a language and state engine than a simple message passing metaphor?
 
 You can find fakeredis adapters in Python, fake caches in Ruby and in-memory databases in C#.  But it's all surrounded by caveats.  It's just easier to create a test database because databases ruin all good ideas.  At least database tech enables a workaround.
 
 There is so much state and back-and-forth protocol in a relational database that treating it like client/server message passing is too simple.  All the state and data lives in the database.  Even triggers and internals would be too complicated to account for.  It's just easier to create a test database because database namespaces/collections are very easy to create.  Databases also have the advantage of rolling back in a transaction which works great for unit testing.
 
-So your project might have fake adapters but not for mysql/postgres.  Or maybe you use sqlite in dev/tests and something bigger in prod.  But this product selection difference doesn't happen with caches/queues.  See what I mean?
+So your project might have fake adapters but not for mysql/postgres.  Or maybe you use sqlite in dev/tests and something bigger in prod.  But you don't change entire products for your caches/queues based on the environment do you?  See what I mean?
 
 
 ### Let's Use The Cloud
 
-Renting large boxes usually doesn't make sense financially.  You'd be better off just buying.  The same is true for performance clusters and GPUs.  The scaling and pooling problems from above don't change.  Even a SaaS has the same issue.
+Renting large boxes usually doesn't make sense financially.  You'd be better off just buying.  The same is true for performance clusters and GPUs.  The scaling and pooling problems from above don't change.  Even a SaaS has the same issue.  In this case the singular `db01` box just moves to the cloud.
 
 
 ## A Horrible Story
