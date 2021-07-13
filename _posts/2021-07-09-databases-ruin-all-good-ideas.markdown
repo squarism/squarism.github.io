@@ -2,7 +2,7 @@
 layout: post
 status: published
 published: true
-title: Database Ruin All Good Ideas
+title: The Database Ruins All Good Ideas
 date: 2021-07-08
 ---
 
