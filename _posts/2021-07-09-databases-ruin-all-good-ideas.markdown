@@ -66,6 +66,16 @@ So your project might have fake adapters but not for mysql/postgres.  Or maybe y
 Renting large boxes usually doesn't make sense financially.  You'd be better off just buying.  The same is true for performance clusters and GPUs.  The scaling and pooling problems from above don't change.  Even a SaaS has the same issue.  In this case the singular `db01` box just moves to the cloud.
 
 
+### Let's Keep It Simple with a Microframework
+
+I really like the syntax and style of [Labstack's Echo framework](https://github.com/labstack/echo) for Golang.  But my experience changed when adding a database to my app.  The simplicity fell apart in that putting a global variable makes it hard to test.  Without state, I don't have this problem.  There are many microframeworks where this happens.  You can almost predict it happening if you look at the table of contents for the documentation and see that they have no database story.
+
+
+### Let's Deploy Often with a Chatbot
+
+We had a chatbot that had two endpoints for deployment:  `/deploy` and `/deploy-with-migrations`.  It worked well, we did deploys almost every day.  I'm not saying that the database is unusable but this illustrates my point.  The happy path of `/deploy` is naive.  It was probably written first.  And then you say "oops, I forgot about the database" and you have to write a special or more careful version to do database migrations.
+
+
 ## A Horrible Story
 
 Very long ago, I worked on an Oracle cluster that required a ton of specialized software, hardware, admin and configuration.  Almost the entire idea was about availability and performance.  The CEO just couldn't stand the fact that half of the system is wasting money being read-only.  He wanted read-write on both nodes.  Active active.  This was a long time ago but the CAP theorum isn't going to change.  I learned a ton about splitbrain mostly through trauma.
