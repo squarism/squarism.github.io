@@ -2,7 +2,7 @@
 layout: post
 status: published
 published: true
-title: Your Rare A/B Testing is Constant To Me
+title: Your 1% A/B Testing is A Lot To Me
 date: 2021-07-07
 ---
 
@@ -12,7 +12,7 @@ There's this popup thing happening.  I'm not sure it's because [I really don't c
 
 Imagine we have a company.  We've been in business for a while and we're public.  But along comes automation and analytics and we find if you pull this lever, you get a few more hits on the website.  If we send an email, we make X.  If we send an SMS, we make Y.  If we put a banner on the site, we make Z.  On and on.  And us having scale, dashboards and reports; this is almost like a noise function through a filter.  We're tracking our lever pulls and our knob twists.  This is what we wanted all this information for.  We wanted to optimize and act.
 
-So we make our site, our cart, our onboarding, our existing users' experiences all have some options to randomly upsell or increase revenue.  Not on purpose from the start but iteratively through many small changes.  Why wouldn't we?  If someone finishes checking out, we send an email making sure that everything went find and that email has more product links.  When we do this, we notice that we make +X%.  Just on random noise from sampling.
+So we make our site, our cart, our onboarding, our existing users' experiences all have some options to randomly upsell or increase revenue.  Not on purpose from the start but iteratively through many small changes.  Why wouldn't we?  If someone finishes checking out, we send an email making sure that everything went fine and that email has more product links.  When we do this, we notice that we make +X%.  Just on random noise from sampling.
 
 ```ruby
 # sample all users as some_users
