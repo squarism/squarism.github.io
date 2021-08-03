@@ -3,7 +3,7 @@ layout: post
 status: published
 published: true
 title: Scenario Practice
-date: 2021-07-31
+date: 2021-08-06
 ---
 
 One of the hardest questions I've been asked is "how do I get production experience?".  Someone was looking for a job and they were seeing job requirements about production and operations.  They didn't have any.  The landscape has changed quite a bit since I was a sysadmin but the Catch-22 is the same.  The Catch-22 being: you can't get ops experience without an ops job and you can't get an ops job without ops experience.  But I think the chicken-egg cycle can be broken.  Let me explain what _Scenario Practice_ is and offer some scenarios to practice.
@@ -37,6 +37,7 @@ It doesn't matter too much.  The important thing here is to make the client sens
 For example, the solution to the above scenario is this:
 <img alt="mock client solution" style="width: 50%; margin: auto;" src="/uploads/2021/overview_solution.png" />
 
+<!-- more -->
 
 ### Section 1 - Three Tier Web Application Uptime
 
