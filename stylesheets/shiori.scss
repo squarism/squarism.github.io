@@ -8,7 +8,7 @@ $headings-font-family: "Montserrat", "Helvetica Neue", Arial, sans-serif;
 $headings-font-weight: 700;
 
 $font-size-base: 13px;
-$font-size-h1: floor(($font-size-base * 2));
+$font-size-h1: floor(($font-size-base * 2.5));
 $font-size-h2: floor(($font-size-base * 1.4));
 $font-size-h3: floor(($font-size-base * 1));
 $font-size-h4: floor(($font-size-base * 1));
@@ -141,7 +141,7 @@ h3 {
 
 .navbar-brand {
   font-weight: $headings-font-weight;
-  font-size: $font-size-h1;
+  font-size: 48px;
 }
 .navbar {
   font-family: $headings-font-family;
