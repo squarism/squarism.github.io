@@ -19,7 +19,7 @@ So, making your main machine Linux, learning some shell skills and surviving mig
 
 ## Scenario Practice
 
-_Scenario Practice_ is about setting up production scenarios to fight the catch-22 of ops experience.  It's probably useful for people already in ops too.  Ops folks that are wondering and worrying how they would handle a certain situation.  I'm just going to describe some of the scenario ideas I've had, mostly ordered from simplest to most complicated.  The situations mostly involve a developer/ops hybrid role.  So if you are purely ops and I say to create an application, you might have to improvise or find an existing app (maybe [todomvc](https://todomvc.com/) but you need agency and control of this app to change it).  The point here is to explain _Scenario Practice_, give it a name and perhaps inspire some things to practice.
+_Scenario Practice_ is about setting up production scenarios to fight the catch-22 of ops experience.  It's probably useful for people already in ops too; ops folks that are curious, worried or want to practice these situations.  I'm just going to describe some of the scenario ideas I've had, mostly ordered from simplest to most complicated.  The situations mostly involve a developer/ops hybrid role.  So if you are purely ops and I say to create an application, you might have to improvise or find an existing app (maybe [todomvc](https://todomvc.com/) but you need agency and control of this app to change it).  The point here is to explain _Scenario Practice_, give it a name and perhaps inspire some things to practice.
 
 
 ## The Mock Client
