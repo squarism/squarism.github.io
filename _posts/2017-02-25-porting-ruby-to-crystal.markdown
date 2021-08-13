@@ -23,7 +23,7 @@ otherwise keep my gems and projects sandboxed.  Because (as it did happen) pry u
 behind causing slop problems between projects.  Distributing this gem to our team was problematic because
 different people used different gem isolation tools.
 
-So ... uh ... what if I just want a CLI?  Why can I just live and die in `/usr/local/bin` like "normal" unix-y
+So ... uh ... what if I just want a CLI?  Why can't I just live and die in `/usr/local/bin` like "normal" unix-y
 utilities do?
 
 
