@@ -14,6 +14,8 @@ These examples are in Python just to change things up a bit.  These concepts app
 
 When I use the term _stomp on a method_, I mean the test library overwrites the real method.  In python this might be `.mock` in pytest or `MagicMock`.  In Ruby, it's `expect` or `allow`.  In Javascript, it's Jest's syntax or Sinon's (Jest is fine).  Stomp just means overwrite at testing time.
 
+Finally, this is a unit testing perspective.  There's a section that talks about mocking trade-offs which you should be covering by other levels of testing depending on criticality.
+
 
 ## The Start
 
