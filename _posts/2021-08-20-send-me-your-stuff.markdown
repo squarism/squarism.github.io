@@ -18,7 +18,7 @@ The wrong type of email to send:
 > This is a hard question to answer but I'll try anyway.  If you are doing a mobile app, you probably want to hire a few ...<br />
 > [ several pages of content ]
 
-Instead of that, send:
+Instead of that, send this:
 > Let's find a time to chat about hiring and the technical landscape.  We can look at some industry surveys and talk about what the different sweet spots and communities are like.  This will probably take about two hours depending on the detail.  We can start with a short 30 minute meeting to talk about things at a high level but the additional conversations will probably get you primed for hiring a recruiter and making a job description. <br /><br />
 > Sincerely,<br />
 > You
