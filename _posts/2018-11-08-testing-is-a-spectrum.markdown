@@ -46,14 +46,14 @@ The TLDR here is:
 
 No one does "No Testing" but people think they do.  This is typing the code,
 never running it and shipping it to production or scheduling it to run for real.
-You never observe it running.  No one does this but they think they have no tests
-when they only have manual tests.
+You never observe it running.  When people say they have no tests they really
+mean they only only have manual tests.
 
-Think about this with "hello world".  You would type hello world code, save it
-and put it somewhere as production. You would dust off your hands, say _"another
-job well done!"_ and go home.  No one does this.  From here on out, this isn't
-what I mean by testing vs no testing.  By testing, I mean automated testing
-and that includes your local machine.
+Think about this with "hello world".  Someone would type out hello world, save it
+and put it somewhere as production and never run it.
+They would dust off your hands, say _"another job well done!"_ and go home.
+No one does this.  From here on out, this isn't what I mean by testing vs no testing. 
+By testing, I mean automated testing and that includes your local machine.
 
 Pros:
 * You are infallable and you type the correct solution perfectly
