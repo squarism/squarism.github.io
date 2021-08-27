@@ -102,14 +102,8 @@ $rust: #846a51;
   padding-right: 1em;
 }
 
-.contact_details .detail_value {
-  position: relative;
-  left: -4.5em;
-  width: 30%;
-  margin-top: 0.4em;
-  padding-bottom: 0.4em;
-  z-index: 5;  /* putting this under 0 makes the links unclickable */
-  font-size: 14px;
+.contact_details .detail_key a, a:link, a:visited, a:hover, a:active {
+  color: white;
 }
 
 .business_card .gutter_bar {
