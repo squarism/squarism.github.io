@@ -38,6 +38,7 @@ projects:
 plugins:
   - jemoji
   - jekyll-seo-tag
+  - jekyll-feed
 exclude:
   - "README.md"
   - "CHANGELOG.md"
