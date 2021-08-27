@@ -31,12 +31,11 @@
     Fav Projects
   </h3>
 
-
   <ul class="nav">
   {% for project in site.projects %}
-    <li>
+    <li class="project-link">
       <a href="{{project.url}}">{{ project.title }}</a>
-     </li>
+    </li>
   {% endfor %}
   </ul>
 </div>
