@@ -100,7 +100,19 @@ $rust: #846a51;
   padding-right: 1em;
 }
 
-.contact_details .detail_key a, a:link, a:visited, a:hover, a:active {
+.contact_details .detail_key a:link {
+  color: white;
+}
+
+.contact_details .detail_key a:visited {
+  color: white;
+}
+
+.contact_details .detail_key a:hover {
+  color: white;
+}
+
+.contact_details .detail_key a:active {
   color: white;
 }
 
@@ -175,8 +187,4 @@ $rust: #846a51;
 .post-excerpt-home a, .post-content a {
   color: #aaa;
   text-decoration: underline;
-}
-
-.project-link a {
-  color: #1F282C;
 }
