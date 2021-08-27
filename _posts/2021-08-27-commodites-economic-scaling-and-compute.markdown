@@ -78,4 +78,4 @@ In the future, maybe commoditiy and server x86 chips are replaced by ARM which w
 
 ## Wrap Up
 
-I hope these reductive cause and effect topics aren't too polarizing.  I just wanted to highlight some engines of [S-curves](https://www.open.edu/openlearn/nature-environment/organisations-environmental-management-and-innovation/content-section-1.7) and a few examples in one place.
+I hope these reductive cause and effect topics aren't too polarizing.  I just wanted to highlight some second-order effect engines of [S-curves](https://www.open.edu/openlearn/nature-environment/organisations-environmental-management-and-innovation/content-section-1.7) and a few examples in one place.
