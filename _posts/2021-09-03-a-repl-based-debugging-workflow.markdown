@@ -25,7 +25,7 @@ function findUsers(users, age) {
 
 It's causing some issues somewhere else and we have no idea what root cause is.  In the real world, ending up at a tiny piece of code where we think the problem lies is very lucky.  This is probably the result of lots of tracing and investigative work.  But let's just pretend that we ended up here.
 
-We're going to walk through our approach and challenge ourselves to think about why and how we are thinking.  We are also not going to turn into computer compilers or syntax interpreters.  But we'll study the anti-patterns first.
+We're going to walk through our approach and challenge ourselves to think about why and how we are thinking.  We ourselves are not going to turn into computer compilers or syntax interpreters.  But before that, we'll study the anti-patterns first.
 
 When you are trying to figure out something that is broken or even develop something to make something new:
 <img alt="manual debugging is annoying" style="width: 100%; margin: auto;" src="/uploads/2021/repl_debugging.png" />
@@ -33,31 +33,32 @@ When you are trying to figure out something that is broken or even develop somet
 
 ## Anti Pattern 1 - The Human Interpreter
 
-If I ran into this bit of code, the first thing I'd not do is grab my chin and stare at each line, trying to catch the bug.  The reason I don't want to do this is, the bug is usually not as obvious as this example (it might not be obvious to you, that's ok).  So staring at the code is healthy and normal but this is not the core of our process.  What we're going to do is get a feel for the code by exercising and playing with it.
+If I ran into this bit of code, the first thing I'd not do is grab my chin and stare at each line, trying to catch the bug.  I don't want to do this because the bug is usually not as obvious as this example (it might not be obvious to you, that's ok).  So, staring at the code is healthy and normal but this is not the core of our process.  What we're going to do is get a feel for the code by exercising and playing with it.
 
 ## Anti Pattern 2 - Print Statements
 
-You might be tempted to start dropping `console.log()` statements all over the place.  I do this too but I try to get away from this as fast as I can.  Print statements are throwaway code and mostly a waste of time (in general).  You can get something that works much better as a one-liner.
+You might be tempted to start dropping `console.log()` statements all over the place.  I do this too but I try to get away from this as fast as I can.  Print statements are throwaway code and mostly a waste of time (in general).  You can get something that works much better as a one-liner (breakpoint) or a mouse click (breakpoint).
 
 ## Anti Pattern 3 - Opening a Shell
 
-Node / Python / Ruby and other languages have an interactive shell called a REPL.  You could copy and paste the above function and mess around it in a REPL.  This is great for learning and is completely on the right track.
+Node / Python / Ruby and other languages have an interactive shell called a [REPL](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop).  You could copy and paste the above function and mess around it in a REPL.  This is great for learning and is completely on the right track.
 
 The problem is, what is `users` and `age`?  Age is probably a number.  But even if we know what users is, we have to type it in.  And, if we want to experiment on the function itself, we have to type that in too to redefine it.  In some REPLs this can be very annoying because of whitespace and syntax.
 
 
 ## A Debugging Workflow
 
-First, you need tests.  If your project doesn't have tests, this won't work.  You'll have to pay the cost to make that happen or step back a bit.  I'll have a section about finding a workaround.
+First, you need tests.  If your project doesn't have tests, this won't work as well.  You'll have to pay the cost to make that happen or step back a bit.  I'll have a section about finding a workaround.
 
 Every test follows a pattern:
 1. Setup
 2. Execute
-3. Assert
+3. Assert or Test
 
 What we do is create some dummy data to expose the bug for the Setup.
 
 ```javascript
+// setup
 let john = { name: "John", age: 25 };
 let pete = { name: "Pete", age: 30 };
 let mary = { name: "Mary", age: 28 };
@@ -68,6 +69,7 @@ let users = [ pete, john, mary ];
 And then we call the function as execute:
 
 ```javascript
+// execute
 var result = findUsers(users, 29)
 ```
 
@@ -90,17 +92,18 @@ var findUsers = require('./repl_debugging.js');
 describe("finding users", () => {
 
   it("finds users under a certain age", () => {
-
+    // setup
     let john = { name: "John", age: 25 };
     let pete = { name: "Pete", age: 30 };
     let mary = { name: "Mary", age: 28 };
     
     let users = [ pete, john, mary ];
 
-    
+    // execute
     var result = findUsers(users, 29);
     var expected = [ { name: 'John', age: 25 }, { name: 'Mary', age: 28 } ];
 
+    // assert or test, jest uses expect
     expect(result).toStrictEqual(expected);
   })
 
@@ -157,7 +160,7 @@ And the test passes.
 
 ## I Don't Have Tests!
 
-Create a file that executes the function with setup data.  You're basically making a test suite yourself.  This is close enough to the nice REPL + test workflow that you might be able to make it worth it.
+Create a file that executes the function with setup data.  You're basically making a test suite yourself.  This is close enough to the nice REPL + test workflow that you might be able to make it worth it.  In this case at least you don't have to type the test data over and over again.  When I find myself doing this, I copy it into a test.  Once I have it in a test, I can drop REPL breakpoints in.
 
 
 ## The Big Lesson
