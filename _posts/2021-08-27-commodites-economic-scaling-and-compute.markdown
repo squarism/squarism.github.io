@@ -43,7 +43,7 @@ Making chips is hard.  Apple doesn't make their own chips.  Who are they using a
 
 Even if Apple wanted to work with Intel, they wouldn't do it.  TSMC is doing leading edge work and buying the majority of ASML's EUV machines.
 
-> Mobile phones change transitor manufacturing
+> Mobile phones change transistor manufacturing
 
 
 ## Processor Speeds Increase Network Bandwidth
