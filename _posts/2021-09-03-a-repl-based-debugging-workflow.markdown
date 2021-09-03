@@ -134,7 +134,7 @@ Now unfortunately, some languages are easier to debug than others.  You might be
 
 For now, I'm going to show you NDB and this flow.
 
-<img alt="debugging in a test run" style="width: 100%; margin: auto;" src="/uploads/2021/repl_debugging_02.png" />
+<img alt="debugging in a test run" style="width: 80%; margin: auto;" src="/uploads/2021/repl_debugging_02.png" />
 
 Run this command to watch tests and run our debugger
 ```bash
