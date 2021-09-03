@@ -134,7 +134,7 @@ Now unfortunately, some languages are easier to debug than others.  You might be
 
 For now, I'm going to show you NDB and this flow.
 
-<img alt="debugging in a test run" style="width: 80%; margin: auto;" src="/uploads/2021/repl_debugging_02.png" />
+<img alt="debugging in a test run" style="width: 100%; margin: auto;" src="/uploads/2021/repl_debugging_02.png" />
 
 Run this command to watch tests and run our debugger
 ```bash
@@ -143,7 +143,7 @@ ndb $(npm bin)/jest --watchAll --no-cache --runInBand
 
 First, our breakpoint breaks in this function and when we hover over variables we can see their values without `console.log()`.
 
-<img alt="the NDB UI" style="width: 100%; margin: auto;" src="/uploads/2021/ndb.png" />
+<img alt="the NDB UI" style="width: 80%; margin: auto;" src="/uploads/2021/ndb.png" />
 
 Now we see that the element at `0` is wrong.  We need to fix that.
 
