@@ -155,7 +155,7 @@ var findUsers = function findUsers(users, age) {
   var hits = new Array();
 ```
 
-And the test passes.
+And the test passes.  Now you could refactor that for loop into a map or something.  :)
 
 
 ## I Don't Have Tests!
