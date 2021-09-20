@@ -50,7 +50,7 @@ What about NixOS?  Or some other hot and trendy new idea?  My first concern and 
 You definitely can't do the [cattle thing](https://devops.stackexchange.com/questions/653/what-is-the-definition-of-cattle-not-pets) because you can't have a load balancer.  You can only do the cattle/pets thing in the app tier because you have a load balancer with a health check.
 
 
-### Let's Mock Our Database
+### Let's Mock IO Seams
 
 During unit testing you might want your tests not to hit an API.  You can mock out the HTTP interface and test against a mock response (or even better, ignore the response entirely).  This is basically mocking out someone else's (or your own) app server.  So why don't people do this with the database?  Is it because the response is so important?  It's more of a language and state engine than a simple message passing metaphor?
 
