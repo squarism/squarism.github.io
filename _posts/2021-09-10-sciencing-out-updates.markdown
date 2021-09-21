@@ -17,13 +17,14 @@ There's a workflow around updates that I wish I could write on the moon.  Given 
 
 ```bash
 git checkout -b python3_update
-asdf local python 3.9.6 # asdf is an every language language version manager
+asdf local python 3.9.6 # asdf is an "every language" version manager
 poetry run task test # invoke pytest
 # note errors
 # let's say requests throws an error
 poetry update requests
 poetry run task test # invoke pytest again
-# keep iterating, you have a list of stacktraces at this point, work the list
+# keep iterating, you have a list of stacktraces at this point
+# work the list
 
 # on test suite pass, commit the change for python
 # remove .tool-versions if `asdf local` created one
