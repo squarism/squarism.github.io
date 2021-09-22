@@ -80,7 +80,7 @@ Some people find this really annoying.  They might find this so annoying that th
 
 1. Make an alias.  In fish, when I type `pr` it autoexpands to `poetry run`.
 2. Use long running commands like test watches or http servers.
-3. Get used to it?  :|  Many other languages have prefixes: `yarn run foo` and `cargo foo` and `bundle exec foo` and others
+3. Get used to it? 😐 Many other languages have prefixes: `yarn run foo` and `cargo foo` and `bundle exec foo` and others
 4. If you have an app, make a bin dir full of helper scripts.  You probably want these anyway instead of README blocks.
 5. If you embrace prefixes, you can use [taskipy](https://github.com/illBeRoy/taskipy) and get `poetry run task foo`, stay in python and avoid Makefiles.
 
