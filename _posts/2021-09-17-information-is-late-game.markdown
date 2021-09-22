@@ -12,15 +12,15 @@ Many years ago I was at a meetup at a brewery and I noticed a bunch of IoT devic
 I have no idea how the machines work or what they are measuring but I started thinking about this _Information Is Late Game_ idea.
 
 Someone at that brewery had to get the beer working.  After they got the beer working, they sold the beer.  As they are selling the beer,
-they are wondering "are we selling enough beer?" and "how is our beer doing?".  Ultimately these questions after physical things
-are established are informational questions.  First came the thing and then came the information describing the thing.
+they are wondering "are we selling enough beer?" and "how is our beer doing?".
+First came _the thing_ and then came the information describing _the thing_.  Information is late game.
 
 <img alt="pricing demand curve" style="width: 50%; margin: auto; float: right" src="/uploads/2021/price.jpg" />
 
 The IoT sensors can measure temperature and liquid flows.  The payment system can record revenue. The schedule can be a
 calendar.  The people working can be in a database.  All the stuff that happens after _the real thing_ is
 information.  The information is what doing all this stuff means.  The review score, the money.  Even if it's not digital,
-it's information.  We were doing this almost immediately after inventing farming.
+it's information.  We were doing this [almost immediately after inventing farming](https://en.wikipedia.org/wiki/History_of_mathematics).
 
 Physicists and mathematicians might say that all this is entirely information but that's
 [entirely too interesting for me to talk about](https://www.youtube.com/watch?v=VN19VOMHxkk).
@@ -38,9 +38,9 @@ from there on out in development and especially when it's running.
 I understand this is annoyingly generalized.  Just one more.
 
 
-<img alt="minecraft ae2" style="width: 60%; margin: auto;" src="/uploads/2021/ae2.jpg" />
+<img alt="minecraft ae2" style="width: 40%; float: right; margin-left: 2em;" src="/uploads/2021/ae2.jpg" />
 
-Here's another one at the risk of exposing myself as a huge nerd.
+Here's another one at the risk of exposing an [enthusiast trench](http://squarism.com/2016/11/25/the-enthusiast-trench/).
 A friend and I are playing Minecraft.  We make a hut, we get established.  We
 start smelting things.  We have a couple of iron bars.  How many do we have?
 We want to know or we want to act on this.  It's a number!  It's a number in a chest.

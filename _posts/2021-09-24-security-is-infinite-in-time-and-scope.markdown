@@ -14,11 +14,11 @@ I think any topic can be turned into one about security.
 
 You can't buy, have or achieve security.  Any security you think you have [is coupled to time](http://squarism.com/2019/06/04/sprinkle-time-on-that-thing/).  Your feeling or belief of being secure can change to insecure at any momenet.  So security is more like fitness.  You *practice* fitness.  You might be fit now but you cannot be done with fitness.
 
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">the thing they don’t tell you about exercise is that you just have to keep doing more of it? all the time?? or it stops working??? it’s a scam</p>&mdash; shrimp, voted ✨🗳🦐✨ (@geoffwithasword) <a href="https://twitter.com/geoffwithasword/status/1384219351490777091?ref_src=twsrc%5Etfw">April 19, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<div style="margin: auto; margin-bottom: 2em; align='center'">
+  <blockquote class="twitter-tweet"><p lang="en" dir="ltr">the thing they don’t tell you about exercise is that you just have to keep doing more of it? all the time?? or it stops working??? it’s a scam</p>&mdash; shrimp, voted ✨🗳🦐✨ (@geoffwithasword) <a href="https://twitter.com/geoffwithasword/status/1384219351490777091?ref_src=twsrc%5Etfw">April 19, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
 
-You have to keep exercising your whole life and this [isn't a completely depressing thought](https://twitter.com/geoffwithasword/status/1384219351490777091?s=20), it's the glass half empty version.  You get to exercise to keep yourself from feeling like crap your whole life.
-
-_yea i know that tweet is a joke_
+You have to keep exercising your whole life and this [isn't a completely depressing thought](https://twitter.com/geoffwithasword/status/1384219351490777091?s=20), it's the glass half empty version.  You get to exercise to keep yourself from feeling like crap your whole life. _yea i know that tweet is a joke_
 
 So security is infinite in time so it has the chance to always be a topic, forever.
 
