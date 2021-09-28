@@ -3,7 +3,7 @@ layout: post
 status: published
 published: true
 title: Things That Draw Themselves
-date: 2021-10-01
+date: 2021-10-15
 ---
 
 <img alt="Photo by Sebastian Svenson (unsplash.com/@sebastiansvenson) on Unsplash" style="width: 100%; margin: auto;" src="/uploads/2021/discs.jpg" />  
