@@ -53,12 +53,12 @@ class TodoList
     @items = items
   end
 
-  def render
+  def draw
     @items
   end
 
   def print
-    puts render
+    puts draw
   end
 end
 
@@ -78,6 +78,13 @@ end
 main
 ```
 
+We have to run this manually:
+```bash
+$ ruby cli_drawing.rb print
+{:name=>"Make lunch"}
+{:name=>"Whistle math metal"}
+```
+
 Your first reaction might be _"that's the same thing with more steps".  It's true.  It is the same thing.  The invocation stayed the same and really the internal data stayed the same.  The big difference here is organization and testability.  The `print` method only does `puts` and the `render` method knows what to present to `print`.  So, when you write a test, it's super easy.  You just test `render` and you have extreme confidence that puts is going to work.  You don't need to test `puts` [because you don't own that code](http://squarism.com/2021/08/13/dont-test-code-you-dont-own/).
 
 Let's write a test inline here just to show how this works.  You'll have to invoke the program with `rspec cli_drawing.rb` instead of running it like a script.  This is just to avoid making a whole project.
@@ -88,12 +95,12 @@ class TodoList
     @items = items
   end
 
-  def render
+  def draw
     @items
   end
 
   def print
-    puts render
+    puts draw
   end
 end
 
@@ -107,7 +114,7 @@ describe TodoList do
 
   it "prints a todo list" do
     expected = [{:name=>"Make lunch"}, {:name=>"Whistle math metal"}]
-    expect(subject.render).to eq(expected)
+    expect(subject.draw).to eq(expected)
   end
 
 end
