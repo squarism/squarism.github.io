@@ -85,7 +85,7 @@ $ ruby cli_drawing.rb print
 {:name=>"Whistle math metal"}
 ```
 
-Your first reaction might be _"that's the same thing with more steps"_.  It's true.  It is the same thing.  The invocation stayed the same and really the internal data stayed the same.  The big difference here is organization and testability.  The `print` method only does `puts` and the `render` method knows what to present to `print`.  So, when you write a test, it's super easy.  You just test `render` and you have extreme confidence that puts is going to work.  You don't need to test `puts` [because you don't own that code](http://squarism.com/2021/08/13/dont-test-code-you-dont-own/).
+Your first reaction might be _"that's the same thing with more steps"_.  It's true.  It is the same thing.  The invocation stayed the same and really the internal data stayed the same.  The big difference here is organization and testability.  The `print` method only does `puts` and the `draw` method knows what to present to `print`.  So, when you write a test, it's super easy.  You just test `draw` and you have extreme confidence that puts is going to work.  You don't need to test `puts` [because you don't own that code](http://squarism.com/2021/08/13/dont-test-code-you-dont-own/).
 
 Let's write a test inline here just to show how this works.  You'll have to invoke the program with `rspec cli_drawing.rb` instead of running it like a script.  This is just to avoid making a whole project.
 
@@ -120,6 +120,6 @@ describe TodoList do
 end
 ```
 
-And then you can test or create your CLI runner in isolation.  The CLI runner's job isn't to print or render but to call commands.  This is easy to test and write.
+And then you can test or create your CLI runner in isolation.  The CLI runner's job isn't to print or render but to call commands.  This is easy to test and write.  What you are really doing is moving IO to the edges.  It's confusing to have draw and print methods, you can name them whatever you want; maybe run and render would be more clear.  The point here is about making a method with the data representation and then having the IO (puts) in a method by itself so we don't have to deal with `STDOUT`.  Pushing I/O to the edges is really the point of my post [don't test code you don't own](http://squarism.com/2021/08/13/dont-test-code-you-dont-own/).
 
 Things that draw themselves end up being very clean objects. If you are in a functional language, you will still have modules. Modules can be organized in the same way. When you think about things drawing themselves, you are making clear lines of responsibility which will help you.
