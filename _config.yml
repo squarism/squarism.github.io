@@ -1,5 +1,5 @@
 baseurl: "" # The subpath of your site. Use "" if you're hosting a blog at the root level.
-# url: "http://squarism.com" # the base hostname & protocol for your site
+url: "https://squarism.com" # the base hostname & protocol for your site
 title: "SQUARISM"
 
 # This is used by feed.xml. Uncomment if you want to use it.
@@ -33,7 +33,7 @@ projects:
   - title: Tatris - A tetris clone
     url: /tatris
   - title: Spikes in the Lab
-    url: http://squarism.com/lab
+    url: /lab
 
 plugins:
   - jemoji
