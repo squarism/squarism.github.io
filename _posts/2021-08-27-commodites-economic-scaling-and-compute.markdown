@@ -39,7 +39,7 @@ This one is really interesting to me.  There are two parts to this.  One, manufa
 
 First, CPUs have a long history but let's focus on recent events.  ARM recently has been challenging x86 on a performance front but instead I want to focus on process nodes.  You can't really compare process nodes between manufacturers but let's try anyway.  Why is Apple on 5nm and Intel (king of kings for so long) on 14-10nm manufacturing process?
 
-Making chips is hard.  Apple doesn't make their own chips.  Who are they using and who are they?  Today, TSMC is making Apple's M1 chips on their 5nm node which has been fueled by mobile phones.  [TSMC has gained so much experience](https://www.tomshardware.com/news/arm-6-7-billion-chips-per-quarter) from making mobile phones that they are really good at it.  Samsung makes phones, it's the same and Samsung is also driving transitor density at scale.
+Making chips is hard.  Apple doesn't make their own chips.  Who are they using and who are they?  Today, TSMC is making Apple's M1 chips on their 5nm node which has been fueled by mobile phones.  [TSMC has gained so much experience](https://www.tomshardware.com/news/arm-6-7-billion-chips-per-quarter) from making mobile phones that [they are really good at it](https://arstechnica.com/tech-policy/2021/10/intel-slipped-and-its-future-now-depends-on-making-everyone-elses-chips/).  Samsung makes phones, it's the same and Samsung is also driving transitor density at scale.
 
 Even if Apple wanted to work with Intel, they wouldn't do it.  TSMC is doing leading edge work and buying the majority of ASML's EUV machines.
 
