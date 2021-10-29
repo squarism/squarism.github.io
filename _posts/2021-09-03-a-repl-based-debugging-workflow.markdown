@@ -138,7 +138,7 @@ For now, I'm going to show you NDB and this flow.
 
 Run this command to watch tests and run our debugger
 ```bash
-ndb $(npm bin)/jest --watchAll --no-cache --runInBand
+ndb $(npm bin)/jest --watchAll --runInBand
 ```
 
 First, our breakpoint breaks in this function and when we hover over variables we can see their values without `console.log()`.
