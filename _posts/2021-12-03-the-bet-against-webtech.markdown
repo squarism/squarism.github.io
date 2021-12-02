@@ -64,7 +64,7 @@ In this vein, here is a list of technologies which were server-side, native or s
 | Unix Sockets | [Websockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket) |
 | OpenGL | [WebGL](https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API) |
 | sqlite or small caches | [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API)|
-| MIDI | [WebMIDI](https://www.w3.org/TR/webmidi/) |
+| MIDI | [WebMIDI](https://developer.mozilla.org/en-US/docs/Web/API/Web_MIDI_API) |
 | Assembly | [WebAssembly](https://developer.mozilla.org/en-US/docs/WebAssembly) |
 | Bluetooth | [WebBluetooth](https://developer.mozilla.org/en-US/docs/Web/API/Web_Bluetooth_API) |
 | Filesystem | [Native Filesystem API](https://developer.mozilla.org/en-US/docs/Web/API/FileSystem) |
