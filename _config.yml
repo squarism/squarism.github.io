@@ -48,6 +48,7 @@ exclude:
 permalink: /:year/:month/:day/:title/
 excerpt_separator: "<!-- more -->"
 future: false
+timezone: America/Los_Angeles
 defaults:
   -
     scope:
