@@ -2,6 +2,7 @@
 @import "pygments-tomorrow";
 
 $rust: #846a51;
+$light: #e8e1e1;
 
 .post-content img,
 .post-excerpt-home img,
@@ -14,7 +15,6 @@ $rust: #846a51;
   @extend .table;
   @extend .table-bordered;
 }
-
 
 .sidebar {
   width: 100%;
@@ -33,11 +33,9 @@ $rust: #846a51;
 
 .business_card {
   width: 300px;
-  height: 220px;
   padding: 1em;
   margin: 0.5em;
-  z-index: -5;
-  border-left: 1px solid #0e191d;
+  border-left: 1px solid $light;
 }
 
 .business_card .name_area {
@@ -53,6 +51,13 @@ $rust: #846a51;
   top: -1.2em;
 }
 
+.name_area {
+  margin-bottom: 0.2em;
+  padding-bottom: 0.7em;
+  border-bottom: 1px $light solid;
+  width: 30%;
+}
+
 .name_area .mug {
   width: 80px;
   height: 80px;
@@ -62,16 +67,14 @@ $rust: #846a51;
 .name_area .name {
   width: 160px;
   height: 20px;
-  z-index: 3;
   font-size: 14px;
   font-weight: bold;
-  color: #846a51;
+  color: $rust
 }
 
 .business_card .contact_details {
   height: 50%;
   width: 75%;
-  padding-top: 2.6em;
   margin-right: 0em;
   margin-left: 1.8em;
 }
@@ -84,16 +87,16 @@ $rust: #846a51;
   position: relative;
   float: left;
   left: -5.1em;
-  width: 70%;
+  width: 23rem;
   padding-top: 5px;
-  padding-left: 10px;
+  padding-left: 27px;
   padding-right: 20px;
   padding-bottom: 5px;
   margin-bottom: 0.2em;   /* line spacing between contact detail ribbons */
-  background: #0e191d;
-  color: white;
+  color: $rust;
   font-weight: bold;
   font-size: 14px;
+  border-bottom: 1px $light solid;
 }
 
 .contact_details .detail_key i {
@@ -101,19 +104,19 @@ $rust: #846a51;
 }
 
 .contact_details .detail_key a:link {
-  color: white;
+  color: $rust;
 }
 
 .contact_details .detail_key a:visited {
-  color: white;
+  color: $rust;
 }
 
 .contact_details .detail_key a:hover {
-  color: white;
+  color: $rust;
 }
 
 .contact_details .detail_key a:active {
-  color: white;
+  color: $rust;
 }
 
 .business_card .gutter_bar {
