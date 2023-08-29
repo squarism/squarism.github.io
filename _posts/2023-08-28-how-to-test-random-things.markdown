@@ -6,7 +6,7 @@ title: How To Test Random Things
 date: 2023-08-28
 ---
 
-Let's say we had a program that interacts with something that is random.  This could be a random number function we can sort of control or it could be something out of our control.  Let's step through three examples, where the last one is random but wildly different.
+Let's say we had a program that interacts with something that is random.  This could be a pseudorandom number generator (PRNG) we can sort of control or it could be something out of our control.  Let's step through three examples, where the last one is random but wildly different.
 
 Our program depends on this function.  How do we know our program works?
 
@@ -39,7 +39,7 @@ This is pretty easy to deal with, we just pass [a seed](https://en.wikipedia.org
 
 Using the seed, you can replay or inspect the randomness as a way to make the behavior deterministic.
 
-Not everything can be made deterministic in a sort of clean room setting.
+Not everything can be made deterministic in a sort of clean room setting.  The next example is very different.
 
 
 ## AI Models
@@ -97,6 +97,9 @@ results/llama_2_code/0001.json
 results/llama_2_code/0002.json
 ...
 ```
+
+The results files might be API JSON responses or a file format we've invented with metadata and the response as an attribute.  The results file format is not important.
+
 
 ### Step 5 - Scoring
 
@@ -165,4 +168,4 @@ Testing randomness is solvable and recognizable in general software.  I think I 
 
 This gets even more complicated when people who are integrating LLMs for the first-time and wondering if their idea "works".  In general software, we usually avoid this problem with other tricks like mocking or seeding.  I'm always curious how they are going to find out if they have not generated 100s of test data questions or know what an F1 score is.  I barely understand evaluations and certainly have not designed one.  I just have been around it a bit.
 
-At the same time, I saw a determinism theme in PRNGs and the AI/ML domain and wanted to write a bit about it.
+At the same time, I saw a determinism commonality between PRNGs and AI models and wanted to write a bit about its similarity.  If we were testing the PRNG itself, we might follow a similar approach where we try many executions, collect the results and try to analyze it (maybe check its distribution).  This is different than deterministic functional testing.
