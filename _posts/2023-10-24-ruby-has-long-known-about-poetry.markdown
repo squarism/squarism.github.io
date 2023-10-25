@@ -6,6 +6,8 @@ title: Ruby Has Long Known About Poetry
 date: 2023-10-24
 ---
 
+<img alt="Bundler and Poetry timeline" style="width: 100%; margin: auto;" src="/uploads/2023/bundle_poetry.png" />
+
 Ruby has known about the Python package manager [Poetry](https://python-poetry.org/) for a long time as [Bundler](https://bundler.io/).  This is not a smug victory lap.  Bundler was not always _the thing to use_.  If the sands of time are going to bury Ruby so that the language is [deleted](https://sloboda-studio.com/blog/is-ruby-on-rails-dying/) from all multiverse timelines, then we might as well listen to its dying words:
 
 &nbsp;&nbsp;  _"The Poetry transition is the Bundler transition, we already went through this.  Ack."_ 💀
