@@ -26,7 +26,7 @@ These are good posts.  I'm adding orthogonally to them.  I want to talk about ot
 
 First, let's translate a little bit.  Ruby gems are like Python packages.  Python has `.whl` and Ruby has `.gem`.  Ruby has only had gems but Python has had many package formats over the years, so I will just say python package.
 
-You can install packages yourself, sort of "raw" using `pip install` in Python and `gem install` in Ruby.  Some people do this in Python but rarely do you do this in Ruby.  There are exceptions like global installs or generators but basically you rarely would do the equivalent of `gem install` in Ruby.
+You can install packages yourself, sort of "raw" using `pip install` in Python and `gem install` in Ruby.  Some people do this in Python but rarely do you do this in Ruby.  There are exceptions like global installs or generators but basically you rarely would do the equivalent of `pip install` in Ruby.
 
 Both sites have a package website.  Python's is [pypi.org](https://pypi.org/) and Ruby's is [rubygems.org](https://rubygems.org/).
 
@@ -54,7 +54,7 @@ You would use RVM gemsets because if you didn't, your Ruby install would fill up
 
 You'd have no idea.  The same happens with raw `pip`.
 
-When Bundler came out, I rejected it and kept using rvm gemsets.  But there was a major difference.  Bundler solved the dependency tree while doing isolation.  This was something I didn't understand.  When someone told me that my gemset was just going become polluted, I said this was no big deal.  I would just delete my gemset and then `gem install` all the libraries I needed.  Maybe I could make a list of gems I needed in a text file in the project root.
+When Bundler came out, [I rejected it](https://wiki.c2.com/?BlubParadox) and kept using rvm gemsets.  But there was a major difference.  Bundler solved the dependency tree while doing isolation.  This was something I didn't understand.  When someone told me that my gemset was just going become polluted, I said this was no big deal.  I would just delete my gemset and then `gem install` all the libraries I needed.  Maybe I could make a list of gems I needed in a text file in the project root.
 
 
 I never tried Bundler and I didn't know what problem it was solving.
