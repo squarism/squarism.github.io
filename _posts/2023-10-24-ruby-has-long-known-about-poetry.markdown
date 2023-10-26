@@ -113,11 +113,19 @@ The only caveat with poetry is that I need to prefix all commands with `poetry r
 
 So, Ruby already went through the poetry transition.  We learned a few things:
 
-* Don't install libraies with gem install.
-* Lock your dependencies.
+* Don't raw install libraies with gem install.
+* Deeply solve your dependencies as a tree (transitive deps).
 * Prefixes on commands are annoying but sub-shell or shell tricks are worse.
 * Lock files are good.
 * Conventions are good.
+
+This would translate to Python as something like this:
+
+* Don't raw install libraries with `pip install`.
+* Deeply solve your tree with pip 23.1+.  But, is it a good resolver?  🤷🏻‍♂️
+* Get used to `poetry run`, alias it if you have to.
+* Lock files are good, poetry comes with one.  You don't need to use `pip freeze` or piptools or addons.
+* Conventions are good.  The world will not use your homegrown system.
 
 After I started using Bundler, I never went back to even another style.  When I tried Go for 4 years, I used `gb` and other tools until `go.mod` was finalized.  It was similar with Python.  I searched for a Bundler-like tool and found Pipenv.  Pipenv's resolver failed me on a project and Poetry did not.  I switched to Poetry.  When I started with Rust, Cargo was very familiar because [the people](https://github.com/rust-lang/cargo/commits?author=wycats) that worked on Cargo [came from](https://github.com/rust-lang/cargo/commits?author=carllerche) the Ruby community.
 
