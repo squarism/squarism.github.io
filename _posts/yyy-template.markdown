@@ -1,7 +1,7 @@
 ---
 layout: post
 status: published
-published: false
+published: true
 title: Template
 # date: xxx
 ---
