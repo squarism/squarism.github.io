@@ -12,7 +12,7 @@ I want to talk about what microframeworks don't solve but also why there has bee
 - It has a small hello world example that looks like Sinatra in the README or the homepage
 - It doesn't pre-solve a common problem for you
 
-So, Flask / Express / Sinatra are microframeworks as opposed to their sister projects Django / Next.js or others / Rails.  If the language ecosystem offers a pair like Django vs Flask then comparatively, Flask is the microframework by comparison and not just because [wikipedia also classifies it](https://en.wikipedia.org/wiki/Flask_(web_framework) this way.  It's because it's smaller than Django.  This is not obvious if a language does not have a bigger framework.
+So, Flask / Express / Sinatra are microframeworks as opposed to their sister projects Django / Next.js or others / Rails.  If the language ecosystem offers a pair like Django vs Flask then comparatively, Flask is the microframework by comparison and not just because [wikipedia also classifies it](https://en.wikipedia.org/wiki/Flask_(web_framework)) this way.  It's because it's smaller than Django.  This is not obvious if a language does not have a bigger framework.
 
 The "pre-solve a common problem for you" is the big one.  To make this more concrete, I will be using the use
 case of adding a database to your project as an inflection point.  Larger frameworks usually have some kind of story around adding a database and the microframeworks do not.
