@@ -14,7 +14,7 @@ $font-size-h3: floor(($font-size-base * 1));
 $font-size-h4: floor(($font-size-base * 1));
 $font-size-h5: floor(($font-size-base * 1));
 $font-size-h6: floor(($font-size-base * 1));
-$blockquote-font-size: floor(($font-size-base * 1.25));
+$blockquote-font-size: floor(($font-size-base * 1.05));
 $line-height-base: 1.8;
 $headings-line-height: 1.3;
 
@@ -82,6 +82,10 @@ h3 {
   }
 }
 
+blockquote {
+  color: #547cae;
+}
+
 .btn {
   font-family: $headings-font-family;
 }
@@ -107,7 +111,16 @@ h3 {
 }
 .post-excerpt-home {
   margin-bottom: $space-md;
+  margin-bottom: 3em;
+  padding-bottom: 3em;
+
+  /* dotted border */
+  background-image: linear-gradient(to right, #ddd 50%, transparent 50%);
+  background-position: bottom;
+  background-size: 7px 1px;
+  background-repeat: repeat-x;
 }
+
 .post-title-main {
   margin: 0;
 }
