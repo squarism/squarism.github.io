@@ -1,20 +1,20 @@
 ---
 layout: post
-status: draft
-published: false
+status: published
+published: true
 title: A Network in Rust, Part 1
 date: 2024-05-05
 ---
 
-Let's embark on a Rust journey to demystify networking concepts, shall we?
+Let's take the magic out of networking, shall we?
 
-First things first, let's establish some ground rules to guide our exploration:
+First things first, let's establish some ground rules:
 
 1. Our aim is to provide an abstraction level akin to that experienced by a Linux server or networking device user, not delving into the intricacies of network engineering.
-1. We'll steer clear of diving into the nitty-gritty of bits, electrons, and cables. After all, when people say they don't grasp networking, they're usually not referring to the physics behind it. Plus, let's be honest, meticulously simulating every detail would be a Herculean task.
-1. Our model won't operate within an event loop. While scripting or CLI tools are fantastic, they're inherently limited by their sequential nature. Real-world networking operates asynchronously, akin to a bustling city where events occur in parallel. To replicate this, we would need to veer into text-mode game territory, and I don't want to do this.  We can learn about networking without making a long-running program but some things will need to be faked.
+1. We'll avoid nitty-gritty details of bits, electrons, and cables.  After all, when people say they don't grasp networking, they're usually not referring to the physics behind it.
+1. Our model won't operate within an event loop.  While scripting or CLI tools are fantastic, they're inherently limited by their sequential nature.  Real-world networking operates asynchronously, akin to a bustling city where events occur in parallel.  To replicate this, we would need to veer into text-mode game territory, and I don't want to do this.  We can learn about networking without making a long-running program but some things will need to be faked.
 
-Now that we've set some boundaries, let's name some exciting topics ahead.  We will explore bit-math, frames and packets, understand different abstraction layers, make a binary file that can *actually*  be read by [Wireshark](https://www.wireshark.org/) and create a working local area network (LAN) using real specifications.
+Now that we've set some boundaries, let's name some exciting topics ahead.  We will explore bit-math, frames, packets, understand different abstraction layers, make a binary file that can *actually*  be read by [Wireshark](https://www.wireshark.org/) and create a working local area network (LAN) using real specifications.
 
 
 <!-- This is a series of posts -->
@@ -141,4 +141,6 @@ mod tests {
 }
 ```
 
-The tests section shows its usage.  It will be more useful and clear what this type is doing when using it with an interface or an ARP function.  In the next post, we'll continue modeling out concepts.  The source code will not be completely explained and duplicated in following posts but [is available on Github](https://github.com/squarism/layer_three).
+The tests section shows its usage.  It will be more useful and clear what this type is doing when using it with an interface or an ARP function.
+
+In the next post, we'll continue modeling out concepts.  The source code will not be completely explained and duplicated in following posts but [is available on Github](https://github.com/squarism/layer_three).
