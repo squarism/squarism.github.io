@@ -23,17 +23,23 @@ Now that we've set some boundaries, let's name some exciting topics ahead.  We w
 
 ## Approximately How Networking Works
 
-Networking works in abstraction layers from the point of view of the OSI model.  From the bottom up, it goes (1) physical, (2) data link and then (3) network layer.  It continues to [higher abstraction layers](https://en.wikipedia.org/wiki/OSI_model) but our simulation and this blog post series will stop at layer 3.
+Networking works in abstraction layers from the point of view of the OSI model.  From the bottom up, it goes (1) Physical, (2) Data Link and then (3) Network layer.  It continues to [higher abstraction layers](https://en.wikipedia.org/wiki/OSI_model) but our simulation and this blog post series will stop at layer 3.
 
 <img alt="Network Abstration Layers" style="width: 60%; margin: auto;" src="/uploads/2024/osi.png" />
 
-Imagine a server named `box1` runs `$ ping box2`.  The ICMP program `ping` is way up at layer 7 (not pictured below) and sends information down the left side of the picture below `ICMP client -> IP -> Ethernet -> Switch Port 1`.  Eventually it turns into bits, electricity that flows across the switch through cables (not pictured) and then hits box2's stack where it flows back up.  This flow up the right side of the picture below as `Switch Port 4 -> Ethernet -> IP -> ICMP client`.  _(The ICMP responder would really a part of the network stack on box2)_.  So notice that the flow down the left side and the flow up the right side are opposite and reversed.
+Imagine a server named `box1` pings `box2`.
+
+```
+user@box1 $ ping box2
+```
+
+The ICMP program `ping` is way up at layer 7 (not pictured below) and sends information down the left side of the picture below `ICMP client -> IP -> Ethernet -> Switch Port 1`.  Eventually it turns into bits, electricity that flows across the switch through cables (not pictured) and then hits box2's stack where it flows back up right side.  This flow up the right side of the picture is shown below as `Switch Port 4 -> Ethernet -> IP -> ICMP client`.  _(The ICMP responder would really a part of the network stack on box2)_.  So notice that the flow down the left side and the flow up the right side are opposite and reversed.
 
 <img alt="Network Abstration Layers" style="width: 100%; margin: auto;" src="/uploads/2024/layer_three_layers.png" />
 
 We will talk about all the details of all of this.  But here are key takeaways at this point:
 
-* The details are hidden by the abstraction layers.
+* Details are hidden by the abstraction layers.
 * The layers are different.  The physical layer could be [copper wires](https://en.wikipedia.org/wiki/Ethernet), wifi, [pigeons](https://en.wikipedia.org/wiki/IP_over_Avian_Carriers) or [glass](https://en.wikipedia.org/wiki/Fiber-optic_communication).  The other layers don't know or care.  Ping works the same over wifi or wires.
 * Each layer has its own concerns (non-leaky abstraction).
 
@@ -51,37 +57,35 @@ So in terms of modeling and the previous layer diagram, we will probably need at
 
 1. A server called `box1` with an IP address.  It could be `84.16.226.173` but we will use a more common private IP address of `192.168.0.1`.
 1. An IP address.  Something that represents an IP.  We won't rebuild `ip addr` or `ifconfig` so we'll need to make an IP address _"thing"_ and a subnet mask.
-1. An Ethernet device.  Notice that in the ifconfig screenshot the interface is called `eno0`.  The device name is arbitrary depending on your device driver and hardware model.  We're not going to model device driver details, all we need is an interface with a MAC address.  The MAC address is burned onto a network card at manufacturing time.  It's job is to locally identify an interface (sometimes called a NIC) on a local area network (LAN).
-1. You've seen Ethernet cables.  We won't end up modeling cables but you've probably noticed that the plug into a switch or a home router.  You've also probably noticed that when you plug in a port a light turns on.
+1. An Ethernet device.  Notice that in the ifconfig screenshot the interface is called `eno0`.  The device name is arbitrary depending on your device driver and hardware model.  We're not going to model device driver details, all we need is an interface with a MAC address.  The MAC address is burned onto a network card at manufacturing time.  The MAC's job is to locally identify an interface (sometimes called a NIC) on a local area network (LAN).
+1. You've seen Ethernet cables.  We won't end up modeling cables but you've probably noticed the plug on a switch or a home router.  You've also probably noticed that when you plug in a port a light turns on.
 
-Notice that we can sort our things into the same abstraction layers.
+Notice that we can sort the things we have named so far into the same abstraction layers.
 
-* Layer 1 - Physical - Cables, ports on a switch, pins, bits, electricity
-* Layer 2 - Data link - Ethernet, MAC addresses, a link light
-* Layer 3 - Network - IP address, subnet mask, the ICMP protocol which ping uses
-* Layer 7 - Application - A program named `ping` in Linux and Windows
+* Layer 1 / Physical - Cables, ports on a switch, pins, bits, electricity
+* Layer 2 / Data Link - Ethernet, MAC addresses, a link light
+* Layer 3 / Network - IP address, subnet mask, the ICMP protocol which ping uses
+* Layer 7 / Application - A program named `ping` in Linux and Windows
 
 Notice that we skipped nnumbers 4, 5 and 6.  This is on purpose because these layers do not have concepts we have named.  We can just ignore them for now for simplicity.  We are going to focus on Layers 2 & 3 while faking Layer 1.
 
 
 ## Starting our Model
 
-So, with these concepts named and sorted, we can start thinking about how to implement this.  There are many ways to do it.  First, I selected Rust because it's my current low-level, CLI type of language.  It's also nice to have access to bytes and tooling that is lower down in abstractions.  We'll be using a library called [etherparse](https://docs.rs/etherparse/latest/etherparse/) to avoid us having to define binary bit offsets from the specs and things like that.
+So, with these concepts named and sorted, we can start thinking about how to implement this.  There are many ways to implement all of this.  First, I arbitrarily selected Rust because it's my current low-level, CLI type of language.  It's also nice to have access to bytes and tooling that is lower down in abstractions.  Specifically, we'll be using a library called [etherparse](https://docs.rs/etherparse/latest/etherparse/) to avoid us having to define binary bit offsets from the specs and things like that.
 
-We could also decide on where we want to start.  We could start from the top level with servers and ping or from the bottom with network primitives like MACs and packets.  There are many ways to do it.  In truth, I built the simulator in a combination of top-down and bottom-up thinking.
-
-First, let's talk about the end-flow of what happens with ping and then we'll discover something.  When `user@box1 $ ping box2` executes, this is approximately what happens:
+First, let's talk about the end-to-end flow of what happens with ping and then we'll discover some things.  When `user@box1 $ ping box2` executes, this is approximately what happens:
 
 1. Before anything happens, we had already created our network.  IE: bought two servers, a switch and some cables.
 2. We plugged in box1 into port1 and box2 into port2 on an ethernet switch.
-3. The interfaces came with a MAC burned in at manufacturing time.  `box1` has `11:12:13:14:15:16`.  Each hex starts with `1` for the reader.
-4. We assigned `192.168.0.1` to box1.  It ends with `.1` for the reader.
+3. The interfaces came with a MAC burned in at manufacturing time.  `box1` has `11:12:13:14:15:16`.  Each hex for box1 starts with `1` for ease of reading for the reader.
+4. We assigned `192.168.0.1` to box1.  It ends with `.1` for ease of reading for the reader (and myself).
 5. We did the same for `box2` with `192.168.0.2` and the MAC `21:22:23:24:25:26`.
 
 When ping fires,
 
-1. The ICMP program `ping` tells the network stack to make an ICMP packet with the destination of box2.  This is layer 3.
-1. The destiation of `box2` isn't good enough.  It needs an IP address.  So, before the IP packet is made, it looks up the IP address for `box2`.  Normally, this would probably be done with DNS.  We are going to fake it with a fake hosts file.
+1. The program `ping` creates an ICMP packet and tells the network stack to make an ICMP packet with the destination of box2.  This is layer 3.
+1. The ICMP packet destiation of `box2` isn't good enough.  It needs an IP address.  So, before the IP packet is made, it looks up the IP address for `box2`.  Normally, this would probably be done with DNS.  We are going to fake it with a fake hosts file.
 1. The IP layer now crafts a packet with the source of box1's IP address and the destination IP of box2.
 1. The IP layer now finds the interface that this network packet needs to go out on.  Our simulation will only have one interface per server.
 1. Now we hit layer 2.  The IP is not enough, we need to put this network packet on the Ethernet network.  So, we have to make an _ethernet frame_.  The ethernet frame has a source and a destination just like IP does but it speaks in MAC addresses, hardware locations.
@@ -98,10 +102,10 @@ There are many ways we could have modeled this but for now, this is enough.  Not
 A MAC address is what was in the `ether` field from the ifconfig screenshot we saw earlier.  It's a series of bytes in hex.  An ethernet device has one but also _dumb switches_ use them for passing along packets.  We'll talk about switches more in later posts but for now know that we have at least two things that need to know about MAC addresses.  Without explaning each one now, these are the things we will find out that we need to have MAC addresses for:
 
 1. An ARP broadcast asks the local network if anyone knows about the ownership of an IP address
-2. A switch keeps a copy of MAC addresses in a table
-3. An ethernet interface has its MAC address sometimes burned onto a ROM
+2. A switch keeps a copy of MAC addresses it has seen in a table called a CAM table
+3. An ethernet interface has its MAC address usually burned onto a ROM
 
-So, this MAC concept is coming up a lot.  We should model a `MacAddress` type.  We'll also want to print this out in a friendly format for debugging so we will make a `.to_string()` method.
+So, this MAC address concept is coming up a lot.  We should model a `MacAddress` type.  We'll also want to print this out in a friendly format for debugging so we will make a `.to_string()` method.
 
 ```rust
 pub type MacAddress = [u8; 6];
@@ -141,6 +145,6 @@ mod tests {
 }
 ```
 
-The tests section shows its usage.  It will be more useful and clear what this type is doing when using it with an interface or an ARP function.
+The tests section shows its usage.  It will be more useful and clear what this type is doing when using it with an interface or an ARP function.  But for now, that's our first model.  The others will be similar.
 
 In the next post, we'll continue modeling out concepts.  The source code will not be completely explained and duplicated in following posts but [is available on Github](https://github.com/squarism/layer_three).
