@@ -3,7 +3,7 @@ layout: post
 status: published
 published: true
 title: We Cannot Have One Language
-date: 2024-06-01
+date: 2024-07-01
 ---
 
 Why don't we just invent a programming language to do everything?  Why are there so many?  Have we ever had a language that does everything?  Could we have one language that does mostly everything?
