@@ -17,8 +17,12 @@ First things first, let's establish some ground rules:
 Now that we've set some boundaries, let's name some exciting topics ahead.  We will explore bit-math, frames, packets, understand different abstraction layers, make a binary file that can *actually*  be read by [Wireshark](https://www.wireshark.org/) and create a working local area network (LAN) using real specifications.
 
 
-<!-- This is a series of posts -->
-<!-- Part II will be here ... etc -->
+This is a series of posts exploring networking by building things:
+
+* [Part 2](/2024/05/17/a_network_in_rust_part_2/) - implements primitives like IP, ARP and an Interface
+<!-- * [Part 3](/2024/06/15/a_network_in_rust_part_3/) -  -->
+
+For more in-depth background, here is [a nice video series](https://www.youtube.com/playlist?list=PLDQaRcbiSnqF5U8ffMgZzS7fq1rHUI3Q8) but I encourage you to replicate my work and build a network yourself in Rust or some other language.  You'll [learn more by doing](https://jvns.ca/blog/2023/05/12/introducing-implement-dns-in-a-weekend/).
 
 
 ## Approximately How Networking Works
