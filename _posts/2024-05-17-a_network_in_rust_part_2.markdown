@@ -8,7 +8,7 @@ date: 2024-05-17
 
 This post is part 2 of a series.  We are learning networking by building it.
 
-* [Part 1](/2024/05/05/a_network_in_rust_part_1/) - covers networking basics and implmented MAC addressing
+* [Part 1](/2024/05/05/a_network_in_rust_part_1/) - covers networking basics and implemented MAC addressing
 
 
 ## More Primitives
