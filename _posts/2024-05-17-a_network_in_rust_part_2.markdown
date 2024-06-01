@@ -6,9 +6,12 @@ title: A Network in Rust, Part 2
 date: 2024-05-17
 ---
 
+<img alt="Abstract Networking" style="width: 100%; margin: auto;" src="/uploads/2024/networking_abstract.jpg" />
+
 This post is part 2 of a series.  We are learning networking by building it.
 
-* [Part 1](/2024/05/05/a_network_in_rust_part_1/) - covers networking basics and implemented MAC addressing
+* [Part 1](/2024/05/05/a_network_in_rust_part_1/) - covered networking basics and implemented MAC addressing
+* [Part 3](/2024/06/01/a_network_in_rust_part_3/) - finishes the abstractions and shows the whole thing working
 
 
 ## More Primitives
