@@ -19,3 +19,5 @@ I saw this animation from [NVIDIA's 2022 GTC presentation](https://www.youtube.c
 |space | pause, at least the belt movement |
 |d| debug: destination markers|
 |w| debug: wireframe of "the belt"|
+
+[Source is here](https://github.com/squarism/nvidia_sorter).
