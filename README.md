@@ -1,8 +1,8 @@
-# Squarism
-
-Personal blog and portfolio site built with Astro, transformed from AstroPaper template into a newspaper-style publication.
+Personal blog and portfolio site.
 
 ## Site Architecture
+
+Built with Astro, different sections have collections which are described below.  This template is not generic or intended for reuse but you are welcome to poke around.
 
 ### Content Collections
 
@@ -64,7 +64,7 @@ pnpm run build
 
 ## Testing
 
-Unit tests use [vitest](https://vitest.dev) and live next to the code they cover as `src/**/*.test.ts`. The config in `vitest.config.ts` resolves the `@/` alias to `src/` and nothing else, so tests can only import modules that do not depend on Astro runtime imports like `astro:content`.
+Unit tests (as little as possible) use [vitest](https://vitest.dev) and live next to the code they cover as `src/**/*.test.ts`. The config in `vitest.config.ts` resolves the `@/` alias to `src/` and nothing else, so tests can only import modules that do not depend on Astro runtime imports like `astro:content`.
 
 ```bash
 # run the suite once
@@ -79,7 +79,8 @@ vitest is pinned to 3.x because Astro 5 ships vite 6, and newer vitest releases 
 ## Content Creation
 
 ### Posts (Main Blog)
-Long-form technical articles in `src/content/posts/`, organized by year on disk. The year folder is for organization only and never appears in the URL: `src/content/posts/2024/descriptive-title.md` is published at `/posts/descriptive-title/`.
+
+Long-form technical articles in `src/content/posts/`, organized by year on disk. The year folder is for organization only and never appears in the URL: `src/content/posts/2024/descriptive-title.md` is published at `/posts/descriptive-title/`.  The URL slug comes from the filename.
 
 1. **Create file**: `src/content/posts/YYYY/descriptive-title.md`. Use hyphens, not underscores. The date comes from frontmatter, not the filename. `src/content/posts/yyy-template.md` is a draft starting point.
 2. **Frontmatter**:
