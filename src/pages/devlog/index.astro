@@ -1,0 +1,171 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import ArticleCard from "@/components/ArticleCard.astro";
+import { getCollection } from "astro:content";
+import { SITE } from "@/config";
+
+const devlogEntries = await getCollection("devlog", ({ data }) => !data.draft);
+const sortedDevlog = devlogEntries.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+---
+
+<Layout title={`Development Log | ${SITE.title}`}>
+  <Header />
+  <main id="main-content" class="devlog-index">
+    <div class="devlog-header">
+      <h1>Development Log</h1>
+      <div class="devlog-explanation">
+        <p>
+          A development log is a running diary of technical work, decisions, and discoveries. 
+          Unlike blog posts, these entries are raw, unpolished notes written in real-time 
+          during development. Think of them as field notes from the programming trenches.
+        </p>
+        <p>
+          The format is intentionally constrained - short, fixed-width entries that capture 
+          the moment without the overhead of full article writing. Status updates, 
+          debugging notes, architecture decisions, and those "aha!" moments that happen 
+          at 2 AM when the code finally works.
+        </p>
+      </div>
+    </div>
+
+    {sortedDevlog.length > 0 ? (
+      <div class="devlog-entries">
+        {sortedDevlog.map((entry) => (
+          <ArticleCard post={entry} />
+        ))}
+      </div>
+    ) : (
+      <div class="no-devlog">
+        <p>No development log entries found.</p>
+      </div>
+    )}
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .devlog-index {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+
+  .devlog-header {
+    margin-bottom: 3rem;
+  }
+
+  .devlog-header h1 {
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    color: var(--fg);
+    margin: 0 0 2rem 0;
+    text-align: center;
+    font-family: var(--font-serif);
+  }
+
+  .devlog-explanation {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 0;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    font-family: var(--font-serif);
+    line-height: 1.7;
+  }
+
+  .devlog-explanation p {
+    margin: 0 0 1rem 0;
+    color: var(--muted);
+  }
+
+  .devlog-explanation p:last-child {
+    margin-bottom: 0;
+  }
+
+  .devlog-entries {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .devlog-entry {
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 0;
+    overflow: hidden;
+  }
+
+  .devlog-content {
+    padding: 1.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--fg);
+    
+    /* Newspaper column styling */
+    max-width: 65ch;
+    margin: 0 auto;
+  }
+
+  /* Style the rendered markdown content */
+  .devlog-content :global(h1),
+  .devlog-content :global(h2),
+  .devlog-content :global(h3) {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    margin: 0 0 0.5rem 0;
+    color: var(--fg);
+  }
+
+  .devlog-content :global(p) {
+    margin: 0 0 1rem 0;
+    text-align: justify;
+  }
+
+  .devlog-content :global(strong) {
+    font-weight: 700;
+    color: var(--fg);
+  }
+
+  .devlog-content :global(em) {
+    font-style: italic;
+    color: var(--muted);
+  }
+
+  .devlog-content :global(code) {
+    background: var(--border);
+    padding: 0.125rem 0.25rem;
+    border-radius: 0;
+    font-size: 0.8125rem;
+  }
+
+  .devlog-content :global(ul),
+  .devlog-content :global(ol) {
+    margin: 0 0 1rem 1rem;
+    padding: 0;
+  }
+
+  .devlog-content :global(li) {
+    margin-bottom: 0.25rem;
+  }
+
+  .no-devlog {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--muted);
+    font-family: var(--font-mono);
+  }
+
+  @media (max-width: 640px) {
+    .devlog-content {
+      padding: 1rem;
+      font-size: 0.8125rem;
+    }
+    
+    .devlog-explanation {
+      padding: 1.5rem;
+    }
+  }
+</style>

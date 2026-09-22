@@ -1,0 +1,309 @@
+---
+import { SITE } from "@/config";
+
+// logo option from the design handoff: "a" pixel Q, "b" grid mark, "c" facets.
+// b was the one being previewed at handoff time.
+type LogoOption = "a" | "b" | "c";
+const LOGO = "b" as LogoOption;
+
+const { pathname } = Astro.url;
+const currentPath =
+  pathname.endsWith("/") && pathname !== "/" ? pathname.slice(0, -1) : pathname;
+
+const isActive = (path: string) => {
+  const currentPathArray = currentPath.split("/").filter(p => p.trim());
+  const pathArray = path.split("/").filter(p => p.trim());
+  return currentPath === path || currentPathArray[0] === pathArray[0];
+};
+
+const navItems = [
+  { href: "/", label: "home" },
+  { href: "/posts", label: "posts" },
+  { href: "/projects", label: "projects" },
+  { href: "/about", label: "about" },
+  { href: "/talks", label: "talks" },
+];
+
+// 5x6 pixel grid for the Q in option a. 1 = ink, 2 = accent
+const pixelQ = ["01110", "10001", "10001", "10021", "01110", "00002"];
+---
+
+<header class="site-header">
+  <a id="skip-to-content" href="#main-content" class="skip-link">
+    Skip to content
+  </a>
+
+  {
+    LOGO === "a" && (
+      <a href="/" class="logo logo-a" aria-label={SITE.title}>
+        <span>S</span>
+        <span class="pixel-q" aria-hidden="true">
+          {pixelQ.map(row =>
+            row
+              .split("")
+              .map(cell => (
+                <i class:list={{ ink: cell === "1", accent: cell === "2" }} />
+              ))
+          )}
+        </span>
+        <span>UARISM</span>
+      </a>
+    )
+  }
+  {
+    LOGO === "b" && (
+      <a href="/" class="logo logo-b" aria-label={SITE.title}>
+        <span class="grid-mark" aria-hidden="true">
+          <>
+            <i class="ink" />
+            <i class="ink" />
+            <i class="ink" />
+          </>
+          <>
+            <i class="ink" />
+            <i class="accent" />
+            <i />
+          </>
+          <>
+            <i class="ink" />
+            <i />
+            <i />
+          </>
+        </span>
+        <span class="wordmark-mono">squarism</span>
+      </a>
+    )
+  }
+  {
+    LOGO === "c" && (
+      <a href="/" class="logo logo-c" aria-label={SITE.title}>
+        <span class="facets" aria-hidden="true">
+          <>
+            <i class="f1" />
+            <i class="f2" />
+            <i class="f3" />
+          </>
+        </span>
+        <span class="wordmark-facets">
+          Squar
+          <span class="dotless">
+            ı<i aria-hidden="true" />
+          </span>
+          sm
+        </span>
+      </a>
+    )
+  }
+
+  <nav class="site-nav" aria-label="Main">
+    {
+      navItems.map(item => (
+        <a href={item.href} class:list={{ active: isActive(item.href) }}>
+          {item.label}
+        </a>
+      ))
+    }
+    {
+      SITE.lightAndDarkMode && (
+        <button
+          id="theme-btn"
+          class="theme-toggle"
+          title="Toggles light & dark"
+          aria-label="auto"
+          aria-live="polite"
+        >
+          ◐
+        </button>
+      )
+    }
+  </nav>
+</header>
+
+<style>
+  .site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 26px var(--header-pad-x);
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  .skip-link {
+    position: absolute;
+    top: -100%;
+    left: 16px;
+    z-index: 50;
+    padding: 8px 12px;
+    background: var(--bg);
+    color: var(--fg);
+    transition: top 0.15s;
+  }
+  .skip-link:focus {
+    top: 16px;
+  }
+
+  /* ----- logos ----- */
+  .logo {
+    display: flex;
+    align-items: center;
+    color: var(--fg);
+    text-decoration: none;
+    border-bottom: 0;
+  }
+  .logo:hover {
+    color: var(--fg);
+  }
+  .logo i {
+    display: block;
+  }
+  .logo i.ink {
+    background: var(--fg);
+  }
+  .logo i.accent {
+    background: var(--accent);
+  }
+
+  /* a: pixel q */
+  .logo-a {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .pixel-q {
+    display: grid;
+    grid-template-columns: repeat(5, 2.5px);
+    grid-auto-rows: 2.5px;
+    gap: 0.4px;
+    margin: 0 1px 0 1.5px;
+    transform: translateY(2.9px);
+  }
+
+  /* b: grid mark */
+  .logo-b {
+    gap: 10px;
+  }
+  .grid-mark {
+    display: grid;
+    grid-template-columns: repeat(3, 6px);
+    grid-auto-rows: 6px;
+    gap: 2px;
+  }
+  .wordmark-mono {
+    font-family: var(--font-mono);
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+
+  /* c: facets */
+  .logo-c {
+    gap: 10px;
+  }
+  .facets {
+    position: relative;
+    width: 24px;
+    height: 24px;
+  }
+  .facets i {
+    position: absolute;
+    box-sizing: border-box;
+  }
+  .facets .f1 {
+    left: 0;
+    top: 0;
+    width: 15px;
+    height: 15px;
+    border: 1.5px solid var(--fg);
+  }
+  .facets .f2 {
+    left: 5px;
+    top: 5px;
+    width: 13px;
+    height: 13px;
+    border: 1.5px solid var(--fg);
+    background: var(--surface);
+  }
+  .facets .f3 {
+    left: 13px;
+    top: 13px;
+    width: 8px;
+    height: 8px;
+    background: var(--accent);
+  }
+  .wordmark-facets {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+  .dotless {
+    position: relative;
+  }
+  .dotless i {
+    position: absolute;
+    left: 1.5px;
+    top: 1.5px;
+    width: 3.5px;
+    height: 3.5px;
+    background: var(--accent);
+  }
+
+  /* ----- nav ----- */
+  .site-nav {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 28px;
+    font-family: var(--font-mono);
+    font-size: 16px;
+  }
+  .site-nav a {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--muted);
+    text-decoration: none;
+    border-bottom: 0;
+  }
+  .site-nav a:hover,
+  .site-nav a.active {
+    color: var(--fg);
+  }
+  .site-nav a.active::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+  }
+
+  .theme-toggle {
+    margin-left: 8px;
+    width: 28px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--border-strong);
+    background: transparent;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .theme-toggle:hover {
+    color: var(--fg);
+    border-color: #555;
+  }
+
+  @media (max-width: 640px) {
+    .site-header {
+      padding: 18px 20px;
+    }
+    .site-nav {
+      gap: 18px;
+    }
+  }
+</style>

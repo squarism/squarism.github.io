@@ -1,0 +1,252 @@
+@plugin '@tailwindcss/typography';
+
+@layer base {
+  /* ===== Override default Tailwind Typography styles ===== */
+  .app-prose {
+    @apply prose;
+    font-family: var(--font-sans);
+    font-size: 18px;
+    line-height: 1.7;
+    color: var(--body);
+    text-wrap: pretty;
+
+    p {
+      margin: 0 0 26px;
+      color: var(--body);
+    }
+
+    h2,
+    h3,
+    h4 {
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--fg);
+    }
+
+    /* raised boxes with a hairline, radius 0 */
+    pre {
+      background-color: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 0;
+    }
+
+    /* code blocks get a lighter top edge and darker bottom edge */
+    pre {
+      border-top-color: #555;
+      border-bottom-color: #333;
+
+      html[data-theme="light"] & {
+        border-top-color: #999;
+        border-bottom-color: #bbb;
+      }
+    }
+
+    /* wordpress-era image alignment classes still present in old posts */
+    .alignright {
+      float: right;
+      margin: 0 0 1rem 1.5rem;
+    }
+
+    .alignleft {
+      float: left;
+      margin: 0 1.5rem 1rem 0;
+    }
+
+    .aligncenter {
+      display: block;
+      margin-inline: auto;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    th {
+      @apply mb-3 text-foreground;
+    }
+
+
+    strong {
+      color: var(--fg);
+    }
+
+    ol,
+    ul,
+    figcaption,
+    table,
+    code {
+      color: var(--body);
+    }
+
+    /* remove top margin from first elements */
+    > *:first-child {
+      margin-top: 0 !important;
+    }
+
+    ul {
+      @apply overflow-x-clip;
+    }
+
+    li {
+      @apply marker:text-foreground my-1;
+      line-height: var(--leading-normal);
+    }
+
+    hr {
+      @apply border-border;
+    }
+
+    /* image box from the design: hairline, raised surface, 24px padding.
+       the content area is backed white so transparent line-art diagrams
+       stay readable in dark mode; opaque images cover it. */
+    img {
+      @apply mx-auto;
+      border: 1px solid var(--border);
+      padding: 24px;
+      background:
+        linear-gradient(#fff, #fff) content-box,
+        var(--card) padding-box;
+    }
+    img.alignright,
+    img.alignleft {
+      padding: 8px;
+    }
+
+    figcaption {
+      @apply opacity-75;
+    }
+
+    table {
+      th,
+      td {
+        @apply border border-border p-2;
+      }
+
+      th {
+        @apply py-1.5;
+      }
+
+      code {
+        @apply break-all sm:break-normal;
+      }
+    }
+
+    /* inline code: quiet chip with a hairline */
+    code {
+      @apply break-words text-foreground before:content-none after:content-none;
+      font-weight: 400;
+      font-size: 0.9em;
+      padding: 1px 5px;
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 0;
+    }
+
+    .astro-code code {
+      @apply bg-inherit p-0;
+      border: 0;
+      display: block;
+      min-width: max-content;
+    }
+
+    /* quotes are callouts: a thin accent rule, no box */
+    blockquote {
+      @apply break-words;
+      font-style: normal;
+      font-weight: normal;
+      color: var(--body);
+      border: 0;
+      border-left: 2px solid var(--accent);
+      padding: 0.7rem 0 0.5rem 1rem;
+      margin: 1.75rem 0;
+      quotes: none;
+      background: var(--code-bg);
+
+      /*html[data-theme="light"] & {
+        background:  --alpha(var(--color-zinc-700) / 5%);
+      }*/
+    }
+
+    blockquote p {
+      margin: 0;
+    }
+
+    blockquote p + p {
+      margin-top: 0.75rem;
+    }
+
+    blockquote p:first-of-type::before,
+    blockquote p:last-of-type::after {
+      content: none;
+    }
+
+    details {
+      @apply inline-block cursor-pointer text-foreground select-none [&_p]:hidden [&_ul]:!my-0;
+    }
+
+    summary {
+      @apply focus-visible:no-underline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-accent focus-visible:outline-dashed;
+    }
+
+    pre {
+      @apply focus-visible:border-transparent focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-dashed;
+    }
+
+    .float-right-diagram {
+      float: right;
+      width: max-content;
+      max-width: 50%;
+      margin: 0 0 1rem 1.5rem;
+    }
+
+    .float-right-diagram .astro-code {
+      max-width: none;
+    }
+
+    @media (max-width: 700px) {
+      .float-right-diagram {
+        float: none;
+        width: 100%;
+        max-width: 100%;
+        margin: 1rem 0;
+      }
+    }
+
+    /* Selective image inversion for dark mode */
+    /* Add 'invert-dark' class to images that should invert in dark mode */
+    /* (e.g., diagrams, charts) while leaving photos/logos unchanged */
+  }
+
+  html[data-theme="dark"] .app-prose img.invert-dark {
+    filter: invert(1);
+  }
+
+  /* ===== Code Blocks & Syntax Highlighting ===== */
+  .astro-code {
+    @apply block overflow-x-auto border text-(--shiki-light) outline-border [&_span]:text-(--shiki-light);
+    white-space: pre;
+    max-width: 100%;
+    background-color: var(--card);
+  }
+
+  html[data-theme="dark"] .astro-code {
+    @apply text-(--shiki-dark) [&_span]:text-(--shiki-dark);
+  }
+
+  /* Styles for Shiki transformers */
+  /* https://shiki.style/packages/transformers */
+  .astro-code {
+    .line.diff.add {
+      @apply relative inline-block w-full bg-green-400/20 before:absolute before:-left-3 before:text-green-500 before:content-['+'];
+    }
+    .line.diff.remove {
+      @apply relative inline-block w-full bg-red-500/20 before:absolute before:-left-3 before:text-red-500 before:content-['-'];
+    }
+    .line.highlighted {
+      @apply inline-block w-full bg-slate-400/20;
+    }
+    .highlighted-word {
+      @apply rounded-sm border border-border px-0.5 py-px;
+    }
+  }
+}

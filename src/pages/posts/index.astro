@@ -1,0 +1,153 @@
+---
+// /posts: the index. every post, grouped by year, one row each: title, inline
+// excerpt that truncates, image marker, date. design ref: screen 2b
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import { getUnifiedFeed, groupByYear } from "@/lib/content";
+import { getPostExcerpt } from "@/utils/excerpt";
+import { SITE } from "@/config";
+
+const posts = (await getUnifiedFeed({ excludeDrafts: true })).filter(
+  p => p.inferredType === "blog"
+);
+
+const years = groupByYear(posts);
+
+const fmtDay = (d: Date) =>
+  d.toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" });
+---
+
+<Layout title={`Posts | ${SITE.title}`}>
+  <Header />
+  <main id="main-content" class="index">
+    {
+      years.map(({ year, posts }) => (
+        <section class="index-year">
+          <h2 class="index-year-title">
+            {year} · {posts.length} {posts.length === 1 ? "post" : "posts"}
+          </h2>
+          <ul class="index-list">
+            {posts.map(post => {
+              const excerpt = getPostExcerpt(post);
+              return (
+                <li class="index-row">
+                  <div class="index-body">
+                    <a class="index-title" href={post.url}>
+                      {post.data.title}
+                    </a>
+                    {excerpt && <span class="index-excerpt">{excerpt}</span>}
+                  </div>
+                  <time class="index-date" datetime={post.data.date.toISOString()}>{fmtDay(post.data.date)}</time>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      ))
+    }
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .index {
+    width: 100%;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 72px var(--header-pad-x) 64px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+  }
+
+  .index-year {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .index-year-title {
+    margin: 0 0 14px;
+    font-family: var(--font-mono);
+    font-size: 15px;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    color: var(--muted);
+  }
+
+  .index-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .index-row {
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .index-body {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .index-title {
+    align-self: flex-start;
+    font-size: 23px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--fg);
+    text-decoration: none;
+    border-bottom: 0;
+    white-space: nowrap;
+  }
+  .index-title:hover {
+    color: var(--accent-text);
+  }
+
+  .index-excerpt {
+    font-size: 16px;
+    color: var(--muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .index-date {
+    flex: none;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 720px) {
+    .index {
+      padding: 40px 20px 48px;
+      gap: 44px;
+    }
+    .index-row {
+      flex-direction: column;
+      gap: 6px;
+      padding: 14px 0;
+    }
+    .index-title {
+      font-size: 19px;
+      white-space: normal;
+    }
+    .index-excerpt {
+      font-size: 15px;
+      white-space: normal;
+    }
+  }
+</style>

@@ -1,0 +1,98 @@
+/* design tokens. dark-first, "terminal-adjacent": neutral charcoal surfaces,
+   sans body, mono metadata, one muted accent used as a small square.
+   source: tmp/design_handoff_squarism/README.md */
+:root {
+  /* dark (default) */
+  --bg: #0f0f0f;             /* page */
+  --surface: #141414;        /* screen / header */
+  --card: #1a1a1a;           /* raised: image boxes, code, blockquotes */
+  --border: #262626;
+  --border-strong: #333333;
+  --fg: #e7e7e7;             /* ink: headings, nav active, link text */
+  --body: #cfcfcf;           /* body copy */
+  --muted: #8a8a8a;          /* meta, inactive nav */
+  --faint: #444444;          /* separators */
+  --accent: #b8923f;          /* accent: pixel squares, link underlines, hover */
+  --accent-text: #e2bf6c;     /* accent when used as text colour */
+  --code-bg: #1a1a1a;        /* for code and pre */
+
+  /* legacy aliases still referenced around the site */
+  --divider: var(--border);
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+
+  /* typography */
+  --font-sans: "Instrument Sans", Helvetica, Arial, system-ui, sans-serif;
+  --font-serif: var(--font-sans);
+  --font-mono: "JetBrains Mono", Menlo, Monaco, "Courier New", monospace;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+
+  --leading-tight: 1.05;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.7;
+  --leading-loose: 2;
+
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 2.5rem;
+  --space-3xl: 3rem;
+
+  /* radius 0 everywhere, no shadows */
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+  --radius-xl: 0;
+  --shadow-sm: none;
+  --shadow-md: none;
+  --shadow-lg: none;
+  --shadow-xl: none;
+
+  /* layout */
+  --max-width: 72rem;       /* 1152px, list pages */
+  --article-width: 720px;   /* post page */
+  --content-width: 66ch;
+  --sidebar-width: 20rem;
+  --header-pad-x: 48px;
+
+  --z-modal: 1000;
+  --z-dropdown: 100;
+  --z-sticky: 10;
+
+  --focus-ring: 0 0 0 2px var(--accent);
+  --focus-ring-offset: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent);
+}
+
+/* light: the neutral ramp inverted, accent kept for squares and underlines.
+   the accent is too pale to read as text on a light page, so hover text uses
+   a mid gray instead. the theme script sets data-theme before first paint,
+   so this is the only light block. */
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f2f2f2;
+  --surface: #ededed;
+  --card: #e6e6e6;
+  --border: #d9d9d9;
+  --border-strong: #c8c8c8;
+  --fg: #181818;
+  --body: #303030;
+  --muted: #757575;
+  --faint: #bbbbbb;
+  --accent-text: #777;
+  --code-bg: --alpha(var(--color-zinc-700) / 5%);  /* for code and pre */
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}

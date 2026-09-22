@@ -1,0 +1,336 @@
+---
+title: "iPadDC 2010"
+description: "Blog post about ipaddc 2010"
+date: 2010-04-17T00:00:00.000Z
+author: "SQUARISM"
+draft: false
+tags: ["blog"]
+---
+
+![](/uploads/2010/04/iPadDC.jpg "iPadDC")
+
+Some notes from the 2010 iPadDC conference, I typed as fast as I could.  2nd annual iPhone OS barcamp style un-conference with many good speakers and donuts.  Yum.
+
+Full slides might be available under the [#iPadDC hashtag](http://twitter.com/ipaddc).
+
+## Rob Rhyne @capttaco
+
+### iPad UI Design
+
+[Walter Gropius](http://en.wikipedia.org/wiki/Walter_Gropius), founded the Bauhaus.
+He loved Claire De Lune from Ocean's Eleven, builds up in fountain scene.
+Find the simple.
+Discover the hook and bust your ass to make your app enjoyable.
+When in doubt, polish.
+Demo'd his mock up/wireframe iPhone app [Brief](http://giveabrief.com/).  Really looks nice.  http://giveabrief.com/
+Ruby based BS script for mock up movement.
+Mentioned we should check out a Brett Victor mock up talk at WWDC.  Video might be hard to find.
+
+## Nic Schlueter @schlu
+
+### Pleasing Everyone
+
+blog.simpltry.com
+Taxi Magic (super awesome), PM Android and WebOS
+JSConf
+Very cool taxi booking and payment app.
+Order of market importance
+iPhone -> Android -> Blackberry -> iPad -> WebOS -> WinMobile Phone 7 -> WinMobile 6.5
+Basically WinMobile is dead.
+
+Things to worry about
+- Isms (metaphors per platform)
+- Cross Device Within Platform
+- Location
+- Multitasking
+- App Stores
+
+Androidisms
+Back button kills app. Home keeps it alive. These are hardware buttons so this is the way it is. You can't disable this. Android phones don't get latest versions of the OS. And they don't care because they're going to sell a newer phone. So you have to support old OS's.
+
+BlackBerryism
+- Learn to love the menus
+- Hardware back button
+- T-Mobile users prepare for pain
+- Blackberry users never upgrade their OS
+- Very low expectations
+
+WebOSisms
+- hardware back
+- software swipe down menu, supported by almost all apps
+- most similar to iPhone
+
+Platform Quirks (deep dive)
+Android
+- screen resolution
+     - biggest challenge
+     - must support landscape if you want cred!
+     - watch the font size
+     - large variety in PPI and resolution in phones
+     - so you have to use different pixel density features of fonts?
+- Which OS to Target
+     - 1.6 unless you have a good reason
+     - 6-9 mo you can safely target 2.0 or 2.1
+     - expensive to test old devices (subscriptions)
+     - device manufacturers don't make it a priority to update device OS
+
+Blackberry
+- layout manager not quite as flexible as Android, you have to do lots of detection on your end
+- Currently a lot of resolutions
+- In the future, should be less than Android
+- Which OS to target. The Blackberry App World allows you to submit apps targeted from 4.2.1+.
+- Enterprises might want you to target older devices.
+- Too many threads bug
+     - 6-7 threads seem to be the max. Nasty. A problem on older BBs.
+
+Future Proof
+- build support into your price
+     - either the app is going to suck or you'll be broke if you don't
+- unreleased phones will break your app
+
+T-Mobile
+- some crazy APN process to enable 3rd party internet support on your app
+
+BB partner
+$2000/year to be a partner. They'll send source code. 1-on-1 support person. If you're serious about BB, it's worth it.
+
+WebOS
+- multi-resolutions, not that bad. It's all CSS3.
+- Bottom position sticky to the bottom.
+- PDK makes games fairly trivial. C & C++ are easily portable.
+- Single threaded, not a problem with Ajax async for network calls etc.
+- Ares web based IDE developing in the browser.
+- Is it worth it? Probably not. Still better than WindowsMobile! HAHA
+
+iPhone location services are awesome, spoiled. Others aren't as good. The Droid rate limits how frequently you can get a location. Even between app restarts. Check time on the last known location. Nasty behavior for him to figure out.
+
+BB Location. Slow GPS only. Not on older phones.
+WebOS Location is basically fine.
+
+Multitasking
+- Do not do things that kill the battery. Location or network.
+- Consider the user experience if a user comes back to a screen days later.
+Android
+- full access
+- prog con running
+- save state when users leave app
+- your app gets killed in low mem situtations
+BB
+- full access
+- your prog con running
+- do what you want (spawn, background, you can watch sms/email - poor man's push)
+WebOS
+- full access
+- won't kill your app, prevents users from starting a new app if too much mem in use
+- You must have a card or icon when running in bg, or prepare to be killed
+
+App Stores
+Apple - submit, wait, pray (14 days to 24 hours to 3 days). Apple is the only one with identifiers for betas. 70/30
+Android - no permission, 325 character description limit, can only sell from certain countries. Money collected from Google Checkout. Betas run from your own server. Free to publish. 70/30
+Blackberry - 3ish day approval time. $2.99 minimum price. Betas run through your own server. $200 per app. 80/20 split
+WebOS - 5ish day approval. $50 per app. 70/30.
+
+## Dana Nuon @wdnuon
+
+### iBooks Page Curl in Six Lines of Code
+
+Transforming page by page turning with deformation. Method returns a vector which is applied to a flat matrix. Each vertex in a matrix has an X/Y. The function adds a Z.
+
+He basically showed how to implement the Apple iBook page turn effect in six lines of code using a Xerox algorithm from a one page PDF with some super heavy conic math. Super awesome demos he had.  He's been doing this stuff for a while.  Very experienced, very nice chats after his talk.
+
+## Luis de la Rosa @louielouie
+
+### Seven Ways to Improve Your App with Servers
+
+Pro: Access more data, differentiate
+Con: More work, maintenance
+
+JSON vs XML
+JSON - smaller, more efficient - TouchJSON
+XML - built-in, ubiquitous - TouchXML
+runner-ups: plist (no server will recognize this), custom binary
+
+API enables community (high score list). More processing power (upload image to amazon mechanical turk)
+
+Debugging. Inspect traffic. Charles Proxy. Adjust WiFi proxy preference. Debug with proxy.
+
+Push notification: Your Server -> Apple Push Server -> iPad -> Popup: Your App: Hello World!
+- Registration
+- Push message, badge, sound. Message 5lines, 24 char
+- Best Practice, custom data to highlight item. Push some JSON to highlight.
+
+In-App Purchase
+Three types:
+- Consumable (example: uBoot torpedos).
+- Non-consumable (ie: uBoot levels) - usually built-in
+- Subscriptions (magazine)
+
+In-App Purchase Server Product Model
+- App store handles CC but then passes it to you.
+iPad -> App Store -> Your Server -> iPad
+
+Sync
+User data survives data / app loss. Or enable multiple devices per user. Out of scope: WiFi Sync (sync to mac) + GameKit (P2P)
+
+Analytics
+- Track usage
+- Easy to setup
+- Best practice: Send specific custom data (which level are people playing the most?)
+- Best practice: Crash handler
+
+Advertising
+- Make money with free app
+- Design: Dedicate some space
+- Animation may help
+
+How to implement
+- Hire a consultant like Happy Apps
+- DIY
+- 3rd party providers like Millennial Media
+- Apple (they don't do much)
+
+## Christopher Brown
+
+### iPad Advertising
+
+Answered questions and talked about how to do analytics, marketing, ads and what iAds might affect the space.  He had solid metrics and graphs that I can't type out like he did last year with his Tap Metrics talk.
+
+## David Smith
+
+### 14 Days and 11 Apps Later
+
+An amazing walkthrough his flurry of app submissions.  He walked through ideas he and his team had for the iPad, demo'd his _ELEVEN APPS_ and showed sales results.  Shotgun approach gets a bit of cash but not really going to start a business.  He had a lot of great insight like, "it's not about making money but about getting your $99 worth and learning".  I'm not doing his talk justice.  Cool guy.
+
+## James Norton @jnorton
+
+### OpenGL ES 2.0 & the OpenGL Shading Language
+
+Graphics Pipeline
+Why 2.0?
+- Programmable shaders enable things that are difficult or impossible without them
+- Computations in the GPU
+- Can free up memory by replacing static textures
+
+Shaders (introduced in 2.0)
+- Vertex Shaders operate on vertex data (attributes)
+     - Enables CPU to offload many vertex computations to GPU
+- Fragment Shaders operate on fragment (pixel) data
+     - Allow per-pixel effects like per-pixel lighting, procedural textures (bump mapping or env mapping), noise, etc
+
+Shading Language
+- Based on C
+- Variables, structures, arrays, operators, functions, flow control
+- Additional types to support gfx operations (vectors and matrices)
+
+Differences from C
+- Stricter type conversions
+- No pointers
+- Function parameters can be qualified with modification: in (default), inout, out
+- For loopers require iteration count to be known at compile time
+- Array indices must be constants
+
+Variable Types
+- Scalars - float, int, bool
+
+Vectors and Matrices
+- Ops work with vec and matrices too
+- Multiplication op handles vec matrix and mat/matrix multiplies correctly
+- Math ops likely to be HW accel
+- Position component access
+```text
+vec2 pos = vec2(0,1.0)
+float xPost = pos.x;
+float yPos = pos.y;
+```
+
+Variable Constructors
+`vec2 texCoord = vec2(0.5, 0.5);`
+
+Type conversion
+```text
+int count = 4;
+float fCount = float(count);
+```
+
+Flexible
+```text
+vec3 pos = vec3(1.0,1.0,1.0);
+vec2 something = vec2(pos);
+```
+
+Precision Qualifiers
+lowp,mediump,highp (high precision)
+highp vec4 color;
+MUST declare default or per var precision for float in frag shaders
+
+Type Modifiers
+- Uniforms - readonly variables passed in by the application
+- Attributes - per-vertex input to the vertex shader
+- Varyings - user to communicate form vertex shaders to fragment shader
+
+Simple Shaders
+Vertex Shader
+```c
+attribute vec4 position;
+attribute vec2 texCoord;
+varying vec2 fTexCoord;
+
+void main(void) {
+     gl_Position = position; // no view transformation
+     fTexCoord = texCoord; // will be linearly interpolated
+}
+```
+
+Fragment Shader
+```c
+precision highp float;
+varying vec2 fTexCoord;
+
+uniform sampler2D myTextureSampler;
+
+void main(void) {
+     gl_FragColor = texture2D(myTextureSampler,fTexCoord);
+}
+```
+
+TV Noise Fade in Demo
+Sigmoid Function: s(t) = 1 / (1 + e^ -f(t-t0) )
+Vertex Shader simply passes position to gl_Position like before.
+
+Fragment Shader preample
+```c
+precision highp float;      // use high p as defaulit for floats
+uniforma smapler2D test_pattern_texture;     // texture sampler for text patter
+uniform highp float time;     //time since animation start
+varying highp vec2 vTexCoord;
+
+void main() {
+     float weight = sigmoid(time);
+     float randStatic = rand(vTextCoord);
+     float randDynamic = rand(vec2(randStatic,weight));
+     vec4 texVal = texture2D(test_pattern_texture, vTexCoord);
+     //don't add noise to the black border
+     if(textVal != vec4(0,0,0,1)){
+          gl_FragColor = weight * texVal + (12.0 - weight) * randDynamic;
+     } else {
+          gl_FragColor = texVal;
+     }
+}
+
+// sigmoid function
+float sigmoid(highp float t) {
+float f = 10.0;
+float t0 = 1.25;
+return 1.0 / (1.0 + exp(f * -(t - t0)));
+}
+
+// pseudo random number generator
+float rand(highp vec2 pos){
+     return fract(sin(dot(pos, vec2(12.0909, 78 ....
+}
+```
+
+Final Thoughts
+- OpenGL ES 2.0 allows developers more flexibility than OpenGL ES 1.1. Only will run on 3GS, iPad
+- Gold book (the purple book).
+- Orange book later for advanced.

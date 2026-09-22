@@ -1,0 +1,240 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import { SITE } from "@/config";
+
+// descriptions are html strings so inline links survive. image paths live under
+// public/images/talks. a talk with no image still gets the empty slot.
+interface Talk {
+  year: number;
+  title: string;
+  href?: string;
+  description: string;
+  image?: string;
+}
+
+const talks: Talk[] = [
+  {
+    year: 2024,
+    title: "Python Tooling",
+    description:
+      "A series of seven ~10min talks on my perspective on Python tooling. It started with poetry but it applies to uv or any resolving/locking package manager. It goes over what the lock file means and when to run it. It gets into testing and frameworks in the end. Recorded privately.",
+  },
+  {
+    year: 2024,
+    title: "Slack Bots Are Neat",
+    description: "Intro to a chatops style Slack bot. Recorded privately.",
+  },
+  {
+    year: 2023,
+    title: "MLOps is Devops for Machine Learning",
+    description:
+      "Making a comparison to devops adoption. Like, why it took so long. Software Maturity Crisis in ML and Python prototypes. How we could explore the space. Why there's no stack. Recorded privately.",
+  },
+  {
+    year: 2023,
+    title: "Intro to Ansible",
+    description:
+      "This talk was made to explain what problem Ansible is solving but also the infrastructure repo I had started, what decisions I made. It also went over Ansible testing at the time. Recorded privately.",
+  },
+  {
+    year: 2016,
+    title: "Docker Dreams",
+    href: "https://github.com/squarism/docker_dreams",
+    description: "An intro to Docker",
+  },
+  {
+    year: 2015,
+    title: "Encoding is Hard",
+    href: "https://www.youtube.com/watch?v=IG0oytnUIrg",
+    description:
+      'pdxruby July 2015, was a lightning talk on the spot, unrehearsed. There is an <a href="https://squarism.com/2015/07/08/encoding-in-ruby-and-everywhere/">accompanying blog post</a>.',
+    image: "/images/talks/encoding.jpg",
+  },
+  {
+    year: 2015,
+    title: "Dream Talk - Ruby on Ales",
+    href: "https://www.youtube.com/watch?v=LFNoyi0nnsA",
+    description:
+      'A talk done at Ruby on Ales, 2015 in Bend, OR. It was about a pixel art music video I made in Ruby. <a href="https://github.com/squarism/dream">The repo is here</a> and <a href="https://vimeo.com/116836454">the video of just the animation is on vimeo</a>.',
+    image: "/images/talks/dream.png",
+  },
+  {
+    year: 2015,
+    title: "Arduino Cat Faucet",
+    href: "https://www.youtube.com/watch?v=tIdC7nS5kWI",
+    description:
+      'A talk about an automatic watering faucet done at pdxruby. This project funny enough was featured on Sparkfun\'s homepage (where I bought the parts) and Hackaday. <a href="https://www.youtube.com/watch?v=J5ToTB8yRJk">Just the video of the faucet in action is here</a>.',
+    image: "/images/talks/cat_faucet_thumb.png",
+  },
+];
+---
+
+<Layout title={`Talks | ${SITE.title}`}>
+  <Header />
+  <main id="main-content" class="talks">
+    <h1 class="talks-title">Talks</h1>
+
+    <p class="talks-intro">
+      Sometimes I talk at conferences and meetups. This list has links to
+      recordings if they are available, otherwise it's a list of things I find
+      interesting enough to present on.
+    </p>
+
+    <ul class="talk-list">
+      {
+        talks.map(talk => (
+          <li class="talk">
+            <span class="talk-year">{talk.year}</span>
+            <div class="talk-body">
+              {talk.href ? (
+                <a class="talk-name" href={talk.href}>{talk.title}</a>
+              ) : (
+                <span class="talk-name">{talk.title}</span>
+              )}
+              <p class="talk-desc" set:html={talk.description} />
+            </div>
+            <div class:list={["talk-shot", { "has-image": !!talk.image }]}>
+              {talk.image && (
+                <a href={talk.href ?? talk.image} tabindex="-1">
+                  <img src={talk.image} alt={`${talk.title} screenshot`} loading="lazy" />
+                </a>
+              )}
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+
+    <p class="talks-credits">
+      I'd like to plug and thank Confreaks for all their hard work over the
+      years. It takes a lot of coordination and work to record all the
+      conferences live.
+    </p>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .talks {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 64px var(--header-pad-x) 80px;
+  }
+
+  .talks-title {
+    margin: 0 0 16px;
+    font-size: 40px;
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    color: var(--fg);
+  }
+
+  .talks-intro {
+    max-width: 62ch;
+    margin: 0 0 48px;
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--body);
+    text-wrap: pretty;
+  }
+
+  .talk-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--border);
+  }
+
+  /* year | text | screenshot slot. the slot is always laid out so rows line
+     up whether or not a talk has an image */
+  .talk {
+    display: grid;
+    grid-template-columns: 72px minmax(0, 1fr) 280px;
+    gap: 32px;
+    align-items: start;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .talk-year {
+    padding-top: 4px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .talk-body {
+    min-width: 0;
+  }
+
+  .talk-name {
+    display: inline-block;
+    margin-bottom: 8px;
+    font-size: 21px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--fg);
+  }
+  a.talk-name:hover {
+    color: var(--accent-text);
+  }
+
+  .talk-desc {
+    margin: 0;
+    max-width: 60ch;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--body);
+    text-wrap: pretty;
+  }
+
+  .talk-shot {
+    aspect-ratio: 16 / 9;
+    width: 100%;
+  }
+  .talk-shot a {
+    display: block;
+    height: 100%;
+    border-bottom: 0;
+  }
+  .talk-shot img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: 1px solid var(--border);
+    box-sizing: border-box;
+  }
+
+  .talks-credits {
+    max-width: 62ch;
+    margin: 48px 0 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+
+  @media (max-width: 800px) {
+    .talks {
+      padding: 40px 20px 56px;
+    }
+    .talk {
+      grid-template-columns: 1fr;
+      gap: 12px;
+      padding: 22px 0;
+    }
+    .talk-year {
+      padding-top: 0;
+    }
+    /* no reserved slot on small screens; an image just follows the text */
+    .talk-shot:not(.has-image) {
+      display: none;
+    }
+    .talk-shot {
+      max-width: 360px;
+    }
+  }
+</style>

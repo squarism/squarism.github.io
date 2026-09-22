@@ -1,0 +1,23 @@
+---
+import { type CollectionEntry, getCollection } from "astro:content";
+import TILDetails from "@/layouts/TILDetails.astro";
+import { generateTILSlug } from "@/utils/generateSlug";
+
+export interface Props {
+  til: CollectionEntry<"til">;
+}
+
+export async function getStaticPaths() {
+  const tilEntries = await getCollection("til", ({ data }) => !data.draft);
+  const tilResult = tilEntries.map(til => ({
+    params: { slug: generateTILSlug(til) },
+    props: { til },
+  }));
+
+  return tilResult;
+}
+
+const { til } = Astro.props;
+---
+
+<TILDetails til={til} />

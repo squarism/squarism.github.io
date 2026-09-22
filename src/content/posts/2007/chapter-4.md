@@ -1,0 +1,74 @@
+---
+title: "Chapter 4"
+description: "Going through the Oreilly book _Practical C++ Programming_, which may be an arguable title, and I'm just trying to go through all of the examples and"
+date: 2007-01-21T00:00:00.000Z
+author: "SQUARISM"
+draft: false
+tags: ["blog"]
+---
+
+Going through the Oreilly book _Practical C++ Programming_, which may be an arguable title, and I'm just trying to go through all of the examples and save them somewhere so I know where I left off the next time I'm feeling recklessly productive.
+
+Specifically, Chapter 4 asks
+
+> **Exercise 4-2:** Write a program to print a block E using asterisks (*), where the E is 7 characters high and 5 characters wide.
+
+Of course the easy way would be to just print out a bunch of strings.  But I consider that cheap.  So I played around with struct and typedefs but I don't know what the hell I'm doing with those so I instead forced myself to learn about passing by value vs. passing by reference.
+
+First, the function makeE() creates an integer array which in my world of goals could be a game model, or x,y,z points for some game object.  Then printE() prints out the array, but only an array of 7.  If I wanted to do this whole thing much better I'd use a vector.
+
+It's rough shifting gears back to C++.  I don't know if I'll ever get really good with it and be able to get to the fun stuff.  You can see below that another version just printed out way too many *'s.
+
+![e messedup](/uploads/2007/01/e_messedup.png "e messedup")
+
+```text
+/*
+ *  4-2.cpp
+ *  Practical C++ Exercises
+ *
+ *  Created by Chris on 1/21/07.
+ *  Copyright 2007 hexameter.com. All rights reserved.
+ *
+ */
+// write a program to print a block E using *, where e is 7 high and 5 wide.
+#include <iostream>
+
+void makeE(int int_array[])
+{
+  int_array[0]=5;
+  int_array[1]=1;
+  int_array[2]=1;
+  int_array[3]=5;
+  int_array[4]=1;
+  int_array[5]=1;
+  int_array[6]=5;
+}
+
+void printE(int e[])
+{
+
+  for (int i = 0; i < 7 ; i++)
+  {
+    for (int j=0; j<e[i]; j++)
+    {
+      std::cout << "*";
+    }
+    std::cout << "\n";
+  }
+}
+
+int main()
+{
+  int e_array[7];
+
+  makeE(e_array);
+  printE(e_array);
+  return(0);
+}
+```
+
+But then finally, it worked suddenly after I made some adjustments.
+
+![e success](/uploads/2007/01/e_success.png "e success")
+
+This is all just beginner stuff.  :(

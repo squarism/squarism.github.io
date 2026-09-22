@@ -1,0 +1,110 @@
+---
+import { SITE } from "@/config";
+import IconLink from "@/components/IconLink.astro";
+
+const githubIcon = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>`;
+
+const rssIcon = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+  <path d="M4 11a9 9 0 0 1 9 9"></path>
+  <path d="M4 4a16 16 0 0 1 16 16"></path>
+  <circle cx="5" cy="19" r="1"></circle>
+</svg>`;
+
+const mastodonIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 216.4144 232.00976">
+  <path fill="currentColor" d="M177.50984 80.077v60.94125h-24.14375v-59.15c0-12.46875-5.24625-18.7975-15.74-18.7975-11.6025 0-17.4175 7.5075-17.4175 22.3525v32.37625H96.20734V85.42325c0-14.845-5.81625-22.3525-17.41875-22.3525-10.49375 0-15.74 6.32875-15.74 18.7975v59.15H38.90484V80.077c0-12.455 3.17125-22.3525 9.54125-29.675 6.56875-7.3225 15.17125-11.07625 25.85-11.07625 12.355 0 21.71125 4.74875 27.8975 14.2475l6.01375 10.08125 6.015-10.08125c6.185-9.49875 15.54125-14.2475 27.8975-14.2475 10.6775 0 19.28 3.75375 25.85 11.07625 6.36875 7.3225 9.54 17.22 9.54 29.675"/>
+</svg>`;
+---
+
+<div class="identity-card">
+  <div class="identity-content">
+    <h3 class="identity-name">{SITE.author}</h3>
+    <p class="identity-bio">Code and synths but I want to hear about your thing.</p>
+
+    <div class="identity-links">
+      <IconLink
+        href="https://github.com/squarism"
+        target="_blank"
+        rel="noopener noreferrer"
+        icon={githubIcon}
+        label="GitHub"
+      />
+      <IconLink
+        href="https://hachyderm.io/@squarism"
+        target="_blank"
+        rel="noopener noreferrer"
+        icon={mastodonIcon}
+        label="Mastodon"
+      />
+      <IconLink
+        href="/rss.xml"
+        icon={rssIcon}
+        label="RSS"
+      />
+    </div>
+  </div>
+</div>
+
+<style>
+  .identity-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 0;
+    overflow: hidden;
+    transition: all 0.2s ease;
+    padding: 1.5rem;
+    text-align: center;
+  }
+
+  .identity-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    border-color: var(--fg);
+  }
+
+  .identity-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .identity-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--fg);
+    margin: 0;
+  }
+
+  .identity-bio {
+    color: var(--muted);
+    line-height: 1.6;
+    margin: 0;
+    font-size: 0.9375rem;
+  }
+
+  .identity-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+
+  @media (max-width: 768px) {
+    .identity-links {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .identity-card {
+      transition: none;
+    }
+
+    .identity-card:hover {
+      transform: none;
+    }
+  }
+</style>

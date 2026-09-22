@@ -1,0 +1,24 @@
+---
+export interface Props {
+  href: string;
+  icon: any;
+  label: string;
+  target?: string;
+  rel?: string;
+}
+
+const { href, icon, label, target, rel } = Astro.props;
+---
+
+<a href={href} target={target} rel={rel} class="icon-link">
+  <Fragment set:html={icon} />
+  <span>{label}</span>
+</a>
+
+<style>
+  .icon-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+</style>

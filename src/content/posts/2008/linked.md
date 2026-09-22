@@ -1,0 +1,103 @@
+---
+title: "Linked"
+description: "I just finished a book called Linkedhttp://www.amazon.com/Linked-Everything-Connected-Else-Means/dp/0452284392/ref=pd_bbs_1?ie=UTF8&s=books&sr=8-1"
+date: 2008-03-25T00:00:00.000Z
+author: "SQUARISM"
+draft: false
+tags: ["blog"]
+---
+
+I just finished a book called [Linked](http://www.amazon.com/Linked-Everything-Connected-Else-Means/dp/0452284392/ref=pd_bbs_1?ie=UTF8&s=books&sr=8-1). It's a book about network theory and covers a wide variety of topics very quickly. It's not incredibly long but I found it very interesting just because of speculation I've done over the years.
+
+Sometimes, I've wondered if the patterns I see in some subject translate (either by divine will or mathematics) into other subjects. For example, if the 80/20 rule applies in software, does it apply to business or biology or anything else? The author covers these kinds of things in a much more journalistic approach than my everyday speculation and casual daydreaming could. It was reinforcing in a way.
+
+Towards the end of the book, the author has a diagram of a three-point triangle. He relates the node map to society and members of society as connectors and hubs. The chapter covered topics like infection and how certain hub-people will transmit disease faster than others. It's a bit more complicated than how I'm summarizing but the diagram caught my attention none-the-less. The author started with a node and then added nodes recursively (whether he knew it or not). So I fired up the [processing.org](http://processing.org) program and tried to draw what he had made but make it configurable with depth. Here's the result, was fun.
+
+The depth goes 1,2,4,8. After that it becomes a white mess.
+
+![linkedRecursion1](/uploads/2008/03/linkedRecursion1.png "linkedRecursion1")
+![linkedRecursion2](/uploads/2008/03/linkedRecursion2.png "linkedRecursion2")
+![linkedRecursion3](/uploads/2008/03/linkedRecursion3.png "linkedRecursion3")
+![linkedRecursion4](/uploads/2008/03/linkedRecursion4.png "linkedRecursion4")
+
+```java
+int scale = 100; // size of initial triangle
+int w = 500;
+int h = 500;
+
+void setup()
+{
+
+background(40);
+size(w,h);
+noStroke();
+smooth();
+noLoop();
+}
+
+void draw()
+{
+drawHorseshit(w/2, h/2, 9, scale);
+}
+
+class tri {
+int ax;
+int ay;
+int bx;
+int by;
+int cx;
+int cy;
+}
+
+void drawHorseshit(int x, int y, int depth, int s)
+{
+fill(140);
+stroke(255);
+
+stroke(255,5);
+line(0,y,w,y); //horizontal line
+line(x,0,x,h); //vertical line
+stroke(255);
+
+// interior lines
+tri outline = new tri();
+
+//center
+ellipse(x, y, s/4, s/4);
+
+//top
+ellipse(x, y-s, s/8, s/8);
+outline.ax = x;
+outline.ay = y-s;
+
+//right
+float ra = s _ sin(60);
+float rb = s _ cos(60);
+ellipse( (x-rb), (y-ra), s/8, s/8);
+outline.bx = (int)(x-rb);
+outline.by = (int)(y-ra);
+
+//left
+float la = s _ sin(60);
+float lb = s _ cos(60);
+ellipse( (x+lb), (y-la), s/8, s/8);
+outline.cx = (int)(x+lb);
+outline.cy = (int)(y-la);
+
+stroke(255,50);
+line(outline.ax, outline.ay, x,y);
+line(outline.bx, outline.by, x,y);
+line(outline.cx, outline.cy, x,y);
+stroke(255);
+
+if(depth > 1) {
+depth--;
+s = s/2;
+drawHorseshit(outline.ax, outline.ay, depth, s);
+drawHorseshit(outline.bx, outline.by, depth, s);
+drawHorseshit(outline.cx, outline.cy, depth, s);
+}
+
+}
+
+```

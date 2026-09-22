@@ -1,0 +1,197 @@
+---
+// /projects: one row per project. pinned ones (with an order) first, ascending,
+// then the rest newest first. same shape as the talks page:
+// year | name + description | image slot. the name links to the project page
+// and the repo link sits under the description.
+import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import { SITE } from "@/config";
+
+const projects = (
+  await getCollection("projects", ({ data }) => !data.draft)
+).sort((a, b) => {
+  const ao = a.data.order ?? Infinity;
+  const bo = b.data.order ?? Infinity;
+  if (ao !== bo) return ao - bo;
+  return b.data.date.getTime() - a.data.date.getTime();
+});
+---
+
+<Layout title={`Projects | ${SITE.title}`}>
+  <Header />
+  <main id="main-content" class="projects">
+    <h1 class="projects-title">Projects</h1>
+
+    <p class="projects-intro">
+      Software I have built and/or published. Mostly on GitHub.
+    </p>
+
+    <ul class="project-list">
+      {
+        projects.map(project => (
+          <li class="project">
+            <span class="project-year">
+              {project.data.date.getUTCFullYear()}
+            </span>
+            <div class="project-body">
+              <a class="project-name" href={`/projects/${project.id}/`}>
+                {project.data.title}
+              </a>
+              <p class="project-desc">{project.data.description}</p>
+              {project.data.repo && (
+                <a class="project-repo" href={project.data.repo}>
+                  {project.data.repo.replace(/^https?:\/\//, "")}
+                </a>
+              )}
+            </div>
+            <div
+              class:list={[
+                "project-shot",
+                { "has-image": !!project.data.image },
+              ]}
+            >
+              {project.data.image && (
+                <a href={`/projects/${project.id}/`} tabindex="-1">
+                  <Image
+                    src={project.data.image}
+                    alt={`${project.data.title} screenshot`}
+                    width={560}
+                    loading="lazy"
+                  />
+                </a>
+              )}
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .projects {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 64px var(--header-pad-x) 80px;
+  }
+
+  .projects-title {
+    margin: 0 0 16px;
+    font-size: 40px;
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    color: var(--fg);
+  }
+
+  .projects-intro {
+    max-width: 62ch;
+    margin: 0 0 48px;
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--body);
+    text-wrap: pretty;
+  }
+
+  .project-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--border);
+  }
+
+  /* year | text | image slot. the slot is always laid out so rows line up
+     whether or not a project has an image */
+  .project {
+    display: grid;
+    grid-template-columns: 72px minmax(0, 1fr) 280px;
+    gap: 32px;
+    align-items: start;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .project-year {
+    padding-top: 4px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .project-body {
+    min-width: 0;
+  }
+
+  .project-name {
+    display: inline-block;
+    margin-bottom: 8px;
+    font-size: 21px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--fg);
+  }
+  .project-name:hover {
+    color: var(--accent-text);
+  }
+
+  .project-desc {
+    margin: 0 0 10px;
+    max-width: 60ch;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--body);
+    text-wrap: pretty;
+  }
+
+  .project-repo {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .project-repo:hover {
+    color: var(--accent-text);
+  }
+
+  .project-shot {
+    aspect-ratio: 16 / 9;
+    width: 100%;
+  }
+  .project-shot a {
+    display: block;
+    height: 100%;
+    border-bottom: 0;
+  }
+  .project-shot img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: 1px solid var(--border);
+    box-sizing: border-box;
+  }
+
+  @media (max-width: 800px) {
+    .projects {
+      padding: 40px 20px 56px;
+    }
+    .project {
+      grid-template-columns: 1fr;
+      gap: 12px;
+      padding: 22px 0;
+    }
+    .project-year {
+      padding-top: 0;
+    }
+    /* no reserved slot on small screens; an image just follows the text */
+    .project-shot:not(.has-image) {
+      display: none;
+    }
+    .project-shot {
+      max-width: 360px;
+    }
+  }
+</style>

@@ -1,0 +1,77 @@
+---
+export interface Props {
+  src: string;
+  alt: string;
+  priority?: boolean;
+  sizes?: string;
+}
+
+const { 
+  src, 
+  alt, 
+  priority = false,
+  sizes = "(min-width: 768px) 50vw, 100vw"
+} = Astro.props;
+
+// generate responsive sizes
+const srcset = [
+  { width: 400, suffix: "-400w" },
+  { width: 800, suffix: "-800w" },
+  { width: 1200, suffix: "-1200w" }
+];
+
+// for now, we'll just use the original image
+// in a real implementation, you'd generate these sizes
+const responsiveSrcset = srcset
+  .map(({ width, suffix }) => `${src}${suffix} ${width}w`)
+  .join(", ");
+---
+
+<div class="header-image">
+  <picture>
+    <img
+      src={src}
+      alt={alt}
+      sizes={sizes}
+      width="1200"
+      height="675"
+      loading={priority ? "eager" : "lazy"}
+      decoding="async"
+      class="header-img"
+    />
+  </picture>
+</div>
+
+<style>
+  .header-image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: 0;
+    margin-bottom: 0;
+    position: relative;
+  }
+
+  .header-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.3s ease;
+    display: block;
+  }
+
+  .header-image:hover .header-img {
+    transform: scale(1.02);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .header-img {
+      transition: none;
+    }
+    
+    .header-image:hover .header-img {
+      transform: none;
+    }
+  }
+</style>

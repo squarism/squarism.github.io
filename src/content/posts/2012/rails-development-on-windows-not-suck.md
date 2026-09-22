@@ -1,0 +1,24 @@
+---
+title: "Making Rails Development on Windows Not Suck"
+description: "Blog post about making rails development on windows not suck"
+date: 2012-09-22T00:00:00.000Z
+author: "SQUARISM"
+draft: false
+tags: ["blog"]
+---
+
+One of these strategies will probably work for you.
+
+I have a Windows 7 box. Normally I dev on Mac (not perfect but sucks less). I had built a Linux VM (ubuntu) but wanted to share my projects from the VM to windows to use sublime text 2. Editing through the shell is ok but I wanted a full text editor instead of vi (which I haven't gotten my speed up on). So I normally watch my files for changes with Guard as previously blogged.
+
+So I share out my ~/projects directory through VMWare to Windows. Great! Now I can have all the unix tools in the VM and a GUI editor without doing the console screen painting through VMWare. The problem is, libevent doesn't trigger through the shared folder feature of VMware. I have no idea why.
+
+So I pivoted. I tried the windows rails installer. Even though it tries to pre-patch mingw32 right before the native gem install, it didn't work well with native libs like nokogiri (just to name one).
+
+So I tried cygwin and apt-cyg (apt-get for Cygwin, nice, sorta). It didn't work well with compiling ruby even after googling flags and installing gcc. Was getting "could not find C compiler".
+
+So this journey continues. I installed the latest version of VMware workstation on Windows, going to try shared directory again with new vmware version and ubuntu 12.04. Maybe there will be some magic in the upgrades. I doubt it but I will try.
+
+I could also try my [inline rspec](/posts/a-different-repl-workflow-in-ruby/) trick even though that still uses libevent for triggering the test execution.
+
+If you have no idea what I'm talking about but am curious, leave a comment and I'll make a video or follow-up.

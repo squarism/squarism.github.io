@@ -1,0 +1,123 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import { getCollection } from "astro:content";
+import { generateTILSlug } from "@/utils/generateSlug";
+import { SITE } from "@/config";
+
+const tilEntries = await getCollection("til", ({ data }) => !data.draft);
+const sortedTIL = tilEntries.sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+
+const fmtDate = (d: Date) =>
+  d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "2-digit" });
+---
+
+<Layout title={`Today I Learned | ${SITE.title}`}>
+  <Header />
+  <main id="main-content" class="til-index">
+    <header class="til-header">
+      <h1>Today I Learned</h1>
+      <p class="til-description">
+        Short knowledge snippets, quick discoveries, and programming gotchas.
+        The small things that make a big difference.
+      </p>
+    </header>
+
+    {sortedTIL.length > 0 ? (
+      <ul class="til-list">
+        {sortedTIL.map(til => (
+          <li class="til-item">
+            <time class="til-date" datetime={til.data.date.toISOString()}>
+              {fmtDate(til.data.date)}
+            </time>
+            <a class="til-link" href={`/til/${generateTILSlug(til)}/`}>
+              {til.data.title}
+            </a>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p class="no-til">No TIL entries found. Start learning!</p>
+    )}
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .til-index {
+    max-width: 56rem;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 3rem;
+  }
+
+  .til-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .til-header h1 {
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    color: var(--fg);
+    margin: 0 0 0.5rem 0;
+    line-height: var(--leading-tight);
+  }
+
+  .til-description {
+    font-size: 1rem;
+    color: var(--muted);
+    line-height: var(--leading-normal);
+    max-width: 36rem;
+    margin: 0;
+  }
+
+  .til-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .til-item {
+    display: grid;
+    grid-template-columns: 7rem 1fr;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0.625rem 0;
+    border-bottom: 1px dotted var(--border);
+  }
+
+  .til-item:last-child {
+    border-bottom: none;
+  }
+
+  .til-date {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.8125rem;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .til-link {
+    font-size: 1rem;
+    line-height: 1.4;
+    font-weight: 500;
+  }
+
+  @media (max-width: 640px) {
+    .til-item {
+      grid-template-columns: 5.5rem 1fr;
+      gap: 0.75rem;
+    }
+  }
+
+  .no-til {
+    color: var(--muted);
+    text-align: center;
+    padding: 4rem 0;
+  }
+</style>

@@ -1,0 +1,73 @@
+---
+title: "Passion"
+description: "On a Ruby Rogues podcast about Passionhttp://rubyrogues.com/144-rr-passion/, Avdi continued to enlighten and entertain me with his insights. I've"
+date: 2014-05-19T00:00:00.000Z
+author: "SQUARISM"
+draft: false
+tags: ["blog"]
+---
+
+On a [Ruby Rogues podcast about Passion](http://rubyrogues.com/144-rr-passion/), Avdi continued to enlighten and entertain me with his insights. I've really been enjoying his speaking style and voice lately through tapas and talks. If he reads this, I hope he understands I don't disagree with what he is saying; I thought he would enjoy a related story.
+
+Honestly, this topic is so massive I don't think I can really offer too much more than the Rogues did on the podcast so I encourage you to <a href="http://rubyrogues.com/144-rr-passion/">listen to the episode yourself</a>. It has almost nothing to do with programming or Ruby. I feel that philosophies and stories about passion are so close to the difficult and inevitable goal of "master yourself", which is both complicated and personal, I can just barely approach the topic and then a rat's nest of anecdotes and advice explodes all around us.
+
+With that context laid out, here are a few stories.
+
+<!-- more -->
+
+On the podcast, the rogues talked about two PhDs that would scream at each other in the office on a daily basis. Avdi said that he's had similar experiences personally and said:
+
+> I've gotten upset with people for their code because it was so stupid. I've gotten angry and I've said mean things. And you know what? All those instances, those were wastes of my passion. That was wasted emotional energy.
+
+I know what he's trying to say. There are moments when this is true. In fact, I would say in the majority of cases it's better to just "get over it" (a challenge itself). Most of the time I try to run in this mode. Most of the time I fail. It's especially hard when you feel like you need to "represent".
+
+### Story Time
+
+Here was my situation. A "lead architect" I sat with in a shared office room was named "Bradly". Bradly was not his real name but it will help you remember that Bradly was Bad. He was a lead architect of our project but he couldn't code and he couldn't build servers. He had some very narrow skills in a certain problem domain but those skills weren't general enough for him to be an "architect". He got the title/position through a previous successful project. I'm just setting up the scenario here.
+
+We had an application in the middle-tier, doesn't really matter what it did except that it talks to a database. His bright idea was to install a database on every node to reduce network traffic. We were vendor-locked into Oracle. We had at least 10 servers that this design decision would impact. We really needed 1 database but we would be purchasing 10. I was the only one on the project that could or would argue against the decision.
+
+It was very simple from my point of view:
+
+- Three tier architecture is front, middle, back. Normally that's web, app server, database.
+- No one installs databases on their app servers to reduce network traffic.
+- We didn't know that network traffic is the (or a) bottleneck.
+- Oracle database licenses sell for about $20k + $?? annual support.
+- We were going to have a failover site so this single decision was on the order of $400k.
+- Running 10 databases is hard. Replication is hard. Oracle RDBMS does not "want" this layout.
+
+Bradly's argument was:
+
+- Networks (gigabit, brand new awesome switches) are slow.
+- Local databases would avoid the network.
+
+<hr>
+
+Just to be clear, this is a simplified version of what Bradly wanted.
+
+![tier_architecture_one](/uploads/2014/05/tier_architecture_one.png)
+
+<hr>
+
+This is what I wanted.
+![tier_architecture_two](/uploads/2014/05/tier_architecture_two.png)
+
+<hr>
+
+I did my best to remain calm but this is the represent problem. I felt compelled to bring the "outside world" into the room. I knew that no one did it like this. And I imagined a stadium of my peers agreeing with me if they only knew what he was saying. "What would the Internet think? Oh my god! They would laugh! Imagine our embarrassment! What kind of project is this?!" etc.
+
+I tried to approach it logically. I showed vendor diagrams and documentation of example architectures from the very vendor product we were using and no diagrams showed locally installed databases. Eventually it came down to his argument: "I own the architecture, I'm the architect."
+
+In this case, I was very passionate. I was furious. I had to represent the outside world. I couldn't let it go. I had to teach him that no one does it this way. I had to represent.
+
+## Drama
+
+We eventually got into the only screaming argument I've ever had in my 14-ish year career. It was bad. We didn't talk anymore. We split the team. We pitched our designs to management separately. Management was trying to side with one of us since money was involved. I moved offices so I didn't have to sit with him anymore. It was no fun, it was a bad situation.
+
+In the end, he moved onto to other projects and I was able to influence the project back to normalcy. When new developers joined the project, some artifacts of this debate would surface (like an old diagram). Someone with three-tier experience would say "what the hell is this" and I'd have to explain the whole thing. In those rare cases I felt righteous but to this day I feel awful about the whole story. My working relationship was ruined with him and I hate the memory of that job just because of experiences like this one and others.
+
+I'd rather teach than win. But he wasn't there to be a teacher and I wasn't given that role or power. When some people go to work they optimize for their career. They start off the day wanting to perform a job, move up and at the very least maintain the power they have. Because this is the best they've ever been in their career.
+
+When I wake up, I optimize for experience. I start off the day ready to learn, improve and at the very least make myself or other people better at what we spend our time doing. Because this is the very worst I'll ever be in my career.
+
+So Avdi, in this and other things, I hear you.

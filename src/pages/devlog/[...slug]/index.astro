@@ -1,0 +1,23 @@
+---
+import { type CollectionEntry, getCollection } from "astro:content";
+import DevLogDetails from "@/layouts/DevLogDetails.astro";
+import { generateDevLogSlug } from "@/utils/generateSlug";
+
+export interface Props {
+  devlog: CollectionEntry<"devlog">;
+}
+
+export async function getStaticPaths() {
+  const devlogEntries = await getCollection("devlog", ({ data }) => !data.draft);
+  const devlogResult = devlogEntries.map(devlog => ({
+    params: { slug: generateDevLogSlug(devlog) },
+    props: { devlog },
+  }));
+
+  return devlogResult;
+}
+
+const { devlog } = Astro.props;
+---
+
+<DevLogDetails devlog={devlog} />

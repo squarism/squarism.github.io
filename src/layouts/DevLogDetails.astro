@@ -1,0 +1,153 @@
+---
+import { render, type CollectionEntry } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import { SITE } from "@/config";
+
+export interface Props {
+  devlog: CollectionEntry<"devlog">;
+}
+
+const { devlog } = Astro.props;
+
+const {
+  title,
+  author,
+  date,
+  project,
+  mood,
+} = devlog.data;
+
+const { Content } = await render(devlog);
+
+const ogUrl = new URL(
+  `/devlog/${devlog.id}.png`,
+  Astro.url.origin
+).href;
+const ogImageUrl = ogUrl;
+---
+
+<Layout
+  title={`${title} | ${SITE.title}`}
+  author={author}
+  description={title}
+  ogImage={ogImageUrl}
+  canonicalURL={`${SITE.website}devlog/${devlog.id}/`}
+  date={date}
+  modDatetime={null}
+  scrollSmooth={true}
+>
+  <Header />
+  
+  <main id="main-content" class="devlog-main">
+    <article class="devlog-article">
+      <header class="devlog-header">
+        <div class="devlog-eyebrow">
+          <span class="devlog-kind">devlog</span>
+          <time class="devlog-date" datetime={date.toISOString()}>
+            {date.toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "short",
+              day: "2-digit",
+            })}
+          </time>
+        </div>
+
+        <h1 class="devlog-title">{title}</h1>
+
+        {(project || mood) && (
+          <div class="devlog-meta">
+            {project && <span class="devlog-tag">{project}</span>}
+            {mood && <span class={`devlog-tag mood-${mood}`}>{mood}</span>}
+          </div>
+        )}
+      </header>
+
+      <div class="devlog-content app-prose">
+        <Content />
+      </div>
+    </article>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .devlog-main {
+    max-width: 44rem;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 4rem;
+  }
+
+  .devlog-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .devlog-eyebrow {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+    font-size: 0.75rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    margin-bottom: 0.75rem;
+  }
+
+  .devlog-kind {
+    text-transform: uppercase;
+  }
+
+  .devlog-date {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .devlog-title {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: var(--fg);
+    line-height: 1.2;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  .devlog-meta {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+  }
+
+  .devlog-tag {
+    font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+    font-size: 0.6875rem;
+    text-transform: lowercase;
+    letter-spacing: 0.04em;
+    padding: 0.125rem 0.5rem;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    background: transparent;
+  }
+
+  .devlog-tag.mood-progress { color: var(--fg); border-color: var(--fg); }
+  .devlog-tag.mood-stuck { color: var(--fg); border-color: var(--fg); }
+  .devlog-tag.mood-breakthrough { color: var(--fg); border-color: var(--fg); }
+  .devlog-tag.mood-planning { color: var(--muted); }
+
+  .devlog-content {
+    color: var(--fg);
+  }
+
+  @media (max-width: 640px) {
+    .devlog-main {
+      padding: 1.5rem 1rem 3rem;
+    }
+
+    .devlog-title {
+      font-size: 1.5rem;
+    }
+  }
+</style>

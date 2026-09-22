@@ -1,0 +1,257 @@
+---
+import { render, type CollectionEntry } from "astro:content";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import { getPath } from "@/utils/getPath";
+import { slugifyStr } from "@/utils/slugify";
+import { SITE } from "@/config";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
+export interface Props {
+  post: CollectionEntry<"posts">;
+  posts: CollectionEntry<"posts">[];
+}
+
+const { post, posts } = Astro.props;
+
+const {
+  title,
+  author,
+  description,
+  ogImage: initOgImage,
+  canonicalURL,
+  date,
+  updated,
+  timezone: postTimezone,
+  tags,
+} = post.data;
+
+const { Content } = await render(post);
+
+let ogImageUrl: string | undefined;
+if (typeof initOgImage === "string") {
+  ogImageUrl = initOgImage;
+} else if (initOgImage?.src) {
+  ogImageUrl = initOgImage.src;
+}
+if (!ogImageUrl && SITE.dynamicOgImage) {
+  ogImageUrl = `${getPath(post.id, post.filePath)}/index.png`;
+}
+const ogImage = ogImageUrl
+  ? new URL(ogImageUrl, Astro.url.origin).href
+  : undefined;
+
+const layoutProps = {
+  title: `${title} | ${SITE.title}`,
+  author,
+  description,
+  date,
+  modDatetime: updated ?? null,
+  canonicalURL,
+  ogImage,
+  scrollSmooth: true,
+};
+
+// meta row date: iso, matches the filename
+const shownDate = dayjs(date).tz(postTimezone || SITE.timezone);
+const isoDate = shownDate.format("YYYY-MM-DD");
+
+/* ========== prev/next among blog posts only ========== */
+const allPosts = posts
+  .filter(p => (p.data.type ?? "blog") === "blog")
+  .map(({ data: { title }, id, filePath }) => ({ id, title, filePath }));
+
+const currentPostIndex = allPosts.findIndex(a => a.id === post.id);
+
+// posts are sorted newest first: previous = older = index + 1
+const prevPost =
+  currentPostIndex !== allPosts.length - 1 ? allPosts[currentPostIndex + 1] : null;
+const nextPost = currentPostIndex !== 0 ? allPosts[currentPostIndex - 1] : null;
+---
+
+<Layout {...layoutProps}>
+  <Header />
+  <main id="main-content" data-pagefind-body class="post-page">
+    <article class="post">
+      <div class="post-meta">
+        <time datetime={shownDate.toISOString()}>{isoDate}</time>
+        {
+          tags.map(tag => (
+            <>
+              <span class="sep" aria-hidden="true">/</span>
+              <a href={`/tags/${slugifyStr(tag)}/`}>#{tag}</a>
+            </>
+          ))
+        }
+      </div>
+
+      <h1 class="post-title" transition:name={slugifyStr(title)}>{title}</h1>
+
+      <div
+        id="article"
+        class="app-prose post-body"
+      >
+        <Content />
+      </div>
+    </article>
+
+    <footer class="post-pagination" data-pagefind-ignore>
+      {
+        prevPost ? (
+          <a href={getPath(prevPost.id, prevPost.filePath)} class="prev">
+            <span class="label">← PREVIOUS</span>
+            <span class="title">{prevPost.title}</span>
+          </a>
+        ) : (
+          <span />
+        )
+      }
+      {
+        nextPost && (
+          <a href={getPath(nextPost.id, nextPost.filePath)} class="next">
+            <span class="label">NEXT →</span>
+            <span class="title">{nextPost.title}</span>
+          </a>
+        )
+      }
+    </footer>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .post-page {
+    width: 100%;
+  }
+
+  .post {
+    max-width: var(--article-width);
+    width: 100%;
+    margin: 0 auto;
+    padding: 88px 32px 72px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .post-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 22px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    color: var(--muted);
+  }
+  .post-meta .sep {
+    color: var(--faint);
+  }
+  .post-meta a {
+    color: var(--muted);
+    text-decoration: none;
+    border-bottom: 0;
+  }
+  .post-meta a:hover {
+    color: var(--accent-text);
+  }
+
+  .post-title {
+    margin: 0 0 56px;
+    font-family: var(--font-sans);
+    font-size: 48px;
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    color: var(--fg);
+    text-wrap: pretty;
+  }
+
+  .post-body {
+    min-width: 0;
+    width: 100%;
+    max-width: none;
+  }
+
+  .post-pagination {
+    max-width: none;
+    margin: 0;
+    padding: 36px var(--header-pad-x) 48px;
+    border-top: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .post-pagination a {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    color: var(--fg);
+    text-decoration: none;
+    border-bottom: 0;
+  }
+  .post-pagination a:hover,
+  .post-pagination a:hover .label {
+    color: var(--accent-text);
+  }
+  .post-pagination .next {
+    text-align: right;
+    align-items: flex-end;
+    grid-column: 2;
+  }
+  .post-pagination .label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+  .post-pagination .title {
+    font-size: 17px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  @media (max-width: 640px) {
+    .post {
+      padding: 48px 20px 56px;
+    }
+    .post-title {
+      font-size: 34px;
+      margin-bottom: 36px;
+    }
+    .post-pagination {
+      padding: 28px 20px 40px;
+      grid-template-columns: 1fr;
+    }
+    .post-pagination .next {
+      grid-column: 1;
+    }
+  }
+</style>
+
+<script is:inline data-astro-rerun>
+  /** attach anchor links to headings for easy section sharing */
+  function addHeadingLinks() {
+    const headings = Array.from(document.querySelectorAll("#article h2, #article h3, #article h4"));
+    for (const heading of headings) {
+      if (!heading.id || heading.querySelector(".heading-link")) continue;
+      heading.classList.add("group");
+      const link = document.createElement("a");
+      link.className = "heading-link ms-2 opacity-75 md:opacity-0 md:group-hover:opacity-100 md:focus:opacity-100";
+      link.href = "#" + heading.id;
+      const span = document.createElement("span");
+      span.ariaHidden = "true";
+      span.innerText = "#";
+      link.appendChild(span);
+      heading.appendChild(link);
+    }
+  }
+  addHeadingLinks();
+</script>

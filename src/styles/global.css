@@ -1,0 +1,112 @@
+@import "tailwindcss";
+@import "./tokens.css";
+@import "./typography.css";
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+@theme inline {
+  --color-background: var(--bg);
+  --color-foreground: var(--fg);
+  --color-accent: var(--fg);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-card: var(--card);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+    scrollbar-width: auto;
+    scrollbar-color: var(--color-muted) transparent;
+  }
+
+  html {
+    @apply overflow-y-scroll;
+    font-family: var(--font-sans);
+  }
+
+  html {
+    background: var(--bg);
+  }
+
+  /* the design is a 1200px screen sitting on the page background. cap the
+     whole site at that so the header does not run full-bleed on wide monitors */
+  body {
+    @apply flex min-h-svh flex-col text-foreground;
+    max-width: 1200px;
+    margin-inline: auto;
+    background: var(--surface);
+    border-inline: 1px solid var(--border);
+    color: var(--fg);
+    line-height: var(--leading-normal);
+    selection: {
+      background: var(--fg);
+      color: white;
+    }
+  }
+
+  /* links: ink text with a 1px accent underline, hover text turns accent */
+  a,
+  .app-prose a,
+  .prose a {
+    color: var(--fg);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent);
+    font-weight: inherit;
+  }
+
+  a:hover,
+  .app-prose a:hover,
+  .prose a:hover {
+    color: var(--accent-text);
+  }
+
+  /* focus states */
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid var(--fg);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  section,
+  footer {
+    @apply mx-auto px-4;
+    max-width: var(--max-width);
+  }
+
+  .prose {
+    font-family: var(--font-sans);
+    max-width: var(--content-width);
+    line-height: var(--leading-relaxed);
+  }
+
+  /* code elements */
+  code,
+  pre {
+    font-family: var(--font-mono);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@utility max-w-app {
+  max-width: var(--max-width);
+}
+
+/* Source: https://piccalil.li/blog/a-more-modern-css-reset/ */
+/* Anything that has been anchored to should have extra scroll margin */
+:target {
+  scroll-margin-block: 1rem;
+}
