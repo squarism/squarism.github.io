@@ -4,6 +4,8 @@ import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import ArticleCard from "@/components/ArticleCard.astro";
 import { getCollection } from "astro:content";
+import { devLogToFeedItem } from "@/lib/feed";
+import { getFirstImage } from "@/lib/posts";
 import { SITE } from "@/config";
 
 const devlogEntries = await getCollection("devlog", ({ data }) => !data.draft);
@@ -33,7 +35,7 @@ const sortedDevlog = devlogEntries.sort((a, b) => b.data.date.getTime() - a.data
     {sortedDevlog.length > 0 ? (
       <div class="devlog-entries">
         {sortedDevlog.map((entry) => (
-          <ArticleCard post={entry} />
+          <ArticleCard item={devLogToFeedItem(entry)} image={getFirstImage(entry.body)} />
         ))}
       </div>
     ) : (

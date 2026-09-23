@@ -5,84 +5,47 @@
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
-import { getCollection } from "astro:content";
-import {
-  getUnifiedFeed,
-  getHeroPost,
-  getPostUrl,
-  getFeatures,
-  getFeatureUrl,
-  getHeroFeature,
-} from "@/lib/content";
+import type { FeedItem, FeedKind } from "@/types/content";
+import { getFeed } from "@/lib/feed";
+import { getHeroPost, getPostUrl } from "@/lib/posts";
+import { getFeatures, getFeatureUrl, getHeroFeature } from "@/lib/features";
 import { getHeroExcerpt } from "@/utils/excerpt";
 
 const RECENT_LIMIT = 10;
 const SIDEBAR_LIMIT = 3;
 const FEATURES_LIMIT = 4;
 
-const [feed, heroPost, links, features, heroFeature] = await Promise.all([
-  getUnifiedFeed({ excludeDrafts: true }),
+const [feed, heroPost, features, heroFeature] = await Promise.all([
+  getFeed(),
   getHeroPost(),
-  getCollection("links", ({ data }) => !data.draft),
   getFeatures(),
   getHeroFeature(),
 ]);
+
+const ofKind = (kind: FeedKind, limit: number): FeedItem[] =>
+  feed.filter(item => item.kind === kind).slice(0, limit);
 
 // the hero feature is shown big above the list, so keep it out of the list
 const listedFeatures = features
   .filter(f => f.id !== heroFeature?.id)
   .slice(0, FEATURES_LIMIT);
 
+// same for the hero post
+const heroUrl = heroPost ? getPostUrl(heroPost) : null;
 const recent = feed
-  .filter(p => p.inferredType === "blog" && p.id !== heroPost?.id)
+  .filter(item => item.kind === "post" && item.url !== heroUrl)
   .slice(0, RECENT_LIMIT);
-
-interface SidebarItem {
-  title: string;
-  date: Date;
-  url: string;
-}
 
 interface SidebarSection {
   title: string;
   href: string;
-  items: SidebarItem[];
+  items: FeedItem[];
 }
 
-const toItem = (p: {
-  data: { title: string; date: Date };
-  url: string;
-}): SidebarItem => ({
-  title: p.data.title,
-  date: p.data.date,
-  url: p.url,
-});
-
 const sidebar: SidebarSection[] = [
-  {
-    title: "devlog",
-    href: "/devlog/",
-    items: feed
-      .filter(p => p.inferredType === "devlog")
-      .slice(0, SIDEBAR_LIMIT)
-      .map(toItem),
-  },
-  {
-    title: "til",
-    href: "/til/",
-    items: feed
-      .filter(p => p.inferredType === "til")
-      .slice(0, SIDEBAR_LIMIT)
-      .map(toItem),
-  },
-  {
-    title: "links",
-    href: "/links/",
-    items: [...links]
-      .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-      .slice(0, SIDEBAR_LIMIT)
-      .map(l => ({ title: l.data.title, date: l.data.date, url: l.data.url })),
-  },
+  { title: "devlog", href: "/devlog/", items: ofKind("devlog", SIDEBAR_LIMIT) },
+  { title: "til", href: "/til/", items: ofKind("til", SIDEBAR_LIMIT) },
+  { title: "links", href: "/links/", items: ofKind("link", SIDEBAR_LIMIT) },
 ];
 
 const fmtDay = (d: Date) =>
@@ -196,10 +159,10 @@ const fmtIso = (d: Date) => d.toISOString().slice(0, 10);
           {
             recent.map(post => (
               <li>
-                <time datetime={post.data.date.toISOString()}>
-                  {fmtDay(post.data.date)}
+                <time datetime={post.date.toISOString()}>
+                  {fmtDay(post.date)}
                 </time>
-                <a href={post.url}>{post.data.title}</a>
+                <a href={post.url}>{post.title}</a>
               </li>
             ))
           }

@@ -1,5 +1,6 @@
 ---
-import { render, type CollectionEntry } from "astro:content";
+import { render } from "astro:content";
+import type { Post } from "@/types/content";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
@@ -14,8 +15,8 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 
 export interface Props {
-  post: CollectionEntry<"posts">;
-  posts: CollectionEntry<"posts">[];
+  post: Post;
+  posts: Post[];
 }
 
 const { post, posts } = Astro.props;
@@ -62,10 +63,8 @@ const layoutProps = {
 const shownDate = dayjs(date).tz(postTimezone || SITE.timezone);
 const isoDate = shownDate.format("YYYY-MM-DD");
 
-/* ========== prev/next among blog posts only ========== */
-const allPosts = posts
-  .filter(p => (p.data.type ?? "blog") === "blog")
-  .map(({ data: { title }, id, filePath }) => ({ id, title, filePath }));
+/* ========== prev/next ========== */
+const allPosts = posts.map(({ data: { title }, id, filePath }) => ({ id, title, filePath }));
 
 const currentPostIndex = allPosts.findIndex(a => a.id === post.id);
 

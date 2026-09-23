@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getPath } from "./getPath";
+import { getPath } from "@/utils/getPath";
 
 const base = "src/content/posts";
 

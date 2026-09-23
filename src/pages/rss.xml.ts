@@ -1,22 +1,16 @@
 import rss from "@astrojs/rss";
-import { getCollection } from "astro:content";
-import { getPath } from "@/utils/getPath";
-import getSortedPosts from "@/utils/getSortedPosts";
-import { getFeatures, getFeatureUrl } from "@/lib/content";
+import { getPosts, getPostUrl } from "@/lib/posts";
+import { getFeatures, getFeatureUrl } from "@/lib/features";
 import { SITE } from "@/config";
 
 export async function GET() {
-  const [posts, features] = await Promise.all([
-    getCollection("posts"),
-    getFeatures(),
-  ]);
-  const sortedPosts = getSortedPosts(posts);
+  const [posts, features] = await Promise.all([getPosts(), getFeatures()]);
   const items = [
-    ...sortedPosts.map(({ data, id, filePath }) => ({
-      link: getPath(id, filePath),
-      title: data.title,
-      description: data.description,
-      pubDate: new Date(data.updated ?? data.date),
+    ...posts.map(post => ({
+      link: getPostUrl(post),
+      title: post.data.title,
+      description: post.data.description,
+      pubDate: new Date(post.data.updated ?? post.data.date),
     })),
     ...features.map(feature => ({
       link: getFeatureUrl(feature),

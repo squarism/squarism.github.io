@@ -1,60 +1,41 @@
 ---
-import type { CollectionEntry } from "astro:content";
-import type { UnifiedPost } from "@/lib/content";
-import { getPostUrl } from "@/lib/content";
-import { getPostExcerpt } from "@/utils/excerpt";
+// one card in a list. takes a feed item plus whatever extras the caller has
+// for it: a one-line excerpt, tags, a thumbnail
+import type { FeedItem } from "@/types/content";
 
 export interface Props {
-  post: CollectionEntry<"posts"> | CollectionEntry<"til"> | CollectionEntry<"devlog"> | UnifiedPost;
+  item: FeedItem;
+  excerpt?: string;
+  tags?: string[];
+  image?: string | null;
   className?: string;
 }
 
-const { post, className = "" } = Astro.props;
-const url = getPostUrl(post);
-const excerpt = getPostExcerpt(post);
+const { item, excerpt = "", tags = [], image = null, className = "" } = Astro.props;
 
-// detect post type
-const postType = (post as UnifiedPost).inferredType || ("type" in post.data ? post.data.type : undefined) || "blog";
-
-// Extract first image from markdown content
-function getFirstImage(content: string): string | null {
-  // Match markdown images: ![alt](src) or HTML images: <img ... src="..." />
-  const markdownImageMatch = content.match(/!\[[^\]]*\]\(([^)]+)\)/);
-  if (markdownImageMatch) return markdownImageMatch[1];
-
-  const htmlImageMatch = content.match(/<img[^>]+src=["']([^"']+)["'][^>]*>/);
-  if (htmlImageMatch) return htmlImageMatch[1];
-
-  return null;
-}
-
-const imageUrl = getFirstImage(post.body || "");
-
-// build dynamic class names based on post type
-const typeClass = postType !== "blog" ? `article-card-${postType}` : "";
-const combinedClassName = `article-card ${typeClass} ${className}`.trim();
+// posts are the plain card; everything else gets a kind class and a kind tag
+const kindClass = item.kind !== "post" ? `article-card-${item.kind}` : "";
+const combinedClassName = `article-card ${kindClass} ${className}`.trim();
 ---
 
 <article class={combinedClassName}>
   <div class="article-content">
     <aside class="article-meta">
-      {"date" in post.data && post.data.date && (
-        <time datetime={post.data.date.toISOString()} class="article-date">
-          {post.data.date.toLocaleDateString("en-US", {
-            month: "short",
-            day: "numeric",
-            year: "numeric"
-          })}
-        </time>
-      )}
-      {postType !== "blog" && (
-        <a href={`/${postType}/`} class={`post-type-tag tag-${postType}`}>
-          #{postType}
+      <time datetime={item.date.toISOString()} class="article-date">
+        {item.date.toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric"
+        })}
+      </time>
+      {item.kind !== "post" && (
+        <a href={`/${item.kind}/`} class={`post-type-tag tag-${item.kind}`}>
+          #{item.kind}
         </a>
       )}
-      {"tags" in post.data && Array.isArray(post.data.tags) && post.data.tags.length > 0 && (
+      {tags.length > 0 && (
         <ul class="article-tags">
-          {post.data.tags.slice(0, 6).map((tag: string) => (
+          {tags.slice(0, 6).map(tag => (
             <li><span class="article-tag">#{tag}</span></li>
           ))}
         </ul>
@@ -63,19 +44,19 @@ const combinedClassName = `article-card ${typeClass} ${className}`.trim();
 
     <div class="article-text">
       <h3 class="article-title">
-        {postType === "devlog" ? (
-          <span class="article-link">{post.data.title}</span>
+        {item.kind === "devlog" ? (
+          <span class="article-link">{item.title}</span>
         ) : (
-          <a href={url} class="article-link">{post.data.title}</a>
+          <a href={item.url} class="article-link">{item.title}</a>
         )}
       </h3>
 
-      <p class="article-excerpt">{excerpt}</p>
+      {excerpt && <p class="article-excerpt">{excerpt}</p>}
     </div>
 
-    {imageUrl && (
+    {image && (
       <div class="article-thumbnail">
-        <img src={imageUrl} alt={post.data.title} loading="lazy" />
+        <img src={image} alt={item.title} loading="lazy" />
       </div>
     )}
   </div>

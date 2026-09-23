@@ -23,7 +23,6 @@ const posts = defineCollection({
       description: z.string().optional(),
       canonicalURL: z.string().optional(),
       timezone: z.string().optional(),
-      type: z.enum(["blog", "til", "devlog"]).optional().default("blog"),
     }),
 });
 

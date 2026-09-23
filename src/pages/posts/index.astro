@@ -4,15 +4,11 @@
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
-import { getUnifiedFeed, groupByYear } from "@/lib/content";
+import { getPosts, getPostUrl, groupByYear } from "@/lib/posts";
 import { getPostExcerpt } from "@/utils/excerpt";
 import { SITE } from "@/config";
 
-const posts = (await getUnifiedFeed({ excludeDrafts: true })).filter(
-  p => p.inferredType === "blog"
-);
-
-const years = groupByYear(posts);
+const years = groupByYear(await getPosts());
 
 const fmtDay = (d: Date) =>
   d.toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" });
@@ -33,7 +29,7 @@ const fmtDay = (d: Date) =>
               return (
                 <li class="index-row">
                   <div class="index-body">
-                    <a class="index-title" href={post.url}>
+                    <a class="index-title" href={getPostUrl(post)}>
                       {post.data.title}
                     </a>
                     {excerpt && <span class="index-excerpt">{excerpt}</span>}
