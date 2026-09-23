@@ -3,6 +3,7 @@ title: "Feature Name"
 description: "One or two sentences under the headline. Shown on /features, the home page, and as the page description."
 date: 2026-01-01T00:00:00.000Z
 tags: []
+# order: 1   # optional. lower numbers list first; without it, newest date first
 # image: "./cover.png"   # 16:9 works best; shown on the /features card only
 draft: true
 ---
@@ -18,7 +19,7 @@ the `feature-wide` class and it breaks out to the full page width; everything el
 stays at article width.
 
 ```mdx
-import PatchingUnderLoad from "@/features/patching-under-load/PatchingUnderLoad.vue";
+import Downtime from "@/features/downtime/Downtime.vue";
 
-<PatchingUnderLoad client:visible level={1} />
+<Downtime client:visible level={1} />
 ```

@@ -114,6 +114,8 @@ const features = defineCollection({
       // picture for the card on /features. not shown in the article itself
       image: image().optional(),
       author: z.string().default(SITE.author),
+      // lower numbers list first; features without one follow, newest first
+      order: z.number().int().optional(),
       draft: z.boolean().optional(),
     }),
 });

@@ -1,0 +1,52 @@
+---
+title: "Database Migration"
+description: "A complicated database migration scenario simulation where the users table has first_name and last_name. The next version of the app wants one name column because splitting names was a mistake. Run the migration without downtime and without losing data."
+date: 2026-09-23T00:00:00.000Z
+tags: ["ops", "databases"]
+draft: false
+image: ./thumb.jpg
+order: 2
+---
+
+import DatabaseMigration from "@/features/database-migration/DatabaseMigration.vue";
+
+## The setup
+
+In [Scenario Practice](/posts/scenario-practice/) the last database exercise was to split an `author` field into `author_first_name` and `author_last_name` so you could filter by last name. I listed the steps as bullets: add the columns, run a script to fill them, expose them in the API, switch the clients, delete the old column. I said it was many deploys and left it at that.
+
+Here is the concept full explained and interactive.  I switched the direction, going the way it usually goes in a real app. The table already has `first_name` and `last_name` but it needs to unify to just `name`.  Pretend that it's been like this for a long time and it's your job to fix it.  _Prince_ signed up and got a blank last name and his bill is wrong. Pretend this is the problem you're trying to fix.  So you need to get the database to one `name` column while having no downtime.
+
+Pretty tricky, right?  Well, this is _Scenario Practice_ and this is the time to make mistakes.
+
+## How this works
+
+App v1 reads and writes the two columns. App v2 reads and writes `name` and doesn't know the other two columns exist. During the rollout both versions are behind the same load balancer talking to the same table, and the mock client simulating load is still running. It reads and writes users the whole time (30% of its requests are writes) and some of those writes are people changing their name.
+
+This is the same three tier setup as the patching scenario [in the feature _Downtime_](/features/downtime). I took the load part out because it's not the point here. There are no worker threads within a server and the rate doesn't matter. What matters here is the database data state and the relationship of the shape, the schema, as you are making changes.  Hopefully, the visualizations really help here.  Make sure to watch the table.
+
+One thing I got wrong for a long time: the trigger goes in before the copy, not after. The copy script visits each row once. If a row gets written after the script has passed it, that write never makes it to the other column. A trigger catches every write from the moment it exists. Put the trigger in first and the copy can be as slow as it likes.
+
+So, what you need to do is play around.  The first step is to click "Start traffic".  You should end up with the migration done, no downtime and no wrong data served at any point.
+
+Application v1 reads from two fields `first_name, last_name`.  You can see the SQL in the right side bar with a count of how many servers are running that code.  Application v2 reads from the new unified field `name`.
+
+<DatabaseMigration client:visible />
+
+## Notes
+
+If you do this right, you'll notice that at some point the `first_name, last_name` split gets out of sync.  Things go red.  But it doesn't matter and you'll notice the _Rows out of sync_ count doesn't increment.
+
+
+## Things to try wrong
+
+1. Run the copy script before the trigger.
+1. Try to run just the copy script with no trigger.
+1. Add a v2 server after adding the column and doing nothing else.
+
+There are many ways this can go sideways.  In real life, there's many more things that can go wrong.
+
+## Wrap Up
+
+This scenario is pretty complicated.  In my original post, I said there would be many deploys and that's true.  It would also be many Pull Requests and reviews if you are on a team.  It's also a lot of git commits and things that might never get git committed.  It's pretty complicated.
+
+Hopefully this shows you the flow and helps you visualize what is going on.

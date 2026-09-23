@@ -5,9 +5,10 @@ date: 2026-09-22T00:00:00.000Z
 tags: ["ops"]
 draft: false
 image: ./downtime.jpg
+order: 1
 ---
 
-import PatchingUnderLoad from "@/features/patching-under-load/PatchingUnderLoad.vue";
+import Downtime from "@/features/downtime/Downtime.vue";
 
 A few years ago I wrote [Scenario Practice](/posts/scenario-practice/), a post about how to get production experience when nobody will let you near production. The pitch was: run a mock client in a loop, make it sensitive to failure, then break things on purpose and try to keep the client happy. I described scenarios. I didn't build any of them. I said I was sorry about that in the post.
 
@@ -19,7 +20,7 @@ The users box is the mock client. It sends requests at a rate you pick. The serv
 
 This will not be possible to do without dropping requests.  Look at the yellow Goal text below.  The Goal of getting web-01 onto `v1.0.1` will not be possible in this scenario and not Starting traffic also counts as down.  Try anyway.  Make sure to click `Start traffic`.
 
-<PatchingUnderLoad client:visible level={1} />
+<Downtime client:visible level={1} />
 
 Every request that arrives while the server is patching is dropped. So, you'd have to take an outage or stay up until 2am.  But under constant load, when there is no window, you're kind of stuck.
 
@@ -33,7 +34,7 @@ Same scenario but now we have a load balancer.  The goal becomes possible and a 
 
 Get three servers running `v1.0.1`. Add two servers and drag the load balancer into the slot between the users and the pool.  Same as before, you have to `Start traffic` before starting.
 
-<PatchingUnderLoad client:visible level={2} />
+<Downtime client:visible level={2} />
 
 So a load balancer is an abstraction between the servers and the user load.  With it, you can hide what's happening with patching.  Yes, a load balancer scales and spreads the load out across multiple servers.  That's in the name.  But it's really an encapsulating layer.  If you have a single server, you take downtime.  For certain internal tools, that's probably fine.
 

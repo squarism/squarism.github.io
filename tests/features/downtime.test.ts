@@ -9,7 +9,7 @@ import {
   WORKERS,
   fmtClock,
   type Level,
-} from "@/features/patching-under-load/sim";
+} from "@/features/downtime/sim";
 
 const TICK = 1 / 60;
 
@@ -43,7 +43,7 @@ describe("level 1: single server", () => {
     expect(sim.servers[0].name).toBe("web-01");
     expect(sim.servers[0].online).toBe(true);
     expect(sim.done).toBe(false);
-    expect(lastLog(sim)).toContain("Level 1 started");
+    expect(lastLog(sim)).toContain("level 1");
   });
 
   it("serves everything at a modest rate", () => {
@@ -99,7 +99,7 @@ describe("level 1: single server", () => {
     expect(sim.done).toBe(true);
     expect(sim.traffic).toBe(false);
     expect(sim.requests).toHaveLength(0);
-    expect(lastLog(sim)).toMatch(/^Goal reached at 00:0[89]\. \d+ requests dropped/);
+    expect(lastLog(sim)).toMatch(/^goal reached 00:0[89]\. \d+ dropped/);
     const frozenAt = sim.t;
     const dropped = sim.dropped;
     run(sim, 5);
@@ -119,7 +119,7 @@ describe("level 1: single server", () => {
     expect(sim.done).toBe(true);
     expect(sim.quiet).toBe(true);
     expect(sim.downtime).toBeGreaterThan(0);
-    expect(lastLog(sim)).toContain("there were no users");
+    expect(lastLog(sim)).toContain("no traffic was started");
   });
 
   it("is not quiet once a single request has been sent", () => {
@@ -132,7 +132,7 @@ describe("level 1: single server", () => {
     run(sim, PATCH_SECS + 0.5);
     expect(sim.done).toBe(true);
     expect(sim.quiet).toBe(false);
-    expect(lastLog(sim)).not.toContain("there were no users");
+    expect(lastLog(sim)).not.toContain("no traffic was started");
   });
 
   it("cuts in-flight requests when a patch starts", () => {
@@ -148,7 +148,7 @@ describe("level 1: single server", () => {
     sim.startPatch(sim.servers[0]);
     expect(sim.dropped).toBe(busy);
     expect(sim.handled).toBe(handledBefore - busy);
-    expect(lastLog(sim)).toContain(`${busy} in-flight requests cut`);
+    expect(lastLog(sim)).toContain(`${busy} requests cut`);
   });
 
   it("drops when every worker is busy and says so once per change", () => {
@@ -160,7 +160,7 @@ describe("level 1: single server", () => {
     expect(sim.dropped).toBeGreaterThan(0);
     expect(sim.servers[0].online).toBe(true);
     const warnings = () =>
-      sim.log.filter(l => l.msg.includes("All workers on web-01 are busy"));
+      sim.log.filter(l => l.msg.includes("web-01: all 4 workers busy"));
     expect(warnings()).toHaveLength(1);
     sim.setRate(24);
     run(sim, 4);
@@ -225,7 +225,7 @@ describe("level 2: load balancer", () => {
     const sim = make(2);
     const second = sim.addServer();
     expect(second?.name).toBe("web-02");
-    expect(lastLog(sim)).toContain("the users only know the address of web-01");
+    expect(lastLog(sim)).toContain("users only know web-01");
     sim.setTraffic(true);
     run(sim, 4);
     expect(sim.servers[0].served).toBeGreaterThan(0);
@@ -262,7 +262,7 @@ describe("level 2: load balancer", () => {
     sim.removeServer(b);
     expect(sim.dropped).toBeGreaterThan(0);
     expect(sim.requests.some(r => r.server === b)).toBe(false);
-    expect(lastLog(sim)).toContain("in-flight requests lost");
+    expect(lastLog(sim)).toContain("requests lost");
   });
 
   it("caps the number of servers", () => {
@@ -300,7 +300,7 @@ describe("level 2: load balancer", () => {
     expect(sim.inflight(a)).toBe(0);
     const servedByB = b.served;
     sim.startPatch(a);
-    expect(lastLog(sim)).toContain("Drained first, so nobody notices");
+    expect(lastLog(sim)).toBe("web-01 patching, offline");
     run(sim, PATCH_SECS + 1);
     expect(a.online).toBe(true);
     expect(a.patch).toBe(1);
@@ -336,8 +336,8 @@ describe("level 2: load balancer", () => {
     expect(sim.done).toBe(true);
     expect(sim.traffic).toBe(false);
     expect(sim.dropped).toBe(0);
-    expect(lastLog(sim)).toContain("Goal reached");
-    expect(lastLog(sim)).toContain("Not one request dropped");
+    expect(lastLog(sim)).toContain("goal reached");
+    expect(lastLog(sim)).toContain("0 dropped");
   });
 
   it("a patched server does not count until it is returned to the pool", () => {
@@ -399,11 +399,11 @@ describe("level 2: load balancer", () => {
     run(sim, 3);
     const [a] = sim.servers;
     sim.startPatch(a);
-    expect(lastLog(sim)).toContain("keeps sending it traffic until a health check fails");
+    expect(lastLog(sim)).toContain("still in pool");
     run(sim, HEALTH_SECS + 1);
     expect(sim.dropped).toBeGreaterThan(0);
     expect(a.lbHealthy).toBe(false);
-    expect(sim.log.some(l => l.msg.includes("Health check failed for web-01"))).toBe(true);
+    expect(sim.log.some(l => l.msg.includes("web-01 health check failed"))).toBe(true);
     // once out of rotation, web-02 takes everything and drops stop
     const droppedSoFar = sim.dropped;
     run(sim, 2);
@@ -421,7 +421,7 @@ describe("level 2: load balancer", () => {
     run(sim, HEALTH_SECS + 2);
     expect(sim.reachable).toBe(false);
     expect(sim.downtime).toBeGreaterThan(0);
-    expect(sim.log.some(l => l.msg.includes("no healthy server in the pool"))).toBe(true);
+    expect(sim.log.some(l => l.msg.includes("no backend available"))).toBe(true);
   });
 
   it("brings a patched server back into rotation after a passing health check", () => {
@@ -435,7 +435,7 @@ describe("level 2: load balancer", () => {
     run(sim, PATCH_SECS);
     expect(a.online).toBe(true);
     expect(a.lbHealthy).toBe(true);
-    expect(sim.log.some(l => l.msg.includes("Health check passed for web-01"))).toBe(true);
+    expect(sim.log.some(l => l.msg.includes("web-01 health check ok"))).toBe(true);
   });
 
   it("never sends more than WORKERS concurrent jobs to one server", () => {

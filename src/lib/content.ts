@@ -357,7 +357,8 @@ export function getFeatureUrl(feature: { id: string }): string {
 }
 
 /**
- * features newest first, drafts out
+ * features with an order first, ascending, then the rest newest first.
+ * drafts out. same rule as projects.
  */
 export async function getFeatures({
   excludeDrafts = true,
@@ -367,7 +368,12 @@ export async function getFeatures({
   const features = await getCollection("features");
   return features
     .filter(f => !(excludeDrafts && f.data.draft))
-    .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+    .sort((a, b) => {
+      const ao = a.data.order ?? Infinity;
+      const bo = b.data.order ?? Infinity;
+      if (ao !== bo) return ao - bo;
+      return b.data.date.getTime() - a.data.date.getTime();
+    });
 }
 
 /**

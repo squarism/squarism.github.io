@@ -167,7 +167,7 @@ export class Sim {
     this.warnedNoPool = false;
     this.events = [];
     this.addServer();
-    this.say(`Level ${this.level} started. web-01 online on v1.0.0`);
+    this.say(`level ${this.level}. web-01 up, v1.0.0`);
   }
 
   // events since the last call: the renderer turns them into rings and
@@ -185,9 +185,7 @@ export class Sim {
     this.traffic = on;
     // a saturation warning is worth repeating once the operator changes something
     if (!on) this.warnedBusy = false;
-    this.say(
-      on ? `Traffic started at ${this.rate} requests/s` : "Traffic stopped"
-    );
+    this.say(on ? `traffic on, ${this.rate} req/s` : "traffic off");
   }
 
   setRate(rate: number): void {
@@ -213,8 +211,8 @@ export class Sim {
     if (n > 1) {
       this.say(
         this.lb
-          ? `${server.name} added and joined the pool`
-          : `${server.name} added. Nothing sends it traffic: the users only know the address of web-01.`
+          ? `${server.name} up, joined pool`
+          : `${server.name} up. no traffic: users only know web-01`
       );
     }
     return server;
@@ -240,9 +238,7 @@ export class Sim {
     this.requests = this.requests.filter(r => r.server !== server);
     this.servers = this.servers.filter(s => s !== server);
     if (cut) this.drop(cut);
-    this.say(
-      `${server.name} removed${cut ? ` (${cut} in-flight requests lost)` : ""}`
-    );
+    this.say(`${server.name} removed${cut ? `, ${cut} requests lost` : ""}`);
     return true;
   }
 
@@ -254,7 +250,7 @@ export class Sim {
       s.lbHealthy = s.online;
     }
     this.say(
-      `lb-01 installed. Traffic now goes to the balancer, which spreads it across ${plural(this.servers.length, "server")}`
+      `lb-01 up, round robin over ${plural(this.servers.length, "server")}`
     );
     return true;
   }
@@ -275,16 +271,11 @@ export class Sim {
       this.handled -= cut;
       server.served -= cut;
     }
-    const drained = this.lb && !server.inPool;
-    let why = "";
-    if (this.lb && server.inPool) {
-      why =
-        ". It was still in the pool, so the balancer keeps sending it traffic until a health check fails.";
-    } else if (drained) {
-      why = ". Drained first, so nobody notices.";
-    }
-    const cutNote = cut ? ` (${cut} in-flight requests cut)` : "";
-    this.say(`Patching ${server.name}, it is offline${cutNote}${why}`);
+    this.say(
+      `${server.name} patching, offline` +
+        (cut ? `, ${cut} requests cut` : "") +
+        (this.lb && server.inPool ? ", still in pool" : "")
+    );
   }
 
   toggleDrain(server: Server): void {
@@ -292,12 +283,10 @@ export class Sim {
     server.inPool = !server.inPool;
     if (server.inPool) {
       server.lbHealthy = server.online;
-      this.say(`${server.name} returned to the pool`);
+      this.say(`${server.name} in pool`);
       this.checkGoal();
     } else {
-      this.say(
-        `Draining ${server.name}: no new requests, in-flight ones finish`
-      );
+      this.say(`${server.name} draining`);
     }
   }
 
@@ -399,11 +388,10 @@ export class Sim {
   private finishPatch(server: Server): void {
     server.online = true;
     server.patch++;
-    const note =
-      this.lb && !server.inPool
-        ? ". Still drained; return it to the pool when ready."
-        : "";
-    this.say(`${server.name} back online on v1.0.${server.patch}${note}`);
+    this.say(
+      `${server.name} up, v1.0.${server.patch}` +
+        (this.lb && !server.inPool ? ", drained" : "")
+    );
     this.checkGoal();
   }
 
@@ -411,16 +399,12 @@ export class Sim {
     this.done = true;
     this.traffic = false;
     this.requests = [];
-    let outcome: string;
-    if (this.quiet) {
-      outcome =
-        "The patch went on, but there were no users. Start the traffic and try again.";
-    } else if (this.dropped) {
-      outcome = `${this.dropped.toLocaleString()} requests dropped, ${this.downtime.toFixed(1)} s of downtime.`;
-    } else {
-      outcome = "Not one request dropped.";
-    }
-    this.say(`Goal reached at ${fmtClock(this.t)}. ${outcome}`);
+    this.say(
+      `goal reached ${fmtClock(this.t)}. ` +
+        (this.quiet
+          ? "0 requests, no traffic was started"
+          : `${this.dropped} dropped, ${this.downtime.toFixed(1)}s downtime`)
+    );
   }
 
   private healthCheck(): void {
@@ -428,12 +412,10 @@ export class Sim {
       if (!s.inPool) continue;
       if (s.lbHealthy && !s.online) {
         s.lbHealthy = false;
-        this.say(
-          `Health check failed for ${s.name}, lb-01 stops sending it traffic`
-        );
+        this.say(`lb-01: ${s.name} health check failed, out of rotation`);
       } else if (!s.lbHealthy && s.online) {
         s.lbHealthy = true;
-        this.say(`Health check passed for ${s.name}, in rotation`);
+        this.say(`lb-01: ${s.name} health check ok, in rotation`);
       }
     }
   }
@@ -482,9 +464,7 @@ export class Sim {
         this.events.push({ type: "dropped", request });
         if (!this.warnedNoPool) {
           this.warnedNoPool = true;
-          this.say(
-            "lb-01 has no healthy server in the pool, requests are dropped at the balancer"
-          );
+          this.say("lb-01: no backend available, 503");
         }
         return;
       }
@@ -514,11 +494,7 @@ export class Sim {
     this.events.push({ type: "dropped", request });
     if (s && s.online && !this.warnedBusy) {
       this.warnedBusy = true;
-      const fix =
-        this.level === 2 ? " or spread the load over more servers." : ".";
-      this.say(
-        `All workers on ${s.name} are busy, requests are being dropped. Lower the rate${fix}`
-      );
+      this.say(`${s.name}: all ${WORKERS} workers busy, dropping`);
     }
   }
 

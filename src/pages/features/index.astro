@@ -7,7 +7,6 @@ import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import { getFeatures, getFeatureUrl } from "@/lib/content";
 import { SITE } from "@/config";
-import { slugifyStr } from "@/utils/slugify";
 
 const features = await getFeatures();
 
@@ -40,6 +39,10 @@ const fmtIso = (d: Date) => d.toISOString().slice(0, 10);
         <ul class="feature-grid">
           {features.map(feature => (
             <li class="card">
+              <a class="card-title" href={getFeatureUrl(feature)}>
+                {feature.data.title}
+              </a>
+
               <div class="card-meta">
                 <time datetime={feature.data.date.toISOString()}>
                   {fmtIso(feature.data.date)}
@@ -49,13 +52,10 @@ const fmtIso = (d: Date) => d.toISOString().slice(0, 10);
                     <span class="sep" aria-hidden="true">
                       /
                     </span>
-                    <a href={`/tags/${slugifyStr(tag)}/`}>#{tag}</a>
+                    <span>#{tag}</span>
                   </>
                 ))}
               </div>
-              <a class="card-title" href={getFeatureUrl(feature)}>
-                {feature.data.title}
-              </a>
               <a
                 class:list={["card-pic", { "has-image": !!feature.data.image }]}
                 href={getFeatureUrl(feature)}
@@ -161,26 +161,21 @@ const fmtIso = (d: Date) => d.toISOString().slice(0, 10);
     background: var(--accent);
   }
 
+  /* date and tags, kept quiet: mono, small, dimmer than body text */
   .card-meta {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: 12px;
-  }
-  .card-meta .sep {
-    color: var(--faint);
-  }
-  .card-meta a {
-    color: var(--muted);
-    border-bottom: 0;
-  }
-  .card-meta a:hover {
-    color: var(--accent-text);
     margin-top: 6px;
     font-family: var(--font-mono);
     font-size: 12px;
     letter-spacing: 0.02em;
     color: var(--muted);
+    opacity: 0.7;
+  }
+  .card-meta .sep {
+    color: var(--faint);
   }
   .card-title {
     font-size: 26px;

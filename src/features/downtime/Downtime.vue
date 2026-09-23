@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// one stage of the patching-under-load feature. level 1 is the single server,
+// one stage of the downtime feature. level 1 is the single server,
 // level 2 adds parts (servers, a load balancer). the sim lives in sim.ts and
 // is wrapped in shallowReactive() so the template reads it directly. shallow
 // on purpose: the clock changes every frame, which re-renders the template,
@@ -543,7 +543,6 @@ onUnmounted(() => {
             <dt>Availability</dt>
             <dd>{{ availability() }}</dd>
           </dl>
-          <button type="button" @click="restart">Try again</button>
         </div>
       </section>
 
@@ -734,7 +733,9 @@ button.primary:hover:not(:disabled) {
   pointer-events: none;
   z-index: 1;
 }
-.stage > div {
+/* everything on the stage sits above the canvas, except the result panel,
+   which is positioned on its own */
+.stage > div:not(.result) {
   position: relative;
   z-index: 2;
 }
@@ -942,7 +943,7 @@ button.primary:hover:not(:disabled) {
   border: 2px solid var(--fg);
   padding: 16px 18px;
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
   gap: 12px 24px;
 }
