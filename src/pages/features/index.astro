@@ -1,0 +1,215 @@
+---
+// /features: a grid of cards, newest first. date, title, picture (a reserved
+// slot when there is none), then description.
+import { Image } from "astro:assets";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import { getFeatures, getFeatureUrl } from "@/lib/content";
+import { SITE } from "@/config";
+import { slugifyStr } from "@/utils/slugify";
+
+const features = await getFeatures();
+
+const fmtIso = (d: Date) => d.toISOString().slice(0, 10);
+---
+
+<Layout title={`Features | ${SITE.title}`}>
+  <Header />
+  <main id="main-content" class="features">
+    <h1 class="features-title">Features</h1>
+    <div class="features-intro">
+      <p>
+        Features are richer posts where I have built a thing you can play with.
+      </p>
+      <p>
+        These are long posts with something working inside them. For example,
+        there was a post called <a href="/posts/scenario-practice"
+          >Scenario Practice</a
+        > where I listed a bunch of exercises to do to gain production experience.
+        But doing the scenarios as I suggested is actually quite a lot of work. So
+        instead, there is a Feature called <em>Downtime</em> and others which illustrate
+        the point in <em>Scenario Practice</em>.
+      </p>
+    </div>
+
+    {
+      features.length === 0 ? (
+        <p class="features-empty">nothing yet</p>
+      ) : (
+        <ul class="feature-grid">
+          {features.map(feature => (
+            <li class="card">
+              <div class="card-meta">
+                <time datetime={feature.data.date.toISOString()}>
+                  {fmtIso(feature.data.date)}
+                </time>
+                {feature.data.tags.map(tag => (
+                  <>
+                    <span class="sep" aria-hidden="true">
+                      /
+                    </span>
+                    <a href={`/tags/${slugifyStr(tag)}/`}>#{tag}</a>
+                  </>
+                ))}
+              </div>
+              <a class="card-title" href={getFeatureUrl(feature)}>
+                {feature.data.title}
+              </a>
+              <a
+                class:list={["card-pic", { "has-image": !!feature.data.image }]}
+                href={getFeatureUrl(feature)}
+                tabindex="-1"
+                aria-hidden="true"
+              >
+                {feature.data.image ? (
+                  <Image
+                    src={feature.data.image}
+                    alt=""
+                    width={720}
+                    loading="lazy"
+                  />
+                ) : (
+                  <span class="card-mark" />
+                )}
+              </a>
+              <p class="card-desc">{feature.data.description}</p>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .features {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 64px var(--header-pad-x) 80px;
+  }
+
+  .features-title {
+    margin: 0 0 16px;
+    font-size: 40px;
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    color: var(--fg);
+  }
+  .features-intro {
+    max-width: 62ch;
+    margin: 0 0 48px;
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--body);
+    text-wrap: pretty;
+  }
+  .features-intro p {
+    margin: 0 0 16px;
+  }
+  .features-intro p:last-child {
+    margin-bottom: 0;
+  }
+  .features-empty {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .feature-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 48px 40px;
+  }
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+  }
+
+  /* the picture slot is always there so cards line up */
+  .card-pic {
+    display: block;
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    border: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--card);
+    box-sizing: border-box;
+    overflow: hidden;
+    position: relative;
+  }
+  .card-pic img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  /* no picture yet: one accent square, same mark as the hero flag */
+  .card-mark {
+    position: absolute;
+    left: 20px;
+    bottom: 20px;
+    width: 10px;
+    height: 10px;
+    background: var(--accent);
+  }
+
+  .card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+  }
+  .card-meta .sep {
+    color: var(--faint);
+  }
+  .card-meta a {
+    color: var(--muted);
+    border-bottom: 0;
+  }
+  .card-meta a:hover {
+    color: var(--accent-text);
+    margin-top: 6px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    color: var(--muted);
+  }
+  .card-title {
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    color: var(--fg);
+    border-bottom: 0;
+    text-wrap: pretty;
+  }
+  .card-title:hover {
+    color: var(--accent-text);
+  }
+  .card-desc {
+    margin: 0;
+    max-width: 52ch;
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--body);
+    text-wrap: pretty;
+  }
+
+  @media (max-width: 800px) {
+    .features {
+      padding: 40px 20px 56px;
+    }
+    .feature-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+</style>

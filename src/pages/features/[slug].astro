@@ -1,0 +1,201 @@
+---
+// /features/<slug>: one feature. left-aligned at the site padding like the
+// list pages. a header (date, tags, headline), a rule, then
+// the mdx body at article width. the picture in frontmatter is for the card
+// on /features only; the article has the real thing in it. anything in the body with the .feature-wide class spans the full
+// content width.
+import { getCollection, render } from "astro:content";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import { slugifyStr } from "@/utils/slugify";
+import { SITE } from "@/config";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
+export async function getStaticPaths() {
+  const features = await getCollection("features", ({ data }) => !data.draft);
+  return features.map(feature => ({
+    params: { slug: feature.id },
+    props: { feature },
+  }));
+}
+
+const { feature } = Astro.props;
+const { title, description, date, updated, tags, author } = feature.data;
+const { Content } = await render(feature);
+
+const shownDate = dayjs(date).tz(SITE.timezone);
+const isoDate = shownDate.format("YYYY-MM-DD");
+---
+
+<Layout
+  title={`${title} | ${SITE.title}`}
+  description={description}
+  author={author}
+  date={date}
+  modDatetime={updated ?? null}
+  scrollSmooth={true}
+>
+  <Header />
+  <main id="main-content" data-pagefind-body class="feature-page">
+    <article class="feature">
+      <a class="feature-back" href="/features/">← features</a>
+
+      <header class="feature-head">
+        <div class="feature-head-text">
+          <div class="feature-meta">
+            <time datetime={shownDate.toISOString()}>{isoDate}</time>
+            {
+              tags.map(tag => (
+                <>
+                  <span class="sep" aria-hidden="true">
+                    /
+                  </span>
+                  <a href={`/tags/${slugifyStr(tag)}/`}>#{tag}</a>
+                </>
+              ))
+            }
+          </div>
+          <h1 class="feature-title" transition:name={slugifyStr(title)}>
+            {title}
+          </h1>
+        </div>
+      </header>
+
+      <div id="article" class="app-prose feature-body">
+        <Content />
+      </div>
+    </article>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .feature-page {
+    width: 100%;
+  }
+  .feature {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 64px var(--header-pad-x) 80px;
+  }
+
+  .feature-back {
+    display: inline-block;
+    margin-bottom: 28px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--muted);
+    border-bottom: 0;
+  }
+  .feature-back:hover {
+    color: var(--accent-text);
+  }
+
+  /* ----- header, rule under ----- */
+  .feature-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+    align-items: end;
+    padding-bottom: 40px;
+    margin-bottom: 48px;
+    border-bottom: 1px solid var(--border);
+  }
+  .feature-head-text {
+    min-width: 0;
+  }
+
+  .feature-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 22px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    color: var(--muted);
+  }
+  .feature-meta .sep {
+    color: var(--faint);
+  }
+  .feature-meta a {
+    color: var(--muted);
+    border-bottom: 0;
+  }
+  .feature-meta a:hover {
+    color: var(--accent-text);
+  }
+
+  .feature-title {
+    margin: 0;
+    font-size: 56px;
+    font-weight: 600;
+    line-height: 1.02;
+    letter-spacing: -0.04em;
+    color: var(--fg);
+    text-wrap: balance;
+  }
+
+  /* ----- body: prose at article width, left aligned. framework islands are
+     display: contents wrappers, so the rule skips them and their child
+     decides. specificity beats the prose margins ----- */
+  .feature-body {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+  }
+  .feature-body.app-prose > :not(.feature-wide):not(astro-island) {
+    max-width: var(--article-width);
+  }
+  .feature-body.app-prose > .feature-wide {
+    max-width: none;
+  }
+
+  @media (max-width: 640px) {
+    .feature {
+      padding: 40px 20px 56px;
+    }
+    .feature-title {
+      font-size: 36px;
+    }
+    .feature-head {
+      padding-bottom: 28px;
+      margin-bottom: 36px;
+    }
+  }
+</style>
+
+<script is:inline data-astro-rerun>
+  /** attach anchor links to headings for easy section sharing */
+  function addHeadingLinks() {
+    const headings = Array.from(
+      document.querySelectorAll("#article h2, #article h3, #article h4")
+    );
+    for (const heading of headings) {
+      if (
+        !heading.id ||
+        heading.querySelector(".heading-link") ||
+        heading.closest(".feature-wide")
+      )
+        continue;
+      heading.classList.add("group");
+      const link = document.createElement("a");
+      link.className =
+        "heading-link ms-2 opacity-75 md:opacity-0 md:group-hover:opacity-100 md:focus:opacity-100";
+      link.href = "#" + heading.id;
+      const span = document.createElement("span");
+      span.ariaHidden = "true";
+      span.innerText = "#";
+      link.appendChild(span);
+      heading.appendChild(link);
+    }
+  }
+  addHeadingLinks();
+</script>

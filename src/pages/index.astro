@@ -6,17 +6,32 @@ import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import { getCollection } from "astro:content";
-import { getUnifiedFeed, getHeroPost, getPostUrl } from "@/lib/content";
+import {
+  getUnifiedFeed,
+  getHeroPost,
+  getPostUrl,
+  getFeatures,
+  getFeatureUrl,
+  getHeroFeature,
+} from "@/lib/content";
 import { getHeroExcerpt } from "@/utils/excerpt";
 
 const RECENT_LIMIT = 10;
 const SIDEBAR_LIMIT = 3;
+const FEATURES_LIMIT = 4;
 
-const [feed, heroPost, links] = await Promise.all([
+const [feed, heroPost, links, features, heroFeature] = await Promise.all([
   getUnifiedFeed({ excludeDrafts: true }),
   getHeroPost(),
   getCollection("links", ({ data }) => !data.draft),
+  getFeatures(),
+  getHeroFeature(),
 ]);
+
+// the hero feature is shown big above the list, so keep it out of the list
+const listedFeatures = features
+  .filter(f => f.id !== heroFeature?.id)
+  .slice(0, FEATURES_LIMIT);
 
 const recent = feed
   .filter(p => p.inferredType === "blog" && p.id !== heroPost?.id)
@@ -85,6 +100,63 @@ const fmtIso = (d: Date) => d.toISOString().slice(0, 10);
   <main id="main-content" class="home" data-layout="index">
     <div class="home-main">
       {
+        heroFeature && (
+          <section class="hero">
+            <div class="hero-meta">
+              <span class="hero-flag">
+                <i aria-hidden="true" />
+                feature
+              </span>
+              <span class="sep" aria-hidden="true">
+                /
+              </span>
+              <time datetime={heroFeature.data.date.toISOString()}>
+                {fmtIso(heroFeature.data.date)}
+              </time>
+              {heroFeature.data.tags.map(tag => (
+                <>
+                  <span class="sep" aria-hidden="true">
+                    /
+                  </span>
+                  <span>#{tag}</span>
+                </>
+              ))}
+            </div>
+            <h2 class="hero-title">
+              <a href={getFeatureUrl(heroFeature)}>{heroFeature.data.title}</a>
+            </h2>
+            <p class="hero-excerpt">{heroFeature.data.description}</p>
+          </section>
+        )
+      }
+
+      {
+        listedFeatures.length > 0 && (
+          <section class="features-block">
+            <div class="list-head">
+              <span>features</span>
+              <a href="/features/">all features →</a>
+            </div>
+            <ul class="feature-list">
+              {listedFeatures.map(feature => (
+                <li>
+                  <time datetime={feature.data.date.toISOString()}>
+                    {fmtDay(feature.data.date)}
+                  </time>
+                  <div class="feature-row">
+                    <a href={getFeatureUrl(feature)}>{feature.data.title}</a>
+                    {feature.data.tags[0] && (
+                      <span class="tag">#{feature.data.tags[0]}</span>
+                    )}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )
+      }
+
+      {
         heroPost && (
           <section class="hero">
             <div class="hero-meta">
@@ -116,8 +188,8 @@ const fmtIso = (d: Date) => d.toISOString().slice(0, 10);
       }
 
       <section class="recent">
-        <div class="recent-head">
-          <span>date</span>
+        <div class="list-head">
+          <span>posts</span>
           <a href="/posts/">full index →</a>
         </div>
         <ul class="recent-list">
@@ -188,6 +260,52 @@ const fmtIso = (d: Date) => d.toISOString().slice(0, 10);
     min-width: 0;
   }
 
+  /* ----- features block: same list as posts, first tag beside the title ----- */
+  .home .features-block {
+    margin-bottom: 40px;
+  }
+  .feature-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .feature-list li {
+    display: grid;
+    grid-template-columns: 86px minmax(0, 1fr);
+    align-items: baseline;
+    gap: 16px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .feature-list time {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .feature-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 6px 14px;
+  }
+  .feature-list a {
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    color: var(--fg);
+    border-bottom: 0;
+    text-wrap: pretty;
+  }
+  .feature-list a:hover {
+    color: var(--accent-text);
+  }
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--muted);
+  }
+
   /* ----- hero ----- */
   .home .hero {
     padding-bottom: 40px;
@@ -242,8 +360,8 @@ const fmtIso = (d: Date) => d.toISOString().slice(0, 10);
     text-wrap: pretty;
   }
 
-  /* ----- recent ----- */
-  .recent-head {
+  /* ----- list heads, shared by features and posts ----- */
+  .list-head {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
@@ -254,12 +372,14 @@ const fmtIso = (d: Date) => d.toISOString().slice(0, 10);
     letter-spacing: 0.02em;
     color: var(--muted);
   }
-  .recent-head a {
+  .list-head a {
     color: var(--muted);
   }
-  .recent-head a:hover {
+  .list-head a:hover {
     color: var(--accent-text);
   }
+
+  /* ----- recent posts ----- */
   .recent-list {
     list-style: none;
     margin: 0;
@@ -363,6 +483,14 @@ const fmtIso = (d: Date) => d.toISOString().slice(0, 10);
     }
     .hero-excerpt {
       font-size: 17px;
+    }
+    .feature-list li {
+      grid-template-columns: 1fr;
+      gap: 4px;
+      padding: 14px 0;
+    }
+    .feature-list a {
+      font-size: 18px;
     }
     .recent-list li {
       grid-template-columns: 1fr;

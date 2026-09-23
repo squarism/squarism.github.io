@@ -1,0 +1,52 @@
+---
+title: "Downtime"
+description: "Scenario Practice described exercises and never built one. Here is the first scenario to practice: patch a server while there is user load.  In the first scenario you will watch requests die and there is nothing you can do about it.  Then you will fix it with a load balancer."
+date: 2026-09-22T00:00:00.000Z
+tags: ["ops"]
+draft: false
+image: ./downtime.jpg
+---
+
+import PatchingUnderLoad from "@/features/patching-under-load/PatchingUnderLoad.vue";
+
+A few years ago I wrote [Scenario Practice](/posts/scenario-practice/), a post about how to get production experience when nobody will let you near production. The pitch was: run a mock client in a loop, make it sensitive to failure, then break things on purpose and try to keep the client happy. I described scenarios. I didn't build any of them. I said I was sorry about that in the post.
+
+This is the first scenario from that post, as a built thing you can play with.  This is the one I called a sanity test: you have one app server, it needs an OS update, and you are trying to hide this fact from your users.
+
+## Patching under load
+
+The users box is the mock client. It sends requests at a rate you pick. The server has four workers and each request takes half a second, so it can serve under eight a second before it starts turning people away. Start the traffic, then install the patch. The goal is just to get the patch to 1.0.1.
+
+This will not be possible to do without dropping requests.  Look at the yellow Goal text below.  The Goal of getting web-01 onto `v1.0.1` will not be possible in this scenario and not Starting traffic also counts as down.  Try anyway.  Make sure to click `Start traffic`.
+
+<PatchingUnderLoad client:visible level={1} />
+
+Every request that arrives while the server is patching is dropped. So, you'd have to take an outage or stay up until 2am.  But under constant load, when there is no window, you're kind of stuck.
+
+The users keep coming, and for eight seconds you are down. If you had in-flight requests when you clicked patch, those were cut too, which is the part people forget: it's not just the new traffic you lose.
+
+Try a couple of things before you patch. Turn the rate up past eight and notice it drops requests without you touching anything. This is a load problem and a second server would help.  Balancing load is probably what you think of first with a load balancer (rightly so) but the point of this exercise is to learn the other benefits of having a bit of an abstraction between your servers and your users.
+
+## Behind a load balancer
+
+Same scenario but now we have a load balancer.  The goal becomes possible and a little more complicated.
+
+Get three servers running `v1.0.1`. Add two servers and drag the load balancer into the slot between the users and the pool.  Same as before, you have to `Start traffic` before starting.
+
+<PatchingUnderLoad client:visible level={2} />
+
+So a load balancer is an abstraction between the servers and the user load.  With it, you can hide what's happening with patching.  Yes, a load balancer scales and spreads the load out across multiple servers.  That's in the name.  But it's really an encapsulating layer.  If you have a single server, you take downtime.  For certain internal tools, that's probably fine.
+
+But if you have a money-making app across multiple time zones or an API which knows no business hours, this kind of setup is going to be pretty typical.  At least for standard 3-tier setups.  Of course, there are many ways to do things.
+
+Unforunately, showing every detail of how this would work in practice would be a little too long.  The commands to drain and add servers are usually very complicated with many steps.  But, I assure you, at a conceptual level this is really how it works.
+
+You might be typing
+
+```bash
+echo "set server web/web-01 state drain" | socat stdio /var/run/haproxy.sock
+ansible-playbook site.yml --limit web-01 --tags patch
+echo "set server web/web-01 state ready" | socat stdio /var/run/haproxy.sock
+```
+
+and doing other things but this is really the flow and concept while you are doing the individual commands.

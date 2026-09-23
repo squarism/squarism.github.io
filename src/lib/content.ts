@@ -108,7 +108,9 @@ export function groupByYear<T extends { data: { date: Date } }>(
     .sort(([a], [b]) => b - a)
     .map(([year, items]) => ({
       year,
-      posts: items.sort((a, b) => b.data.date.getTime() - a.data.date.getTime()),
+      posts: items.sort(
+        (a, b) => b.data.date.getTime() - a.data.date.getTime()
+      ),
     }));
 }
 
@@ -211,10 +213,11 @@ export async function getHeroPost(): Promise<Post | null> {
   if (!SITE.heroPost) return null;
 
   const posts = await getAllPosts({ excludeDrafts: true });
-  const heroPost = posts.find(post =>
-    post.id === SITE.heroPost ||
-    post.id.includes(SITE.heroPost) ||
-    post.id.endsWith(SITE.heroPost)
+  const heroPost = posts.find(
+    post =>
+      post.id === SITE.heroPost ||
+      post.id.includes(SITE.heroPost) ||
+      post.id.endsWith(SITE.heroPost)
   );
   return heroPost ?? null;
 }
@@ -345,4 +348,33 @@ export async function getUnifiedFeed({
   });
 
   return limit ? sorted.slice(0, limit) : sorted;
+}
+
+export type Feature = CollectionEntry<"features">;
+
+export function getFeatureUrl(feature: { id: string }): string {
+  return `/features/${feature.id}/`;
+}
+
+/**
+ * features newest first, drafts out
+ */
+export async function getFeatures({
+  excludeDrafts = true,
+}: {
+  excludeDrafts?: boolean;
+} = {}): Promise<Feature[]> {
+  const features = await getCollection("features");
+  return features
+    .filter(f => !(excludeDrafts && f.data.draft))
+    .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+}
+
+/**
+ * the named hero feature from config, or null when unset or not found
+ */
+export async function getHeroFeature(): Promise<Feature | null> {
+  if (!SITE.heroFeature) return null;
+  const features = await getFeatures();
+  return features.find(f => f.id === SITE.heroFeature) ?? null;
 }

@@ -1,0 +1,24 @@
+---
+title: "Feature Name"
+description: "One or two sentences under the headline. Shown on /features, the home page, and as the page description."
+date: 2026-01-01T00:00:00.000Z
+tags: []
+# image: "./cover.png"   # 16:9 works best; shown on the /features card only
+draft: true
+---
+
+Copy this folder to `src/content/features/<slug>/`. The folder name becomes the URL,
+so `src/content/features/downtime/` is published at `/features/downtime/`.
+
+Images are relative to the folder you copy.
+
+Features are MDX, so a feature can import and place components. Interactive pieces
+live in `src/features/<name>/` as Vue components. Give the component's root element
+the `feature-wide` class and it breaks out to the full page width; everything else
+stays at article width.
+
+```mdx
+import PatchingUnderLoad from "@/features/patching-under-load/PatchingUnderLoad.vue";
+
+<PatchingUnderLoad client:visible level={1} />
+```

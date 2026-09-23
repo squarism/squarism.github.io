@@ -50,7 +50,9 @@ const devlog = defineCollection({
       draft: z.boolean().optional(),
       author: z.string().default(SITE.author),
       project: z.string().optional(),
-      mood: z.enum(["progress", "stuck", "breakthrough", "planning"]).optional(),
+      mood: z
+        .enum(["progress", "stuck", "breakthrough", "planning"])
+        .optional(),
     }),
 });
 
@@ -91,4 +93,29 @@ const projects = defineCollection({
     }),
 });
 
-export const collections = { posts, til, devlog, links, projects };
+// features: long-form rich posts, one folder per feature under src/content/features
+// with an index.mdx so a feature can embed components (labs, diagrams). the
+// folder name is the id and the url: features/downtime -> /features/downtime
+const features = defineCollection({
+  loader: glob({
+    pattern: "[^_]*/index.mdx",
+    base: "./src/content/features",
+    generateId: ({ entry }) => entry.split("/")[0],
+  }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      // one or two sentences. the standfirst under the headline, the card text
+      // on /features and the home page, and the page description
+      description: z.string(),
+      date: z.date(),
+      updated: z.date().optional().nullable(),
+      tags: z.array(z.string()).default([]),
+      // picture for the card on /features. not shown in the article itself
+      image: image().optional(),
+      author: z.string().default(SITE.author),
+      draft: z.boolean().optional(),
+    }),
+});
+
+export const collections = { posts, til, devlog, links, projects, features };
