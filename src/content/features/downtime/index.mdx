@@ -20,6 +20,16 @@ The users box is the mock client. It sends requests at a rate you pick. The serv
 
 This will not be possible to do without dropping requests.  Look at the yellow Goal text below.  The Goal of getting web-01 onto `v1.0.1` will not be possible in this scenario and not Starting traffic also counts as down.  Try anyway.  Make sure to click `Start traffic`.
 
+| Control | Represents |
+| --- | --- |
+| Users | The traffic. This is your business needing to run. Sends one request at a time at the rate on the slider. |
+| Rate | Requests per second. The slider tops out at what three servers can handle. |
+| Start traffic | Turns the traffic on. Off is not a real option in production, it is there so you can start the sim. |
+| web-01 | One app server. The four boxes are its workers _like threads_, a filled box is a request being served. |
+| Install patch | An OS update and reboot. The server is offline for eight seconds and comes back one version higher. |
+| Yellow dashes | Requests in flight from the users to a server. |
+| Event log | What happened and when, by the sim clock. |
+
 <Downtime client:visible level={1} />
 
 Every request that arrives while the server is patching is dropped. So, you'd have to take an outage or stay up until 2am.  But under constant load, when there is no window, you're kind of stuck.
@@ -33,6 +43,17 @@ Try a couple of things before you patch. Turn the rate up past eight and notice 
 Same scenario but now we have a load balancer.  The goal becomes possible and a little more complicated.
 
 Get three servers running `v1.0.1`. Add two servers and drag the load balancer into the slot between the users and the pool.  Same as before, you have to `Start traffic` before starting.
+
+| Control | Represents |
+| --- | --- |
+| Add a load balancer | Magically puts `lb-01` between the users and the servers. Traffic goes to it and it round robins across the pool. |
+| Add a server | Another app server behind `lb-01`. Four at most just for sim UI layout limits. |
+| Load balancer green chips | Inside the load balancer is a list of servers.  This is the load balancer's internal configuration.  It's an abstract visualation of which servers the balancer will send to. Dashed means drained, red means it failed a health check. |
+| Health check | Every two seconds lb-01 asks each server if it is up. A server that goes down stays in rotation until the next check. |
+| Drain | Tells lb-01 to stop sending new requests to this server. Requests already on their way still land. |
+| Return | Puts a drained server back in the pool. |
+| Remove | Takes the server away. Anything in flight to it is lost. |
+| Up to date | The server is at the goal version for the scenario and has nothing left to install. |
 
 <Downtime client:visible level={2} />
 
