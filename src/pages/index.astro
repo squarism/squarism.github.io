@@ -60,7 +60,7 @@ const fmtIso = (d: Date) => d.toISOString().slice(0, 10);
 <Layout>
   <Header />
 
-  <main id="main-content" class="home" data-layout="index">
+  <main id="main-content" class="home">
     <div class="home-main">
       {
         heroFeature && (
@@ -465,13 +465,3 @@ const fmtIso = (d: Date) => d.toISOString().slice(0, 10);
     }
   }
 </style>
-
-<script>
-  document.addEventListener("astro:page-load", () => {
-    const indexLayout = (document.querySelector("#main-content") as HTMLElement)
-      ?.dataset?.layout;
-    if (indexLayout) {
-      sessionStorage.setItem("backUrl", "/");
-    }
-  });
-</script>

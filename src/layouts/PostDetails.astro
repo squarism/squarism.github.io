@@ -84,7 +84,7 @@ const nextPost = currentPostIndex !== 0 ? allPosts[currentPostIndex - 1] : null;
           tags.map(tag => (
             <>
               <span class="sep" aria-hidden="true">/</span>
-              <a href={`/tags/${slugifyStr(tag)}/`}>#{tag}</a>
+              <span class="tag">#{tag}</span>
             </>
           ))
         }
@@ -153,13 +153,8 @@ const nextPost = currentPostIndex !== 0 ? allPosts[currentPostIndex - 1] : null;
   .post-meta .sep {
     color: var(--faint);
   }
-  .post-meta a {
+  .post-meta .tag {
     color: var(--muted);
-    text-decoration: none;
-    border-bottom: 0;
-  }
-  .post-meta a:hover {
-    color: var(--accent-text);
   }
 
   .post-title {

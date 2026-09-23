@@ -72,21 +72,6 @@ export function generateDevLogSlug(entry: {
 }
 
 /**
- * Generate URL-friendly slug for posts
- * Can optionally include date based on site config
- */
-export function generatePostSlug(entry: {
-  id: string;
-  data: {
-    title: string;
-    slug?: string;
-    date?: Date;
-  };
-}, includeDatePrefix = false): string {
-  return generateSlug(entry, { includeDate: includeDatePrefix, dateFormat: "full" });
-}
-
-/**
  * Generate URL-friendly slug for TIL entries
  * Format: category-title or just title if no category
  */

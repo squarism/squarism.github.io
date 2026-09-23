@@ -6,19 +6,13 @@ export const SITE = {
   title: "SQUARISM",
   ogImage: "squarism-og.jpg",
   lightAndDarkMode: true,
-  postPerIndex: 10,
-  postPerPage: 10,
   scheduledPostMargin: 15 * 60 * 1000, // 15 minutes
   showArchives: false,
-  showBackButton: true,
+  // per-post social cards rendered at build time from the post title
   dynamicOgImage: true,
   dir: "ltr",
   lang: "en",
   timezone: "America/Los_Angeles",
-
-  // custom configuration options
-  recentPostsLimit: 15,
-  themeDefault: "system" as "system" | "light" | "dark",
 
   // hero post: matches a post id/filename in src/content/posts
   heroPost: "a-network-in-rust-part-1",

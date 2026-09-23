@@ -1,7 +1,9 @@
+import type { Font, FontStyle, FontWeight } from "satori";
+
 async function loadGoogleFont(
   font: string,
   text: string,
-  weight: number
+  weight: FontWeight
 ): Promise<ArrayBuffer> {
   const API = `https://fonts.googleapis.com/css2?family=${font}:wght@${weight}&text=${encodeURIComponent(text)}`;
 
@@ -29,24 +31,19 @@ async function loadGoogleFont(
   return res.arrayBuffer();
 }
 
-async function loadGoogleFonts(
-  text: string
-): Promise<
-  Array<{ name: string; data: ArrayBuffer; weight: number; style: string }>
-> {
-  const fontsConfig = [
-    {
-      name: "IBM Plex Mono",
-      font: "IBM+Plex+Mono",
-      weight: 400,
-      style: "normal",
-    },
-    {
-      name: "IBM Plex Mono",
-      font: "IBM+Plex+Mono",
-      weight: 700,
-      style: "bold",
-    },
+interface FontConfig {
+  name: string;
+  font: string;
+  weight: FontWeight;
+  style: FontStyle;
+}
+
+// the fonts satori embeds in a social card, fetched from google fonts with
+// only the glyphs in `text` so the download stays small
+async function loadGoogleFonts(text: string): Promise<Font[]> {
+  const fontsConfig: FontConfig[] = [
+    { name: "IBM Plex Mono", font: "IBM+Plex+Mono", weight: 400, style: "normal" },
+    { name: "IBM Plex Mono", font: "IBM+Plex+Mono", weight: 700, style: "normal" },
   ];
 
   const fonts = await Promise.all(

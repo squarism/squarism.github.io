@@ -1,32 +1,31 @@
-/**
- * CustomShiki transformer that adds file name labels to code blocks.
- *
- * This transformer looks for the `file="filename"` meta attribute in code blocks
- * and creates a styled label showing the filename. It supports two different
- * styling options and can optionally hide the green dot indicator.
- *
- * @param {Object} options - Configuration options for the transformer
- * @param {string} [options.style="v2"] - The styling variant to use
- *   - `"v1"`: Tab-style with rounded top corners, positioned at top-left
- *   - `"v2"`: Badge-style with border, positioned at top-left with offset
- * @param {boolean} [options.hideDot=false] - Whether to hide the green dot indicator
- */
+import type { transformerNotationDiff } from "@shikijs/transformers";
+
+type ShikiTransformer = ReturnType<typeof transformerNotationDiff>;
+
+interface FileNameOptions {
+  // v1: tab with rounded top corners at the top left.
+  // v2: badge with a border, offset above the top left
+  style?: "v1" | "v2";
+  // drop the green dot before the name
+  hideDot?: boolean;
+}
+
+// shiki transformer that labels a code block with the `file="name"` meta
+// attribute, e.g. ```ts file="src/config.ts"
 export const transformerFileName = ({
   style = "v2",
   hideDot = false,
-} = {}) => ({
+}: FileNameOptions = {}): ShikiTransformer => ({
+  name: "file-name",
   pre(node) {
-    // Add CSS custom property to the node
     const fileNameOffset = style === "v1" ? "0.75rem" : "-0.75rem";
     node.properties.style =
       (node.properties.style || "") + `--file-name-offset: ${fileNameOffset};`;
 
     const raw = this.options.meta?.__raw?.split(" ");
-
     if (!raw) return;
 
-    const metaMap = new Map();
-
+    const metaMap = new Map<string, string>();
     for (const item of raw) {
       const [key, value] = item.split("=");
       if (!key || !value) continue;
@@ -34,16 +33,10 @@ export const transformerFileName = ({
     }
 
     const file = metaMap.get("file");
-
     if (!file) return;
 
-    // Add additional margin to code block
-    this.addClassToHast(
-      node,
-      `mt-8 ${style === "v1" ? "rounded-tl-none" : ""}`
-    );
+    this.addClassToHast(node, `mt-8 ${style === "v1" ? "rounded-tl-none" : ""}`);
 
-    // Add file name to code block
     node.children.push({
       type: "element",
       tagName: "span",
@@ -58,12 +51,7 @@ export const transformerFileName = ({
             : "left-2 top-(--file-name-offset) border rounded-md bg-background",
         ],
       },
-      children: [
-        {
-          type: "text",
-          value: file,
-        },
-      ],
+      children: [{ type: "text", value: file }],
     });
   },
 });
