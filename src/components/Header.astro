@@ -96,14 +96,7 @@ const pixelQ = ["01110", "10001", "10001", "10021", "01110", "00002"];
     )
   }
 
-  <nav class="site-nav" aria-label="Main">
-    {
-      navItems.map(item => (
-        <a href={item.href} class:list={{ active: isActive(item.href) }}>
-          {item.label}
-        </a>
-      ))
-    }
+  <div class="header-actions">
     {
       SITE.lightAndDarkMode && (
         <button
@@ -117,12 +110,62 @@ const pixelQ = ["01110", "10001", "10001", "10021", "01110", "00002"];
         </button>
       )
     }
+    <button
+      class="nav-toggle"
+      type="button"
+      aria-label="Menu"
+      aria-expanded="false"
+      aria-controls="site-nav"
+      data-nav-toggle
+    >
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </button>
+  </div>
+
+  <nav id="site-nav" class="site-nav" aria-label="Main">
+    {
+      navItems.map(item => (
+        <a href={item.href} class:list={{ active: isActive(item.href) }}>
+          {item.label}
+        </a>
+      ))
+    }
   </nav>
 </header>
+
+<script>
+  // collapse the nav behind a button on narrow screens. the site uses view
+  // transitions, so wire it up on every page load, not just the first.
+  function initNavToggle(): void {
+    const header = document.querySelector<HTMLElement>(".site-header");
+    const toggle =
+      header?.querySelector<HTMLButtonElement>("[data-nav-toggle]");
+    const nav = header?.querySelector<HTMLElement>("#site-nav");
+    if (!header || !toggle || !nav || toggle.dataset.ready) return;
+    toggle.dataset.ready = "1";
+    const set = (open: boolean) => {
+      header.classList.toggle("nav-open", open);
+      toggle.setAttribute("aria-expanded", String(open));
+    };
+    toggle.addEventListener("click", () =>
+      set(!header.classList.contains("nav-open"))
+    );
+    nav.addEventListener("click", e => {
+      if ((e.target as HTMLElement).closest("a")) set(false);
+    });
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape") set(false);
+    });
+  }
+  document.addEventListener("astro:page-load", initNavToggle);
+</script>
 
 <style>
   .site-header {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
     gap: 24px;
@@ -258,8 +301,15 @@ const pixelQ = ["01110", "10001", "10001", "10021", "01110", "00002"];
     align-items: center;
     flex-wrap: wrap;
     gap: 28px;
+    margin-left: auto;
     font-family: var(--font-mono);
     font-size: 16px;
+  }
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    order: 3;
   }
   .site-nav a {
     display: flex;
@@ -281,7 +331,6 @@ const pixelQ = ["01110", "10001", "10001", "10021", "01110", "00002"];
   }
 
   .theme-toggle {
-    margin-left: 8px;
     width: 28px;
     height: 28px;
     display: grid;
@@ -299,12 +348,70 @@ const pixelQ = ["01110", "10001", "10001", "10021", "01110", "00002"];
     border-color: #555;
   }
 
+  /* three bars, only on narrow screens */
+  .nav-toggle {
+    display: none;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    align-items: center;
+    border: 1px solid var(--border-strong);
+    background: transparent;
+    cursor: pointer;
+  }
+  .nav-toggle span {
+    width: 14px;
+    height: 1.5px;
+    background: var(--muted);
+    transition:
+      transform 0.15s,
+      opacity 0.15s;
+  }
+  .nav-toggle:hover span {
+    background: var(--fg);
+  }
+  .nav-open .nav-toggle span:nth-child(1) {
+    transform: translateY(6.5px) rotate(45deg);
+  }
+  .nav-open .nav-toggle span:nth-child(2) {
+    opacity: 0;
+  }
+  .nav-open .nav-toggle span:nth-child(3) {
+    transform: translateY(-6.5px) rotate(-45deg);
+  }
+
   @media (max-width: 640px) {
     .site-header {
       padding: 18px 20px;
     }
+    .nav-toggle {
+      display: flex;
+    }
+    /* closed: gone. open: a full-width column under the logo row */
     .site-nav {
-      gap: 18px;
+      display: none;
+      flex-basis: 100%;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+      margin: 4px 0 0;
+      padding-top: 8px;
+      border-top: 1px solid var(--border);
+    }
+    .nav-open .site-nav {
+      display: flex;
+    }
+    .site-nav a {
+      width: 100%;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 17px;
+    }
+    .site-nav a:last-child {
+      border-bottom: 0;
     }
   }
 </style>
