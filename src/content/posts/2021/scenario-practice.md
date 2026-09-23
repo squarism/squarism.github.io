@@ -7,6 +7,13 @@ tags: ["blog"]
 excerpt: "How do I get production experience if no one lets me do production?"
 ---
 
+> _Update after 5 years ..._ <br />
+> There are now two interactive features related to this post that you can play with instead of setting up these "scenarios" yourself
+> 1. [Downtime](/features/downtime) is about load balancers and upgrades
+> 2. [Database Migration](/features/database-migration) is about changing a schema
+>
+> There are many topics mentioned in this post and really it's about setting up a lab and learning.  But, actually doing this and getting started I think is very difficult.  So, I hope to have more features that are like learning pieces.
+
 One of the hardest questions I've been asked is "how do I get production experience?". Someone was looking for a job and they were seeing job requirements about production and operations. They didn't have any. The landscape has changed quite a bit since I was a sysadmin but the Catch-22 is the same. The Catch-22 being: you can't get ops experience without an ops job and you can't get an ops job without ops experience. But I think the chicken-egg cycle can be broken. Let me explain what _Scenario Practice_ is and offer some scenarios to practice.
 
 <!-- more -->

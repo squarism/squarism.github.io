@@ -192,6 +192,17 @@
       @apply focus-visible:border-transparent focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-dashed;
     }
 
+    /* wide code (ascii diagrams) may grow past the text column, centred on
+       it, up to a cap. narrow code stays column width. */
+    pre {
+      width: max-content;
+      min-width: 100%;
+      max-width: min(980px, calc(100vw - 48px));
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
     .float-right-diagram {
       float: right;
       width: max-content;
