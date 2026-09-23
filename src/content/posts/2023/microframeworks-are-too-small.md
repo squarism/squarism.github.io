@@ -51,7 +51,7 @@ But I think these DX nit-picks are not where the test is.  I think adding a data
 
 ## The Database is the Inflection Point
 
-I think configuring a database stresses the framework and most microframeworks fail here.  This isn't quite [The Database Ruins All Good Ideas](https://squarism.com/2021/07/08/databases-ruin-all-good-ideas/), it's more like, The Database Makes the Framework Creak.
+I think configuring a database stresses the framework and most microframeworks fail here.  This isn't quite [The Database Ruins All Good Ideas](/posts/the-database-ruins-all-good-ideas/), it's more like, The Database Makes the Framework Creak.
 
 Some teams running Flask might say "we have a database in Flask already, it's easy" but what they really have is a bunch of hidden context. Take this example of how some work with Flask:
 
@@ -146,7 +146,7 @@ they do a release, those things that they include or have written are bumped or 
 release.  In theory, a plugin system sounds ideal because it has flexibility.  What I'm arguing is that CORS,
 authentication and database state are extremely common and these things should be in the framework.
 
-More than that, copying and pasting configs from FastAPI docs is one-way and subject to [bit-rot](https://squarism.com/2019/06/04/sprinkle-time-on-that-thing/).  Controlling configuration even in a full framework is extremely challenging but usually there can be step-to-step upgrade guides but this only works when you can name the version you are on.  If you are copying and pasting configuration and code, what version of FastAPI are you on?
+More than that, copying and pasting configs from FastAPI docs is one-way and subject to [bit-rot](/posts/sprinkle-time-on-that-thing/).  Controlling configuration even in a full framework is extremely challenging but usually there can be step-to-step upgrade guides but this only works when you can name the version you are on.  If you are copying and pasting configuration and code, what version of FastAPI are you on?
 
 ## A Tour of Small READMEs
 

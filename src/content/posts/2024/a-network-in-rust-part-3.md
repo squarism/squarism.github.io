@@ -13,12 +13,12 @@ We are in the home-stretch now.  Let's show a few more details and then we'll ru
 
 This post is part 3 of a series.  We are learning networking by building a network.
 
-* [Part 1](/2024/05/05/a_network_in_rust_part_1/) - covered networking basics and implemented MAC addressing
-* [Part 2](/2024/05/17/a_network_in_rust_part_2/) - implemented primitives like IP, ARP and an Interface
+* [Part 1](/posts/a-network-in-rust-part-1/) - covered networking basics and implemented MAC addressing
+* [Part 2](/posts/a-network-in-rust-part-2/) - implemented primitives like IP, ARP and an Interface
 
 ## More Abstractions
 
-In [part 2](/2024/05/17/a_network_in_rust_part_2/), we created an interface and previewed how we can make "a box" at the end of the post.  A box is just slang for a server, a node or a computer.  There are many ways we could represent a box, but one way would be for it to own the things that it owns in the real world.  Since we will not model an entire operating system here, this is just an approximation.
+In [part 2](/posts/a-network-in-rust-part-2/), we created an interface and previewed how we can make "a box" at the end of the post.  A box is just slang for a server, a node or a computer.  There are many ways we could represent a box, but one way would be for it to own the things that it owns in the real world.  Since we will not model an entire operating system here, this is just an approximation.
 
 ### The Server
 
@@ -118,7 +118,7 @@ And each box's IP is saved as variables `box1_host` and `box2_host` (not shown f
     }
 ```
 
-This part is basically IP routing as discussed in [Part 1](/2024/05/05/a_network_in_rust_part_1/).  Box 1 and 2 are on the same subnet so `local_lan` is always true in this demo.  This is here to exercise the IP routing feature but there is no other path at the moment.  What would happen next is to implement a router and send the IP packet to the router instead of going to layer 2.
+This part is basically IP routing as discussed in [Part 1](/posts/a-network-in-rust-part-1/).  Box 1 and 2 are on the same subnet so `local_lan` is always true in this demo.  This is here to exercise the IP routing feature but there is no other path at the moment.  What would happen next is to implement a router and send the IP packet to the router instead of going to layer 2.
 
 We continue instead and make an ICMP packet from the hosts file resolved IPs.
 

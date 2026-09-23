@@ -7,7 +7,7 @@ draft: false
 tags: ["blog"]
 ---
 
-Knowledge debt is then you don't spend the time to catch up.  This is Part Two, discussing common knowledge gaps in technology projects regardless of company, industry, project or people.  Part One is [here](/posts/tech-knowledge-debt/) and talked about Troubleshooting, VNC, X11, Version Control, Sudo and Cron as common debted areas.  The original post that posed the questions is [here](/posts/dearth-patterns/), where I wondered why the same patterns happen from project to project, company to company and person to person.
+Knowledge debt is then you don't spend the time to catch up.  This is Part Two, discussing common knowledge gaps in technology projects regardless of company, industry, project or people.  Part One is [here](/posts/technology-knowledge-debt-part-one/) and talked about Troubleshooting, VNC, X11, Version Control, Sudo and Cron as common debted areas.  The original post that posed the questions is [here](/posts/dearth-patterns/), where I wondered why the same patterns happen from project to project, company to company and person to person.
 
 ### Myth of supportability
 

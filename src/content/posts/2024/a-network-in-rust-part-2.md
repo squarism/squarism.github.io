@@ -11,8 +11,8 @@ excerpt: "Modeling IP addresses, subnet math, ARP and Ethernet frames on the way
 
 This post is part 2 of a series.  We are learning networking by building it.
 
-* [Part 1](/2024/05/05/a_network_in_rust_part_1/) - covered networking basics and implemented MAC addressing
-* [Part 3](/2024/06/01/a_network_in_rust_part_3/) - finishes the abstractions and shows the whole thing working
+* [Part 1](/posts/a-network-in-rust-part-1/) - covered networking basics and implemented MAC addressing
+* [Part 3](/posts/a-network-in-rust-part-3/) - finishes the abstractions and shows the whole thing working
 
 ## More Primitives
 
@@ -110,7 +110,7 @@ Because they are both on the same network, it means we don't have to forward it 
 
 ## ARP
 
-IP is a protocol used for routing traffic over the internet and on local area networks.  Similarly, there is another protocol which discovers hosts on a local network called [ARP](https://en.wikipedia.org/wiki/Address_Resolution_Protocol).  It's job is to discover what MAC addresses go with what IPs.  When we send an IP message, that's not enough.  Remember in in [Part 1](/2024/05/05/a_network_in_rust_part_1/), we talked about how messages go up and down abstraction layers.  So ARP is sort of connecting Layer 3 and Layer 2 because it connects IP addresses and hardware addresses which (in wired networks) lead us to ports on a switch and eventually electrons on a wire.
+IP is a protocol used for routing traffic over the internet and on local area networks.  Similarly, there is another protocol which discovers hosts on a local network called [ARP](https://en.wikipedia.org/wiki/Address_Resolution_Protocol).  It's job is to discover what MAC addresses go with what IPs.  When we send an IP message, that's not enough.  Remember in in [Part 1](/posts/a-network-in-rust-part-1/), we talked about how messages go up and down abstraction layers.  So ARP is sort of connecting Layer 3 and Layer 2 because it connects IP addresses and hardware addresses which (in wired networks) lead us to ports on a switch and eventually electrons on a wire.
 
 Simulating a real ARP request would be complicated because it's usually built into the operating system or network stack.  For this simulation, we're going to hardcode responses like this.
 

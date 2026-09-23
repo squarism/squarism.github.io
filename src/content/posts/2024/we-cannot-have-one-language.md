@@ -9,7 +9,7 @@ tags: ["blog"]
 Why don't we just invent a programming language to do everything?  Why are there so many?  Have we ever had a language that does everything?  Could we have one language that does mostly everything?
 
 I understand the historical context and the common answers to this question but I want to approach this from a
-different angle and even make a prediction heuristic related to my [Microframeworks Are Too Small](/posts/microframeworks/) post.  I think there's something deeper than the platitude _"use the right tool for the job"_.  I think we've never had a language that is both human-happy and machine-happy and I'll explain why.
+different angle and even make a prediction heuristic related to my [Microframeworks Are Too Small](/posts/microframeworks-are-too-small/) post.  I think there's something deeper than the platitude _"use the right tool for the job"_.  I think we've never had a language that is both human-happy and machine-happy and I'll explain why.
 
 ## Low and High Complexity Apps
 

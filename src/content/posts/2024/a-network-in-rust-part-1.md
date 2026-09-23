@@ -21,8 +21,8 @@ Now that we've set some boundaries, let's name some exciting topics ahead.  We w
 
 This is a series of posts exploring networking by building things:
 
-* [Part 2](/2024/05/17/a_network_in_rust_part_2/) - implements primitives like IP, ARP and an Interface
-* [Part 3](/2024/06/01/a_network_in_rust_part_3/) - finishes the abstractions and shows the whole thing working
+* [Part 2](/posts/a-network-in-rust-part-2/) - implements primitives like IP, ARP and an Interface
+* [Part 3](/posts/a-network-in-rust-part-3/) - finishes the abstractions and shows the whole thing working
 
 For more in-depth background, here is [a nice video series](https://www.youtube.com/playlist?list=PLDQaRcbiSnqF5U8ffMgZzS7fq1rHUI3Q8) but I encourage you to replicate my work and build a network yourself in Rust or some other language.  You'll [learn more by doing](https://jvns.ca/blog/2023/05/12/introducing-implement-dns-in-a-weekend/).
 
