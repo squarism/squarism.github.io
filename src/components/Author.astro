@@ -19,7 +19,7 @@ const mastodonIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="22" height=
 
 <div class="identity-card">
   <div class="identity-content">
-    <h3 class="identity-name">{SITE.author}</h3>
+    <h2 class="identity-name">{SITE.author}</h2>
     <p class="identity-bio">Code and synths but I want to hear about your thing.</p>
 
     <div class="identity-links">
@@ -47,64 +47,53 @@ const mastodonIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="22" height=
 </div>
 
 <style>
+  /* flat, like the other sidebar sections: mono title, rule, body copy */
   .identity-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 0;
-    overflow: hidden;
-    transition: all 0.2s ease;
-    padding: 1.5rem;
-    text-align: center;
-  }
-
-  .identity-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    border-color: var(--fg);
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
   }
 
   .identity-content {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 12px;
   }
 
   .identity-name {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--fg);
     margin: 0;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
   }
 
   .identity-bio {
-    color: var(--muted);
-    line-height: 1.6;
     margin: 0;
-    font-size: 0.9375rem;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--body);
+    text-wrap: pretty;
   }
 
   .identity-links {
     display: flex;
-    justify-content: center;
-    gap: 1rem;
     flex-wrap: wrap;
+    gap: 6px 18px;
+    font-family: var(--font-mono);
+    font-size: 13px;
   }
 
-
-  @media (max-width: 768px) {
-    .identity-links {
-      flex-direction: column;
-      gap: 0.75rem;
-    }
+  .identity-links :global(a) {
+    color: var(--muted);
+    border-bottom: 0;
   }
-
-  @media (prefers-reduced-motion: reduce) {
-    .identity-card {
-      transition: none;
-    }
-
-    .identity-card:hover {
-      transform: none;
-    }
+  .identity-links :global(a:hover) {
+    color: var(--accent-text);
+  }
+  .identity-links :global(svg) {
+    width: 16px;
+    height: 16px;
   }
 </style>

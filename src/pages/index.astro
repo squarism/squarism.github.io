@@ -5,6 +5,7 @@
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
+import Author from "@/components/Author.astro";
 import type { FeedItem, FeedKind } from "@/types/content";
 import { getFeed } from "@/lib/feed";
 import { getHeroPost, getPostUrl } from "@/lib/posts";
@@ -171,6 +172,7 @@ const fmtIso = (d: Date) => d.toISOString().slice(0, 10);
     </div>
 
     <aside class="home-side">
+      <Author />
       {
         sidebar.map(section => (
           <section class="side-section">

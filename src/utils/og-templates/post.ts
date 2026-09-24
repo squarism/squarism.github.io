@@ -2,126 +2,67 @@ import satori from "satori";
 import type { Post } from "@/types/content";
 import { SITE } from "@/config";
 import loadGoogleFonts from "../loadGoogleFont";
+import { colors, gridMark, type OgElement } from "./shared";
 
-// satori takes a react-like element tree; this is the shape it reads
-type OgElement = Parameters<typeof satori>[0];
-
-// a post's social card: its title big, author and site name along the bottom
+// a post's social card: its title big, the site's mark and wordmark along the
+// bottom. dark theme colours to match the site card
 export default async function postOgImage(post: Post): Promise<string> {
   const element: OgElement = {
     type: "div",
     props: {
       style: {
-        background: "#fefbfb",
+        background: colors.bg,
         width: "100%",
         height: "100%",
         display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        padding: "72px 84px",
+        fontFamily: "IBM Plex Mono",
+        color: colors.fg,
       },
       children: [
         {
-          type: "div",
+          type: "p",
           props: {
             style: {
-              position: "absolute",
-              top: "-1px",
-              right: "-1px",
-              border: "4px solid #000",
-              background: "#ecebeb",
-              opacity: "0.9",
-              borderRadius: "4px",
-              display: "flex",
-              justifyContent: "center",
-              margin: "2.5rem",
-              width: "88%",
-              height: "80%",
+              fontSize: 64,
+              fontWeight: 700,
+              letterSpacing: "-0.03em",
+              lineHeight: 1.15,
+              margin: 0,
+              maxHeight: 380,
+              overflow: "hidden",
             },
+            children: post.data.title,
           },
         },
         {
           type: "div",
           props: {
-            style: {
-              border: "4px solid #000",
-              background: "#fefbfb",
-              borderRadius: "4px",
-              display: "flex",
-              justifyContent: "center",
-              margin: "2rem",
-              width: "88%",
-              height: "80%",
-            },
-            children: {
-              type: "div",
-              props: {
-                style: {
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-between",
-                  margin: "20px",
-                  width: "90%",
-                  height: "90%",
+            style: { display: "flex", alignItems: "center", justifyContent: "space-between", fontSize: 28 },
+            children: [
+              {
+                type: "div",
+                props: {
+                  style: { display: "flex", alignItems: "center", gap: 18 },
+                  children: [
+                    gridMark(16),
+                    {
+                      type: "span",
+                      props: {
+                        style: { fontWeight: 700, letterSpacing: "-0.03em", fontSize: 36 },
+                        children: SITE.title.toLowerCase(),
+                      },
+                    },
+                  ],
                 },
-                children: [
-                  {
-                    type: "p",
-                    props: {
-                      style: {
-                        fontSize: 72,
-                        fontWeight: "bold",
-                        maxHeight: "84%",
-                        overflow: "hidden",
-                      },
-                      children: post.data.title,
-                    },
-                  },
-                  {
-                    type: "div",
-                    props: {
-                      style: {
-                        display: "flex",
-                        justifyContent: "space-between",
-                        width: "100%",
-                        marginBottom: "8px",
-                        fontSize: 28,
-                      },
-                      children: [
-                        {
-                          type: "span",
-                          props: {
-                            children: [
-                              "by ",
-                              {
-                                type: "span",
-                                props: {
-                                  style: { color: "transparent" },
-                                  children: '"',
-                                },
-                              },
-                              {
-                                type: "span",
-                                props: {
-                                  style: { overflow: "hidden", fontWeight: "bold" },
-                                  children: post.data.author,
-                                },
-                              },
-                            ],
-                          },
-                        },
-                        {
-                          type: "span",
-                          props: {
-                            style: { overflow: "hidden", fontWeight: "bold" },
-                            children: SITE.title,
-                          },
-                        },
-                      ],
-                    },
-                  },
-                ],
               },
-            },
+              {
+                type: "span",
+                props: { style: { color: colors.muted }, children: post.data.author },
+              },
+            ],
           },
         },
       ],
@@ -132,6 +73,6 @@ export default async function postOgImage(post: Post): Promise<string> {
     width: 1200,
     height: 630,
     embedFont: true,
-    fonts: await loadGoogleFonts(post.data.title + post.data.author + SITE.title + "by"),
+    fonts: await loadGoogleFonts(post.data.title + post.data.author + SITE.title.toLowerCase()),
   });
 }

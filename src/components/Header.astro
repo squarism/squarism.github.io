@@ -296,12 +296,18 @@ const pixelQ = ["01110", "10001", "10001", "10021", "01110", "00002"];
   }
 
   /* ----- nav ----- */
+  /* desktop row: logo, then nav pushed right, then the theme button after
+     talks. order is set on all three so it never falls back to dom order */
+  .logo {
+    order: 1;
+  }
   .site-nav {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
     gap: 28px;
     margin-left: auto;
+    order: 2;
     font-family: var(--font-mono);
     font-size: 16px;
   }
@@ -390,9 +396,15 @@ const pixelQ = ["01110", "10001", "10001", "10021", "01110", "00002"];
     .nav-toggle {
       display: flex;
     }
-    /* closed: gone. open: a full-width column under the logo row */
+    /* buttons stay on the logo row; the nav, when open, is a full-width
+       column under it */
+    .header-actions {
+      order: 2;
+      margin-left: auto;
+    }
     .site-nav {
       display: none;
+      order: 3;
       flex-basis: 100%;
       flex-direction: column;
       align-items: flex-start;

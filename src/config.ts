@@ -2,9 +2,13 @@ export const SITE = {
   website: "https://squarism.com/",
   author: "@squarism",
   profile: "https://squarism.com/",
-  desc: "Programming, technology, and creative projects by Chris.",
+  // the tagline: under the wordmark on the social card, the meta description,
+  // and the rss feed description
+  desc: "Notes on the systems we work with.",
   title: "SQUARISM",
-  ogImage: "squarism-og.jpg",
+  // social card for pages without their own: a file under public/, or "" for
+  // the generated /og.png (see src/utils/og-templates/site.ts)
+  ogImage: "",
   lightAndDarkMode: true,
   scheduledPostMargin: 15 * 60 * 1000, // 15 minutes
   showArchives: false,
