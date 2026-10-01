@@ -80,11 +80,11 @@ export const LEVELS: Record<
   1: {
     title: "Single server under load",
     intro:
-      "Start the traffic, then patch the server. Patching takes it offline, and every request will be dropped.  Even though the goal is not possible in this scenario, try anyway.",
+      "Start the traffic, then patch the server. Patching takes it offline, and every request will be dropped.  This scenario cannot be completed without downtime. Try anyway.",
     goal: {
       servers: 1,
       patches: 1,
-      text: "Try to get web-01 onto v1.0.1",
+      text: "Get web-01 onto v1.0.1 without dropping a request. Impossible with one server, so this scenario always ends in downtime.",
     },
   },
   2: {
@@ -318,6 +318,12 @@ export class Sim {
     return this.handled + this.dropped === 0;
   }
 
+  // true when real traffic was served and none of it was dropped. the patch
+  // landing is not enough: level 1 always ends unclean
+  get clean(): boolean {
+    return !this.quiet && this.dropped === 0 && this.downtime === 0;
+  }
+
   // servers that have reached the goal's patch level and are back in service.
   // a patched server still drained does not count: the job is not done until
   // it is taking traffic again
@@ -399,12 +405,16 @@ export class Sim {
     this.done = true;
     this.traffic = false;
     this.requests = [];
-    this.say(
-      `goal reached ${fmtClock(this.t)}. ` +
-        (this.quiet
-          ? "0 requests, no traffic was started"
-          : `${this.dropped} dropped, ${this.downtime.toFixed(1)}s downtime`)
-    );
+    const stats = `${this.dropped} dropped, ${this.downtime.toFixed(1)}s downtime`;
+    if (this.quiet) {
+      this.say(
+        `patched ${fmtClock(this.t)}. 0 requests, no traffic was started`
+      );
+    } else if (this.clean) {
+      this.say(`goal reached ${fmtClock(this.t)}. ${stats}`);
+    } else {
+      this.say(`patched with downtime ${fmtClock(this.t)}. ${stats}`);
+    }
   }
 
   private healthCheck(): void {

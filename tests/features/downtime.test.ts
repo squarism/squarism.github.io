@@ -99,7 +99,10 @@ describe("level 1: single server", () => {
     expect(sim.done).toBe(true);
     expect(sim.traffic).toBe(false);
     expect(sim.requests).toHaveLength(0);
-    expect(lastLog(sim)).toMatch(/^goal reached 00:0[89]\. \d+ dropped/);
+    expect(sim.clean).toBe(false);
+    expect(lastLog(sim)).toMatch(
+      /^patched with downtime 00:0[89]\. \d+ dropped/
+    );
     const frozenAt = sim.t;
     const dropped = sim.dropped;
     run(sim, 5);
@@ -118,7 +121,9 @@ describe("level 1: single server", () => {
     run(sim, PATCH_SECS + 0.5);
     expect(sim.done).toBe(true);
     expect(sim.quiet).toBe(true);
+    expect(sim.clean).toBe(false);
     expect(sim.downtime).toBeGreaterThan(0);
+    expect(lastLog(sim)).toMatch(/^patched 00:/);
     expect(lastLog(sim)).toContain("no traffic was started");
   });
 
@@ -336,6 +341,7 @@ describe("level 2: load balancer", () => {
     expect(sim.done).toBe(true);
     expect(sim.traffic).toBe(false);
     expect(sim.dropped).toBe(0);
+    expect(sim.clean).toBe(true);
     expect(lastLog(sim)).toContain("goal reached");
     expect(lastLog(sim)).toContain("0 dropped");
   });

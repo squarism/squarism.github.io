@@ -521,14 +521,31 @@ onUnmounted(() => {
         <div
           v-if="sim.done"
           class="result"
-          :class="{ quiet: sim.quiet }"
+          :class="{ quiet: sim.quiet, unclean: !sim.quiet && !sim.clean }"
           role="status"
         >
           <div class="result-title">
-            Goal reached at {{ fmtClock(sim.t) }}
+            <template v-if="sim.quiet"
+              >Patched at {{ fmtClock(sim.t) }}</template
+            >
+            <template v-else-if="sim.clean"
+              >Goal reached at {{ fmtClock(sim.t) }}</template
+            >
+            <template v-else
+              >Patched with downtime at {{ fmtClock(sim.t) }}</template
+            >
             <span v-if="sim.quiet" class="result-note">
               You patched successfully, but there were no users. Start the
               traffic and try again.
+            </span>
+            <span v-else-if="!sim.clean && level === 1" class="result-note">
+              The patch is on, but users were turned away while the server was
+              offline. With a single server this is unavoidable. The next
+              scenario fixes it.
+            </span>
+            <span v-else-if="!sim.clean" class="result-note">
+              The patch is on, but requests were dropped. Drain a server before
+              patching it and try again.
             </span>
           </div>
           <dl v-if="!sim.quiet">
@@ -963,6 +980,20 @@ button.primary:hover:not(:disabled) {
 }
 .result.quiet {
   grid-template-columns: minmax(0, 1fr) auto;
+}
+/* the note is long, so stack it over the stats instead of beside them */
+.result.unclean {
+  grid-template-columns: minmax(0, 1fr);
+  border-color: var(--bad);
+}
+.result.unclean .result-title {
+  color: var(--bad);
+}
+.result.unclean .result-note {
+  color: var(--muted);
+}
+.result.unclean dl {
+  justify-content: flex-start;
 }
 .result dl {
   display: flex;
