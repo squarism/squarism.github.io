@@ -1,0 +1,49 @@
+---
+title: "RAID 1+0 vs 0+1"
+description: "You have a NAS with eight disks and two ways to lay them out: mirrors striped together, or stripes mirrored. Seems like it should be the same, right?"
+date: 2026-10-08T00:00:00.000Z
+tags: ["ops", "storage"]
+draft: false
+order: 3
+image: ./thumb.jpg
+---
+
+import Raid from "@/features/raid/Raid.vue";
+
+## The setup
+
+You have a NAS with eight disks and you need to pick a layout. The two candidates are RAID 1+0 and RAID 0+1 because RAID 5 or 6 will be too slow.  So, the question is which should you pick?  You could do either if you arrange it correctly.
+
+- **RAID 1+0** mirrors first. Disks pair up into four mirrors, and the array stripes across the four mirrors.
+- **RAID 0+1** stripes first. Disks make two stripes of four, and you get a mirror of two stripes.
+
+When one disk fails, the situation is about the same. Watch what happens when the second disk fails.
+
+## How this works
+
+Pick a layout and click `Fail a random disk`. Any disk that hasn't failed yet is equally likely to be next, and the small percentage on each disk is that chance. The big number on the right is the chance that the next failure takes the whole array down. Watch it.
+
+<Raid client:visible />
+
+| Control | Represents |
+| --- | --- |
+| Layout | Your decision. It locks once a disk fails, like it would in real life. Restart to pick again. |
+| Fail a random disk | A disk dies. Which one is chance. |
+| Red outline | A disk that loses the array if it's the next to die. |
+| Idle | A disk that still works but the array has stopped reading from it. |
+| Your runs | How many failures each layout survived on average across your tries. |
+
+## What's going on
+
+After the first failure, look at the red outlines.
+
+In RAID 1+0, one disk is red: the partner of the disk that died. Its mirror is running on one disk now, and every other mirror is still whole. One of the seven remaining disks is fatal, so the next failure has about a 14% chance of losing the array.
+
+In RAID 0+1, four disks are red. A stripe can't run with a hole in it, so the first failure takes its entire stripe offline, three good disks included. The array is now one plain stripe of four disks, and any of them dying ends it. Four of seven is about 57%.
+
+The disks and the first failure are the same, but the second failure is four times as likely to lose a 0+1 array. That's why you almost never see 0+1 recommended. Stripe first, and one dead disk takes half the array with it.
+
+## Things to try
+
+1. Run each layout five or so times and compare the averages in _Your runs_.
+1. Try to get RAID 0+1 through four failures. Is it possible? Yes, but all four have to land in the same stripe, about a 3% chance. RAID 1+0 survives four when each one hits a different mirror, about 23%. Neither survives five.
