@@ -1,9 +1,16 @@
 <script setup lang="ts">
 // split a column under traffic. the sim lives in sim.ts and is wrapped in
-// shallowReactive(): the clock changes every frame, which re-renders the
-// template, and the template reads nested state fresh each time. this file
+// shallowReactive(): the frame counter changes every frame, which re-renders
+// the template, and the template reads nested state fresh each time. this file
 // adds the toolbox, the table view, the app schema panel, and the canvas.
 import { onMounted, onUnmounted, ref, shallowReactive } from "vue";
+import SimFrame from "@/features/ui/SimFrame.vue";
+import SimSide from "@/features/ui/SimSide.vue";
+import SimCard from "@/features/ui/SimCard.vue";
+import SimStat from "@/features/ui/SimStat.vue";
+import SimResult from "@/features/ui/SimResult.vue";
+import SimStrip from "@/features/ui/SimStrip.vue";
+import SimLog from "@/features/ui/SimLog.vue";
 import {
   APP_QUERIES,
   GOAL_TEXT,
@@ -25,7 +32,7 @@ import {
 
 const sim = shallowReactive(new Sim()) as Sim;
 
-const root = ref<HTMLElement | null>(null);
+const root = ref<InstanceType<typeof SimFrame> | null>(null);
 const stage = ref<HTMLElement | null>(null);
 const canvas = ref<HTMLCanvasElement | null>(null);
 const usersBox = ref<HTMLElement | null>(null);
@@ -67,7 +74,7 @@ function strip(): string[] {
     if (!b) return "";
     if (b.failed > 0) return "bad";
     if (b.off) return "down";
-    if (b.wrong > 0) return "wrong";
+    if (b.wrong > 0) return "warn";
     return b.ok > 0 ? "ok" : "";
   });
 }
@@ -215,12 +222,17 @@ let source: Point = { x: 0, y: 0 };
 const serverBoxes = new Map<string, Box>();
 let raf = 0;
 let last = 0;
-let frame = 0;
+// bumped every frame and read on the stage element. that read is what makes
+// this component re-render per frame: the sim is shallow, so a server going
+// offline in place changes nothing it tracks. the clock in the side column
+// is slot content and is tracked by the card, not by this template
+const frame = ref(0);
 let observer: IntersectionObserver | null = null;
 
 function readColors(): void {
-  if (!root.value) return;
-  const cs = getComputedStyle(root.value);
+  const el = root.value?.$el;
+  if (!(el instanceof HTMLElement)) return;
+  const cs = getComputedStyle(el);
   const get = (k: string) => cs.getPropertyValue(k).trim();
   colors = {
     ok: get("--ok"),
@@ -381,7 +393,7 @@ function loop(now: number): void {
   consumeEvents();
   tickFx(dt);
   draw();
-  if (++frame % 60 === 0) readColors();
+  if (++frame.value % 60 === 0) readColors();
   raf = requestAnimationFrame(loop);
 }
 
@@ -415,16 +427,15 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div ref="root" class="feature-wide sm not-prose" :class="{ done: sim.done }">
-    <header class="head">
-      <div>
-        <h3 class="title">{{ TITLE }}</h3>
-        <p class="intro">{{ INTRO }}</p>
-        <p class="goal"><span class="goal-label">Goal</span> {{ GOAL_TEXT }}</p>
-      </div>
-      <button type="button" @click="restart">Restart</button>
-    </header>
-
+  <SimFrame
+    ref="root"
+    class="sm"
+    :title="TITLE"
+    :intro="INTRO"
+    :goal="GOAL_TEXT"
+    :done="sim.done"
+    @restart="restart"
+  >
     <!-- toolbox: every operation, always visible, never greyed out for order -->
     <div class="toolbox">
       <div class="tool-group">
@@ -474,8 +485,13 @@ onUnmounted(() => {
       </div>
     </div>
 
-    <div class="grid">
-      <section ref="stage" class="stage" aria-label="Simulation">
+    <div class="sim-grid">
+      <section
+        ref="stage"
+        class="sim-stage stage"
+        aria-label="Simulation"
+        :data-frame="frame"
+      >
         <canvas ref="canvas"></canvas>
 
         <div ref="usersBox" class="users">
@@ -648,8 +664,11 @@ onUnmounted(() => {
           </div>
         </div>
 
-        <div v-if="sim.done" class="result" role="status">
-          <div class="result-title">Goal reached at {{ fmtClock(sim.t) }}</div>
+        <SimResult
+          v-if="sim.done"
+          class="result"
+          :title="`Goal reached at ${fmtClock(sim.t)}`"
+        >
           <dl>
             <div class="pair">
               <dt>Failed</dt>
@@ -657,7 +676,7 @@ onUnmounted(() => {
             </div>
             <div class="pair">
               <dt>Wrong data served</dt>
-              <dd :class="{ wrong: sim.wrong > 0 }">{{ sim.wrong }}</dd>
+              <dd :class="{ warn: sim.wrong > 0 }">{{ sim.wrong }}</dd>
             </div>
             <div class="pair">
               <dt>Rows out of sync</dt>
@@ -666,15 +685,12 @@ onUnmounted(() => {
               </dd>
             </div>
           </dl>
-        </div>
+        </SimResult>
       </section>
 
-      <aside class="side">
-        <div class="card big">
-          <div class="num">{{ sim.failed }}</div>
-          <div>requests failed</div>
-        </div>
-        <div class="card">
+      <SimSide>
+        <SimStat :value="sim.failed" label="requests failed" />
+        <SimCard>
           <dl>
             <dt>Clock</dt>
             <dd>{{ fmtClock(sim.t) }}</dd>
@@ -683,17 +699,20 @@ onUnmounted(() => {
             <dt>Availability</dt>
             <dd>{{ availability() }}</dd>
             <dt>Wrong data served</dt>
-            <dd :class="{ wrong: sim.wrong > 0 }">{{ sim.wrong }}</dd>
+            <dd :class="{ warn: sim.wrong > 0 }">{{ sim.wrong }}</dd>
             <dt>Rows out of sync</dt>
             <dd :class="{ bad: sim.outOfSync.length > 0 }">
               {{ sim.outOfSync.length }}
             </dd>
           </dl>
-        </div>
+        </SimCard>
 
         <!-- what each app version actually runs, coloured by the live schema -->
-        <div class="card schema">
-          <h4>App schema</h4>
+        <SimCard
+          class="schema"
+          title="App schema"
+          note="A column in red does not exist in the table right now. That query fails."
+        >
           <div v-for="v in [1, 2] as AppVersion[]" :key="v" class="app">
             <div class="app-head">
               <span class="ver" :class="'v' + v">app v{{ v }}</span>
@@ -709,63 +728,28 @@ onUnmounted(() => {
               class="sql"
             ><template v-for="(p, i) in queryParts(APP_QUERIES[v].write)" :key="i"><span v-if="p.col" :class="sim.columns[p.col] ? 'col-ok' : 'col-missing'">{{ p.text }}</span><template v-else>{{ p.text }}</template></template></pre>
           </div>
-          <small
-            >A column in red does not exist in the table right now. That query
-            fails.</small
-          >
-        </div>
+        </SimCard>
 
-        <div class="card">
-          <h4>Last 60 seconds</h4>
-          <div class="strip">
-            <i v-for="(cls, i) in strip()" :key="i" :class="cls"></i>
-          </div>
-          <small
-            >Green served everything, amber served wrong data, red failed
-            requests, hatched had no working server.</small
-          >
-        </div>
-        <div class="card">
-          <h4>Event log</h4>
-          <ul class="log">
-            <li
-              v-for="(entry, i) in sim.log"
-              :key="sim.log.length - i"
-              :class="entry.level"
-            >
-              <span>{{ fmtClock(entry.t) }}</span
-              >{{ entry.msg }}
-            </li>
-          </ul>
-        </div>
-      </aside>
+        <SimCard
+          title="Last 60 seconds"
+          note="Green served everything, amber served wrong data, red failed requests, hatched had no working server."
+        >
+          <SimStrip :cells="strip()" />
+        </SimCard>
+        <SimCard title="Event log">
+          <SimLog :entries="sim.log" :clock="fmtClock" />
+        </SimCard>
+      </SimSide>
     </div>
-  </div>
+  </SimFrame>
 </template>
 
 <style scoped>
 .sm {
-  --ok: var(--success);
-  --bad: var(--error);
   --wrong: var(--warning);
   --read: var(--warning);
   --write: #7c97ff;
-  --on-accent: #111;
-  width: 100%;
-  box-sizing: border-box;
-  padding: 24px;
-  margin: 40px 0 48px;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  color: var(--fg);
-  font-family: var(--font-sans);
-  font-size: 15px;
-  line-height: 1.45;
-}
-.sm *,
-.sm *::before,
-.sm *::after {
-  box-sizing: border-box;
+  --sim-side: 320px;
 }
 .muted {
   color: var(--muted);
@@ -775,75 +759,6 @@ onUnmounted(() => {
 }
 .wrong {
   color: var(--wrong);
-}
-
-.head {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px 24px;
-  align-items: flex-end;
-  justify-content: space-between;
-  margin-bottom: 16px;
-}
-.title {
-  margin: 0;
-  font-size: 24px;
-  font-weight: 600;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  color: var(--fg);
-}
-.intro {
-  margin: 6px 0 0;
-  max-width: 70ch;
-  color: var(--muted);
-  text-wrap: pretty;
-}
-.goal {
-  margin: 8px 0 0;
-  color: var(--body);
-  max-width: 70ch;
-}
-.goal-label {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--accent-text);
-  margin-right: 8px;
-}
-
-button {
-  font: 600 14px var(--font-sans);
-  color: var(--fg);
-  background: transparent;
-  border: 1.5px solid var(--fg);
-  border-radius: 0;
-  padding: 7px 12px;
-  cursor: pointer;
-}
-button:hover:not(:disabled) {
-  background: var(--fg);
-  color: var(--bg);
-}
-button:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-}
-button:focus-visible,
-input:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-button.primary {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--on-accent);
-}
-button.primary:hover:not(:disabled) {
-  filter: brightness(1.12);
-  background: var(--accent);
-  color: var(--on-accent);
 }
 
 /* ----- toolbox ----- */
@@ -912,43 +827,15 @@ button.primary:hover:not(:disabled) {
 }
 
 /* ----- stage + side ----- */
-.grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 320px;
-  gap: 16px;
-}
 .stage {
-  position: relative;
-  max-width: none;
-  margin: 0;
-  background: var(--card);
-  border: 1px solid var(--border);
-  overflow: hidden;
-  background-image:
-    linear-gradient(var(--border) 1px, transparent 1px),
-    linear-gradient(90deg, var(--border) 1px, transparent 1px);
-  background-size: 56px 56px;
-  background-position: -1px -1px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 48px;
   padding: 14px;
 }
-.stage canvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 1;
-}
 /* everything on the stage sits above the canvas, except the result panel,
    which is positioned on its own */
-.stage > div:not(.result) {
-  position: relative;
-  z-index: 2;
-}
 
 .users {
   background: var(--fg);
@@ -1218,24 +1105,6 @@ td.mark i.failed,
 }
 
 /* ----- goal reached ----- */
-.result {
-  position: absolute;
-  inset: auto 14px 14px 14px;
-  z-index: 3;
-  background: var(--bg);
-  border: 2px solid var(--fg);
-  padding: 16px 18px;
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  align-items: center;
-  gap: 12px 24px;
-}
-.result-title {
-  font-size: 18px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  white-space: nowrap;
-}
 /* the stats are small tiles, label over number, so nothing has to line up */
 .result dl {
   display: flex;
@@ -1259,59 +1128,8 @@ td.mark i.failed,
   font-size: 20px;
   line-height: 1.1;
 }
-.done .stage {
-  border-color: var(--fg);
-}
 
 /* ----- side ----- */
-.side {
-  display: grid;
-  gap: 16px;
-  align-content: start;
-}
-.card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  padding: 14px 16px;
-}
-.num {
-  font-family: var(--font-mono);
-  font-size: 44px;
-  font-weight: 600;
-  line-height: 1;
-  color: var(--bad);
-  font-variant-numeric: tabular-nums;
-}
-.big div:last-child {
-  color: var(--muted);
-  font-size: 14px;
-  margin-top: 4px;
-}
-dl {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 6px 12px;
-  margin: 0;
-}
-dt {
-  color: var(--muted);
-}
-dd {
-  margin: 0;
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
-  font-family: var(--font-mono);
-}
-.card h4 {
-  font: 600 15px var(--font-sans);
-  margin: 0;
-  color: var(--fg);
-}
-.card small {
-  color: var(--muted);
-  display: block;
-  margin-top: 8px;
-}
 .schema .app {
   margin-top: 10px;
   display: grid;
@@ -1334,58 +1152,6 @@ dd {
   text-decoration: line-through;
   text-decoration-thickness: 1.5px;
 }
-.strip {
-  display: grid;
-  grid-template-columns: repeat(60, 1fr);
-  gap: 1px;
-  height: 28px;
-  margin-top: 8px;
-}
-.strip i {
-  background: var(--border);
-}
-.strip i.ok {
-  background: var(--ok);
-}
-.strip i.wrong {
-  background: var(--wrong);
-}
-.strip i.bad {
-  background: var(--bad);
-}
-.strip i.down {
-  background: repeating-linear-gradient(
-    45deg,
-    var(--bad) 0 2px,
-    transparent 2px 4px
-  );
-}
-.log {
-  list-style: none;
-  margin: 8px 0 0;
-  padding: 0;
-  max-height: 240px;
-  overflow: auto;
-  font-size: 13px;
-}
-.log li {
-  padding: 4px 0;
-  border-top: 1px solid var(--border);
-  display: flex;
-  gap: 8px;
-}
-.log li span {
-  color: var(--muted);
-  font-family: var(--font-mono);
-  font-variant-numeric: tabular-nums;
-  flex: none;
-}
-.log li.warn {
-  color: var(--wrong);
-}
-.log li.bad {
-  color: var(--bad);
-}
 
 @media (max-width: 1000px) {
   .ops {
@@ -1393,15 +1159,6 @@ dd {
   }
 }
 @media (max-width: 860px) {
-  .sm {
-    padding: 16px;
-  }
-  .grid {
-    grid-template-columns: 1fr;
-  }
-  .result {
-    grid-template-columns: 1fr;
-  }
   .result dl {
     justify-content: flex-start;
   }

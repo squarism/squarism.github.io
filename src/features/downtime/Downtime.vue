@@ -2,11 +2,19 @@
 // one stage of the downtime feature. level 1 is the single server,
 // level 2 adds parts (servers, a load balancer). the sim lives in sim.ts and
 // is wrapped in shallowReactive() so the template reads it directly. shallow
-// on purpose: the clock changes every frame, which re-renders the template,
-// and the template reads the nested server and request state fresh each time.
+// on purpose: the frame counter below changes every frame, which re-renders
+// the template, and the template reads the nested server state fresh each time.
 // deep reactivity would track every request moving every frame for nothing.
 // this file adds the canvas (request paths, effects) and the controls.
 import { onMounted, onUnmounted, ref, shallowReactive } from "vue";
+import SimFrame from "@/features/ui/SimFrame.vue";
+import SimBar from "@/features/ui/SimBar.vue";
+import SimSide from "@/features/ui/SimSide.vue";
+import SimCard from "@/features/ui/SimCard.vue";
+import SimStat from "@/features/ui/SimStat.vue";
+import SimResult from "@/features/ui/SimResult.vue";
+import SimStrip from "@/features/ui/SimStrip.vue";
+import SimLog from "@/features/ui/SimLog.vue";
 import {
   LEVELS,
   HEALTH_SECS,
@@ -25,7 +33,7 @@ const props = defineProps<{ level: Level }>();
 const { title, intro, goal } = LEVELS[props.level];
 const sim = shallowReactive(new Sim({ level: props.level })) as Sim;
 
-const root = ref<HTMLElement | null>(null);
+const root = ref<InstanceType<typeof SimFrame> | null>(null);
 const stage = ref<HTMLElement | null>(null);
 const canvas = ref<HTMLCanvasElement | null>(null);
 const usersBox = ref<HTMLElement | null>(null);
@@ -102,6 +110,24 @@ function serverViews(): ServerView[] {
   });
 }
 
+function resultTitle(): string {
+  const at = fmtClock(sim.t);
+  if (sim.quiet) return `Patched at ${at}`;
+  if (sim.clean) return `Goal reached at ${at}`;
+  return `Patched with downtime at ${at}`;
+}
+
+function resultNote(): string | undefined {
+  if (sim.quiet) {
+    return "You patched successfully, but there were no users. Start the traffic and try again.";
+  }
+  if (sim.clean) return undefined;
+  if (props.level === 1) {
+    return "The patch is on, but users were turned away while the server was offline. With a single server this is unavoidable. The next scenario fixes it.";
+  }
+  return "The patch is on, but requests were dropped. Drain a server before patching it and try again.";
+}
+
 function poolState(s: Server): { cls: string; label: string } {
   if (!s.inPool) return { cls: "out", label: `${s.name} drained` };
   if (!s.lbHealthy) return { cls: "sick", label: `${s.name} unhealthy` };
@@ -167,12 +193,17 @@ let lbBox: Box | null = null;
 const serverBoxes = new Map<string, Box>();
 let raf = 0;
 let last = 0;
-let frame = 0;
+// bumped every frame and read on the stage element. that read is what makes
+// this component re-render per frame: the sim is shallow, so a server going
+// offline in place changes nothing it tracks. the clock in the side column
+// is slot content and is tracked by the card, not by this template
+const frame = ref(0);
 let observer: IntersectionObserver | null = null;
 
 function readColors(): void {
-  if (!root.value) return;
-  const cs = getComputedStyle(root.value);
+  const el = root.value?.$el;
+  if (!(el instanceof HTMLElement)) return;
+  const cs = getComputedStyle(el);
   colors = {
     ok: cs.getPropertyValue("--ok").trim(),
     bad: cs.getPropertyValue("--bad").trim(),
@@ -328,7 +359,7 @@ function loop(now: number): void {
   consumeEvents();
   tickFx(dt);
   draw();
-  if (++frame % 60 === 0) readColors();
+  if (++frame.value % 60 === 0) readColors();
   raf = requestAnimationFrame(loop);
 }
 
@@ -363,22 +394,16 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div
+  <SimFrame
     ref="root"
-    class="feature-wide pul not-prose"
-    :class="{ done: sim.done }"
+    class="pul"
+    :title="title"
+    :intro="intro"
+    :goal="goal.text"
+    :done="sim.done"
+    @restart="restart"
   >
-    <header class="head">
-      <div>
-        <h3 class="title">{{ title }}</h3>
-        <p class="intro">{{ intro }}</p>
-        <p class="goal"><span class="goal-label">Goal</span> {{ goal.text }}</p>
-      </div>
-      <button type="button" @click="restart">Restart</button>
-    </header>
-
-    <div v-if="level === 2" class="parts">
-      <span class="parts-label">Parts</span>
+    <SimBar v-if="level === 2" label="Parts" :hint="hint()">
       <button
         type="button"
         :disabled="sim.lb || sim.done"
@@ -393,11 +418,15 @@ onUnmounted(() => {
       >
         Add a server
       </button>
-      <span class="hint">{{ hint() }}</span>
-    </div>
+    </SimBar>
 
-    <div class="grid">
-      <section ref="stage" class="stage" aria-label="Simulation">
+    <div class="sim-grid">
+      <section
+        ref="stage"
+        class="sim-stage stage"
+        aria-label="Simulation"
+        :data-frame="frame"
+      >
         <canvas ref="canvas"></canvas>
 
         <div ref="usersBox" class="users">
@@ -518,36 +547,13 @@ onUnmounted(() => {
           </div>
         </div>
 
-        <div
+        <SimResult
           v-if="sim.done"
-          class="result"
-          :class="{ quiet: sim.quiet, unclean: !sim.quiet && !sim.clean }"
-          role="status"
+          :title="resultTitle()"
+          :note="resultNote()"
+          :tone="sim.quiet || sim.clean ? undefined : 'bad'"
+          :stack="!sim.quiet && !sim.clean"
         >
-          <div class="result-title">
-            <template v-if="sim.quiet"
-              >Patched at {{ fmtClock(sim.t) }}</template
-            >
-            <template v-else-if="sim.clean"
-              >Goal reached at {{ fmtClock(sim.t) }}</template
-            >
-            <template v-else
-              >Patched with downtime at {{ fmtClock(sim.t) }}</template
-            >
-            <span v-if="sim.quiet" class="result-note">
-              You patched successfully, but there were no users. Start the
-              traffic and try again.
-            </span>
-            <span v-else-if="!sim.clean && level === 1" class="result-note">
-              The patch is on, but users were turned away while the server was
-              offline. With a single server this is unavoidable. The next
-              scenario fixes it.
-            </span>
-            <span v-else-if="!sim.clean" class="result-note">
-              The patch is on, but requests were dropped. Drain a server before
-              patching it and try again.
-            </span>
-          </div>
           <dl v-if="!sim.quiet">
             <dt>Dropped</dt>
             <dd :class="{ bad: sim.dropped > 0 }">
@@ -560,15 +566,15 @@ onUnmounted(() => {
             <dt>Availability</dt>
             <dd>{{ availability() }}</dd>
           </dl>
-        </div>
+        </SimResult>
       </section>
 
-      <aside class="side">
-        <div class="card big">
-          <div class="num">{{ sim.dropped.toLocaleString() }}</div>
-          <div>requests dropped</div>
-        </div>
-        <div class="card">
+      <SimSide>
+        <SimStat
+          :value="sim.dropped.toLocaleString()"
+          label="requests dropped"
+        />
+        <SimCard>
           <dl>
             <dt>Clock</dt>
             <dd>{{ fmtClock(sim.t) }}</dd>
@@ -581,180 +587,37 @@ onUnmounted(() => {
             <dt>Patched</dt>
             <dd>{{ sim.patchedCount }} / {{ goal.servers }}</dd>
           </dl>
-        </div>
-        <div class="card">
-          <h4>Last 60 seconds</h4>
-          <div class="strip">
-            <i v-for="(cls, i) in strip()" :key="i" :class="cls"></i>
-          </div>
-          <small
-            >Green served everything, red dropped requests, hatched had nothing
-            able to serve.</small
-          >
-        </div>
-        <div class="card">
-          <h4>Event log</h4>
-          <ul class="log">
-            <li v-for="(entry, i) in sim.log" :key="sim.log.length - i">
-              <span>{{ fmtClock(entry.t) }}</span
-              >{{ entry.msg }}
-            </li>
-          </ul>
-        </div>
-      </aside>
+        </SimCard>
+        <SimCard
+          title="Last 60 seconds"
+          note="Green served everything, red dropped requests, hatched had nothing able to serve."
+        >
+          <SimStrip :cells="strip()" />
+        </SimCard>
+        <SimCard title="Event log">
+          <SimLog :entries="sim.log" :clock="fmtClock" />
+        </SimCard>
+      </SimSide>
     </div>
-  </div>
+  </SimFrame>
 </template>
 
 <style scoped>
 /* the site tokens: card surfaces, hairline borders, radius 0. ok, bad and
    request are the only colours that are not neutral. */
 .pul {
-  --ok: var(--success);
-  --bad: var(--error);
   --request: var(--warning);
-  --on-accent: #111;
-  width: 100%;
-  box-sizing: border-box;
-  padding: 24px;
-  margin: 40px 0 48px;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  color: var(--fg);
-  font-family: var(--font-sans);
-  font-size: 15px;
-  line-height: 1.45;
-}
-.pul *,
-.pul *::before,
-.pul *::after {
-  box-sizing: border-box;
-}
-
-.head {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px 24px;
-  align-items: flex-end;
-  justify-content: space-between;
-  margin-bottom: 16px;
-}
-.title {
-  margin: 0;
-  font-size: 24px;
-  font-weight: 600;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  color: var(--fg);
-}
-.intro {
-  margin: 6px 0 0;
-  max-width: 62ch;
-  color: var(--muted);
-  text-wrap: pretty;
-}
-.goal {
-  margin: 8px 0 0;
-  color: var(--body);
-}
-.goal-label {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--accent-text);
-  margin-right: 8px;
-}
-
-button {
-  font: 600 14px var(--font-sans);
-  color: var(--fg);
-  background: transparent;
-  border: 1.5px solid var(--fg);
-  border-radius: 0;
-  padding: 7px 12px;
-  cursor: pointer;
-}
-button:hover:not(:disabled) {
-  background: var(--fg);
-  color: var(--bg);
-}
-button:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-}
-button:focus-visible,
-input:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-button.primary {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--on-accent);
-}
-button.primary:hover:not(:disabled) {
-  filter: brightness(1.12);
-  background: var(--accent);
-  color: var(--on-accent);
-}
-
-/* ----- parts bar (level 2) ----- */
-.parts {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  align-items: center;
-  margin-bottom: 12px;
-  padding: 10px 12px;
-  border: 1px solid var(--border);
-  background: var(--card);
-}
-.parts-label,
-.hint {
-  color: var(--muted);
-  font-size: 14px;
 }
 
 /* ----- stage + side ----- */
-.grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 300px;
-  gap: 16px;
-}
 .stage {
-  position: relative;
   min-height: clamp(540px, 72vh, 700px);
-  max-width: none;
-  margin: 0;
-  background: var(--card);
-  border: 1px solid var(--border);
-  overflow: hidden;
-  background-image:
-    linear-gradient(var(--border) 1px, transparent 1px),
-    linear-gradient(90deg, var(--border) 1px, transparent 1px);
-  background-size: 56px 56px;
-  background-position: -1px -1px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   gap: 56px;
   padding: 14px;
-}
-.stage canvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 1;
-}
-/* everything on the stage sits above the canvas, except the result panel,
-   which is positioned on its own */
-.stage > div:not(.result) {
-  position: relative;
-  z-index: 2;
 }
 
 .users {
@@ -949,174 +812,5 @@ button.primary:hover:not(:disabled) {
   display: block;
   height: 100%;
   background: var(--bad);
-}
-
-/* ----- goal reached ----- */
-.result {
-  position: absolute;
-  inset: auto 14px 14px 14px;
-  z-index: 3;
-  background: var(--bg);
-  border: 2px solid var(--fg);
-  padding: 16px 18px;
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  align-items: center;
-  gap: 12px 24px;
-}
-.result-title {
-  font-size: 18px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  white-space: nowrap;
-}
-.result-note {
-  display: block;
-  margin-top: 4px;
-  font-size: 15px;
-  font-weight: 400;
-  color: var(--muted);
-  white-space: normal;
-}
-.result.quiet {
-  grid-template-columns: minmax(0, 1fr) auto;
-}
-/* the note is long, so stack it over the stats instead of beside them */
-.result.unclean {
-  grid-template-columns: minmax(0, 1fr);
-  border-color: var(--bad);
-}
-.result.unclean .result-title {
-  color: var(--bad);
-}
-.result.unclean .result-note {
-  color: var(--muted);
-}
-.result.unclean dl {
-  justify-content: flex-start;
-}
-.result dl {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 6px 20px;
-  margin: 0;
-}
-.result dt {
-  color: var(--muted);
-  margin-right: 6px;
-}
-.result dd.bad {
-  color: var(--bad);
-}
-.done .stage {
-  border-color: var(--fg);
-}
-
-.side {
-  display: grid;
-  gap: 16px;
-  align-content: start;
-}
-.card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  padding: 14px 16px;
-}
-.num {
-  font-family: var(--font-mono);
-  font-size: 44px;
-  font-weight: 600;
-  line-height: 1;
-  color: var(--bad);
-  font-variant-numeric: tabular-nums;
-}
-.big div:last-child {
-  color: var(--muted);
-  font-size: 14px;
-  margin-top: 4px;
-}
-dl {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 6px 12px;
-  margin: 0;
-}
-dt {
-  color: var(--muted);
-}
-dd {
-  margin: 0;
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
-  font-family: var(--font-mono);
-}
-.strip {
-  display: grid;
-  grid-template-columns: repeat(60, 1fr);
-  gap: 1px;
-  height: 28px;
-  margin-top: 8px;
-}
-.strip i {
-  background: var(--border);
-}
-.strip i.ok {
-  background: var(--ok);
-}
-.strip i.bad {
-  background: var(--bad);
-}
-.strip i.down {
-  background: repeating-linear-gradient(
-    45deg,
-    var(--bad) 0 2px,
-    transparent 2px 4px
-  );
-}
-.card h4 {
-  font: 600 15px var(--font-sans);
-  margin: 0;
-  color: var(--fg);
-}
-.card small {
-  color: var(--muted);
-  display: block;
-  margin-top: 8px;
-}
-.log {
-  list-style: none;
-  margin: 8px 0 0;
-  padding: 0;
-  max-height: 200px;
-  overflow: auto;
-  font-size: 13px;
-}
-.log li {
-  padding: 4px 0;
-  border-top: 1px solid var(--border);
-  display: flex;
-  gap: 8px;
-}
-.log li span {
-  color: var(--muted);
-  font-family: var(--font-mono);
-  font-variant-numeric: tabular-nums;
-  flex: none;
-}
-
-@media (max-width: 860px) {
-  .pul {
-    padding: 16px;
-  }
-  .grid {
-    grid-template-columns: 1fr;
-  }
-  .result {
-    grid-template-columns: 1fr;
-  }
-  .result dl {
-    justify-content: flex-start;
-  }
 }
 </style>

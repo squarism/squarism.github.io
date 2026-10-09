@@ -5,6 +5,12 @@
 // everything, so the template needs the failed list and runs tracked. the
 // state is eight disks, so deep tracking costs nothing.
 import { onMounted, onUnmounted, reactive, ref } from "vue";
+import SimFrame from "@/features/ui/SimFrame.vue";
+import SimSide from "@/features/ui/SimSide.vue";
+import SimCard from "@/features/ui/SimCard.vue";
+import SimStat from "@/features/ui/SimStat.vue";
+import SimResult from "@/features/ui/SimResult.vue";
+import SimBar from "@/features/ui/SimBar.vue";
 import {
   DISKS,
   LAYOUTS,
@@ -20,7 +26,7 @@ import {
 } from "./sim";
 
 const sim = reactive(new Sim()) as Sim;
-const root = ref<HTMLElement | null>(null);
+const root = ref<InstanceType<typeof SimFrame> | null>(null);
 
 // the disk the roulette is passing over, null when not rolling
 const rolling = ref<number | null>(null);
@@ -181,7 +187,7 @@ onMounted(() => {
   observer = new IntersectionObserver(entries => {
     for (const e of entries) visible = e.isIntersecting;
   });
-  if (root.value) observer.observe(root.value);
+  if (root.value?.$el instanceof Element) observer.observe(root.value.$el);
   window.addEventListener("keydown", onKey);
 });
 
@@ -193,26 +199,23 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div
-    class="feature-wide raid not-prose"
-    :class="{ done: sim.lost }"
+  <SimFrame
     ref="root"
+    class="raid"
+    title="RAID 1+0 vs 0+1 Sim"
+    goal="Pick the layout that survives more failures. Try each a few times and watch the odds."
+    :done="sim.lost"
+    restart-key="r"
+    @restart="restart"
   >
-    <header class="head">
-      <div>
-        <h3 class="title">RAID 1+0 vs 0+1 Sim</h3>
-        <p class="goal">
-          <span class="goal-label">Goal</span> Pick the layout that survives
-          more failures. Try each a few times and watch the odds.
-        </p>
-      </div>
-      <button type="button" aria-keyshortcuts="r" @click="restart">
-        Restart
-      </button>
-    </header>
-
-    <div class="parts">
-      <span class="parts-label">Layout</span>
+    <SimBar
+      label="Layout"
+      :hint="
+        sim.canSwitch
+          ? LAYOUTS[sim.layout].summary
+          : 'Locked in until the array is lost or you restart.'
+      "
+    >
       <button
         v-for="l in LAYOUT_ORDER"
         :key="l"
@@ -224,15 +227,10 @@ onUnmounted(() => {
       >
         {{ LAYOUTS[l].title }}
       </button>
-      <span class="hint">{{
-        sim.canSwitch
-          ? LAYOUTS[sim.layout].summary
-          : "Locked in until the array is lost or you restart."
-      }}</span>
-    </div>
+    </SimBar>
 
-    <div class="grid">
-      <section class="stage" aria-label="Simulation">
+    <div class="sim-grid">
+      <section class="sim-stage stage" aria-label="Simulation">
         <div class="nas">
           <div class="nas-head">
             <span class="name">nas-01</span>
@@ -300,26 +298,26 @@ onUnmounted(() => {
           </span>
         </div>
 
-        <div v-if="sim.lost" class="result" role="status">
-          <div class="result-title">
-            Array lost after {{ sim.failed.length }}
-            {{ sim.failed.length === 1 ? "failure" : "failures" }}
-            <span class="result-note">{{ resultNote() }}</span>
-          </div>
+        <SimResult
+          v-if="sim.lost"
+          class="result"
+          tone="bad"
+          :title="`Array lost after ${sim.failed.length} ${sim.failed.length === 1 ? 'failure' : 'failures'}`"
+          :note="resultNote()"
+        >
           <button type="button" aria-keyshortcuts="r" @click="restart">
             Rebuild
           </button>
-        </div>
+        </SimResult>
       </section>
 
-      <aside class="side">
-        <div class="card big">
-          <div class="num" :class="risk()">
-            {{ sim.lost ? "Lost" : pct(sim.chance) }}
-          </div>
-          <div>chance the next failure loses the array</div>
-        </div>
-        <div class="card">
+      <SimSide>
+        <SimStat
+          :value="sim.lost ? 'Lost' : pct(sim.chance)"
+          :tone="risk()"
+          label="chance the next failure loses the array"
+        />
+        <SimCard>
           <dl>
             <dt>Layout</dt>
             <dd>{{ LAYOUTS[sim.layout].title }}</dd>
@@ -330,9 +328,11 @@ onUnmounted(() => {
             <dt>Fatal next</dt>
             <dd>{{ sim.fatal.length }} of {{ sim.healthy.length }}</dd>
           </dl>
-        </div>
-        <div class="card">
-          <h4>Your runs</h4>
+        </SimCard>
+        <SimCard
+          title="Your runs"
+          note="Average failures survived before the array was lost. To reset, refresh the page."
+        >
           <dl class="runs">
             <template v-for="l in LAYOUT_ORDER" :key="l">
               <dt>{{ LAYOUTS[l].title }}</dt>
@@ -343,155 +343,24 @@ onUnmounted(() => {
               </dd>
             </template>
           </dl>
-          <small
-            >Average failures survived before the array was lost. To reset,
-            refresh the page.</small
-          >
-        </div>
-        <div class="card">
+        </SimCard>
+        <SimCard>
           <small class="keys">Press <kbd>R</kbd> to rebuild.</small>
-        </div>
-      </aside>
+        </SimCard>
+      </SimSide>
     </div>
-  </div>
+  </SimFrame>
 </template>
 
 <style scoped>
 /* same frame as the other features: site tokens, hairline borders, radius 0.
    ok, warn and bad are the only colours that are not neutral. */
 .raid {
-  --ok: var(--success);
-  --bad: var(--error);
-  --warn: var(--warning);
-  --on-accent: #111;
-  width: 100%;
-  box-sizing: border-box;
-  padding: 24px;
-  margin: 40px 0 48px;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  color: var(--fg);
-  font-family: var(--font-sans);
-  font-size: 15px;
-  line-height: 1.45;
-}
-.raid *,
-.raid *::before,
-.raid *::after {
-  box-sizing: border-box;
-}
-
-.head {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px 24px;
-  align-items: flex-end;
-  justify-content: space-between;
-  margin-bottom: 16px;
-}
-.title {
-  margin: 0;
-  font-size: 24px;
-  font-weight: 600;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  color: var(--fg);
-}
-.intro {
-  margin: 6px 0 0;
-  max-width: 62ch;
-  color: var(--muted);
-  text-wrap: pretty;
-}
-.goal {
-  margin: 8px 0 0;
-  color: var(--body);
-}
-.goal-label {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--accent-text);
-  margin-right: 8px;
-}
-
-button {
-  font: 600 14px var(--font-sans);
-  color: var(--fg);
-  background: transparent;
-  border: 1.5px solid var(--fg);
-  border-radius: 0;
-  padding: 7px 12px;
-  cursor: pointer;
-}
-button:hover:not(:disabled, [aria-disabled="true"]) {
-  background: var(--fg);
-  color: var(--bg);
-}
-/* aria-disabled looks the same but keeps focus, so the fail button can be
-   pressed again with space after a roll or a rebuild */
-button:disabled,
-button[aria-disabled="true"] {
-  opacity: 0.45;
-  cursor: not-allowed;
-}
-button:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-button.primary,
-button.on {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--on-accent);
-}
-button.primary:hover:not(:disabled, [aria-disabled="true"]),
-button.on:hover:not(:disabled) {
-  filter: brightness(1.12);
-  background: var(--accent);
-  color: var(--on-accent);
-}
-button.on:disabled {
-  opacity: 1;
-}
-
-/* ----- layout bar ----- */
-.parts {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  align-items: center;
-  margin-bottom: 12px;
-  padding: 10px 12px;
-  border: 1px solid var(--border);
-  background: var(--card);
-}
-.parts-label,
-.hint {
-  color: var(--muted);
-  font-size: 14px;
 }
 
 /* ----- stage + side ----- */
-.grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 300px;
-  gap: 16px;
-}
 .stage {
-  position: relative;
   min-height: 520px;
-  max-width: none;
-  margin: 0;
-  background: var(--card);
-  border: 1px solid var(--border);
-  overflow: hidden;
-  background-image:
-    linear-gradient(var(--border) 1px, transparent 1px),
-    linear-gradient(90deg, var(--border) 1px, transparent 1px);
-  background-size: 56px 56px;
-  background-position: -1px -1px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -696,79 +565,6 @@ button.on:disabled {
   border: 2px solid var(--bad);
 }
 
-/* ----- array lost ----- */
-.result {
-  position: absolute;
-  inset: auto 14px 14px 14px;
-  z-index: 3;
-  background: var(--bg);
-  border: 2px solid var(--bad);
-  padding: 16px 18px;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 12px 24px;
-}
-.result-title {
-  font-size: 18px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  color: var(--bad);
-}
-.result-note {
-  display: block;
-  margin-top: 4px;
-  font-size: 15px;
-  font-weight: 400;
-  color: var(--muted);
-}
-
-.side {
-  display: grid;
-  gap: 16px;
-  align-content: start;
-}
-.card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  padding: 14px 16px;
-}
-.num {
-  font-family: var(--font-mono);
-  font-size: 44px;
-  font-weight: 600;
-  line-height: 1;
-  font-variant-numeric: tabular-nums;
-}
-.num.ok {
-  color: var(--ok);
-}
-.num.warn {
-  color: var(--warn);
-}
-.num.bad {
-  color: var(--bad);
-}
-.big div:last-child {
-  color: var(--muted);
-  font-size: 14px;
-  margin-top: 4px;
-}
-dl {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 6px 12px;
-  margin: 0;
-}
-dt {
-  color: var(--muted);
-}
-dd {
-  margin: 0;
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
-  font-family: var(--font-mono);
-}
 .card .keys {
   margin: 0;
 }
@@ -778,34 +574,16 @@ kbd {
   padding: 1px 5px;
   border: 1px solid var(--border-strong);
 }
+.result {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
 .runs {
-  margin-top: 8px;
-}
-.card h4 {
-  font: 600 15px var(--font-sans);
-  margin: 0;
-  color: var(--fg);
-}
-.card small {
-  color: var(--muted);
-  display: block;
   margin-top: 8px;
 }
 
 @media (max-width: 860px) {
-  .raid {
-    padding: 16px;
-  }
-  .grid {
-    grid-template-columns: 1fr;
-  }
   .groups.pairs {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  .result {
-    position: static;
-    grid-template-columns: 1fr;
-    width: 100%;
   }
 }
 @media (max-width: 520px) {
