@@ -8,7 +8,6 @@
 // this file adds the canvas (request paths, effects) and the controls.
 import { onMounted, onUnmounted, ref, shallowReactive } from "vue";
 import SimFrame from "@/features/ui/SimFrame.vue";
-import SimBar from "@/features/ui/SimBar.vue";
 import SimSide from "@/features/ui/SimSide.vue";
 import SimCard from "@/features/ui/SimCard.vue";
 import SimStat from "@/features/ui/SimStat.vue";
@@ -38,6 +37,8 @@ const stage = ref<HTMLElement | null>(null);
 const canvas = ref<HTMLCanvasElement | null>(null);
 const usersBox = ref<HTMLElement | null>(null);
 const lbCard = ref<HTMLElement | null>(null);
+// the slot the balancer goes in, drawn as the track even while empty
+const lbZone = ref<HTMLElement | null>(null);
 const serverEls = new Map<string, HTMLElement>();
 
 function setServerEl(name: string, el: Element | null | unknown): void {
@@ -190,6 +191,7 @@ let H = 0;
 let stageRect: Rect = { left: 0, top: 0, width: 0, height: 0 };
 let source: Point = { x: 0, y: 0 };
 let lbBox: Box | null = null;
+let zoneBox: Box | null = null;
 const serverBoxes = new Map<string, Box>();
 let raf = 0;
 let last = 0;
@@ -243,6 +245,7 @@ function layout(): void {
   serverBoxes.clear();
   for (const [name, el] of serverEls) serverBoxes.set(name, rel(el));
   lbBox = lbCard.value ? rel(lbCard.value) : null;
+  zoneBox = lbZone.value ? rel(lbZone.value) : null;
 }
 
 // start and end of a request's path on the canvas
@@ -300,6 +303,27 @@ function draw(): void {
   if (!ctx) return;
   ctx.clearRect(0, 0, W, H);
   ctx.lineCap = "round";
+  // the track: users down to the balancer slot, then on to the servers.
+  // faint, so the requests riding it stand out
+  ctx.lineWidth = 1.5;
+  ctx.strokeStyle = colors.muted;
+  ctx.globalAlpha = 0.35;
+  const hub = lbBox ?? zoneBox;
+  ctx.beginPath();
+  if (hub) {
+    ctx.moveTo(source.x, source.y);
+    ctx.lineTo(hub.x, hub.top);
+  }
+  if (!lbBox) {
+    const from = hub ? { x: hub.x, y: hub.bottom } : source;
+    const first = sim.servers[0] && serverBoxes.get(sim.servers[0].name);
+    if (first) {
+      ctx.moveTo(from.x, from.y);
+      ctx.lineTo(first.x, first.top);
+    }
+  }
+  ctx.stroke();
+  ctx.globalAlpha = 1;
   if (lbBox) {
     ctx.lineWidth = 2;
     for (const s of sim.servers) {
@@ -398,28 +422,10 @@ onUnmounted(() => {
     ref="root"
     class="pul"
     :title="title"
-    :intro="intro"
-    :goal="goal.text"
+    :subtitle="goal.text"
     :done="sim.done"
     @restart="restart"
   >
-    <SimBar v-if="level === 2" label="Parts" :hint="hint()">
-      <button
-        type="button"
-        :disabled="sim.lb || sim.done"
-        @click="sim.installLB()"
-      >
-        Add a load balancer
-      </button>
-      <button
-        type="button"
-        :disabled="!sim.canAddServer"
-        @click="sim.addServer()"
-      >
-        Add a server
-      </button>
-    </SimBar>
-
     <div class="sim-grid">
       <section
         ref="stage"
@@ -429,37 +435,36 @@ onUnmounted(() => {
       >
         <canvas ref="canvas"></canvas>
 
-        <div ref="usersBox" class="users">
-          <div class="row">
-            <span class="tag">
-              <svg
-                class="cloud"
-                viewBox="0 0 24 16"
-                width="24"
-                height="16"
-                aria-hidden="true"
-              >
-                <path
-                  fill="currentColor"
-                  d="M6 15a4.5 4.5 0 0 1-.6-8.96A6 6 0 0 1 17 5.5a4.75 4.75 0 0 1 1.5 9.5Z"
-                />
-              </svg>
-              Users
-            </span>
+        <div v-if="level === 2" class="parts">
+          <span class="sim-label">Parts</span>
+          <div class="parts-btns">
             <button
               type="button"
-              :class="{ live: sim.traffic }"
-              :disabled="sim.done"
-              @click="toggleTraffic"
+              :disabled="sim.lb || sim.done"
+              @click="sim.installLB()"
             >
-              {{ sim.traffic ? "Stop traffic" : "Start traffic" }}
+              Add a load balancer
+            </button>
+            <button
+              type="button"
+              :disabled="!sim.canAddServer"
+              @click="sim.addServer()"
+            >
+              Add a server
             </button>
           </div>
-          <label>
+        </div>
+
+        <div ref="usersBox" class="users">
+          <div class="users-head">
+            <span class="mono">users</span>
+            <span class="state">
+              <i class="sim-dot" :class="sim.traffic ? 'live' : 'off'"></i>
+              {{ sim.traffic ? "Live" : "Idle" }}
+            </span>
+          </div>
+          <label class="rate">
             <span>Rate</span>
-            <span
-              ><b>{{ rate }}</b> requests/s</span
-            >
             <input
               v-model.number="rate"
               type="range"
@@ -468,15 +473,30 @@ onUnmounted(() => {
               :disabled="sim.done"
               @input="onRate"
             />
+            <span class="mono"
+              ><b>{{ rate }}</b> req/s</span
+            >
           </label>
+          <button
+            type="button"
+            class="primary wide"
+            :class="{ live: sim.traffic }"
+            :disabled="sim.done"
+            @click="toggleTraffic"
+          >
+            {{ sim.traffic ? "Stop traffic" : "Start traffic" }}
+          </button>
         </div>
 
-        <div v-if="level === 2" class="lbzone">
-          <div v-if="!sim.lb" class="drop">No load balancer</div>
+        <div v-if="level === 2" ref="lbZone" class="lbzone">
+          <div v-if="!sim.lb" class="drop">
+            no load balancer — traffic goes straight to
+            {{ sim.servers[0]?.name }}
+          </div>
           <div v-else ref="lbCard" class="lb">
-            <div class="row">
-              <span class="name">lb-01</span>
-              <small>Round robin, health check every {{ HEALTH_SECS }} s</small>
+            <div class="users-head">
+              <span class="mono">lb-01</span>
+              <small>round robin, health check every {{ HEALTH_SECS }} s</small>
             </div>
             <div class="pool">
               <span
@@ -498,12 +518,21 @@ onUnmounted(() => {
             class="server"
             :class="{ offline: !v.server.online, out: v.out || v.idle }"
           >
-            <div class="row">
-              <div>
-                <span class="name">{{ v.server.name }}</span>
-                <span class="ver">v1.0.{{ v.server.patch }}</span>
-              </div>
-              <span class="pill">{{ v.status }}</span>
+            <div class="server-head">
+              <span class="mono name">{{ v.server.name }}</span>
+            </div>
+            <div class="server-row">
+              <span class="state">
+                <i
+                  class="sim-dot"
+                  :class="{
+                    bad: !v.server.online,
+                    off: v.server.online && (v.out || v.idle),
+                  }"
+                ></i>
+                {{ v.status }}
+              </span>
+              <span class="mono ver">v1.0.{{ v.server.patch }}</span>
             </div>
             <div class="slots" aria-hidden="true">
               <i
@@ -513,45 +542,47 @@ onUnmounted(() => {
                 :class="{ busy: v.server.online && j <= v.server.jobs.length }"
               ></i>
             </div>
-            <div class="cap">Served {{ v.server.served.toLocaleString() }}</div>
-            <div class="btns">
+            <div class="bar"><i :style="{ width: v.patchPct + '%' }"></i></div>
+            <div class="mono cap">
+              served {{ v.server.served.toLocaleString() }}
+            </div>
+            <button
+              type="button"
+              class="wide"
+              :disabled="!v.server.online || sim.done || sim.upToDate(v.server)"
+              @click="sim.startPatch(v.server)"
+            >
+              {{ v.patchLabel }}
+            </button>
+            <div v-if="level === 2" class="btn-row">
+              <button
+                v-if="sim.lb"
+                type="button"
+                class="wide"
+                :disabled="sim.done"
+                @click="sim.toggleDrain(v.server)"
+              >
+                {{ v.server.inPool ? "Drain" : "Return" }}
+              </button>
               <button
                 type="button"
-                class="primary"
-                :disabled="
-                  !v.server.online || sim.done || sim.upToDate(v.server)
-                "
-                @click="sim.startPatch(v.server)"
+                class="quiet wide"
+                :disabled="!sim.canRemoveServer(v.server)"
+                @click="sim.removeServer(v.server)"
               >
-                {{ v.patchLabel }}
+                Remove
               </button>
-              <div v-if="level === 2" class="btn-row">
-                <button
-                  v-if="sim.lb"
-                  type="button"
-                  :disabled="sim.done"
-                  @click="sim.toggleDrain(v.server)"
-                >
-                  {{ v.server.inPool ? "Drain" : "Return" }}
-                </button>
-                <button
-                  type="button"
-                  :disabled="!sim.canRemoveServer(v.server)"
-                  @click="sim.removeServer(v.server)"
-                >
-                  Remove
-                </button>
-              </div>
             </div>
-            <div class="bar"><i :style="{ width: v.patchPct + '%' }"></i></div>
           </div>
         </div>
+
+        <p class="sim-note">{{ hint() }}</p>
 
         <SimResult
           v-if="sim.done"
           :title="resultTitle()"
           :note="resultNote()"
-          :tone="sim.quiet || sim.clean ? undefined : 'bad'"
+          :tone="sim.quiet ? undefined : sim.clean ? 'ok' : 'bad'"
           :stack="!sim.quiet && !sim.clean"
         >
           <dl v-if="!sim.quiet">
@@ -570,28 +601,23 @@ onUnmounted(() => {
       </section>
 
       <SimSide>
-        <SimStat
-          :value="sim.dropped.toLocaleString()"
-          label="requests dropped"
-        />
-        <SimCard>
+        <SimStat :value="sim.dropped.toLocaleString()" label="requests dropped">
           <dl>
             <dt>Clock</dt>
             <dd>{{ fmtClock(sim.t) }}</dd>
-            <dt>Service downtime</dt>
-            <dd>{{ sim.downtime.toFixed(1) }} s</dd>
             <dt>Handled</dt>
             <dd>{{ sim.handled.toLocaleString() }}</dd>
             <dt>Availability</dt>
             <dd>{{ availability() }}</dd>
+            <dt>Downtime</dt>
+            <dd :class="{ bad: sim.downtime > 0 }">
+              {{ sim.downtime.toFixed(1) }} s
+            </dd>
             <dt>Patched</dt>
             <dd>{{ sim.patchedCount }} / {{ goal.servers }}</dd>
           </dl>
-        </SimCard>
-        <SimCard
-          title="Last 60 seconds"
-          note="Green served everything, red dropped requests, hatched had nothing able to serve."
-        >
+        </SimStat>
+        <SimCard title="Last 60 s" note="Hatched: nothing could serve.">
           <SimStrip :cells="strip()" />
         </SimCard>
         <SimCard title="Event log">
@@ -603,108 +629,128 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
-/* the site tokens: card surfaces, hairline borders, radius 0. ok, bad and
-   request are the only colours that are not neutral. */
+/* requests ride the track in amber. everything else is the shared theme */
 .pul {
   --request: var(--warning);
 }
 
-/* ----- stage + side ----- */
 .stage {
-  min-height: clamp(540px, 72vh, 700px);
+  min-height: clamp(560px, 74vh, 760px);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
-  gap: 56px;
-  padding: 14px;
+  gap: 40px;
+  padding: 24px 28px 28px;
 }
-
-.users {
-  background: var(--fg);
-  color: var(--bg);
-  padding: 10px 14px 12px;
-  width: min(300px, 84vw);
-  display: grid;
-  gap: 8px;
+.mono {
+  font-family: var(--font-mono);
 }
-.row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-}
-.tag {
-  font-weight: 600;
+.state {
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  color: var(--body);
 }
-.cloud {
-  opacity: 0.8;
+.sim-dot.live {
+  background: var(--request);
 }
-.users button {
-  border-color: var(--bg);
-  color: var(--bg);
+
+/* ----- parts, top right of the stage ----- */
+.parts {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: -8px;
 }
-.users button:hover:not(:disabled) {
+.parts-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* ----- the users box ----- */
+.users {
+  width: min(440px, 100%);
   background: var(--bg);
-  color: var(--fg);
+  border: 1px solid var(--border-strong);
+  clip-path: var(--sim-corner);
+  padding: 16px 18px 18px;
+  display: grid;
+  gap: 12px;
 }
-.users button.live,
-.users button.live:hover {
+.users-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.users-head .mono {
+  font-size: 16px;
+  font-weight: 600;
+}
+.users-head small {
+  color: var(--muted);
+  font-size: 13px;
+}
+.rate {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 14px;
+  color: var(--body);
+}
+.rate input[type="range"] {
+  width: 100%;
+  accent-color: var(--fg);
+  margin: 0;
+}
+.rate b {
+  color: var(--fg);
+  font-weight: 600;
+}
+button.wide {
+  width: 100%;
+  justify-content: center;
+}
+.users .live,
+.users .live:hover {
   background: var(--request);
   border-color: var(--request);
   color: #111;
 }
-.users label {
-  font-size: 13px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 4px;
-}
-.users input[type="range"] {
-  width: 100%;
-  accent-color: var(--request);
-  margin: 0;
-}
 
+/* ----- the balancer slot ----- */
 .lbzone {
-  width: min(360px, 94%);
+  width: min(440px, 100%);
 }
 .drop {
-  border: 2px dashed var(--muted);
+  border: 1px dashed var(--border-strong);
+  clip-path: var(--sim-corner);
   padding: 18px;
   text-align: center;
   color: var(--muted);
 }
 .lb {
   background: var(--bg);
-  border: 2px solid var(--accent);
-  padding: 10px 14px;
-}
-.lb .row {
-  align-items: baseline;
-  gap: 8px;
-}
-.lb small {
-  color: var(--muted);
-}
-.name {
-  font-weight: 600;
+  border: 1px solid var(--fg);
+  clip-path: var(--sim-corner);
+  padding: 14px 18px;
 }
 .pool {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin-top: 8px;
+  margin-top: 10px;
 }
 .pool span {
+  font-family: var(--font-mono);
   font-size: 12px;
-  font-weight: 600;
-  padding: 2px 8px;
-  border: 1.5px solid var(--ok);
+  padding: 3px 9px;
+  border: 1px solid var(--ok);
+  clip-path: var(--sim-corner);
   color: var(--ok);
 }
 .pool span.out {
@@ -717,80 +763,66 @@ onUnmounted(() => {
   color: var(--bad);
 }
 
+/* ----- servers share one row: up to four cards, 170 to 250 wide ----- */
 .servers {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 12px;
   justify-content: center;
   width: 100%;
 }
-/* share the row: up to four cards, each between 150 and 230 wide */
 .server {
-  flex: 1 1 150px;
-  max-width: 230px;
+  flex: 1 1 170px;
+  max-width: 250px;
   min-width: 0;
   background: var(--bg);
-  border: 2px solid var(--ok);
-  padding: 8px 10px;
-}
-.server button {
-  padding: 6px 8px;
-  font-size: 13px;
+  border: 1px solid var(--ok);
+  clip-path: var(--sim-corner);
+  padding: 12px 14px 14px;
+  display: grid;
+  gap: 8px;
 }
 .server.offline {
   border-color: var(--bad);
   border-style: dashed;
 }
 .server.out:not(.offline) {
-  border-color: var(--muted);
+  border-color: var(--border-strong);
 }
-.server .row {
-  gap: 6px;
-  flex-wrap: wrap;
+.server-head .name {
+  font-size: 15px;
+  font-weight: 600;
+}
+.server-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
 }
 .ver {
   color: var(--muted);
-  font-weight: 500;
-  margin-left: 6px;
-  font-size: 14px;
-  font-family: var(--font-mono);
-}
-.pill {
-  font-size: 12px;
-  font-weight: 600;
-  padding: 2px 8px;
-  background: var(--ok);
-  color: var(--bg);
-}
-.offline .pill {
-  background: var(--bad);
-}
-.out:not(.offline) .pill {
-  background: var(--muted);
+  font-size: 13px;
 }
 .slots {
   display: flex;
-  gap: 5px;
-  margin: 8px 0 2px;
+  gap: 6px;
 }
 .slot {
-  width: 15px;
-  height: 15px;
-  border: 1.5px solid var(--border-strong);
+  flex: 1;
+  height: 6px;
+  clip-path: var(--sim-corner);
+  background: var(--border);
 }
 .slot.busy {
   background: var(--ok);
-  border-color: var(--ok);
 }
 .cap {
   font-size: 12px;
   color: var(--muted);
-  margin-bottom: 8px;
-  font-family: var(--font-mono);
 }
-.btns {
-  display: grid;
-  gap: 6px;
+.server button {
+  padding: 7px 10px;
+  font-size: 13px;
 }
 .btn-row {
   display: grid;
@@ -799,9 +831,9 @@ onUnmounted(() => {
   gap: 6px;
 }
 .bar {
-  height: 5px;
+  height: 4px;
   background: var(--border);
-  margin-top: 8px;
+  clip-path: var(--sim-corner);
   overflow: hidden;
   visibility: hidden;
 }
@@ -812,5 +844,17 @@ onUnmounted(() => {
   display: block;
   height: 100%;
   background: var(--bad);
+}
+
+.stage .sim-note {
+  width: 100%;
+  margin-top: auto;
+}
+
+@media (max-width: 860px) {
+  .stage {
+    padding: 18px;
+    gap: 28px;
+  }
 }
 </style>

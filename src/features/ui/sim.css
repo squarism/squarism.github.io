@@ -1,148 +1,346 @@
-/* the chrome every sim shares, loaded once by SimFrame. everything is under
-   .sim so nothing leaks into the article. a sim adds its own colours on top
-   (--request, --read, --warn) and keeps its own scoped rules for the content
-   of the stage. */
+/* the chrome every sim shares, loaded once by SimFrame.
+
+   a sim has its own look, apart from the article around it: charcoal
+   surfaces, rounded cards, mono labels in small caps, green/amber/red for
+   state and nothing else coloured. it redefines the site tokens under .sim,
+   so a sim's own scoped rules (var(--bg), var(--card), ...) pick the theme
+   up without changes. dark by default; light when the site is light, which
+   the site sets as data-theme on :root from the OS or its own toggle. */
 .sim {
+  --bg: #141414;
+  --surface: #181818;
+  --card: #1c1c1c;
+  --border: #2b2b2b;
+  --border-strong: #3a3a3a;
+  --fg: #ececec;
+  --body: #d2d2d2;
+  --muted: #9a9a9a;
+  --faint: #4a4a4a;
+  --accent: #ececec;
+  --accent-text: #ececec;
+  --on-accent: #141414;
+  --success: #3ec97a;
+  --warning: #e0a526;
+  --error: #e5484d;
+  --gold: #d9b25f;
   --ok: var(--success);
-  --bad: var(--error);
   --warn: var(--warning);
-  --on-accent: #111;
+  --bad: var(--error);
+  --ok-dim: rgba(62, 201, 122, 0.14);
+  --warn-dim: rgba(224, 165, 38, 0.16);
+  --bad-dim: rgba(229, 72, 77, 0.16);
+  /* corners: the BeOS way. not a radius, the corner pixel is cut off, so
+     the border stops one pixel short of each corner and the box has a one
+     pixel notch. one token, used on every box; the dots are the only round
+     things. a clipped box cannot have a shadow or anything hanging outside */
+  --sim-corner: polygon(
+    1px 0,
+    calc(100% - 1px) 0,
+    100% 1px,
+    100% calc(100% - 1px),
+    calc(100% - 1px) 100%,
+    1px 100%,
+    0 calc(100% - 1px),
+    0 1px
+  );
   --sim-side: 300px;
+  color-scheme: dark;
+
   width: 100%;
   box-sizing: border-box;
-  padding: 24px;
+  padding: 20px 20px 24px;
   margin: 40px 0 48px;
   background: var(--bg);
   border: 1px solid var(--border);
+  clip-path: var(--sim-corner);
   color: var(--fg);
   font-family: var(--font-sans);
   font-size: 15px;
   line-height: 1.45;
+}
+:root[data-theme="light"] .sim {
+  --bg: #f4f4f4;
+  --surface: #ededed;
+  --card: #ffffff;
+  --border: #dadada;
+  --border-strong: #c4c4c4;
+  --fg: #161616;
+  --body: #333333;
+  --muted: #6e6e6e;
+  --faint: #bdbdbd;
+  --accent: #161616;
+  --accent-text: #161616;
+  --on-accent: #ffffff;
+  --success: #1f9d5a;
+  --warning: #b97b07;
+  --error: #d6383d;
+  --gold: #9c7a21;
+  --ok-dim: rgba(31, 157, 90, 0.12);
+  --warn-dim: rgba(185, 123, 7, 0.14);
+  --bad-dim: rgba(214, 56, 61, 0.12);
+  color-scheme: light;
 }
 .sim *,
 .sim *::before,
 .sim *::after {
   box-sizing: border-box;
 }
+/* the article lets wide code blocks grow past the text column and centres
+   them with a transform. a pre in a sim is a label, not a code block, so
+   undo that. both classes, to outrank the article's rule */
+.sim.feature-wide pre {
+  width: auto;
+  min-width: 0;
+  max-width: none;
+  position: static;
+  left: auto;
+  transform: none;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
 
-/* ----- header: title, intro, goal, restart ----- */
+/* ----- small type: mono labels, keycaps, dots ----- */
+.sim-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.sim-kbd {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1;
+  padding: 4px 7px;
+  border: 1px solid var(--border-strong);
+  clip-path: var(--sim-corner);
+  color: var(--muted);
+  background: transparent;
+  vertical-align: middle;
+}
+.sim-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ok);
+  flex: none;
+}
+.sim-dot.warn {
+  background: var(--warn);
+}
+.sim-dot.bad {
+  background: var(--bad);
+}
+.sim-dot.off {
+  background: var(--faint);
+}
+
+/* the state pill: HEALTHY, DEGRADED, LOST */
+.sim-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  clip-path: var(--sim-corner);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ok);
+  background: var(--ok-dim);
+}
+.sim-pill.warn {
+  color: var(--warn);
+  background: var(--warn-dim);
+}
+.sim-pill.bad {
+  color: var(--bad);
+  background: var(--bad-dim);
+}
+
+/* ----- header: title, the question, intro and goal, then restart ----- */
 .sim-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px 24px;
+  align-items: start;
+  margin-bottom: 20px;
+}
+.sim-head-text {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px 24px;
-  align-items: flex-end;
-  justify-content: space-between;
-  margin-bottom: 16px;
+  align-items: baseline;
+  gap: 4px 24px;
+  min-width: 0;
 }
 .sim-title {
   margin: 0;
-  font-size: 24px;
-  font-weight: 600;
+  font-size: 26px;
+  font-weight: 700;
   line-height: 1.1;
   letter-spacing: -0.02em;
   color: var(--fg);
 }
-.sim-intro {
-  margin: 6px 0 0;
-  max-width: 62ch;
+.sim-subtitle {
+  margin: 0;
+  font-size: 17px;
   color: var(--muted);
-  text-wrap: pretty;
 }
-.sim-goal {
-  margin: 8px 0 0;
-  max-width: 62ch;
+.sim-intro {
+  flex-basis: 100%;
+  margin: 6px 0 0;
+  max-width: 70ch;
   color: var(--body);
   text-wrap: pretty;
 }
+/* the goal label is the one gold thing in a sim */
 .sim-goal-label {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--accent-text);
-  margin-right: 8px;
+  color: var(--gold);
+}
+.sim-head-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex: none;
 }
 
 /* ----- buttons ----- */
 .sim button {
-  font: 600 14px var(--font-sans);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font: 600 15px var(--font-sans);
   color: var(--fg);
   background: transparent;
-  border: 1.5px solid var(--fg);
-  border-radius: 0;
-  padding: 7px 12px;
+  border: 1px solid var(--border-strong);
+  clip-path: var(--sim-corner);
+  padding: 10px 16px;
   cursor: pointer;
+  transition:
+    background 0.12s,
+    border-color 0.12s,
+    color 0.12s;
 }
 .sim button:hover:not(:disabled, [aria-disabled="true"]) {
-  background: var(--fg);
-  color: var(--bg);
+  background: var(--card);
+  border-color: var(--fg);
 }
 /* aria-disabled looks the same but keeps focus, for a button that is pressed
    over and over */
 .sim button:disabled,
 .sim button[aria-disabled="true"] {
-  opacity: 0.45;
+  opacity: 0.4;
   cursor: not-allowed;
 }
 .sim button:focus-visible,
 .sim input:focus-visible,
 .sim select:focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--fg);
   outline-offset: 2px;
 }
-.sim button.primary,
-.sim button.on {
+.sim button.primary {
   background: var(--accent);
   border-color: var(--accent);
   color: var(--on-accent);
 }
-.sim button.primary:hover:not(:disabled, [aria-disabled="true"]),
-.sim button.on:hover:not(:disabled, [aria-disabled="true"]) {
-  filter: brightness(1.12);
+.sim button.primary:hover:not(:disabled, [aria-disabled="true"]) {
   background: var(--accent);
+  border-color: var(--accent);
   color: var(--on-accent);
+  filter: brightness(0.92);
 }
-.sim button.on:disabled {
+/* a button that is there but should not draw the eye: remove, cancel */
+.sim button.quiet {
+  border-color: transparent;
+  color: var(--muted);
+}
+.sim button.quiet:hover:not(:disabled, [aria-disabled="true"]) {
+  background: transparent;
+  border-color: transparent;
+  color: var(--fg);
+}
+.sim button .sim-kbd {
+  color: inherit;
+  border-color: currentColor;
+  opacity: 0.6;
+}
+
+/* joined buttons that pick one of a few: a segmented control */
+.sim-seg {
+  display: inline-flex;
+  border: 1px solid var(--border-strong);
+  clip-path: var(--sim-corner);
+  overflow: hidden;
+}
+.sim-seg button {
+  border: 0;
+  border-radius: 0;
+  padding: 10px 18px;
+  color: var(--muted);
+  font-weight: 600;
+}
+.sim-seg button + button {
+  border-left: 1px solid var(--border-strong);
+}
+.sim-seg button:hover:not(:disabled, [aria-disabled="true"]) {
+  background: var(--card);
+  color: var(--fg);
+}
+.sim-seg button.on,
+.sim-seg button.on:disabled {
+  background: var(--card);
+  color: var(--fg);
   opacity: 1;
 }
 
-/* ----- controls bar above the stage ----- */
+/* ----- controls row above the stage ----- */
 .sim-bar {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 12px 24px;
   align-items: center;
-  margin-bottom: 12px;
-  padding: 10px 12px;
-  border: 1px solid var(--border);
-  background: var(--card);
+  margin-bottom: 20px;
 }
-.sim-bar-label,
 .sim-hint {
   color: var(--muted);
-  font-size: 14px;
+  font-size: 15px;
+}
+
+/* a line of guidance with a bar on the left */
+.sim-note {
+  margin: 0;
+  padding-left: 14px;
+  border-left: 3px solid var(--border-strong);
+  color: var(--body);
+  font-size: 15px;
+  line-height: 1.45;
+  text-wrap: pretty;
 }
 
 /* ----- stage and side ----- */
 .sim-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) var(--sim-side);
-  gap: 16px;
+  gap: 20px;
 }
-/* the grid paper. a sim lays its own things out inside with its own rules.
-   the canvas, when there is one, fills it under everything else */
+/* the stage is a card. a sim lays its own things out inside with its own
+   rules. the canvas, when there is one, fills it under everything else */
 .sim-stage {
   position: relative;
   max-width: none;
   margin: 0;
   background: var(--card);
   border: 1px solid var(--border);
+  clip-path: var(--sim-corner);
   overflow: hidden;
-  background-image:
-    linear-gradient(var(--border) 1px, transparent 1px),
-    linear-gradient(90deg, var(--border) 1px, transparent 1px);
-  background-size: 56px 56px;
-  background-position: -1px -1px;
 }
 .sim-stage > canvas {
   position: absolute;
@@ -157,11 +355,11 @@
   z-index: 2;
 }
 .sim.done .sim-stage {
-  border-color: var(--fg);
+  border-color: var(--border-strong);
 }
 .sim-side {
   display: grid;
-  gap: 16px;
+  gap: 20px;
   align-content: start;
 }
 
@@ -169,32 +367,43 @@
 .sim-card {
   background: var(--card);
   border: 1px solid var(--border);
-  padding: 14px 16px;
+  clip-path: var(--sim-corner);
+  padding: 20px 22px;
 }
-.sim-card h4 {
-  font: 600 15px var(--font-sans);
-  margin: 0;
-  color: var(--fg);
+.sim-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.sim-card-meta {
+  font-size: 14px;
+  color: var(--muted);
 }
 .sim-card small {
   color: var(--muted);
   display: block;
-  margin-top: 8px;
+  margin-top: 14px;
+  font-size: 15px;
+  line-height: 1.45;
 }
 .sim-card dl {
   display: grid;
   grid-template-columns: 1fr auto;
-  gap: 6px 12px;
+  gap: 10px 16px;
   margin: 0;
+  align-items: baseline;
 }
 .sim dt {
-  color: var(--muted);
+  color: var(--body);
 }
 .sim dd {
   margin: 0;
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
   font-family: var(--font-mono);
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
 }
 .sim dd.bad {
   color: var(--bad);
@@ -203,25 +412,32 @@
   color: var(--warn);
 }
 
-/* the one big number */
+/* the one big number, and the stats under it */
 .sim-stat-num {
   font-family: var(--font-mono);
-  font-size: 44px;
-  font-weight: 600;
+  font-size: 54px;
+  font-weight: 500;
   line-height: 1;
+  letter-spacing: -0.03em;
   font-variant-numeric: tabular-nums;
-  color: var(--bad);
+  color: var(--fg);
 }
 .sim-stat-num.ok {
-  color: var(--ok);
+  color: var(--fg);
 }
 .sim-stat-num.warn {
   color: var(--warn);
 }
+.sim-stat-num.bad {
+  color: var(--bad);
+}
 .sim-stat-label {
   color: var(--muted);
-  font-size: 14px;
-  margin-top: 4px;
+  font-size: 15px;
+  margin-top: 8px;
+}
+.sim-stat-body {
+  margin-top: 22px;
 }
 
 /* ----- last 60 seconds ----- */
@@ -230,7 +446,9 @@
   grid-template-columns: repeat(60, 1fr);
   gap: 1px;
   height: 28px;
-  margin-top: 8px;
+  margin-top: 4px;
+  clip-path: var(--sim-corner);
+  overflow: hidden;
 }
 .sim-strip i {
   background: var(--border);
@@ -255,17 +473,17 @@
 /* ----- event log ----- */
 .sim-log {
   list-style: none;
-  margin: 8px 0 0;
+  margin: 4px 0 0;
   padding: 0;
   max-height: 240px;
   overflow: auto;
   font-size: 13px;
 }
 .sim-log li {
-  padding: 4px 0;
+  padding: 5px 0;
   border-top: 1px solid var(--border);
   display: flex;
-  gap: 8px;
+  gap: 10px;
 }
 .sim-log li span {
   color: var(--muted);
@@ -283,11 +501,12 @@
 /* ----- the panel when the goal is reached, or lost ----- */
 .sim-result {
   position: absolute;
-  inset: auto 14px 14px 14px;
+  inset: auto 16px 16px 16px;
   z-index: 3;
   background: var(--bg);
-  border: 2px solid var(--fg);
-  padding: 16px 18px;
+  border: 1px solid var(--border-strong);
+  clip-path: var(--sim-corner);
+  padding: 18px 20px;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
@@ -306,6 +525,9 @@
   font-weight: 400;
   color: var(--muted);
   white-space: normal;
+}
+.sim-result.ok {
+  border-color: var(--ok);
 }
 .sim-result.bad {
   border-color: var(--bad);
@@ -334,6 +556,9 @@
 @media (max-width: 860px) {
   .sim {
     padding: 16px;
+  }
+  .sim-head {
+    grid-template-columns: 1fr;
   }
   .sim-grid {
     grid-template-columns: 1fr;

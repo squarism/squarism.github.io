@@ -46,7 +46,6 @@ interface DiskView {
 
 interface GroupView {
   name: string;
-  status: string;
   cls: string;
   disks: DiskView[];
 }
@@ -63,19 +62,9 @@ function groups(): GroupView[] {
   return info.groups.map((disks, g) => {
     const up = groupUp(sim.layout, g, failed);
     const hit = disks.some(d => failed.has(d));
-    let status = "OK";
-    let cls = "";
-    if (!up) {
-      status = info.inner === "mirror" ? "Lost" : "Offline";
-      cls = "down";
-    } else if (hit) {
-      status = "Degraded";
-      cls = "degraded";
-    }
     return {
       name: groupName(sim.layout, g),
-      status,
-      cls,
+      cls: !up ? "down" : hit ? "degraded" : "",
       disks: disks.map(i => {
         const state = diskState(sim.layout, i, failed);
         return {
@@ -90,11 +79,30 @@ function groups(): GroupView[] {
   });
 }
 
-function risk(): string {
-  if (sim.lost) return "bad";
-  if (sim.chance >= 0.5) return "bad";
+function stateLabel(state: DiskState): string {
+  if (state === "ok") return "Serving";
+  if (state === "offline") return "Idle";
+  return "Failed";
+}
+
+function risk(): "ok" | "warn" | "bad" {
+  if (sim.lost || sim.chance >= 0.5) return "bad";
   if (sim.chance >= 0.2) return "warn";
   return "ok";
+}
+
+function statusTone(): "ok" | "warn" | "bad" {
+  if (sim.status === "Lost") return "bad";
+  if (sim.status === "Degraded") return "warn";
+  return "ok";
+}
+
+function hint(): string {
+  if (sim.lost) return "Rebuild, or switch layouts and try the other one.";
+  if (sim.failed.length === 0) {
+    return "Pick a layout, then fail a disk. Watch which disks turn fatal after the first one.";
+  }
+  return `${sim.fatal.length} of ${sim.healthy.length} disks are fatal now. Fail another and see.`;
 }
 
 function resultNote(): string {
@@ -166,21 +174,27 @@ function pick(layout: Layout): void {
   sim.setLayout(layout);
 }
 
-// R rebuilds while the sim is on screen, no click needed. skipped with a
-// modifier (cmd+r still reloads) or while typing in a field
+// space fails a disk and R rebuilds while the sim is on screen, no click
+// needed. skipped with a modifier (cmd+r still reloads) or while typing in
+// a field
 let visible = false;
 let observer: IntersectionObserver | null = null;
 
 function onKey(e: KeyboardEvent): void {
-  if (!visible || e.key.toLowerCase() !== "r") return;
+  if (!visible) return;
   if (e.metaKey || e.ctrlKey || e.altKey || e.shiftKey) return;
   const t = e.target;
   if (
     t instanceof HTMLElement &&
-    (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))
+    (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT|BUTTON)$/.test(t.tagName))
   )
     return;
-  restart();
+  if (e.key === " ") {
+    e.preventDefault();
+    roll();
+  } else if (e.key.toLowerCase() === "r") {
+    restart();
+  }
 }
 
 onMounted(() => {
@@ -202,86 +216,79 @@ onUnmounted(() => {
   <SimFrame
     ref="root"
     class="raid"
-    title="RAID 1+0 vs 0+1 Sim"
-    goal="Pick the layout that survives more failures. Try each a few times and watch the odds."
+    title="RAID 1+0 vs 0+1"
+    subtitle="Which layout survives more failures?"
     :done="sim.lost"
     restart-key="r"
     @restart="restart"
   >
-    <SimBar
-      label="Layout"
-      :hint="
-        sim.canSwitch
-          ? LAYOUTS[sim.layout].summary
-          : 'Locked in until the array is lost or you restart.'
-      "
-    >
-      <button
-        v-for="l in LAYOUT_ORDER"
-        :key="l"
-        type="button"
-        :class="{ on: sim.layout === l }"
-        :disabled="(!sim.canSwitch && sim.layout !== l) || rolling !== null"
-        :aria-pressed="sim.layout === l"
-        @click="pick(l)"
-      >
-        {{ LAYOUTS[l].title }}
-      </button>
+    <SimBar label="Layout" :hint="LAYOUTS[sim.layout].summary">
+      <div class="sim-seg" role="group" aria-label="Layout">
+        <button
+          v-for="l in LAYOUT_ORDER"
+          :key="l"
+          type="button"
+          :class="{ on: sim.layout === l }"
+          :disabled="(!sim.canSwitch && sim.layout !== l) || rolling !== null"
+          :aria-pressed="sim.layout === l"
+          @click="pick(l)"
+        >
+          {{ LAYOUTS[l].title }}
+        </button>
+      </div>
     </SimBar>
 
     <div class="sim-grid">
       <section class="sim-stage stage" aria-label="Simulation">
-        <div class="nas">
-          <div class="nas-head">
-            <span class="name">nas-01</span>
-            <span class="pill" :class="sim.status.toLowerCase()">{{
-              sim.status
-            }}</span>
-          </div>
+        <div class="nas-head">
+          <span class="sim-label">nas-01</span>
+          <span class="sim-pill" :class="statusTone()">
+            <i class="sim-dot" :class="statusTone()"></i>{{ sim.status }}
+          </span>
+        </div>
 
-          <div class="groups" :class="sim.layout === '1+0' ? 'pairs' : 'sets'">
-            <div
-              v-for="g in groups()"
-              :key="g.name"
-              class="group"
-              :class="g.cls"
-            >
-              <div class="group-head">
-                <span>{{ g.name }}</span>
-                <small>{{ g.status }}</small>
-              </div>
-              <div class="disks">
-                <div
-                  v-for="d in g.disks"
-                  :key="d.i"
-                  class="disk"
-                  :class="[
-                    d.state,
-                    {
-                      fatal: d.fatal,
-                      rolling: rolling === d.i,
-                      hit: justFailed === d.i,
-                    },
-                  ]"
-                >
-                  <span class="disk-name">{{ d.name }}</span>
-                  <span class="led" aria-hidden="true"></span>
-                  <span class="disk-state">{{
-                    d.state === "ok"
-                      ? "Serving"
-                      : d.state === "offline"
-                        ? "Idle"
-                        : "Failed"
-                  }}</span>
-                  <span
-                    class="disk-chance"
-                    :title="`chance ${d.name} is next`"
-                    >{{ d.chance }}</span
-                  >
-                </div>
+        <div class="groups" :class="sim.layout === '1+0' ? 'pairs' : 'sets'">
+          <div v-for="g in groups()" :key="g.name" class="group" :class="g.cls">
+            <div class="sim-label group-name">{{ g.name }}</div>
+            <!-- the rail on the left ties the disks of a mirror or a stripe
+                 together. it goes amber when one is hurt and red dashed when
+                 the group is gone -->
+            <div class="disks">
+              <div
+                v-for="d in g.disks"
+                :key="d.i"
+                class="disk"
+                :class="[
+                  d.state,
+                  {
+                    fatal: d.fatal,
+                    rolling: rolling === d.i,
+                    hit: justFailed === d.i,
+                  },
+                ]"
+              >
+                <span class="disk-name">{{ d.name }}</span>
+                <span class="disk-state">
+                  <i
+                    class="sim-dot"
+                    :class="{
+                      bad: d.state === 'failed',
+                      off: d.state === 'offline',
+                    }"
+                  ></i>
+                  {{ stateLabel(d.state) }}
+                </span>
+                <span class="disk-chance" :title="`chance ${d.name} is next`">
+                  {{ d.chance }}
+                </span>
               </div>
             </div>
           </div>
+        </div>
+
+        <div class="legend">
+          <span class="legend-chip" aria-hidden="true">d?</span>
+          A red outline means the array is lost if that disk dies next.
         </div>
 
         <div class="controls">
@@ -289,13 +296,13 @@ onUnmounted(() => {
             type="button"
             class="primary"
             :aria-disabled="sim.lost || rolling !== null"
+            aria-keyshortcuts="Space"
             @click="roll"
           >
             {{ rolling !== null ? "Rolling…" : "Fail a random disk" }}
+            <kbd class="sim-kbd">space</kbd>
           </button>
-          <span class="legend">
-            <i class="key fatal"></i> fails the array if it dies next
-          </span>
+          <p class="sim-note">{{ hint() }}</p>
         </div>
 
         <SimResult
@@ -306,7 +313,7 @@ onUnmounted(() => {
           :note="resultNote()"
         >
           <button type="button" aria-keyshortcuts="r" @click="restart">
-            Rebuild
+            Rebuild <kbd class="sim-kbd">R</kbd>
           </button>
         </SimResult>
       </section>
@@ -316,36 +323,31 @@ onUnmounted(() => {
           :value="sim.lost ? 'Lost' : pct(sim.chance)"
           :tone="risk()"
           label="chance the next failure loses the array"
-        />
-        <SimCard>
+        >
           <dl>
-            <dt>Layout</dt>
-            <dd>{{ LAYOUTS[sim.layout].title }}</dd>
             <dt>Disks failed</dt>
             <dd>{{ sim.failed.length }} / {{ DISKS }}</dd>
-            <dt>Disks serving</dt>
+            <dt>Still serving</dt>
             <dd>{{ sim.serving }}</dd>
             <dt>Fatal next</dt>
-            <dd>{{ sim.fatal.length }} of {{ sim.healthy.length }}</dd>
+            <dd :class="{ bad: sim.fatal.length > 0 }">
+              {{ sim.fatal.length }} of {{ sim.healthy.length }}
+            </dd>
           </dl>
-        </SimCard>
+        </SimStat>
         <SimCard
           title="Your runs"
-          note="Average failures survived before the array was lost. To reset, refresh the page."
+          meta="avg failures survived"
+          note="Run each layout a few times. 0+1 rarely gets past two."
         >
-          <dl class="runs">
+          <dl>
             <template v-for="l in LAYOUT_ORDER" :key="l">
               <dt>{{ LAYOUTS[l].title }}</dt>
               <dd>
-                {{ sim.runCount(l) }}
-                {{ sim.runCount(l) === 1 ? "run" : "runs" }},
-                {{ average(l) }} avg
+                {{ sim.runCount(l) }} <span class="x">×</span> {{ average(l) }}
               </dd>
             </template>
           </dl>
-        </SimCard>
-        <SimCard>
-          <small class="keys">Press <kbd>R</kbd> to rebuild.</small>
         </SimCard>
       </SimSide>
     </div>
@@ -353,60 +355,24 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
-/* same frame as the other features: site tokens, hairline borders, radius 0.
-   ok, warn and bad are the only colours that are not neutral. */
-.raid {
-}
-
-/* ----- stage + side ----- */
 .stage {
-  min-height: 520px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  gap: 32px;
-  padding: 24px 14px;
+  gap: 24px;
+  padding: 24px 28px 28px;
 }
 
-.nas {
-  width: min(760px, 100%);
-  background: var(--bg);
-  border: 2px solid var(--fg);
-  padding: 12px 14px 14px;
-}
-.done .nas {
-  border-color: var(--bad);
-}
 .nas-head {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 10px;
-  margin-bottom: 10px;
-}
-.name {
-  font-weight: 600;
-}
-.pill {
-  font-size: 12px;
-  font-weight: 600;
-  padding: 2px 8px;
-  background: var(--ok);
-  color: var(--bg);
-}
-.pill.degraded {
-  background: var(--warn);
-  color: #111;
-}
-.pill.lost {
-  background: var(--bad);
 }
 
 /* 1+0 is four pairs side by side; 0+1 is two sets of four */
 .groups {
   display: grid;
-  gap: 10px;
+  gap: 20px;
 }
 .groups.pairs {
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -415,103 +381,115 @@ onUnmounted(() => {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 .group {
-  border: 1.5px solid var(--ok);
-  padding: 8px;
+  --rail: var(--ok);
+  min-width: 0;
 }
 .group.degraded {
-  border-color: var(--warn);
+  --rail: var(--warn);
 }
 .group.down {
-  border-color: var(--bad);
-  border-style: dashed;
+  --rail: var(--bad);
 }
-.group-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 6px;
-  margin-bottom: 8px;
-  font-size: 13px;
-  font-weight: 600;
-  text-transform: capitalize;
-}
-.group-head small {
-  font-weight: 500;
-  color: var(--muted);
-  text-transform: none;
-}
-.disks {
-  display: grid;
-  gap: 6px;
-}
-.sets .disks {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+.group-name {
+  margin-bottom: 12px;
 }
 
-/* one drive bay: name and led on top, state and odds under */
+/* the rail: a vertical line down the left, a tick into each disk */
+.disks {
+  position: relative;
+  display: grid;
+  gap: 12px;
+  padding-left: 14px;
+}
+.disks::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 22px;
+  bottom: 22px;
+  border-left: 2px solid var(--rail);
+}
+.group.down .disks::before {
+  border-left-style: dashed;
+}
+.disk::before {
+  content: "";
+  position: absolute;
+  left: -14px;
+  top: 50%;
+  width: 12px;
+  border-top: 2px solid var(--rail);
+}
+.group.down .disk::before {
+  border-top-style: dashed;
+}
+
+/* one drive bay: name on top, state and odds under */
 .disk {
+  position: relative;
   display: grid;
   grid-template-columns: 1fr auto;
-  gap: 2px 8px;
-  padding: 8px 10px;
-  border: 2px solid var(--border-strong);
-  background: var(--card);
-  font-size: 13px;
+  grid-template-areas:
+    "name name"
+    "state chance";
+  gap: 10px 8px;
+  padding: 14px 16px;
+  border: 1px solid var(--border-strong);
+  clip-path: var(--sim-corner);
+  background: var(--bg);
+  font-size: 15px;
   transition:
     border-color 0.12s,
-    background 0.12s;
+    background 0.12s,
+    opacity 0.12s;
 }
 .disk-name {
+  grid-area: name;
   font-family: var(--font-mono);
+  font-size: 16px;
   font-weight: 600;
-}
-.led {
-  align-self: center;
-  width: 8px;
-  height: 8px;
-  background: var(--ok);
+  color: var(--fg);
 }
 .disk-state {
-  color: var(--muted);
-  font-size: 12px;
+  grid-area: state;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--body);
 }
 .disk-chance {
+  grid-area: chance;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 14px;
   color: var(--muted);
   font-variant-numeric: tabular-nums;
 }
 .disk.fatal {
   border-color: var(--bad);
+  box-shadow: inset 0 0 0 1px var(--bad);
 }
 .disk.offline {
-  opacity: 0.55;
-  border-style: dashed;
-}
-.disk.offline .led {
-  background: var(--muted);
+  opacity: 0.5;
 }
 .disk.failed {
-  border-color: var(--bad);
   border-style: dashed;
-  background: transparent;
-}
-.disk.failed .led {
-  background: var(--bad);
+  border-color: var(--bad);
+  background: var(--bad-dim);
+  box-shadow: none;
 }
 .disk.failed .disk-state {
   color: var(--bad);
-  font-weight: 600;
 }
 .disk.rolling {
-  border-color: var(--accent);
-  background: var(--accent);
-  color: var(--on-accent);
+  border-color: var(--fg);
+  background: var(--fg);
+  color: var(--bg);
   opacity: 1;
 }
+.disk.rolling .disk-name,
 .disk.rolling .disk-state,
 .disk.rolling .disk-chance {
-  color: var(--on-accent);
+  color: var(--bg);
 }
 .disk.hit {
   animation: shake 0.35s ease-out;
@@ -540,48 +518,55 @@ onUnmounted(() => {
   }
 }
 
+/* the legend chip is a tiny disk, so it reads as "a disk like this" and
+   not as a checkbox */
+.legend {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.legend-chip {
+  display: inline-block;
+  padding: 3px 8px;
+  border: 1px solid var(--bad);
+  box-shadow: inset 0 0 0 1px var(--bad);
+  clip-path: var(--sim-corner);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--fg);
+  background: var(--bg);
+}
+
 .controls {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
-  gap: 12px 20px;
-  margin-bottom: auto;
+  gap: 16px 28px;
+  margin-top: auto;
 }
 .controls .primary {
-  padding: 10px 18px;
-  font-size: 15px;
+  padding: 14px 20px;
+  font-size: 16px;
+  flex: none;
 }
-.legend {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  color: var(--muted);
-}
-.key {
-  width: 14px;
-  height: 14px;
-  border: 2px solid var(--bad);
+.controls .sim-note {
+  flex: 1 1 280px;
 }
 
-.card .keys {
-  margin: 0;
-}
-kbd {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  padding: 1px 5px;
-  border: 1px solid var(--border-strong);
-}
 .result {
   grid-template-columns: minmax(0, 1fr) auto;
 }
-.runs {
-  margin-top: 8px;
+.x {
+  color: var(--muted);
+  margin: 0 4px;
 }
 
 @media (max-width: 860px) {
+  .stage {
+    padding: 18px;
+  }
   .groups.pairs {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }

@@ -431,15 +431,14 @@ onUnmounted(() => {
     ref="root"
     class="sm"
     :title="TITLE"
-    :intro="INTRO"
-    :goal="GOAL_TEXT"
+    :subtitle="GOAL_TEXT"
     :done="sim.done"
     @restart="restart"
   >
     <!-- toolbox: every operation, always visible, never greyed out for order -->
     <div class="toolbox">
-      <div class="tool-group">
-        <div class="tool-label">Database</div>
+      <div class="sim-card tool-group">
+        <div class="sim-label">Database</div>
         <div class="ops">
           <div
             v-for="op in OPS"
@@ -451,7 +450,7 @@ onUnmounted(() => {
             <pre class="sql">{{ op.sql }}</pre>
             <button
               type="button"
-              class="primary"
+              class="wide"
               :disabled="!!sim.opBlocked(op.id)"
               :title="sim.opBlocked(op.id) ?? ''"
               @click="sim.runOp(op.id)"
@@ -464,8 +463,8 @@ onUnmounted(() => {
           </div>
         </div>
       </div>
-      <div class="tool-group">
-        <div class="tool-label">Servers</div>
+      <div class="sim-card tool-group">
+        <div class="sim-label">Servers</div>
         <div class="server-tools">
           <button
             type="button"
@@ -495,36 +494,15 @@ onUnmounted(() => {
         <canvas ref="canvas"></canvas>
 
         <div ref="usersBox" class="users">
-          <div class="row">
-            <span class="tag">
-              <svg
-                class="cloud"
-                viewBox="0 0 24 16"
-                width="24"
-                height="16"
-                aria-hidden="true"
-              >
-                <path
-                  fill="currentColor"
-                  d="M6 15a4.5 4.5 0 0 1-.6-8.96A6 6 0 0 1 17 5.5a4.75 4.75 0 0 1 1.5 9.5Z"
-                />
-              </svg>
-              Users
+          <div class="users-head">
+            <span class="mono">users</span>
+            <span class="state">
+              <i class="sim-dot" :class="sim.traffic ? 'live' : 'off'"></i>
+              {{ sim.traffic ? "Live" : "Idle" }}
             </span>
-            <button
-              type="button"
-              :class="{ live: sim.traffic }"
-              :disabled="sim.done"
-              @click="toggleTraffic"
-            >
-              {{ sim.traffic ? "Stop traffic" : "Start traffic" }}
-            </button>
           </div>
-          <label>
+          <label class="rate">
             <span>Rate</span>
-            <span
-              ><b>{{ rate }}</b> requests/s, 30% writes</span
-            >
             <input
               v-model.number="rate"
               type="range"
@@ -533,7 +511,19 @@ onUnmounted(() => {
               :disabled="sim.done"
               @input="onRate"
             />
+            <span class="mono"
+              ><b>{{ rate }}</b> req/s, 30% writes</span
+            >
           </label>
+          <button
+            type="button"
+            class="primary wide"
+            :class="{ live: sim.traffic }"
+            :disabled="sim.done"
+            @click="toggleTraffic"
+          >
+            {{ sim.traffic ? "Stop traffic" : "Start traffic" }}
+          </button>
         </div>
 
         <div class="servers">
@@ -548,16 +538,23 @@ onUnmounted(() => {
               failing: v.status === 'Failing',
             }"
           >
-            <div class="row">
-              <div>
-                <span class="name">{{ v.server.name }}</span>
-                <span class="ver" :class="'v' + v.server.version"
-                  >app v{{ v.server.version }}</span
-                >
-              </div>
-              <span class="pill">{{ v.status }}</span>
+            <div class="server-head">
+              <span class="mono name">{{ v.server.name }}</span>
+              <span class="mono ver" :class="'v' + v.server.version"
+                >app v{{ v.server.version }}</span
+              >
             </div>
-            <div class="counts">
+            <span class="state">
+              <i
+                class="sim-dot"
+                :class="{
+                  bad: !v.server.online || v.status === 'Failing',
+                  off: v.server.online && v.out && v.status !== 'Failing',
+                }"
+              ></i>
+              {{ v.status }}
+            </span>
+            <div class="mono counts">
               <span>served {{ v.server.served }}</span>
               <span :class="{ bad: v.server.failed }"
                 >failed {{ v.server.failed }}</span
@@ -566,40 +563,40 @@ onUnmounted(() => {
                 >wrong {{ v.server.wrong }}</span
               >
             </div>
-            <div class="btns">
-              <button
-                type="button"
-                class="primary"
-                :disabled="!sim.canUpgrade(v.server)"
-                @click="sim.startUpgrade(v.server)"
-              >
-                {{
-                  v.server.online
-                    ? v.server.version === 1
-                      ? "Upgrade to app v2"
-                      : "On app v2"
-                    : "Upgrading…"
-                }}
-              </button>
-              <div class="btn-row">
-                <button
-                  type="button"
-                  :disabled="sim.done"
-                  @click="sim.toggleDrain(v.server)"
-                >
-                  {{ v.server.inPool ? "Drain" : "Return" }}
-                </button>
-                <button
-                  type="button"
-                  :disabled="!sim.canRemoveServer(v.server)"
-                  @click="sim.removeServer(v.server)"
-                >
-                  Remove
-                </button>
-              </div>
-            </div>
             <div class="bar" :class="{ live: !v.server.online }">
               <i :style="{ width: v.upgradePct + '%' }"></i>
+            </div>
+            <button
+              type="button"
+              class="wide"
+              :disabled="!sim.canUpgrade(v.server)"
+              @click="sim.startUpgrade(v.server)"
+            >
+              {{
+                v.server.online
+                  ? v.server.version === 1
+                    ? "Upgrade to app v2"
+                    : "On app v2"
+                  : "Upgrading…"
+              }}
+            </button>
+            <div class="btn-row">
+              <button
+                type="button"
+                class="wide"
+                :disabled="sim.done"
+                @click="sim.toggleDrain(v.server)"
+              >
+                {{ v.server.inPool ? "Drain" : "Return" }}
+              </button>
+              <button
+                type="button"
+                class="quiet wide"
+                :disabled="!sim.canRemoveServer(v.server)"
+                @click="sim.removeServer(v.server)"
+              >
+                Remove
+              </button>
             </div>
           </div>
         </div>
@@ -607,7 +604,7 @@ onUnmounted(() => {
         <!-- the table, live -->
         <div class="table">
           <div class="table-head">
-            <span class="name">users</span>
+            <span class="mono name">users</span>
             <span class="muted">{{ sim.rows.length }} rows</span>
             <span class="muted" :class="{ on: sim.trigger }">
               trigger users_name_sync: {{ sim.trigger ? "on" : "off" }}
@@ -664,9 +661,12 @@ onUnmounted(() => {
           </div>
         </div>
 
+        <p class="sim-note">{{ INTRO }}</p>
+
         <SimResult
           v-if="sim.done"
           class="result"
+          tone="ok"
           :title="`Goal reached at ${fmtClock(sim.t)}`"
         >
           <dl>
@@ -689,8 +689,7 @@ onUnmounted(() => {
       </section>
 
       <SimSide>
-        <SimStat :value="sim.failed" label="requests failed" />
-        <SimCard>
+        <SimStat :value="sim.failed" label="requests failed">
           <dl>
             <dt>Clock</dt>
             <dd>{{ fmtClock(sim.t) }}</dd>
@@ -705,7 +704,7 @@ onUnmounted(() => {
               {{ sim.outOfSync.length }}
             </dd>
           </dl>
-        </SimCard>
+        </SimStat>
 
         <!-- what each app version actually runs, coloured by the live schema -->
         <SimCard
@@ -715,7 +714,7 @@ onUnmounted(() => {
         >
           <div v-for="v in [1, 2] as AppVersion[]" :key="v" class="app">
             <div class="app-head">
-              <span class="ver" :class="'v' + v">app v{{ v }}</span>
+              <span class="mono ver" :class="'v' + v">app v{{ v }}</span>
               <span class="muted"
                 >on {{ versionCount(v) }}
                 {{ versionCount(v) === 1 ? "server" : "servers" }}</span
@@ -731,8 +730,8 @@ onUnmounted(() => {
         </SimCard>
 
         <SimCard
-          title="Last 60 seconds"
-          note="Green served everything, amber served wrong data, red failed requests, hatched had no working server."
+          title="Last 60 s"
+          note="Amber: wrong data served. Hatched: nothing could serve."
         >
           <SimStrip :cells="strip()" />
         </SimCard>
@@ -762,249 +761,22 @@ onUnmounted(() => {
 }
 
 /* ----- toolbox ----- */
-.toolbox {
-  display: grid;
-  gap: 12px;
-  margin-bottom: 16px;
-}
-.tool-group {
-  border: 1px solid var(--border);
-  background: var(--card);
-  padding: 10px 12px;
-}
-.tool-label {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 8px;
-}
-.ops {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 8px;
-}
-.op {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 10px;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  min-width: 0;
-}
-.op.running {
-  border-color: var(--accent);
-}
-.op-name {
-  font-weight: 600;
-  font-size: 14px;
-}
-.sql {
-  margin: 0;
-  font-family: var(--font-mono);
-  font-size: 11.5px;
-  line-height: 1.45;
-  color: var(--body);
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
-  flex: 1;
-}
-.op button {
-  padding: 6px 8px;
-  font-size: 13px;
-}
-.server-tools {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 10px;
-  align-items: center;
-}
-.hint {
-  color: var(--muted);
-  font-size: 14px;
-}
 
 /* ----- stage + side ----- */
-.stage {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 48px;
-  padding: 14px;
-}
 /* everything on the stage sits above the canvas, except the result panel,
    which is positioned on its own */
 
-.users {
-  background: var(--fg);
-  color: var(--bg);
-  padding: 10px 14px 12px;
-  width: min(320px, 84vw);
-  display: grid;
-  gap: 8px;
-}
-.row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-}
-.tag {
-  font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-.cloud {
-  opacity: 0.8;
-}
-.users button {
-  border-color: var(--bg);
-  color: var(--bg);
-}
-.users button:hover:not(:disabled) {
-  background: var(--bg);
-  color: var(--fg);
-}
-.users button.live,
 .users button.live:hover {
   background: var(--read);
   border-color: var(--read);
   color: #111;
 }
-.users label {
-  font-size: 13px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 4px;
-}
-.users input[type="range"] {
-  width: 100%;
-  accent-color: var(--read);
-  margin: 0;
-}
 
-.servers {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  justify-content: center;
-  width: 100%;
-}
-.server {
-  flex: 1 1 150px;
-  max-width: 230px;
-  min-width: 0;
-  background: var(--bg);
-  border: 2px solid var(--ok);
-  padding: 8px 10px;
-}
-.server.offline {
-  border-color: var(--bad);
-  border-style: dashed;
-}
-.server.out:not(.offline) {
-  border-color: var(--muted);
-}
-.server.failing:not(.offline):not(.out) {
-  border-color: var(--bad);
-}
-.server .row {
-  gap: 6px;
-  flex-wrap: wrap;
-}
-.server button {
-  padding: 6px 8px;
-  font-size: 13px;
-}
-.name {
-  font-weight: 600;
-}
-.ver {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 600;
-  margin-left: 6px;
-  padding: 1px 6px;
-  border: 1px solid currentColor;
-}
-.ver.v1 {
-  color: var(--muted);
-}
-.ver.v2 {
-  color: var(--write);
-}
-.pill {
-  font-size: 12px;
-  font-weight: 600;
-  padding: 2px 8px;
-  background: var(--ok);
-  color: var(--bg);
-}
-.offline .pill,
 .failing .pill {
-  background: var(--bad);
-}
-.out:not(.offline) .pill {
-  background: var(--muted);
-}
-.counts {
-  display: flex;
-  gap: 10px;
-  margin: 8px 0;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--muted);
-}
-.btns {
-  display: grid;
-  gap: 6px;
-}
-.btn-row {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: 1fr;
-  gap: 6px;
-}
-.bar {
-  height: 4px;
-  background: var(--border);
-  margin-top: 8px;
-  overflow: hidden;
-  visibility: hidden;
-}
-.bar.live {
-  visibility: visible;
-}
-.bar i {
-  display: block;
-  height: 100%;
-  background: var(--accent);
-}
-.server .bar i {
   background: var(--bad);
 }
 
 /* ----- the table ----- */
-.table {
-  width: min(720px, 100%);
-  background: var(--bg);
-  border: 2px solid var(--fg);
-  padding: 10px 14px 12px;
-}
-.table-head {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px 16px;
-  align-items: baseline;
-  margin-bottom: 6px;
-}
-.table-head .on {
-  color: var(--ok);
-}
 table {
   width: 100%;
   border-collapse: collapse;
@@ -1088,20 +860,8 @@ td.mark i.failed,
 .legend i.failed {
   background: var(--bad);
 }
-.legend {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px 16px;
-  margin-top: 10px;
-  font-size: 12px;
-  color: var(--muted);
-}
 .legend i {
   margin-right: 5px;
-}
-.stale-note {
-  color: var(--bad);
-  font-weight: 600;
 }
 
 /* ----- goal reached ----- */
@@ -1135,15 +895,6 @@ td.mark i.failed,
   display: grid;
   gap: 4px;
 }
-.app-head {
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-  font-size: 13px;
-}
-.app-head .ver {
-  margin-left: 0;
-}
 .col-ok {
   color: var(--ok);
 }
@@ -1153,14 +904,269 @@ td.mark i.failed,
   text-decoration-thickness: 1.5px;
 }
 
+/* ----- toolbox: two cards above the stage ----- */
+.toolbox {
+  display: grid;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.tool-group .sim-label {
+  display: block;
+  margin-bottom: 14px;
+}
+.ops {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+}
+.op {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px 16px 16px;
+  background: var(--bg);
+  border: 1px solid var(--border-strong);
+  clip-path: var(--sim-corner);
+  min-width: 0;
+}
+.op.running {
+  border-color: var(--fg);
+}
+.op-name {
+  font-weight: 600;
+  font-size: 15px;
+}
+.sql {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--muted);
+  flex: 1;
+}
+.op button {
+  padding: 9px 12px;
+  font-size: 14px;
+}
+.server-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* ----- the stage ----- */
+.stage {
+  min-height: 560px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  padding: 24px 28px 28px;
+}
+.mono {
+  font-family: var(--font-mono);
+}
+.state {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--body);
+}
+.sim-dot.live {
+  background: var(--read);
+}
+button.wide {
+  width: 100%;
+  justify-content: center;
+}
+
+/* ----- the users box ----- */
+.users {
+  width: min(440px, 100%);
+  background: var(--bg);
+  border: 1px solid var(--border-strong);
+  clip-path: var(--sim-corner);
+  padding: 16px 18px 18px;
+  display: grid;
+  gap: 12px;
+}
+.users-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+.users-head .mono {
+  font-size: 16px;
+  font-weight: 600;
+}
+.rate {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 14px;
+  color: var(--body);
+}
+.rate input[type="range"] {
+  width: 100%;
+  accent-color: var(--fg);
+  margin: 0;
+}
+.rate b {
+  color: var(--fg);
+  font-weight: 600;
+}
+.users .live,
+.users .live:hover {
+  background: var(--read);
+  border-color: var(--read);
+  color: #111;
+}
+
+/* ----- servers share the row ----- */
+.servers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  width: 100%;
+}
+.server {
+  flex: 1 1 190px;
+  max-width: 270px;
+  min-width: 0;
+  background: var(--bg);
+  border: 1px solid var(--ok);
+  clip-path: var(--sim-corner);
+  padding: 12px 14px 14px;
+  display: grid;
+  gap: 8px;
+}
+.server.offline {
+  border-color: var(--bad);
+  border-style: dashed;
+}
+.server.out:not(.offline) {
+  border-color: var(--border-strong);
+}
+.server.failing:not(.offline):not(.out) {
+  border-color: var(--bad);
+}
+.server-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+.name {
+  font-size: 15px;
+  font-weight: 600;
+}
+.ver {
+  font-size: 12px;
+  padding: 2px 8px;
+  border: 1px solid var(--border-strong);
+  clip-path: var(--sim-corner);
+  color: var(--muted);
+}
+.ver.v2 {
+  border-color: var(--ok);
+  color: var(--ok);
+}
+.counts {
+  display: flex;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.server button {
+  padding: 7px 10px;
+  font-size: 13px;
+}
+.btn-row {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 8px;
+}
+.bar {
+  height: 4px;
+  background: var(--border);
+  clip-path: var(--sim-corner);
+  overflow: hidden;
+  visibility: hidden;
+}
+.bar.live {
+  visibility: visible;
+}
+.bar i {
+  display: block;
+  height: 100%;
+  background: var(--fg);
+}
+.server .bar i {
+  background: var(--bad);
+}
+
+/* ----- the table ----- */
+.table {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border-strong);
+  clip-path: var(--sim-corner);
+  padding: 14px 18px 16px;
+  overflow: auto;
+}
+.table-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+.table-head .on {
+  color: var(--ok);
+}
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.legend i {
+  margin-right: 6px;
+}
+.stale-note {
+  color: var(--bad);
+}
+
+.stage .sim-note {
+  width: 100%;
+  margin-top: auto;
+}
+
+/* ----- side: the two app queries ----- */
+.app-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 13px;
+}
+
 @media (max-width: 1000px) {
   .ops {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 @media (max-width: 860px) {
-  .result dl {
-    justify-content: flex-start;
+  .stage {
+    padding: 18px;
+    gap: 28px;
+  }
+  .ops {
+    grid-template-columns: 1fr;
   }
 }
 </style>
