@@ -355,7 +355,11 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
+/* the stage is a size container so the disk grid responds to its own width,
+   not the viewport. with the side column up, the stage is narrow long before
+   the sim collapses to one column */
 .stage {
+  container-type: inline-size;
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -427,6 +431,7 @@ onUnmounted(() => {
 /* one drive bay: name on top, state and odds under */
 .disk {
   position: relative;
+  min-width: 0;
   display: grid;
   grid-template-columns: 1fr auto;
   grid-template-areas:
@@ -567,11 +572,20 @@ onUnmounted(() => {
   .stage {
     padding: 18px;
   }
+}
+/* at the site's 1200px cap the stage is about 680px inside. tighten the bays
+   first, then go to two rows of two */
+@container (max-width: 760px) {
+  .disk {
+    padding: 12px 12px;
+  }
+}
+@container (max-width: 660px) {
   .groups.pairs {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
-@media (max-width: 520px) {
+@container (max-width: 400px) {
   .groups.sets {
     grid-template-columns: 1fr;
   }

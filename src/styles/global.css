@@ -39,10 +39,14 @@
     border-inline: 1px solid var(--border);
     color: var(--fg);
     line-height: var(--leading-normal);
-    selection: {
-      background: var(--fg);
-      color: white;
-    }
+  }
+
+  /* note: this used to be a `selection: { }` block nested inside body, which
+     is not valid css. lightningcss dropped the whole body rule with it, so
+     the 1200px cap above never shipped */
+  ::selection {
+    background: var(--fg);
+    color: white;
   }
 
   /* links: ink text with a 1px accent underline, hover text turns accent */
