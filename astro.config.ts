@@ -20,7 +20,10 @@ export default defineConfig({
     mdx(),
     vue(),
     sitemap({
-      filter: page => SITE.showArchives || !page.endsWith("/archives"),
+      // the dated paths are redirect stubs for old post urls, not pages
+      filter: page =>
+        (SITE.showArchives || !page.endsWith("/archives")) &&
+        !/\/\d{4}\/\d{2}\/\d{2}\//.test(page),
     }),
   ],
   markdown: {

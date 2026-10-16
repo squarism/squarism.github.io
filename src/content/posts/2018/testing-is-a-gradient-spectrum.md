@@ -4,6 +4,7 @@ date: 2018-11-08T00:00:00.000Z
 author: "SQUARISM"
 draft: false
 tags: ["blog"]
+aliases: ["testing-is-a-spectrum"]
 ---
 
 I'm reading the n-th article where someone mentions TDD (test-driven

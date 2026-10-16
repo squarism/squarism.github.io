@@ -22,6 +22,8 @@ const posts = defineCollection({
       description: z.string().optional(),
       canonicalURL: z.string().optional(),
       timezone: z.string().optional(),
+      // old urls for this post, see src/lib/redirects.ts
+      aliases: z.array(z.string()).default([]),
     }),
 });
 

@@ -1,0 +1,37 @@
+---
+// a stub at every old post url. see src/lib/redirects.ts for the rules. this
+// is the closest a static host gets to a 301: instant meta refresh, noindex,
+// and a canonical link so crawlers move the old url to the new one
+import { getCollection } from "astro:content";
+import { buildRedirects } from "@/lib/redirects";
+import { SITE } from "@/config";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("posts", ({ data }) => !data.draft);
+  return buildRedirects(posts).map(({ from, to }) => ({
+    params: { legacy: from },
+    props: { to },
+  }));
+}
+
+interface Props {
+  to: string;
+}
+
+const { to } = Astro.props;
+const target = new URL(to, SITE.website).href;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Moved to {target}</title>
+    <meta http-equiv="refresh" content={`0;url=${target}`} />
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href={target} />
+  </head>
+  <body>
+    <p>This post moved to <a href={target}>{target}</a>.</p>
+  </body>
+</html>
