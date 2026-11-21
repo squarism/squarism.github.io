@@ -1,10 +1,11 @@
 ---
 import { SITE } from "@/config";
+import LogoMark from "@/assets/images/logo.svg";
 
-// logo option from the design handoff: "a" pixel Q, "b" grid mark, "c" facets.
-// b was the one being previewed at handoff time.
-type LogoOption = "a" | "b" | "c";
-const LOGO = "b" as LogoOption;
+// logo option from the design handoff: "a" pixel Q, "b" grid mark, "c" facets,
+// "d" the two overlapping squares from logo.svg.
+type LogoOption = "a" | "b" | "c" | "d";
+const LOGO = "d" as LogoOption;
 
 const { pathname } = Astro.url;
 const currentPath =
@@ -71,6 +72,14 @@ const pixelQ = ["01110", "10001", "10001", "10021", "01110", "00002"];
             <i />
           </>
         </span>
+        <span class="wordmark-mono">squarism</span>
+      </a>
+    )
+  }
+  {
+    LOGO === "d" && (
+      <a href="/" class="logo logo-d" aria-label={SITE.title}>
+        <LogoMark class="squares-mark" aria-hidden="true" />
         <span class="wordmark-mono">squarism</span>
       </a>
     )
@@ -240,6 +249,15 @@ const pixelQ = ["01110", "10001", "10001", "10021", "01110", "00002"];
     font-size: 18px;
     font-weight: 500;
     letter-spacing: -0.02em;
+  }
+
+  /* d: overlapping squares, stroked in currentColor so it follows the theme */
+  .logo-d {
+    gap: 10px;
+  }
+  .squares-mark {
+    width: 24px;
+    height: 24px;
   }
 
   /* c: facets */
